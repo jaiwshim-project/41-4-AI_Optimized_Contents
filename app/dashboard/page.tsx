@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import type { HistoryItem } from '@/lib/types';
@@ -14,6 +14,8 @@ export default function DashboardPage() {
   const [viewItem, setViewItem] = useState<HistoryItem | null>(null);
   const [expandedRevisions, setExpandedRevisions] = useState<Set<string>>(new Set());
   const [viewRevisionId, setViewRevisionId] = useState<string | null>(null);
+  const [copiedBlog, setCopiedBlog] = useState(false);
+  const contentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     getHistoryAsync().then(setHistory);
@@ -46,6 +48,26 @@ export default function DashboardPage() {
       .replace(/^\- (.*$)/gm, '<li class="ml-4 list-disc">$1</li>')
       .replace(/^\d+\. (.*$)/gm, '<li class="ml-4 list-decimal">$1</li>')
       .replace(/^> (.*$)/gm, '<blockquote class="border-l-4 border-indigo-300 pl-4 py-1 my-3 bg-indigo-50 rounded-r-lg text-gray-700">$1</blockquote>');
+  };
+
+  const handleCopyBlog = async () => {
+    if (!contentRef.current) return;
+    try {
+      const htmlBlob = new Blob([contentRef.current.innerHTML], { type: 'text/html' });
+      const textBlob = new Blob([contentRef.current.innerText], { type: 'text/plain' });
+      await navigator.clipboard.write([
+        new ClipboardItem({
+          'text/html': htmlBlob,
+          'text/plain': textBlob,
+        }),
+      ]);
+      setCopiedBlog(true);
+      setTimeout(() => setCopiedBlog(false), 2000);
+    } catch {
+      await navigator.clipboard.writeText(contentRef.current.innerText);
+      setCopiedBlog(true);
+      setTimeout(() => setCopiedBlog(false), 2000);
+    }
   };
 
   // 상세 보기 모드
@@ -97,6 +119,20 @@ export default function DashboardPage() {
                   )}
                 </div>
               </div>
+              {/* 블로그 붙여넣기 복사 */}
+              <button
+                onClick={handleCopyBlog}
+                className={`inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl transition-all duration-200 border-2 hover:shadow-md hover:scale-[1.03] ${
+                  copiedBlog
+                    ? 'bg-emerald-500 text-white border-emerald-300'
+                    : 'bg-gradient-to-r from-indigo-500 to-purple-600 text-white border-indigo-300 hover:from-indigo-600 hover:to-purple-700'
+                }`}
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={copiedBlog ? 'M5 13l4 4L19 7' : 'M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z'} />
+                </svg>
+                {copiedBlog ? '복사됨!' : '블로그 붙여넣기용 복사'}
+              </button>
               {/* 수정 이력 선택 */}
               {isGeneration && viewItem.revisions && viewItem.revisions.length > 0 && (
                 <div className="flex items-center gap-2">
@@ -147,19 +183,21 @@ export default function DashboardPage() {
 
           {/* 콘텐츠 */}
           <div className="bg-white rounded-2xl shadow-sm border-2 border-indigo-200 p-6">
-            <div
-              className="prose prose-sm max-w-none whitespace-pre-wrap text-sm text-gray-800 leading-relaxed"
-              dangerouslySetInnerHTML={{ __html: renderContent(content || '') }}
-            />
-            {hashtags && hashtags.length > 0 && (
-              <div className="mt-6 pt-4 border-t border-gray-200 flex flex-wrap gap-2">
-                {hashtags.map((tag, i) => (
-                  <span key={i} className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-indigo-50 text-indigo-600 border border-indigo-200">
-                    {tag.startsWith('#') ? tag : `#${tag}`}
-                  </span>
-                ))}
-              </div>
-            )}
+            <div ref={contentRef}>
+              <div
+                className="prose prose-sm max-w-none whitespace-pre-wrap text-sm text-gray-800 leading-relaxed"
+                dangerouslySetInnerHTML={{ __html: renderContent(content || '') }}
+              />
+              {hashtags && hashtags.length > 0 && (
+                <div className="mt-8 pt-4 flex flex-wrap gap-2">
+                  {hashtags.map((tag, i) => (
+                    <span key={i} className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-indigo-50 text-indigo-600 border border-indigo-200">
+                      {tag.startsWith('#') ? tag : `#${tag}`}
+                    </span>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
         </main>
         <Footer />
