@@ -281,7 +281,11 @@ export async function generateContent(request: GenerateRequest): Promise<Generat
 콘텐츠 유형: ${categoryLabel}
 톤/스타일: ${toneDesc}
 ${request.targetKeyword ? `타겟 키워드: ${request.targetKeyword}` : ''}
-${request.additionalNotes ? `추가 요구사항: ${request.additionalNotes}` : ''}
+${request.additionalNotes ? `\n${request.additionalNotes}\n` : ''}
+중요 지침:
+- 위 참조 자료가 있다면, 그 안의 정보, 데이터, 수치, 사실관계를 적극 반영하여 콘텐츠를 작성하세요.
+- 참조 자료의 핵심 내용을 인용하거나 재구성하여 콘텐츠의 신뢰성과 구체성을 높이세요.
+- 사용자 요구사항이 있다면 반드시 반영하세요.
 
 AIO/GEO에 최적화된 고품질 콘텐츠를 마크다운 형식으로 작성해주세요.
 콘텐츠는 한국어로 작성하며, 최소 1000자 이상이어야 합니다.`;

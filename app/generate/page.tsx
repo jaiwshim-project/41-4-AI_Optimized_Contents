@@ -91,6 +91,7 @@ export default function GeneratePage() {
   const [targetKeyword, setTargetKeyword] = useState('');
   const [tone, setTone] = useState('전문적이고 신뢰감 있는');
   const [additionalNotes, setAdditionalNotes] = useState('');
+  const [referenceFiles, setReferenceFiles] = useState<{ name: string; content: string }[]>([]);
   const [isGenerating, setIsGenerating] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [showApiKeyInput, setShowApiKeyInput] = useState(false);
@@ -224,9 +225,36 @@ export default function GeneratePage() {
     { value: '기타', label: '📦 기타' },
   ];
 
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (!files) return;
+    const newFiles: { name: string; content: string }[] = [];
+    for (const file of Array.from(files)) {
+      try {
+        const text = await file.text();
+        newFiles.push({ name: file.name, content: text.substring(0, 10000) });
+      } catch {
+        // 텍스트로 읽을 수 없는 파일 건너뛰기
+      }
+    }
+    setReferenceFiles(prev => [...prev, ...newFiles]);
+    e.target.value = '';
+  };
+
+  const removeFile = (index: number) => {
+    setReferenceFiles(prev => prev.filter((_, i) => i !== index));
+  };
+
   const buildAdditionalNotes = () => {
     const parts: string[] = [];
-    if (additionalNotes.trim()) parts.push(additionalNotes.trim());
+    if (additionalNotes.trim()) parts.push(`[사용자 요구사항]\n${additionalNotes.trim()}`);
+    // 업로드된 참조 파일을 RAG 컨텍스트로 포함
+    if (referenceFiles.length > 0) {
+      const refParts = referenceFiles.map(f =>
+        `--- 참조자료: ${f.name} ---\n${f.content}\n--- 끝 ---`
+      ).join('\n\n');
+      parts.push(`[참조 자료 - 아래 자료의 정보, 수치, 사실, 표현을 적극 활용하여 콘텐츠를 작성하세요]\n${refParts}`);
+    }
     const biz = businessInfo;
     const bizParts: string[] = [];
     if (biz.companyName) bizParts.push(`회사명: ${biz.companyName}`);
@@ -797,16 +825,56 @@ export default function GeneratePage() {
                     </div>
                   </div>
 
-                  {/* 추가 요구사항 */}
+                  {/* 추가 요구사항 + 참조 파일 업로드 */}
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">추가 요구사항 (선택)</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">참조 자료 & 추가 요구사항 (선택)</label>
+                    <p className="text-xs text-gray-400 mb-2">입력된 텍스트와 업로드된 파일의 정보를 기반으로 콘텐츠를 생성합니다 (RAG 방식)</p>
                     <textarea
                       value={additionalNotes}
                       onChange={(e) => setAdditionalNotes(e.target.value)}
-                      placeholder="특별한 요구사항이 있다면 입력하세요..."
-                      rows={3}
+                      placeholder="콘텐츠에 반영할 정보를 입력하세요...&#10;예: 제품 스펙, 통계 데이터, 전문 용어, 인용할 내용, 특별 요구사항 등"
+                      rows={4}
                       className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent placeholder-gray-400 resize-none"
                     />
+                    {/* 파일 업로드 */}
+                    <div className="mt-3">
+                      <label className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl border-2 border-dashed border-indigo-300 bg-indigo-50 text-indigo-600 hover:bg-indigo-100 hover:border-indigo-400 transition-all cursor-pointer">
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                        </svg>
+                        참조 파일 업로드
+                        <input
+                          type="file"
+                          multiple
+                          accept=".txt,.md,.csv,.json,.html,.xml,.log"
+                          onChange={handleFileUpload}
+                          className="hidden"
+                        />
+                      </label>
+                      <span className="text-xs text-gray-400 ml-2">TXT, MD, CSV, JSON, HTML 등 텍스트 파일</span>
+                    </div>
+                    {/* 업로드된 파일 목록 */}
+                    {referenceFiles.length > 0 && (
+                      <div className="mt-3 space-y-2">
+                        {referenceFiles.map((file, i) => (
+                          <div key={i} className="flex items-center gap-2 px-3 py-2 bg-indigo-50 rounded-lg border border-indigo-200">
+                            <svg className="w-4 h-4 text-indigo-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                            </svg>
+                            <span className="text-xs font-medium text-indigo-700 flex-1 truncate">{file.name}</span>
+                            <span className="text-[10px] text-indigo-400">{(file.content.length / 1000).toFixed(1)}K자</span>
+                            <button
+                              onClick={() => removeFile(i)}
+                              className="text-gray-400 hover:text-red-500 transition-colors p-0.5"
+                            >
+                              <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                              </svg>
+                            </button>
+                          </div>
+                        ))}
+                      </div>
+                    )}
                   </div>
 
                   {/* 생성 버튼 */}
