@@ -368,7 +368,12 @@ export default function GeneratePage() {
 
   const handleCopy = async () => {
     if (!result) return;
-    await navigator.clipboard.writeText(result.content);
+    let text = result.content;
+    if (result.hashtags && result.hashtags.length > 0) {
+      const tags = result.hashtags.map(t => t.startsWith('#') ? t : `#${t}`).join(' ');
+      text += '\n\n' + tags;
+    }
+    await navigator.clipboard.writeText(text);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
@@ -1220,23 +1225,22 @@ export default function GeneratePage() {
                 <button
                   onClick={() => {
                     if (!contentRef.current) return;
-                    const range = document.createRange();
-                    range.selectNodeContents(contentRef.current);
-                    const selection = window.getSelection();
-                    if (selection) {
-                      selection.removeAllRanges();
-                      selection.addRange(range);
+                    let html = contentRef.current.innerHTML;
+                    let text = contentRef.current.innerText;
+                    // 해시태그 포함
+                    if (result?.hashtags && result.hashtags.length > 0) {
+                      const tags = result.hashtags.map(t => t.startsWith('#') ? t : `#${t}`).join(' ');
+                      html += `<p style="margin-top:24px;color:#6366f1;font-size:0.9em">${tags}</p>`;
+                      text += '\n\n' + tags;
                     }
-                    const html = contentRef.current.innerHTML;
                     const blob = new Blob([html], { type: 'text/html' });
-                    const textBlob = new Blob([contentRef.current.innerText], { type: 'text/plain' });
+                    const textBlob = new Blob([text], { type: 'text/plain' });
                     navigator.clipboard.write([
                       new ClipboardItem({
                         'text/html': blob,
                         'text/plain': textBlob,
                       }),
                     ]).then(() => {
-                      selection?.removeAllRanges();
                       setCopiedContent(true);
                       setTimeout(() => setCopiedContent(false), 2000);
                     });
@@ -1326,6 +1330,15 @@ export default function GeneratePage() {
                         AI 생성 이미지 ({generatedImages.length}장)
                       </span>
                       <button
+                        onClick={handleApplyImages}
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg transition-all duration-200 border-2 border-indigo-300 text-white bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 hover:shadow-md hover:scale-105"
+                      >
+                        <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                        </svg>
+                        본문에 추가
+                      </button>
+                      <button
                         onClick={handleGenerateImages}
                         disabled={isGeneratingImages}
                         className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg transition-all duration-200 border-2 border-emerald-300 text-emerald-700 bg-emerald-50 hover:bg-emerald-100 hover:shadow-md hover:scale-105 disabled:opacity-50"
@@ -1339,15 +1352,6 @@ export default function GeneratePage() {
                             재생성 중...
                           </>
                         ) : '다시 생성'}
-                      </button>
-                      <button
-                        onClick={handleApplyImages}
-                        className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg transition-all duration-200 border-2 border-indigo-300 text-indigo-700 bg-indigo-50 hover:bg-indigo-100 hover:shadow-md hover:scale-105"
-                      >
-                        <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                        </svg>
-                        이미지 적용
                       </button>
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
