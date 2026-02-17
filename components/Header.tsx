@@ -149,6 +149,14 @@ export default function Header({ showApiKeyButton = false, onToggleApiKey, apiKe
             {user ? (
               <div className="flex items-center gap-1.5">
                 <span className="text-xs text-gray-500 max-w-[120px] truncate">{user.email}</span>
+                <Link
+                  href="/change-password"
+                  className="inline-flex items-center gap-1 px-2.5 py-1.5 text-xs font-medium rounded-lg bg-gray-50 text-gray-600 border-2 border-gray-300 hover:bg-indigo-50 hover:border-indigo-300 transition-all"
+                >
+                  <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
+                  </svg>
+                </Link>
                 <button
                   onClick={handleLogout}
                   className="inline-flex items-center gap-1 px-2.5 py-1.5 text-xs font-medium rounded-lg bg-gray-100 text-gray-600 border-2 border-gray-300 hover:bg-red-50 hover:text-red-600 hover:border-red-300 transition-all"
@@ -279,17 +287,29 @@ export default function Header({ showApiKeyButton = false, onToggleApiKey, apiKe
             {/* 모바일 로그인/로그아웃 */}
             <div className="border-t border-green-200 pt-2 mt-1">
               {user ? (
-                <div className="flex items-center justify-between px-4 py-2.5">
-                  <span className="text-xs text-gray-500 truncate max-w-[200px]">{user.email}</span>
-                  <button
-                    onClick={() => { handleLogout(); setMobileOpen(false); }}
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded-lg bg-red-50 text-red-600 border-2 border-red-200"
-                  >
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-                    </svg>
-                    로그아웃
-                  </button>
+                <div className="px-4 py-2.5 space-y-2">
+                  <span className="text-xs text-gray-500 truncate block">{user.email}</span>
+                  <div className="flex items-center gap-2">
+                    <Link
+                      href="/change-password"
+                      onClick={() => setMobileOpen(false)}
+                      className="flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded-lg bg-gray-50 text-gray-600 border-2 border-gray-300"
+                    >
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
+                      </svg>
+                      비밀번호 변경
+                    </Link>
+                    <button
+                      onClick={() => { handleLogout(); setMobileOpen(false); }}
+                      className="flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded-lg bg-red-50 text-red-600 border-2 border-red-200"
+                    >
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                      </svg>
+                      로그아웃
+                    </button>
+                  </div>
                 </div>
               ) : (
                 <div className="flex items-center gap-2 px-4 py-2.5">

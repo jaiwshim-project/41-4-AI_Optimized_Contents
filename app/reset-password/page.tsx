@@ -1,59 +1,86 @@
 'use client';
 
-import { useState, Suspense } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { createClient } from '@/lib/supabase-client';
 
-export default function LoginPage() {
-  return (
-    <Suspense>
-      <LoginContent />
-    </Suspense>
-  );
-}
-
-function LoginContent() {
+export default function ResetPasswordPage() {
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const redirect = searchParams.get('redirect') || '/';
-
-  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState(false);
+  const [ready, setReady] = useState(false);
 
-  const handleLogin = async (e: React.FormEvent) => {
+  useEffect(() => {
+    // Supabase가 URL의 토큰을 자동으로 세션에 적용할 때까지 대기
+    const supabase = createClient();
+    supabase.auth.onAuthStateChange((event) => {
+      if (event === 'PASSWORD_RECOVERY') {
+        setReady(true);
+      }
+    });
+    // 이미 세션이 있을 수도 있음
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (session) setReady(true);
+    });
+  }, []);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
+
+    if (password !== confirmPassword) {
+      setError('비밀번호가 일치하지 않습니다.');
+      return;
+    }
+
+    if (password.length < 6) {
+      setError('비밀번호는 최소 6자 이상이어야 합니다.');
+      return;
+    }
+
     setLoading(true);
 
     const supabase = createClient();
-    const { error: authError } = await supabase.auth.signInWithPassword({
-      email,
+    const { error: updateError } = await supabase.auth.updateUser({
       password,
     });
 
-    if (authError) {
-      if (authError.message.includes('Invalid login credentials')) {
-        setError('이메일 또는 비밀번호가 올바르지 않습니다.');
-      } else if (authError.message.includes('Email not confirmed')) {
-        setError('이메일 인증이 완료되지 않았습니다. 메일함을 확인해주세요.');
-      } else {
-        setError(authError.message);
-      }
+    if (updateError) {
+      setError(updateError.message);
       setLoading(false);
       return;
     }
 
-    router.push(redirect);
-    router.refresh();
+    setSuccess(true);
+    setLoading(false);
+    setTimeout(() => router.push('/'), 2000);
   };
+
+  if (success) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-violet-50 flex items-center justify-center px-4">
+        <div className="w-full max-w-md">
+          <div className="bg-white rounded-2xl shadow-lg border-2 border-emerald-200 p-8 text-center">
+            <div className="w-16 h-16 bg-emerald-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+              <svg className="w-8 h-8 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+              </svg>
+            </div>
+            <h2 className="text-xl font-bold text-gray-900 mb-2">비밀번호가 변경되었습니다</h2>
+            <p className="text-sm text-gray-600">잠시 후 홈페이지로 이동합니다...</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-violet-50 flex items-center justify-center px-4">
       <div className="w-full max-w-md">
-        {/* 로고 */}
         <div className="text-center mb-8">
           <Link href="/" className="inline-flex items-center gap-2.5">
             <div className="w-12 h-12 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-xl flex items-center justify-center shadow-lg">
@@ -68,10 +95,15 @@ function LoginContent() {
           </Link>
         </div>
 
-        {/* 로그인 폼 */}
         <div className="bg-white rounded-2xl shadow-lg border-2 border-indigo-200 p-8">
-          <h2 className="text-xl font-bold text-gray-900 mb-1">로그인</h2>
-          <p className="text-sm text-gray-500 mb-6">계정에 로그인하여 콘텐츠 최적화를 시작하세요</p>
+          <h2 className="text-xl font-bold text-gray-900 mb-1">새 비밀번호 설정</h2>
+          <p className="text-sm text-gray-500 mb-6">새로운 비밀번호를 입력해주세요</p>
+
+          {!ready && (
+            <div className="mb-4 p-3 bg-amber-50 border border-amber-200 rounded-xl text-sm text-amber-700">
+              인증 정보를 확인하고 있습니다...
+            </div>
+          )}
 
           {error && (
             <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-xl text-sm text-red-700 flex items-center gap-2">
@@ -82,41 +114,37 @@ function LoginContent() {
             </div>
           )}
 
-          <form onSubmit={handleLogin} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">이메일</label>
-              <input
-                id="email"
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                placeholder="name@example.com"
-                className="w-full px-4 py-2.5 border-2 border-gray-200 rounded-xl text-sm focus:outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100 transition-all"
-              />
-            </div>
-            <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">비밀번호</label>
+              <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">새 비밀번호</label>
               <input
                 id="password"
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                placeholder="비밀번호를 입력하세요"
+                placeholder="최소 6자 이상"
                 minLength={6}
                 className="w-full px-4 py-2.5 border-2 border-gray-200 rounded-xl text-sm focus:outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100 transition-all"
               />
-              <div className="mt-1 text-right">
-                <Link href="/forgot-password" className="text-xs text-indigo-500 hover:text-indigo-700 transition-colors">
-                  비밀번호를 잊으셨나요?
-                </Link>
-              </div>
+            </div>
+            <div>
+              <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 mb-1">새 비밀번호 확인</label>
+              <input
+                id="confirmPassword"
+                type="password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                required
+                placeholder="비밀번호를 다시 입력하세요"
+                minLength={6}
+                className="w-full px-4 py-2.5 border-2 border-gray-200 rounded-xl text-sm focus:outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100 transition-all"
+              />
             </div>
 
             <button
               type="submit"
-              disabled={loading}
+              disabled={loading || !ready}
               className="w-full py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold rounded-xl hover:from-blue-700 hover:to-indigo-700 transition-all shadow-md border-2 border-sky-300 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {loading ? (
@@ -125,26 +153,11 @@ function LoginContent() {
                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
                   </svg>
-                  로그인 중...
+                  변경 중...
                 </span>
-              ) : '로그인'}
+              ) : '비밀번호 변경'}
             </button>
           </form>
-
-          <div className="mt-6 text-center">
-            <p className="text-sm text-gray-500">
-              계정이 없으신가요?{' '}
-              <Link href="/signup" className="text-indigo-600 font-semibold hover:text-indigo-700 transition-colors">
-                회원가입
-              </Link>
-            </p>
-          </div>
-        </div>
-
-        <div className="mt-4 text-center">
-          <Link href="/" className="text-sm text-gray-400 hover:text-gray-600 transition-colors">
-            &larr; 홈으로 돌아가기
-          </Link>
         </div>
       </div>
     </div>
