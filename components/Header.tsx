@@ -106,6 +106,17 @@ export default function Header({ showApiKeyButton = false, onToggleApiKey, apiKe
                   {PLAN_LABELS[plan].name}
                 </Link>
                 <span className="text-xs text-gray-500 max-w-[120px] truncate">{user.email}</span>
+                {plan === 'admin' && (
+                  <Link
+                    href="/admin"
+                    className="inline-flex items-center gap-1 px-2.5 py-1.5 text-xs font-medium rounded-lg bg-red-50 text-red-600 border-2 border-red-200 hover:bg-red-100 hover:border-red-300 transition-all"
+                  >
+                    <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                    </svg>
+                    관리
+                  </Link>
+                )}
                 <Link
                   href="/change-password"
                   className="inline-flex items-center gap-1 px-2.5 py-1.5 text-xs font-medium rounded-lg bg-gray-50 text-gray-600 border-2 border-gray-300 hover:bg-indigo-50 hover:border-indigo-300 transition-all"
@@ -206,6 +217,15 @@ export default function Header({ showApiKeyButton = false, onToggleApiKey, apiKe
                       {PLAN_LABELS[plan].name}
                     </Link>
                     <span className="text-xs text-gray-500 truncate">{user.email}</span>
+                    {plan === 'admin' && (
+                      <Link
+                        href="/admin"
+                        onClick={() => setMobileOpen(false)}
+                        className="px-2.5 py-0.5 text-[11px] font-bold rounded-full border bg-red-50 text-red-600 border-red-200"
+                      >
+                        관리
+                      </Link>
+                    )}
                   </div>
                   <div className="flex items-center gap-2">
                     <Link
