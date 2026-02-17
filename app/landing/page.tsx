@@ -478,7 +478,8 @@ export default function PromotionLandingPage() {
                 example: '"강남 맛집 추천해줘"',
                 pain: '리뷰 사이트에만 의존하면 AI가 추천 못함',
                 benefit: '메뉴, 분위기, 후기를 AI가 인용하는 구조로 최적화',
-                color: 'orange',
+                borderClass: 'border-orange-100 hover:border-orange-300',
+                textClass: 'text-orange-600',
               },
               {
                 emoji: '🏪',
@@ -486,7 +487,8 @@ export default function PromotionLandingPage() {
                 example: '"가성비 좋은 OO 추천"',
                 pain: '상품 스펙만 나열하면 AI가 경쟁사 제품을 추천',
                 benefit: '제품 비교, 장단점을 AI 친화 구조로 변환',
-                color: 'blue',
+                borderClass: 'border-blue-100 hover:border-blue-300',
+                textClass: 'text-blue-600',
               },
               {
                 emoji: '💅',
@@ -494,7 +496,8 @@ export default function PromotionLandingPage() {
                 example: '"피부 타입별 화장품 추천"',
                 pain: '블로그 체험기가 AI 검색에 노출되지 않음',
                 benefit: '성분, 효과, 사용법을 E-E-A-T 기반으로 구조화',
-                color: 'pink',
+                borderClass: 'border-pink-100 hover:border-pink-300',
+                textClass: 'text-pink-600',
               },
               {
                 emoji: '💪',
@@ -502,7 +505,8 @@ export default function PromotionLandingPage() {
                 example: '"초보자 헬스 루틴 알려줘"',
                 pain: '운동법 콘텐츠가 AI 답변에 인용되지 않음',
                 benefit: '전문성 있는 가이드로 AI 피트니스 추천에 포함',
-                color: 'red',
+                borderClass: 'border-red-100 hover:border-red-300',
+                textClass: 'text-red-600',
               },
               {
                 emoji: '🎓',
@@ -510,7 +514,8 @@ export default function PromotionLandingPage() {
                 example: '"영어 학원 추천해줘"',
                 pain: '학원 홍보 글이 AI에게 신뢰받지 못함',
                 benefit: '커리큘럼, 성과 데이터를 AI가 인용하는 형태로 제작',
-                color: 'indigo',
+                borderClass: 'border-indigo-100 hover:border-indigo-300',
+                textClass: 'text-indigo-600',
               },
               {
                 emoji: '💻',
@@ -518,7 +523,8 @@ export default function PromotionLandingPage() {
                 example: '"프로젝트 관리 툴 비교"',
                 pain: '기술 문서가 AI 검색에서 경쟁사에 밀림',
                 benefit: '기술 비교, 사례를 구조화하여 AI 추천 1순위 확보',
-                color: 'cyan',
+                borderClass: 'border-cyan-100 hover:border-cyan-300',
+                textClass: 'text-cyan-600',
               },
               {
                 emoji: '🏥',
@@ -526,7 +532,8 @@ export default function PromotionLandingPage() {
                 example: '"무릎 통증 원인과 치료법"',
                 pain: '의료 정보의 E-E-A-T가 부족하면 AI가 무시',
                 benefit: '전문의 경험 기반 콘텐츠로 의료 AI 답변에 인용',
-                color: 'emerald',
+                borderClass: 'border-emerald-100 hover:border-emerald-300',
+                textClass: 'text-emerald-600',
               },
               {
                 emoji: '💰',
@@ -534,7 +541,8 @@ export default function PromotionLandingPage() {
                 example: '"30대 보험 추천해줘"',
                 pain: '금융 상품 설명이 AI 비교 답변에 빠짐',
                 benefit: '상품 비교, FAQ를 AI가 참조하는 구조로 최적화',
-                color: 'amber',
+                borderClass: 'border-amber-100 hover:border-amber-300',
+                textClass: 'text-amber-600',
               },
               {
                 emoji: '🏠',
@@ -542,7 +550,8 @@ export default function PromotionLandingPage() {
                 example: '"신혼부부 아파트 추천"',
                 pain: '매물 정보만으로는 AI가 추천하지 않음',
                 benefit: '지역 분석, 투자 가이드를 AI 인용 가능하게 제작',
-                color: 'amber',
+                borderClass: 'border-teal-100 hover:border-teal-300',
+                textClass: 'text-teal-600',
               },
               {
                 emoji: '✈️',
@@ -550,7 +559,8 @@ export default function PromotionLandingPage() {
                 example: '"제주도 3박4일 코스 추천"',
                 pain: '여행 블로그가 AI 여행 플래너에 반영 안 됨',
                 benefit: '코스, 숙소, 맛집을 구조화하여 AI 여행 추천에 포함',
-                color: 'sky',
+                borderClass: 'border-sky-100 hover:border-sky-300',
+                textClass: 'text-sky-600',
               },
               {
                 emoji: '⚖️',
@@ -558,7 +568,8 @@ export default function PromotionLandingPage() {
                 example: '"이혼 절차 알려줘"',
                 pain: '법률 콘텐츠의 전문성이 AI에게 전달되지 않음',
                 benefit: '법률 FAQ, 절차 가이드를 AI가 신뢰하는 형태로 변환',
-                color: 'violet',
+                borderClass: 'border-violet-100 hover:border-violet-300',
+                textClass: 'text-violet-600',
               },
               {
                 emoji: '📦',
@@ -566,16 +577,17 @@ export default function PromotionLandingPage() {
                 example: '"OO 분야 전문 업체 추천"',
                 pain: '어떤 분야든 AI 검색에 빠지면 고객을 잃음',
                 benefit: '업종 맞춤 콘텐츠를 AI 최적화 구조로 자동 생성',
-                color: 'slate',
+                borderClass: 'border-gray-200 hover:border-gray-400',
+                textClass: 'text-gray-600',
               },
             ].map((industry) => (
               <div
                 key={industry.name}
-                className={`group bg-white rounded-2xl p-5 border-2 border-${industry.color}-100 hover:border-${industry.color}-300 hover:shadow-lg transition-all duration-300 cursor-default`}
+                className={`group bg-white rounded-2xl p-5 border-2 ${industry.borderClass} hover:shadow-lg transition-all duration-300 cursor-default`}
               >
                 <div className="text-3xl mb-3">{industry.emoji}</div>
                 <h3 className="text-sm font-bold text-gray-900 mb-2">{industry.name}</h3>
-                <p className={`text-xs font-semibold text-${industry.color}-600 mb-2`}>{industry.example}</p>
+                <p className={`text-xs font-semibold ${industry.textClass} mb-2`}>{industry.example}</p>
                 <div className="hidden group-hover:block transition-all">
                   <div className="mt-2 pt-2 border-t border-gray-100 space-y-2">
                     <div className="flex items-start gap-1.5">
