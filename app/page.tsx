@@ -62,9 +62,6 @@ export default function LandingPage() {
         apiKeyOpen={showApiKey}
       />
 
-      {/* API Key 입력 패널 */}
-      <ApiKeyPanel visible={showApiKey} />
-
       {/* 히어로 섹션 */}
       <section className="relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-indigo-50 to-violet-50" />
@@ -134,6 +131,9 @@ export default function LandingPage() {
           ))}
         </div>
       </section>
+
+      {/* API Key 입력 패널 */}
+      <ApiKeyPanel visible={showApiKey} />
 
       {/* CTA 섹션 */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
