@@ -4,21 +4,51 @@ export const maxDuration = 30;
 export const dynamic = 'force-dynamic';
 
 async function extractPdfText(buffer: Buffer): Promise<string> {
-  // pdfjs-dist를 사용하여 PDF 텍스트 추출
-  const pdfjsLib = await import('pdfjs-dist/legacy/build/pdf.mjs');
+  const { PDFParse } = await import('pdf-parse');
   const uint8Array = new Uint8Array(buffer);
-  const doc = await pdfjsLib.getDocument({ data: uint8Array, useSystemFonts: true }).promise;
-  const pages: string[] = [];
-  for (let i = 1; i <= doc.numPages; i++) {
-    const page = await doc.getPage(i);
-    const content = await page.getTextContent();
-    const pageText = content.items
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      .map((item: any) => item.str || '')
-      .join(' ');
-    if (pageText.trim()) pages.push(pageText);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const parser = new PDFParse(uint8Array) as any;
+  await parser.load();
+  const result = await parser.getText();
+  return result.text || '';
+}
+
+async function extractPptxText(buffer: Buffer): Promise<string> {
+  const JSZip = (await import('jszip')).default;
+  const zip = await JSZip.loadAsync(buffer);
+  const slideFiles = Object.keys(zip.files)
+    .filter(name => name.match(/^ppt\/slides\/slide\d+\.xml$/))
+    .sort((a, b) => {
+      const numA = parseInt(a.match(/slide(\d+)/)?.[1] || '0');
+      const numB = parseInt(b.match(/slide(\d+)/)?.[1] || '0');
+      return numA - numB;
+    });
+  const parts: string[] = [];
+  for (const slidePath of slideFiles) {
+    const xml = await zip.files[slidePath].async('text');
+    // <a:t> 태그에서 텍스트 추출
+    const matches = xml.match(/<a:t>([^<]*)<\/a:t>/g);
+    if (matches) {
+      const slideText = matches
+        .map(m => m.replace(/<\/?a:t>/g, ''))
+        .join(' ');
+      if (slideText.trim()) parts.push(slideText.trim());
+    }
   }
-  return pages.join('\n\n');
+  // 슬라이드 노트도 추출
+  const noteFiles = Object.keys(zip.files)
+    .filter(name => name.match(/^ppt\/notesSlides\/notesSlide\d+\.xml$/));
+  for (const notePath of noteFiles) {
+    const xml = await zip.files[notePath].async('text');
+    const matches = xml.match(/<a:t>([^<]*)<\/a:t>/g);
+    if (matches) {
+      const noteText = matches
+        .map(m => m.replace(/<\/?a:t>/g, ''))
+        .join(' ');
+      if (noteText.trim()) parts.push(`[노트] ${noteText.trim()}`);
+    }
+  }
+  return parts.join('\n\n');
 }
 
 export async function POST(request: NextRequest) {
@@ -54,23 +84,7 @@ export async function POST(request: NextRequest) {
       }
 
       case 'pptx': {
-        const JSZip = (await import('jszip')).default;
-        const zip = await JSZip.loadAsync(buffer);
-        const slideFiles = Object.keys(zip.files)
-          .filter(name => name.match(/^ppt\/slides\/slide\d+\.xml$/))
-          .sort();
-        const parts: string[] = [];
-        for (const slidePath of slideFiles) {
-          const xml = await zip.files[slidePath].async('text');
-          const matches = xml.match(/<a:t>([^<]*)<\/a:t>/g);
-          if (matches) {
-            const slideText = matches
-              .map(m => m.replace(/<\/?a:t>/g, ''))
-              .join(' ');
-            parts.push(slideText);
-          }
-        }
-        text = parts.join('\n\n');
+        text = await extractPptxText(buffer);
         break;
       }
 
@@ -104,6 +118,13 @@ export async function POST(request: NextRequest) {
         );
     }
 
+    if (!text || !text.trim()) {
+      return NextResponse.json(
+        { error: '파일에서 텍스트를 추출할 수 없습니다.' },
+        { status: 400 }
+      );
+    }
+
     const maxLength = 30000;
     if (text.length > maxLength) {
       text = text.substring(0, maxLength) + '\n\n... (텍스트가 잘렸습니다)';
@@ -112,9 +133,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ text, fileName: file.name });
   } catch (error) {
     console.error('File parse error:', error);
-    return NextResponse.json(
-      { error: '파일을 처리하는 중 오류가 발생했습니다.' },
-      { status: 500 }
-    );
+    const message = error instanceof Error ? error.message : '파일을 처리하는 중 오류가 발생했습니다.';
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }
