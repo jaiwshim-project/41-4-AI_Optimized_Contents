@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { createClient } from '@/lib/supabase-client';
 import type { User } from '@supabase/supabase-js';
@@ -11,9 +11,15 @@ interface HeaderProps {
   onToggleApiKey?: () => void;
   apiKeyOpen?: boolean;
 }
-
+const navItems = [
+  { href: '/analyze', label: '콘텐츠 분석', icon: 'M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4', activeStyle: 'bg-gradient-to-r from-emerald-600 to-green-600 text-white border-emerald-300', idleStyle: 'text-emerald-700 border-emerald-300 hover:bg-emerald-50 hover:border-emerald-400 hover:shadow-md' },
+  { href: '/generate', label: '콘텐츠 생성', icon: 'M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z', activeStyle: 'bg-gradient-to-r from-purple-600 to-violet-600 text-white border-purple-300', idleStyle: 'text-purple-700 border-purple-300 hover:bg-purple-50 hover:border-purple-400 hover:shadow-md' },
+  { href: '/keyword-analysis', label: '키워드 분석', icon: 'M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z', activeStyle: 'bg-gradient-to-r from-cyan-600 to-teal-600 text-white border-cyan-300', idleStyle: 'text-cyan-700 border-cyan-300 hover:bg-cyan-50 hover:border-cyan-400 hover:shadow-md' },
+  { href: '/series', label: '시리즈 기획', icon: 'M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10', activeStyle: 'bg-gradient-to-r from-amber-600 to-orange-600 text-white border-amber-300', idleStyle: 'text-amber-700 border-amber-300 hover:bg-amber-50 hover:border-amber-400 hover:shadow-md' },
+];
 
 export default function Header({ showApiKeyButton = false, onToggleApiKey, apiKeyOpen }: HeaderProps) {
+  const pathname = usePathname();
   const router = useRouter();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [user, setUser] = useState<User | null>(null);
@@ -52,6 +58,29 @@ export default function Header({ showApiKeyButton = false, onToggleApiKey, apiKe
             </div>
             <span className="sm:hidden text-sm font-bold text-gray-900">AIO/GEO</span>
           </Link>
+
+          {/* 데스크톱 중앙 네비게이션 */}
+          <nav className="hidden md:flex items-center gap-1.5 bg-pink-50 rounded-xl p-1 border-2 border-pink-200">
+            {navItems.map((item) => {
+              const isActive = pathname === item.href;
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-semibold rounded-lg transition-all duration-200 border-2 ${
+                    isActive
+                      ? `${item.activeStyle} shadow-sm`
+                      : `${item.idleStyle} hover:scale-[1.03]`
+                  }`}
+                >
+                  <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={item.icon} />
+                  </svg>
+                  {item.label}
+                </Link>
+              );
+            })}
+          </nav>
 
           {/* 데스크톱 오른쪽 버튼 */}
           <div className="hidden md:flex items-center gap-1.5">
@@ -129,6 +158,27 @@ export default function Header({ showApiKeyButton = false, onToggleApiKey, apiKe
         {/* 모바일 메뉴 */}
         {mobileOpen && (
           <div className="md:hidden mt-3 pb-2 border-t border-green-200 pt-3 space-y-2">
+            {navItems.map((item) => {
+              const isActive = pathname === item.href;
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  onClick={() => setMobileOpen(false)}
+                  className={`flex items-center gap-2 px-4 py-2.5 text-sm font-semibold rounded-xl transition-all border-2 ${
+                    isActive
+                      ? `${item.activeStyle} shadow-sm`
+                      : `${item.idleStyle}`
+                  }`}
+                >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={item.icon} />
+                  </svg>
+                  {item.label}
+                </Link>
+              );
+            })}
+
             {/* 모바일 로그인/로그아웃 */}
             <div className="border-t border-green-200 pt-2 mt-1">
               {user ? (
