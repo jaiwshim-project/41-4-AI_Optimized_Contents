@@ -55,7 +55,7 @@ export async function GET(request: NextRequest) {
       const usage = usageMap.get(user.id) || {};
       return {
         id: user.id,
-        name: user.user_metadata?.full_name || '',
+        name: user.user_metadata?.full_name || user.user_metadata?.name || user.user_metadata?.user_name || user.user_metadata?.preferred_username || '',
         email: user.email || '',
         created_at: user.created_at,
         last_sign_in_at: user.last_sign_in_at,
@@ -79,7 +79,7 @@ export async function GET(request: NextRequest) {
   }
 }
 
-// POST: 회원 등급 변경
+// POST: 회원 등급 변경 또는 이름 수정
 export async function POST(request: NextRequest) {
   const password = request.headers.get('x-admin-password');
   if (password !== ADMIN_PASSWORD) {
@@ -87,27 +87,38 @@ export async function POST(request: NextRequest) {
   }
 
   try {
-    const { userId, plan } = await request.json();
+    const body = await request.json();
+    const { userId, plan, name } = body;
 
-    if (!userId || !plan) {
-      return NextResponse.json({ error: 'userId와 plan이 필요합니다.' }, { status: 400 });
-    }
-
-    if (!['admin', 'free', 'pro', 'max'].includes(plan)) {
-      return NextResponse.json({ error: '유효하지 않은 플랜입니다.' }, { status: 400 });
+    if (!userId) {
+      return NextResponse.json({ error: 'userId가 필요합니다.' }, { status: 400 });
     }
 
     const supabase = getAdminClient();
 
-    // upsert: 있으면 업데이트, 없으면 생성
-    const { error } = await supabase
-      .from('user_plans')
-      .upsert(
-        { user_id: userId, plan, created_at: new Date().toISOString() },
-        { onConflict: 'user_id' }
-      );
+    // 이름 수정
+    if (name !== undefined) {
+      const { error: updateError } = await supabase.auth.admin.updateUserById(userId, {
+        user_metadata: { full_name: name },
+      });
+      if (updateError) throw updateError;
+    }
 
-    if (error) throw error;
+    // 등급 변경
+    if (plan) {
+      if (!['admin', 'free', 'pro', 'max'].includes(plan)) {
+        return NextResponse.json({ error: '유효하지 않은 플랜입니다.' }, { status: 400 });
+      }
+
+      const { error } = await supabase
+        .from('user_plans')
+        .upsert(
+          { user_id: userId, plan, created_at: new Date().toISOString() },
+          { onConflict: 'user_id' }
+        );
+
+      if (error) throw error;
+    }
 
     return NextResponse.json({ success: true });
   } catch (err) {

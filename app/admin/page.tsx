@@ -48,6 +48,8 @@ export default function AdminPage() {
   const [error, setError] = useState('');
   const [updatingUser, setUpdatingUser] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
+  const [editingName, setEditingName] = useState<string | null>(null);
+  const [editNameValue, setEditNameValue] = useState('');
 
   const handleLogin = () => {
     if (password === '96331425') {
@@ -102,6 +104,32 @@ export default function AdminPage() {
       alert(err instanceof Error ? err.message : '오류 발생');
     } finally {
       setUpdatingUser(null);
+    }
+  };
+
+  const handleNameChange = async (userId: string, newName: string) => {
+    setUpdatingUser(userId);
+    try {
+      const res = await fetch('/api/admin/users', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-admin-password': adminPassword,
+        },
+        body: JSON.stringify({ userId, name: newName }),
+      });
+      if (!res.ok) {
+        const data = await res.json();
+        throw new Error(data.error || '변경 실패');
+      }
+      setUsers(prev =>
+        prev.map(u => (u.id === userId ? { ...u, name: newName } : u))
+      );
+    } catch (err) {
+      alert(err instanceof Error ? err.message : '오류 발생');
+    } finally {
+      setUpdatingUser(null);
+      setEditingName(null);
     }
   };
 
@@ -275,7 +303,45 @@ export default function AdminPage() {
                     return (
                       <tr key={user.id} className="border-b border-gray-100 hover:bg-gray-50/50 transition-colors">
                         <td className="px-4 py-3">
-                          <span className="font-medium text-gray-800">{user.name || '-'}</span>
+                          {editingName === user.id ? (
+                            <div className="flex items-center gap-1">
+                              <input
+                                type="text"
+                                value={editNameValue}
+                                onChange={(e) => setEditNameValue(e.target.value)}
+                                onKeyDown={(e) => {
+                                  if (e.key === 'Enter') handleNameChange(user.id, editNameValue);
+                                  if (e.key === 'Escape') setEditingName(null);
+                                }}
+                                className="w-24 px-2 py-1 border border-gray-300 rounded text-xs focus:outline-none focus:ring-1 focus:ring-indigo-400"
+                                autoFocus
+                              />
+                              <button
+                                onClick={() => handleNameChange(user.id, editNameValue)}
+                                className="text-emerald-600 hover:text-emerald-700"
+                              >
+                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                                </svg>
+                              </button>
+                              <button
+                                onClick={() => setEditingName(null)}
+                                className="text-gray-400 hover:text-gray-600"
+                              >
+                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                              </button>
+                            </div>
+                          ) : (
+                            <span
+                              className="font-medium text-gray-800 cursor-pointer hover:text-indigo-600 transition-colors"
+                              onClick={() => { setEditingName(user.id); setEditNameValue(user.name || ''); }}
+                              title="클릭하여 이름 수정"
+                            >
+                              {user.name || <span className="text-gray-400 italic">이름 없음</span>}
+                            </span>
+                          )}
                         </td>
                         <td className="px-4 py-3">
                           <span className="text-gray-600 text-xs">{user.email}</span>
