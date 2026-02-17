@@ -60,7 +60,7 @@ export default function Header({ showApiKeyButton = false, onToggleApiKey, apiKe
           </Link>
 
           {/* 데스크톱 중앙 네비게이션 */}
-          <nav className="hidden md:flex items-center gap-1.5 bg-pink-50 rounded-xl p-1 border-2 border-pink-200">
+          <nav className="hidden md:flex items-center gap-1.5">
             {navItems.map((item) => {
               const isActive = pathname === item.href;
               return (
