@@ -16,6 +16,8 @@ export default function DashboardDetailPage() {
   const [loading, setLoading] = useState(true);
   const [revisionId, setRevisionId] = useState<string | null>(null);
   const [copiedBlog, setCopiedBlog] = useState(false);
+  const [copiedTitle, setCopiedTitle] = useState(false);
+  const [copiedContent, setCopiedContent] = useState(false);
   const contentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -64,6 +66,41 @@ export default function DashboardDetailPage() {
       setCopiedBlog(true);
       setTimeout(() => setCopiedBlog(false), 2000);
     }
+  };
+
+  const handleCopyTitle = async () => {
+    if (!item) return;
+    const isGen = item.type === 'generation';
+    const title = isGen
+      ? (revisionId
+          ? item.revisions?.find(r => r.id === revisionId)?.result.title || item.title
+          : item.generateResult?.title || item.title)
+      : item.title;
+    await navigator.clipboard.writeText(title);
+    setCopiedTitle(true);
+    setTimeout(() => setCopiedTitle(false), 2000);
+  };
+
+  const handleCopyContent = async () => {
+    if (!item) return;
+    const isGen = item.type === 'generation';
+    const text = isGen
+      ? (revisionId
+          ? item.revisions?.find(r => r.id === revisionId)?.result.content
+          : item.generateResult?.content)
+      : item.originalContent;
+    const tags = isGen
+      ? (revisionId
+          ? item.revisions?.find(r => r.id === revisionId)?.result.hashtags
+          : item.generateResult?.hashtags)
+      : undefined;
+    let copyText = text || '';
+    if (tags && tags.length > 0) {
+      copyText += '\n\n' + tags.map(t => t.startsWith('#') ? t : `#${t}`).join(' ');
+    }
+    await navigator.clipboard.writeText(copyText);
+    setCopiedContent(true);
+    setTimeout(() => setCopiedContent(false), 2000);
   };
 
   if (loading || !item) {
@@ -144,6 +181,34 @@ export default function DashboardDetailPage() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={copiedBlog ? 'M5 13l4 4L19 7' : 'M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z'} />
                 </svg>
                 {copiedBlog ? '복사됨!' : '블로그 붙여넣기용 복사'}
+              </button>
+              {/* 제목 복사 */}
+              <button
+                onClick={handleCopyTitle}
+                className={`inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl transition-all duration-200 border-2 hover:shadow-md hover:scale-[1.03] ${
+                  copiedTitle
+                    ? 'bg-emerald-500 text-white border-emerald-300'
+                    : 'border-amber-300 bg-amber-50 text-amber-700 hover:bg-amber-100'
+                }`}
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={copiedTitle ? 'M5 13l4 4L19 7' : 'M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z'} />
+                </svg>
+                {copiedTitle ? '복사됨!' : '제목 복사'}
+              </button>
+              {/* 본문 복사 */}
+              <button
+                onClick={handleCopyContent}
+                className={`inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl transition-all duration-200 border-2 hover:shadow-md hover:scale-[1.03] ${
+                  copiedContent
+                    ? 'bg-emerald-500 text-white border-emerald-300'
+                    : 'border-sky-300 bg-sky-50 text-sky-700 hover:bg-sky-100'
+                }`}
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={copiedContent ? 'M5 13l4 4L19 7' : 'M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z'} />
+                </svg>
+                {copiedContent ? '복사됨!' : '본문 복사'}
               </button>
               {/* 수정 이력 선택 */}
               {isGeneration && item.revisions && item.revisions.length > 0 && (
