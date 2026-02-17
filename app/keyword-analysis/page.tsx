@@ -1,8 +1,10 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import { canUseFeature, incrementUsage } from '@/lib/usage';
 
 interface AIFactor {
   factor: string;
@@ -88,6 +90,14 @@ export default function KeywordAnalysisPage() {
     setResult(null);
 
     try {
+      // 사용량 체크
+      const usage = await canUseFeature('keyword');
+      if (!usage.allowed) {
+        setError(`이번 달 키워드 분석 사용 횟수(${usage.limit}회)를 모두 소진했습니다. 요금제를 업그레이드하세요.`);
+        setLoading(false);
+        return;
+      }
+
       const response = await fetch('/api/keyword-analysis', {
         method: 'POST',
         headers: {
@@ -105,6 +115,7 @@ export default function KeywordAnalysisPage() {
       }
 
       const data = await response.json();
+      await incrementUsage('keyword');
       setResult(data);
     } catch (err) {
       setError(err instanceof Error ? err.message : '알 수 없는 오류가 발생했습니다.');
@@ -192,6 +203,11 @@ export default function KeywordAnalysisPage() {
           {error && (
             <div className="mt-4 p-4 bg-red-50 border-2 border-red-200 rounded-lg">
               <p className="text-red-700 font-semibold">{error}</p>
+              {error.includes('소진했습니다') && (
+                <Link href="/pricing" className="inline-block mt-2 text-sm font-semibold text-indigo-600 hover:text-indigo-800 underline">
+                  요금제 확인하기 &rarr;
+                </Link>
+              )}
             </div>
           )}
         </div>

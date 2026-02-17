@@ -2,12 +2,14 @@
 
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import ApiKeyPanel from '@/components/ApiKeyPanel';
 import type { ContentCategory } from '@/lib/types';
 import { saveHistoryItem, generateId } from '@/lib/history';
 import { getProfiles, saveProfile, deleteProfile as deleteProfileSupabase, type Profile, type ProfileData } from '@/lib/supabase-storage';
+import { canUseFeature, incrementUsage } from '@/lib/usage';
 
 const categories: { id: ContentCategory; label: string; description: string; icon: string; color: string; bgIdle: string }[] = [
   {
@@ -348,6 +350,14 @@ export default function GeneratePage() {
     setError(null);
 
     try {
+      // 사용량 체크
+      const usage = await canUseFeature('generate');
+      if (!usage.allowed) {
+        setError(`이번 달 콘텐츠 생성 사용 횟수(${usage.limit}회)를 모두 소진했습니다. 요금제를 업그레이드하세요.`);
+        setIsGenerating(false);
+        return;
+      }
+
       saveBusinessInfo();
       const notes = buildAdditionalNotes();
 
@@ -391,6 +401,7 @@ export default function GeneratePage() {
             generateResult: r, topic: topic.trim(), tone: r.toneName, revisions: [],
           });
         }
+        await incrementUsage('generate');
         // 첫 번째 결과를 메인으로 저장
         const { saveGenerateResult } = await import('@/lib/supabase-storage');
         const mainResult = { ...results[0], abVersions: results };
@@ -420,6 +431,7 @@ export default function GeneratePage() {
         }
 
         const data = await response.json();
+        await incrementUsage('generate');
         const now = new Date();
         const historyId = generateId();
         await saveHistoryItem({
@@ -1080,7 +1092,14 @@ export default function GeneratePage() {
                 <svg className="w-5 h-5 text-red-500 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
-                <p className="text-sm text-red-700">{error}</p>
+                <div>
+                  <p className="text-sm text-red-700">{error}</p>
+                  {error.includes('소진했습니다') && (
+                    <Link href="/pricing" className="inline-block mt-2 text-sm font-semibold text-indigo-600 hover:text-indigo-800 underline">
+                      요금제 확인하기 &rarr;
+                    </Link>
+                  )}
+                </div>
               </div>
             )}
 

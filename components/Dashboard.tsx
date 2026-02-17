@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 import type { AnalysisResponse, AnalysisTab } from '@/lib/types';
 import ContentInput from './ContentInput';
 import ScoreOverview from './ScoreOverview';
@@ -13,6 +14,7 @@ import Header from './Header';
 import Footer from './Footer';
 import ApiKeyPanel from './ApiKeyPanel';
 import { saveHistoryItem, generateId } from '@/lib/history';
+import { canUseFeature, incrementUsage } from '@/lib/usage';
 
 const tabs: { id: AnalysisTab; label: string }[] = [
   { id: 'overview', label: '종합 개요' },
@@ -37,6 +39,14 @@ export default function Dashboard() {
     setError(null);
 
     try {
+      // 사용량 체크
+      const usage = await canUseFeature('analyze');
+      if (!usage.allowed) {
+        setError(`이번 달 콘텐츠 분석 사용 횟수(${usage.limit}회)를 모두 소진했습니다. 요금제를 업그레이드하세요.`);
+        setIsAnalyzing(false);
+        return;
+      }
+
       const response = await fetch('/api/analyze', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -58,6 +68,8 @@ export default function Dashboard() {
       setOriginalContent(content);
       setTargetKeyword(targetKeyword);
       setActiveTab('overview');
+      // 사용량 증가
+      await incrementUsage('analyze');
       // 이력 저장
       const now = new Date();
       const keywords = data.keywords?.primaryKeywords?.map((k: { keyword: string }) => k.keyword).join(', ') || '';
@@ -100,7 +112,14 @@ export default function Dashboard() {
             <svg className="w-5 h-5 text-red-500 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
-            <p className="text-sm text-red-700">{error}</p>
+            <div>
+              <p className="text-sm text-red-700">{error}</p>
+              {error.includes('소진했습니다') && (
+                <Link href="/pricing" className="inline-block mt-2 text-sm font-semibold text-indigo-600 hover:text-indigo-800 underline">
+                  요금제 확인하기 &rarr;
+                </Link>
+              )}
+            </div>
           </div>
         )}
 
