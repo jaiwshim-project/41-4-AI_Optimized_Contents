@@ -116,10 +116,14 @@ export default function GeneratePage() {
     website: '',
   });
   const [bizSaved, setBizSaved] = useState(false);
+  const [showProfileList, setShowProfileList] = useState(false);
+  const [savedProfiles, setSavedProfiles] = useState<{ name: string; data: typeof businessInfo; savedAt: string }[]>([]);
+  const [profileSaveMsg, setProfileSaveMsg] = useState('');
   const contentRef = useRef<HTMLDivElement>(null);
   const saveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const profileListRef = useRef<HTMLDivElement>(null);
 
-  // localStorage에서 비즈니스 정보 로드
+  // localStorage에서 비즈니스 정보 + 프로필 목록 로드
   useEffect(() => {
     const saved = localStorage.getItem('aio-business-info');
     if (saved) {
@@ -128,7 +132,55 @@ export default function GeneratePage() {
         setBusinessInfo(prev => ({ ...prev, ...parsed, newStrength: '' }));
       } catch {}
     }
+    const profiles = localStorage.getItem('aio-business-profiles');
+    if (profiles) {
+      try { setSavedProfiles(JSON.parse(profiles)); } catch {}
+    }
   }, []);
+
+  // 프로필 목록 외부 클릭 시 닫기
+  useEffect(() => {
+    if (!showProfileList) return;
+    const handler = (e: MouseEvent) => {
+      if (profileListRef.current && !profileListRef.current.contains(e.target as Node)) {
+        setShowProfileList(false);
+      }
+    };
+    document.addEventListener('mousedown', handler);
+    return () => document.removeEventListener('mousedown', handler);
+  }, [showProfileList]);
+
+  const saveAsProfile = () => {
+    const name = businessInfo.companyName.trim() || '이름 없음';
+    const now = new Date();
+    const savedAt = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
+    const profile = { name, data: { ...businessInfo, newStrength: '' }, savedAt };
+    const existing = savedProfiles.findIndex(p => p.name === name);
+    let updated: typeof savedProfiles;
+    if (existing >= 0) {
+      updated = [...savedProfiles];
+      updated[existing] = profile;
+    } else {
+      updated = [profile, ...savedProfiles].slice(0, 10);
+    }
+    setSavedProfiles(updated);
+    localStorage.setItem('aio-business-profiles', JSON.stringify(updated));
+    setProfileSaveMsg(`"${name}" 저장 완료`);
+    setTimeout(() => setProfileSaveMsg(''), 2000);
+  };
+
+  const loadProfile = (profile: typeof savedProfiles[0]) => {
+    setBusinessInfo({ ...profile.data, newStrength: '' });
+    autoSave({ ...profile.data, newStrength: '' });
+    setShowProfileList(false);
+  };
+
+  const deleteProfile = (index: number, e: React.MouseEvent) => {
+    e.stopPropagation();
+    const updated = savedProfiles.filter((_, i) => i !== index);
+    setSavedProfiles(updated);
+    localStorage.setItem('aio-business-profiles', JSON.stringify(updated));
+  };
 
   // 변경 시 자동 저장 (1초 디바운스)
   const autoSave = useCallback((info: typeof businessInfo) => {
@@ -444,6 +496,105 @@ export default function GeneratePage() {
 
               {showBusinessInfo && (
                 <div className="px-6 pb-6 space-y-5 border-t border-teal-100 bg-gradient-to-b from-teal-50/30 to-white">
+                  {/* 프로필 저장/불러오기 */}
+                  <div className="pt-4 flex items-center justify-center gap-3 relative">
+                    {/* 저장 정보 가져오기 */}
+                    <div className="relative" ref={profileListRef}>
+                      <button
+                        type="button"
+                        onClick={() => setShowProfileList(!showProfileList)}
+                        className={`inline-flex items-center gap-2 px-4 py-2.5 text-sm font-semibold rounded-xl transition-all duration-200 border-2 hover:shadow-lg hover:scale-105 ${
+                          showProfileList
+                            ? 'bg-gradient-to-r from-indigo-500 to-violet-500 text-white border-indigo-300 shadow-md'
+                            : 'bg-white text-indigo-700 border-indigo-300 hover:bg-indigo-50'
+                        }`}
+                      >
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                        </svg>
+                        저장 정보 가져오기
+                        {savedProfiles.length > 0 && (
+                          <span className={`ml-1 w-5 h-5 rounded-full text-xs font-bold flex items-center justify-center ${showProfileList ? 'bg-white/30 text-white' : 'bg-indigo-100 text-indigo-600'}`}>
+                            {savedProfiles.length}
+                          </span>
+                        )}
+                      </button>
+
+                      {/* 프로필 드롭다운 */}
+                      {showProfileList && (
+                        <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-80 bg-white rounded-xl shadow-xl border-2 border-indigo-200 z-50 overflow-hidden">
+                          <div className="px-4 py-3 bg-gradient-to-r from-indigo-50 to-violet-50 border-b border-indigo-100">
+                            <p className="text-xs font-semibold text-indigo-700">저장된 비즈니스 프로필</p>
+                          </div>
+                          {savedProfiles.length === 0 ? (
+                            <div className="px-4 py-8 text-center">
+                              <svg className="w-8 h-8 text-gray-300 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
+                              </svg>
+                              <p className="text-sm text-gray-400">저장된 프로필이 없습니다</p>
+                              <p className="text-xs text-gray-300 mt-1">아래 &quot;현재 정보 저장&quot; 버튼으로 저장하세요</p>
+                            </div>
+                          ) : (
+                            <div className="max-h-64 overflow-y-auto">
+                              {savedProfiles.map((profile, i) => (
+                                <button
+                                  key={i}
+                                  type="button"
+                                  onClick={() => loadProfile(profile)}
+                                  className="w-full px-4 py-3 text-left hover:bg-indigo-50 transition-all duration-150 border-b border-gray-100 last:border-b-0 group flex items-center justify-between"
+                                >
+                                  <div className="flex items-center gap-3 min-w-0">
+                                    <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-400 to-violet-500 flex items-center justify-center shrink-0 shadow-sm">
+                                      <span className="text-white text-xs font-bold">{profile.name.charAt(0)}</span>
+                                    </div>
+                                    <div className="min-w-0">
+                                      <p className="text-sm font-semibold text-gray-800 truncate">{profile.name}</p>
+                                      <p className="text-[10px] text-gray-400 truncate">
+                                        {[profile.data.industry, profile.data.mainProduct].filter(Boolean).join(' · ') || '정보 없음'}
+                                        <span className="ml-2">{profile.savedAt}</span>
+                                      </p>
+                                    </div>
+                                  </div>
+                                  <div className="flex items-center gap-1.5 shrink-0 ml-2">
+                                    <span className="text-[10px] text-indigo-500 font-medium opacity-0 group-hover:opacity-100 transition-opacity">선택</span>
+                                    <button
+                                      type="button"
+                                      onClick={(e) => deleteProfile(i, e)}
+                                      className="w-6 h-6 rounded-md flex items-center justify-center text-gray-300 hover:text-red-500 hover:bg-red-50 transition-all opacity-0 group-hover:opacity-100"
+                                    >
+                                      <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                      </svg>
+                                    </button>
+                                  </div>
+                                </button>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+                      )}
+                    </div>
+
+                    {/* 현재 정보 저장 */}
+                    <button
+                      type="button"
+                      onClick={saveAsProfile}
+                      className="inline-flex items-center gap-2 px-4 py-2.5 text-sm font-semibold rounded-xl transition-all duration-200 border-2 bg-white text-teal-700 border-teal-300 hover:bg-teal-50 hover:shadow-lg hover:scale-105"
+                    >
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
+                      </svg>
+                      현재 정보 저장
+                    </button>
+
+                    {/* 저장 완료 메시지 */}
+                    {profileSaveMsg && (
+                      <span className="absolute -bottom-6 left-1/2 -translate-x-1/2 text-[11px] font-medium text-emerald-600 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200 whitespace-nowrap animate-pulse">
+                        {profileSaveMsg}
+                      </span>
+                    )}
+                  </div>
+
                   {/* 회사/브랜드 정보 */}
                   <div className="pt-5 bg-white/80 rounded-xl p-4 border border-teal-100 shadow-sm">
                     <h3 className="text-sm font-semibold text-teal-800 mb-3 flex items-center gap-2">
