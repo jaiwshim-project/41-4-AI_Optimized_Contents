@@ -1,9 +1,9 @@
 import Anthropic from '@anthropic-ai/sdk';
 import type { AnalysisRequest, AnalysisResponse, OptimizeRequest, OptimizeResponse, GenerateRequest, GenerateResponse } from './types';
 
-function getClient() {
+function getClient(apiKey?: string) {
   return new Anthropic({
-    apiKey: process.env.ANTHROPIC_API_KEY,
+    apiKey: apiKey || process.env.ANTHROPIC_API_KEY,
   });
 }
 
@@ -80,10 +80,10 @@ const SYSTEM_PROMPT = `당신은 AIO(AI Overview)와 GEO(Generative Engine Optim
 - 키워드: 주요 키워드 추출, 밀도, 관련 키워드, 롱테일 기회
 - 제안: 우선순위별 구체적 개선 방안 (before/after 포함)`;
 
-export async function analyzeContent(request: AnalysisRequest): Promise<AnalysisResponse> {
+export async function analyzeContent(request: AnalysisRequest, apiKey?: string): Promise<AnalysisResponse> {
   const userMessage = buildUserMessage(request);
 
-  const message = await getClient().messages.create({
+  const message = await getClient(apiKey).messages.create({
     model: 'claude-sonnet-4-5-20250929',
     max_tokens: 4096,
     system: SYSTEM_PROMPT,
@@ -185,7 +185,7 @@ const OPTIMIZE_SYSTEM_PROMPT = `당신은 AIO(AI Overview)와 GEO(Generative Eng
   }
 }`;
 
-export async function optimizeContent(request: OptimizeRequest): Promise<OptimizeResponse> {
+export async function optimizeContent(request: OptimizeRequest, apiKey?: string): Promise<OptimizeResponse> {
   const recommendationsSummary = request.recommendations
     .map(r => `[${r.priority}] ${r.title}: ${r.description}`)
     .join('\n');
@@ -206,7 +206,7 @@ ${request.originalContent}
 
 위 개선 제안을 모두 반영하여 콘텐츠를 최적화해주세요. 원본의 핵심 의미는 유지하되, AI 검색엔진이 이해하고 인용하기 쉬운 형태로 변환해주세요.`;
 
-  const message = await getClient().messages.create({
+  const message = await getClient(apiKey).messages.create({
     model: 'claude-sonnet-4-5-20250929',
     max_tokens: 8192,
     system: OPTIMIZE_SYSTEM_PROMPT,
@@ -271,7 +271,7 @@ hashtags 규칙:
 - 반드시 # 기호로 시작
 - 한국어 태그와 영어 태그를 적절히 혼합`;
 
-export async function generateContent(request: GenerateRequest): Promise<GenerateResponse> {
+export async function generateContent(request: GenerateRequest, apiKey?: string): Promise<GenerateResponse> {
   const categoryLabel = CATEGORY_LABELS[request.category] || request.category;
   const toneDesc = request.tone || '전문적이고 신뢰감 있는';
 
@@ -290,7 +290,7 @@ ${request.additionalNotes ? `\n${request.additionalNotes}\n` : ''}
 AIO/GEO에 최적화된 고품질 콘텐츠를 마크다운 형식으로 작성해주세요.
 콘텐츠는 한국어로 작성하며, 최소 1000자 이상이어야 합니다.`;
 
-  const message = await getClient().messages.create({
+  const message = await getClient(apiKey).messages.create({
     model: 'claude-sonnet-4-5-20250929',
     max_tokens: 16384,
     system: GENERATE_SYSTEM_PROMPT,

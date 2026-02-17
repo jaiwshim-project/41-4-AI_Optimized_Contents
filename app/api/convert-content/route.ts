@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import Anthropic from '@anthropic-ai/sdk';
+import { getApiKey, withCors, corsOptionsResponse } from '@/lib/api-auth';
 
 export const maxDuration = 60;
 
@@ -58,22 +59,31 @@ const channelPrompts: Record<string, string> = {
 - 전체 길이: 300자 이내`,
 };
 
+export async function OPTIONS() {
+  return corsOptionsResponse();
+}
+
 export async function POST(request: NextRequest) {
   try {
+    const apiKey = getApiKey(request);
     const { content, channel, title } = await request.json();
+
     if (!content?.trim() || !channel) {
-      return NextResponse.json({ error: '콘텐츠와 채널을 지정해주세요.' }, { status: 400 });
+      return withCors(NextResponse.json({ error: '콘텐츠와 채널을 지정해주세요.' }, { status: 400 }));
     }
-    if (!process.env.ANTHROPIC_API_KEY) {
-      return NextResponse.json({ error: 'API 키가 설정되지 않았습니다.' }, { status: 400 });
+    if (!apiKey) {
+      return withCors(NextResponse.json(
+        { error: 'API 키가 필요합니다. X-API-Key 헤더 또는 서버에 ANTHROPIC_API_KEY를 설정하세요.' },
+        { status: 401 }
+      ));
     }
 
     const prompt = channelPrompts[channel];
     if (!prompt) {
-      return NextResponse.json({ error: '지원하지 않는 채널입니다.' }, { status: 400 });
+      return withCors(NextResponse.json({ error: '지원하지 않는 채널입니다.' }, { status: 400 }));
     }
 
-    const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
+    const client = new Anthropic({ apiKey });
 
     const response = await client.messages.create({
       model: 'claude-sonnet-4-20250514',
@@ -95,12 +105,12 @@ ${content.substring(0, 5000)}
     });
 
     const text = response.content[0].type === 'text' ? response.content[0].text : '';
-    return NextResponse.json({ result: text, channel });
+    return withCors(NextResponse.json({ result: text, channel }));
   } catch (error) {
     console.error('Content conversion error:', error);
-    return NextResponse.json(
+    return withCors(NextResponse.json(
       { error: error instanceof Error ? error.message : '콘텐츠 변환 중 오류가 발생했습니다.' },
       { status: 500 }
-    );
+    ));
   }
 }

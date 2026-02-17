@@ -1,19 +1,29 @@
 import { NextRequest, NextResponse } from 'next/server';
 import Anthropic from '@anthropic-ai/sdk';
+import { getApiKey, withCors, corsOptionsResponse } from '@/lib/api-auth';
 
 export const maxDuration = 60;
 
+export async function OPTIONS() {
+  return corsOptionsResponse();
+}
+
 export async function POST(request: NextRequest) {
   try {
+    const apiKey = getApiKey(request);
     const { keyword, industry } = await request.json();
+
     if (!keyword?.trim()) {
-      return NextResponse.json({ error: '키워드를 입력해주세요.' }, { status: 400 });
+      return withCors(NextResponse.json({ error: '키워드를 입력해주세요.' }, { status: 400 }));
     }
-    if (!process.env.ANTHROPIC_API_KEY) {
-      return NextResponse.json({ error: 'API 키가 설정되지 않았습니다.' }, { status: 400 });
+    if (!apiKey) {
+      return withCors(NextResponse.json(
+        { error: 'API 키가 필요합니다. X-API-Key 헤더 또는 서버에 ANTHROPIC_API_KEY를 설정하세요.' },
+        { status: 401 }
+      ));
     }
 
-    const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
+    const client = new Anthropic({ apiKey });
 
     const response = await client.messages.create({
       model: 'claude-sonnet-4-20250514',
@@ -57,16 +67,16 @@ ${industry ? `산업 분야: ${industry}` : ''}
     const text = response.content[0].type === 'text' ? response.content[0].text : '';
     const jsonMatch = text.match(/\{[\s\S]*\}/);
     if (!jsonMatch) {
-      return NextResponse.json({ error: '분석 결과를 파싱할 수 없습니다.' }, { status: 500 });
+      return withCors(NextResponse.json({ error: '분석 결과를 파싱할 수 없습니다.' }, { status: 500 }));
     }
 
     const result = JSON.parse(jsonMatch[0]);
-    return NextResponse.json(result);
+    return withCors(NextResponse.json(result));
   } catch (error) {
     console.error('Keyword analysis error:', error);
-    return NextResponse.json(
+    return withCors(NextResponse.json(
       { error: error instanceof Error ? error.message : '키워드 분석 중 오류가 발생했습니다.' },
       { status: 500 }
-    );
+    ));
   }
 }
