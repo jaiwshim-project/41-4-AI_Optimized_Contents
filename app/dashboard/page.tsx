@@ -26,7 +26,7 @@ export default function DashboardPage() {
   const filteredHistory = history.filter(h => h.type === activeTab);
 
   const handleDelete = async (id: string) => {
-    deleteHistoryItem(id);
+    await deleteHistoryItem(id);
     const updated = await getHistoryAsync();
     setHistory(updated);
   };

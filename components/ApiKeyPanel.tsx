@@ -34,10 +34,8 @@ export default function ApiKeyPanel({ visible }: ApiKeyPanelProps) {
     setGeminiKeyStatus('none');
     try {
       const key = geminiKeyInput.trim();
-      // Supabase에 저장 (폴백: localStorage)
+      // Supabase에 저장
       await saveApiKey('gemini', key);
-      // localStorage에도 저장 (기존 코드 호환 - generate-images에서 읽음)
-      localStorage.setItem('gemini-api-key', key);
       // 서버에도 전송 (현재 세션용)
       const res = await fetch('/api/set-api-key', {
         method: 'POST',
@@ -60,7 +58,6 @@ export default function ApiKeyPanel({ visible }: ApiKeyPanelProps) {
 
   const handleDeleteGeminiKey = async () => {
     await deleteApiKey('gemini');
-    localStorage.removeItem('gemini-api-key');
     setHasGeminiKey(false);
     setGeminiKeyStatus('saved');
     setGeminiKeyMessage('Gemini API Key가 삭제되었습니다.');

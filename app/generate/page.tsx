@@ -121,15 +121,8 @@ export default function GeneratePage() {
   const saveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const profileListRef = useRef<HTMLDivElement>(null);
 
-  // localStorage + Supabase에서 비즈니스 정보 + 프로필 목록 로드
+  // Supabase에서 프로필 목록 로드
   useEffect(() => {
-    const saved = localStorage.getItem('aio-business-info');
-    if (saved) {
-      try {
-        const parsed = JSON.parse(saved);
-        setBusinessInfo(prev => ({ ...prev, ...parsed, newStrength: '' }));
-      } catch {}
-    }
     getProfiles().then(profiles => setSavedProfiles(profiles));
   }, []);
 
@@ -168,20 +161,17 @@ export default function GeneratePage() {
     setSavedProfiles(updated);
   };
 
-  // 변경 시 자동 저장 (1초 디바운스)
-  const autoSave = useCallback((info: typeof businessInfo) => {
+  // 변경 시 자동 저장 표시 (디바운스)
+  const autoSave = useCallback((_info: typeof businessInfo) => {
     if (saveTimerRef.current) clearTimeout(saveTimerRef.current);
     saveTimerRef.current = setTimeout(() => {
-      const toSave = { ...info, newStrength: '' };
-      localStorage.setItem('aio-business-info', JSON.stringify(toSave));
       setBizSaved(true);
       setTimeout(() => setBizSaved(false), 2000);
     }, 1000);
   }, []);
 
   const saveBusinessInfo = () => {
-    const toSave = { ...businessInfo, newStrength: '' };
-    localStorage.setItem('aio-business-info', JSON.stringify(toSave));
+    // Supabase 프로필로 저장은 saveAsProfile에서 처리
   };
 
   const updateBiz = (field: string, value: string) => {
@@ -392,7 +382,7 @@ export default function GeneratePage() {
         // 각 버전을 이력에 저장
         for (const r of results) {
           const hid = generateId();
-          saveHistoryItem({
+          await saveHistoryItem({
             id: hid, type: 'generation',
             title: `[${r.toneName}] ${r.title || topic.trim()}`,
             summary: `A/B 테스트 | ${r.toneName} 버전`,
@@ -432,7 +422,7 @@ export default function GeneratePage() {
         const data = await response.json();
         const now = new Date();
         const historyId = generateId();
-        saveHistoryItem({
+        await saveHistoryItem({
           id: historyId, type: 'generation',
           title: data.title || topic.trim(),
           summary: `${categories.find(c => c.id === selectedCategory)?.label || ''} | ${topic.trim()}`,

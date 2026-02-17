@@ -61,7 +61,7 @@ export default function Dashboard() {
       // 이력 저장
       const now = new Date();
       const keywords = data.keywords?.primaryKeywords?.map((k: { keyword: string }) => k.keyword).join(', ') || '';
-      saveHistoryItem({
+      await saveHistoryItem({
         id: generateId(),
         type: 'analysis',
         title: targetKeyword || content.substring(0, 50).trim() + '...',

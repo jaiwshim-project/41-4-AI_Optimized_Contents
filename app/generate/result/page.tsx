@@ -235,7 +235,7 @@ export default function GenerateResultPage() {
       // 수정 이력 저장
       if (currentHistoryId) {
         const now = new Date();
-        addRevision(currentHistoryId, {
+        await addRevision(currentHistoryId, {
           id: generateId(),
           date: `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`,
           editNotes: editNotes.trim(),
@@ -256,7 +256,7 @@ export default function GenerateResultPage() {
     setIsGeneratingImages(true);
     setImageError(null);
     try {
-      const geminiKey = localStorage.getItem('gemini-api-key') || (await (await import('@/lib/supabase-storage')).getApiKey('gemini')) || '';
+      const geminiKey = (await (await import('@/lib/supabase-storage')).getApiKey('gemini')) || '';
       const response = await fetch('/api/generate-images', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -421,7 +421,6 @@ export default function GenerateResultPage() {
   };
 
   const handleReset = () => {
-    localStorage.removeItem('aio-generate-result');
     router.push('/generate');
   };
 
