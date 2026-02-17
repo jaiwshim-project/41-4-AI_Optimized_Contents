@@ -151,6 +151,12 @@ export default function PromotionLandingPage() {
               <span className="text-lg font-bold text-gray-900">AIO/GEO Optimizer</span>
             </Link>
             <div className="flex items-center gap-3">
+              <Link href="/" className="inline-flex items-center gap-1.5 text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors">
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                </svg>
+                홈
+              </Link>
               <Link href="/analyze" className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors hidden sm:block">
                 콘텐츠 분석
               </Link>
