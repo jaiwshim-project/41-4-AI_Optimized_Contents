@@ -110,6 +110,19 @@ export default function Header({ showApiKeyButton = false, onToggleApiKey, apiKe
               </svg>
               소개자료
             </Link>
+            <Link
+              href="/landing"
+              className={`inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg transition-all duration-200 shadow-sm border-2 hover:shadow-md hover:scale-[1.03] ${
+                pathname === '/landing'
+                  ? 'bg-gradient-to-r from-violet-600 to-indigo-600 text-white border-violet-300'
+                  : 'bg-gradient-to-r from-violet-500 to-indigo-500 text-white border-violet-300 hover:from-violet-600 hover:to-indigo-600'
+              }`}
+            >
+              <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z" />
+              </svg>
+              홍보페이지
+            </Link>
           </div>
 
           {/* 모바일 햄버거 + API Key */}
@@ -199,6 +212,16 @@ export default function Header({ showApiKeyButton = false, onToggleApiKey, apiKe
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 4v16M17 4v16M3 8h4m10 0h4M3 12h18M3 16h4m10 0h4M4 20h16a1 1 0 001-1V5a1 1 0 00-1-1H4a1 1 0 00-1 1v14a1 1 0 001 1z" />
               </svg>
               소개자료
+            </Link>
+            <Link
+              href="/landing"
+              onClick={() => setMobileOpen(false)}
+              className="flex items-center gap-2 px-4 py-2.5 text-sm font-medium rounded-xl bg-gradient-to-r from-violet-500 to-indigo-500 text-white border-2 border-violet-300"
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z" />
+              </svg>
+              홍보페이지
             </Link>
           </div>
         )}
