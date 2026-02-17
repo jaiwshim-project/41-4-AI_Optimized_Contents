@@ -195,15 +195,25 @@ export default function PricingPage() {
 
         {/* 이번 달 사용량 */}
         {!loading && usage.length > 0 && (
-          <div className="bg-white rounded-2xl shadow-sm border-2 border-indigo-200 p-6">
-            <h3 className="text-lg font-bold text-gray-900 mb-4">이번 달 사용량</h3>
+          <div className="bg-white rounded-2xl shadow-sm border-2 border-red-400 p-6">
+            <h3 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
+              이번 달 사용량
+              <span className={`px-2.5 py-0.5 text-xs font-bold rounded-full border ${
+                currentPlan === 'admin' ? 'bg-red-100 text-red-700 border-red-300'
+                : currentPlan === 'pro' ? 'bg-blue-100 text-blue-700 border-blue-300'
+                : currentPlan === 'max' ? 'bg-violet-100 text-violet-700 border-violet-300'
+                : 'bg-gray-100 text-gray-700 border-gray-300'
+              }`}>
+                {currentPlan === 'admin' ? '관리자' : currentPlan === 'pro' ? '프로' : currentPlan === 'max' ? '맥스' : '무료'}
+              </span>
+            </h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
               {usage.map((u) => {
                 const isUnlimited = currentPlan === 'admin';
                 const percentage = isUnlimited ? 0 : Math.min((u.current / u.limit) * 100, 100);
                 const isOver = !isUnlimited && u.current >= u.limit;
                 return (
-                  <div key={u.feature} className="bg-gray-50 rounded-xl p-4 border border-gray-200">
+                  <div key={u.feature} className="bg-gray-50 rounded-xl p-4 border-2 border-violet-300">
                     <p className="text-sm font-medium text-gray-700 mb-2">{u.label}</p>
                     <div className="flex items-end gap-1 mb-2">
                       <span className={`text-2xl font-bold ${isOver ? 'text-red-600' : 'text-gray-900'}`}>
