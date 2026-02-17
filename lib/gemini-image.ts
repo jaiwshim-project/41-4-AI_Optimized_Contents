@@ -1,4 +1,10 @@
-import { GoogleGenerativeAI } from '@google/generative-ai';
+import { GoogleGenAI } from '@google/genai';
+
+const IMAGE_MODELS = [
+  'gemini-2.5-flash-preview-04-17',
+  'gemini-2.0-flash-exp-image-generation',
+  'gemini-2.0-flash-exp',
+];
 
 export async function generateContentImages(
   content: string,
@@ -9,9 +15,8 @@ export async function generateContentImages(
     throw new Error('Gemini API 키가 설정되지 않았습니다. API Key 설정에서 Gemini 키를 입력해주세요.');
   }
 
-  const genAI = new GoogleGenerativeAI(apiKey);
+  const ai = new GoogleGenAI({ apiKey });
 
-  // 콘텐츠에서 핵심 키워드/주제 추출하여 3개 프롬프트 생성
   const contentSummary = content.substring(0, 500);
 
   const prompts = [
@@ -22,21 +27,52 @@ export async function generateContentImages(
 
   const images: string[] = [];
 
-  for (const prompt of prompts) {
+  // 작동하는 모델 찾기
+  let workingModel: string | null = null;
+
+  for (const modelName of IMAGE_MODELS) {
     try {
-      const model = genAI.getGenerativeModel({
-        model: 'gemini-2.0-flash-exp',
-        generationConfig: {
+      const response = await ai.models.generateContent({
+        model: modelName,
+        contents: prompts[0],
+        config: {
           responseModalities: ['IMAGE', 'TEXT'],
-        } as Record<string, unknown>,
+        },
       });
 
-      const result = await model.generateContent(prompt);
-      const response = result.response;
-      const candidate = response.candidates?.[0];
+      if (response.candidates?.[0]?.content?.parts) {
+        for (const part of response.candidates[0].content.parts) {
+          if (part.inlineData) {
+            const dataUrl = `data:${part.inlineData.mimeType};base64,${part.inlineData.data}`;
+            images.push(dataUrl);
+            workingModel = modelName;
+            break;
+          }
+        }
+      }
+      if (workingModel) break;
+    } catch (err) {
+      console.error(`Model ${modelName} failed, trying next...`, err);
+    }
+  }
 
-      if (candidate?.content?.parts) {
-        for (const part of candidate.content.parts) {
+  if (!workingModel) {
+    throw new Error('이미지 생성에 실패했습니다. Gemini API 키와 모델 접근 권한을 확인해주세요.');
+  }
+
+  // 나머지 프롬프트로 이미지 생성
+  for (let i = 1; i < prompts.length; i++) {
+    try {
+      const response = await ai.models.generateContent({
+        model: workingModel,
+        contents: prompts[i],
+        config: {
+          responseModalities: ['IMAGE', 'TEXT'],
+        },
+      });
+
+      if (response.candidates?.[0]?.content?.parts) {
+        for (const part of response.candidates[0].content.parts) {
           if (part.inlineData) {
             const dataUrl = `data:${part.inlineData.mimeType};base64,${part.inlineData.data}`;
             images.push(dataUrl);
@@ -46,12 +82,7 @@ export async function generateContentImages(
       }
     } catch (err) {
       console.error('Image generation failed for prompt:', err);
-      // 실패한 이미지는 건너뛰고 계속
     }
-  }
-
-  if (images.length === 0) {
-    throw new Error('이미지 생성에 실패했습니다. Gemini API 키와 모델 접근 권한을 확인해주세요.');
   }
 
   return images;
