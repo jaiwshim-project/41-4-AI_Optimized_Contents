@@ -230,18 +230,18 @@ export default function GeneratePage() {
   };
 
   const industries = [
-    { value: '음식/요식업', label: '음식/요식업' },
-    { value: '소매/유통', label: '소매/유통' },
-    { value: '뷰티/미용', label: '뷰티/미용' },
-    { value: '헬스/피트니스', label: '헬스/피트니스' },
-    { value: '교육/학원', label: '교육/학원' },
-    { value: 'IT/테크', label: 'IT/테크' },
-    { value: '의료/건강', label: '의료/건강' },
-    { value: '금융/보험', label: '금융/보험' },
-    { value: '부동산', label: '부동산' },
-    { value: '여행/관광/숙박', label: '여행/관광/숙박' },
-    { value: '법률/컨설팅', label: '법률/컨설팅' },
-    { value: '기타', label: '기타' },
+    { value: '음식/요식업', label: '🍽️ 음식/요식업' },
+    { value: '소매/유통', label: '🏪 소매/유통' },
+    { value: '뷰티/미용', label: '💅 뷰티/미용' },
+    { value: '헬스/피트니스', label: '🏋️ 헬스/피트니스' },
+    { value: '교육/학원', label: '🎓 교육/학원' },
+    { value: 'IT/테크', label: '💻 IT/테크' },
+    { value: '의료/건강', label: '🏥 의료/건강' },
+    { value: '금융/보험', label: '💰 금융/보험' },
+    { value: '부동산', label: '🏠 부동산' },
+    { value: '여행/관광/숙박', label: '✈️ 여행/관광/숙박' },
+    { value: '법률/컨설팅', label: '⚖️ 법률/컨설팅' },
+    { value: '기타', label: '📦 기타' },
   ];
 
   const buildAdditionalNotes = () => {
@@ -697,23 +697,28 @@ export default function GeneratePage() {
                   <div className="bg-white/80 rounded-xl p-4 border border-amber-100 shadow-sm">
                     <h3 className="text-sm font-semibold text-amber-800 mb-3 flex items-center gap-2">
                       <span className="w-6 h-6 bg-gradient-to-br from-amber-500 to-orange-600 rounded-lg text-center text-xs leading-6 font-bold text-white shadow-sm">2</span>
-                      산업 분야
+                      🏭 산업 분야 선택
                     </h3>
-                    <div className="flex flex-wrap gap-2">
-                      {industries.map(ind => (
-                        <button
-                          key={ind.value}
-                          type="button"
-                          onClick={() => updateBiz('industry', ind.value)}
-                          className={`px-3 py-1.5 text-xs rounded-lg border-2 transition-all duration-200 hover:shadow-md hover:scale-105 ${
-                            businessInfo.industry === ind.value
-                              ? 'bg-gradient-to-r from-amber-500 to-orange-500 text-white border-amber-300 shadow-sm'
-                              : 'bg-amber-50/50 text-amber-700 border-amber-200 hover:border-amber-400 hover:bg-amber-50'
-                          }`}
-                        >
-                          {ind.label}
-                        </button>
-                      ))}
+                    <div className="grid grid-cols-4 gap-2">
+                      {industries.map(ind => {
+                        const emoji = ind.label.split(' ')[0];
+                        const text = ind.label.split(' ').slice(1).join(' ');
+                        return (
+                          <button
+                            key={ind.value}
+                            type="button"
+                            onClick={() => updateBiz('industry', ind.value)}
+                            className={`flex flex-col items-center justify-center gap-1 px-2 py-3 rounded-xl border-2 transition-all duration-200 hover:shadow-md hover:scale-105 ${
+                              businessInfo.industry === ind.value
+                                ? 'bg-gradient-to-br from-amber-500 to-orange-500 text-white border-amber-300 shadow-md'
+                                : 'bg-white text-gray-700 border-gray-200 hover:border-amber-400 hover:bg-amber-50/50'
+                            }`}
+                          >
+                            <span className="text-2xl">{emoji}</span>
+                            <span className="text-[11px] font-semibold leading-tight text-center">{text}</span>
+                          </button>
+                        );
+                      })}
                     </div>
                     {businessInfo.industry === '기타' && (
                       <input type="text" value={businessInfo.customIndustry} onChange={e => updateBiz('customIndustry', e.target.value)} placeholder="산업 분야를 직접 입력" className="mt-3 w-full px-4 py-2.5 bg-amber-50/50 border-2 border-amber-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent placeholder-amber-400/60" />

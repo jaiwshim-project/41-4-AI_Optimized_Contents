@@ -4,6 +4,7 @@ const IMAGE_MODELS = [
   'gemini-2.5-flash-preview-04-17',
   'gemini-2.0-flash-exp-image-generation',
   'gemini-2.0-flash-exp',
+  'gemini-2.0-flash',
 ];
 
 export async function generateContentImages(
@@ -26,12 +27,14 @@ export async function generateContentImages(
   ];
 
   const images: string[] = [];
+  const errors: string[] = [];
 
   // 작동하는 모델 찾기
   let workingModel: string | null = null;
 
   for (const modelName of IMAGE_MODELS) {
     try {
+      console.log(`[Gemini Image] Trying model: ${modelName}`);
       const response = await ai.models.generateContent({
         model: modelName,
         contents: prompts[0],
@@ -46,18 +49,22 @@ export async function generateContentImages(
             const dataUrl = `data:${part.inlineData.mimeType};base64,${part.inlineData.data}`;
             images.push(dataUrl);
             workingModel = modelName;
+            console.log(`[Gemini Image] Success with model: ${modelName}`);
             break;
           }
         }
       }
       if (workingModel) break;
     } catch (err) {
-      console.error(`Model ${modelName} failed, trying next...`, err);
+      const msg = err instanceof Error ? err.message : String(err);
+      errors.push(`${modelName}: ${msg}`);
+      console.error(`[Gemini Image] Model ${modelName} failed:`, msg);
     }
   }
 
   if (!workingModel) {
-    throw new Error('이미지 생성에 실패했습니다. Gemini API 키와 모델 접근 권한을 확인해주세요.');
+    const detail = errors.length > 0 ? `\n시도한 모델 오류:\n${errors.join('\n')}` : '';
+    throw new Error(`이미지 생성에 실패했습니다. Gemini API 키를 확인하고 Google AI Studio에서 이미지 생성이 가능한지 확인해주세요.${detail}`);
   }
 
   // 나머지 프롬프트로 이미지 생성
@@ -81,7 +88,7 @@ export async function generateContentImages(
         }
       }
     } catch (err) {
-      console.error('Image generation failed for prompt:', err);
+      console.error('[Gemini Image] Failed for prompt:', err);
     }
   }
 
