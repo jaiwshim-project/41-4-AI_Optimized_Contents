@@ -149,29 +149,34 @@ export default function DashboardDetailPage() {
         backgroundColor: '#ffffff',
         scale: 2,
         useCORS: true,
+        logging: false,
       });
-      canvas.toBlob(async (blob) => {
-        if (!blob) return;
-        try {
-          await navigator.clipboard.write([
-            new ClipboardItem({ 'image/png': blob }),
-          ]);
-          setCopiedImage(true);
-          setTimeout(() => setCopiedImage(false), 2000);
-        } catch {
-          // 폴백: 이미지 다운로드
-          const url = URL.createObjectURL(blob);
-          const a = document.createElement('a');
-          a.href = url;
-          a.download = 'content.png';
-          a.click();
-          URL.revokeObjectURL(url);
-          setCopiedImage(true);
-          setTimeout(() => setCopiedImage(false), 2000);
-        }
-        setIsCapturing(false);
-      }, 'image/png');
-    } catch {
+      const dataUrl = canvas.toDataURL('image/png');
+      const res = await fetch(dataUrl);
+      const blob = await res.blob();
+
+      try {
+        await navigator.clipboard.write([
+          new ClipboardItem({
+            [blob.type]: blob,
+          }),
+        ]);
+        setCopiedImage(true);
+        setTimeout(() => setCopiedImage(false), 2000);
+      } catch {
+        // 클립보드 이미지 복사 미지원 시 다운로드
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `content-${Date.now()}.png`;
+        a.click();
+        URL.revokeObjectURL(url);
+        setCopiedImage(true);
+        setTimeout(() => setCopiedImage(false), 2000);
+      }
+    } catch (err) {
+      console.error('Image capture error:', err);
+    } finally {
       setIsCapturing(false);
     }
   };
