@@ -6,7 +6,7 @@
 -- 1. 사용자 플랜 테이블
 CREATE TABLE IF NOT EXISTS user_plans (
   user_id uuid references auth.users(id) primary key,
-  plan text not null default 'free' check (plan in ('free', 'pro', 'max')),
+  plan text not null default 'free' check (plan in ('admin', 'free', 'pro', 'max')),
   created_at timestamptz default now(),
   expires_at timestamptz
 );

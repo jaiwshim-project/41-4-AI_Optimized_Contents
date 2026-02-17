@@ -75,6 +75,23 @@ export default function PricingPage() {
           <p className="text-gray-500">필요에 맞는 플랜을 선택하세요</p>
         </div>
 
+        {/* 관리자 배너 */}
+        {!loading && currentPlan === 'admin' && (
+          <div className="mb-8 bg-gradient-to-r from-red-500 to-rose-500 rounded-2xl p-6 text-white shadow-lg border-2 border-red-300">
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                </svg>
+              </div>
+              <div>
+                <h3 className="text-xl font-bold">관리자 계정</h3>
+                <p className="text-white/80 text-sm">모든 기능을 무제한으로 사용할 수 있습니다</p>
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* 요금제 카드 */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
           {plans.map((plan) => {
@@ -141,8 +158,9 @@ export default function PricingPage() {
             <h3 className="text-lg font-bold text-gray-900 mb-4">이번 달 사용량</h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
               {usage.map((u) => {
-                const percentage = Math.min((u.current / u.limit) * 100, 100);
-                const isOver = u.current >= u.limit;
+                const isUnlimited = currentPlan === 'admin';
+                const percentage = isUnlimited ? 0 : Math.min((u.current / u.limit) * 100, 100);
+                const isOver = !isUnlimited && u.current >= u.limit;
                 return (
                   <div key={u.feature} className="bg-gray-50 rounded-xl p-4 border border-gray-200">
                     <p className="text-sm font-medium text-gray-700 mb-2">{u.label}</p>
@@ -150,14 +168,16 @@ export default function PricingPage() {
                       <span className={`text-2xl font-bold ${isOver ? 'text-red-600' : 'text-gray-900'}`}>
                         {u.current}
                       </span>
-                      <span className="text-sm text-gray-500 mb-0.5">/ {u.limit}회</span>
+                      <span className="text-sm text-gray-500 mb-0.5">
+                        {isUnlimited ? '/ 무제한' : `/ ${u.limit}회`}
+                      </span>
                     </div>
                     <div className="w-full bg-gray-200 rounded-full h-2">
                       <div
                         className={`h-2 rounded-full transition-all ${
-                          isOver ? 'bg-red-500' : percentage > 70 ? 'bg-amber-500' : 'bg-emerald-500'
+                          isUnlimited ? 'bg-emerald-500' : isOver ? 'bg-red-500' : percentage > 70 ? 'bg-amber-500' : 'bg-emerald-500'
                         }`}
-                        style={{ width: `${percentage}%` }}
+                        style={{ width: isUnlimited ? '100%' : `${percentage}%` }}
                       />
                     </div>
                   </div>

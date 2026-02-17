@@ -8,6 +8,7 @@ import type { User } from '@supabase/supabase-js';
 import { getUserPlan, type PlanType } from '@/lib/usage';
 
 const PLAN_LABELS: Record<PlanType, { name: string; style: string }> = {
+  admin: { name: '관리자', style: 'bg-gradient-to-r from-red-500 to-rose-500 text-white border-red-300' },
   free: { name: '무료', style: 'bg-gray-100 text-gray-600 border-gray-300' },
   pro: { name: '프로', style: 'bg-gradient-to-r from-blue-500 to-indigo-500 text-white border-blue-300' },
   max: { name: '맥스', style: 'bg-gradient-to-r from-violet-500 to-purple-500 text-white border-violet-300' },

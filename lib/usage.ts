@@ -1,9 +1,10 @@
 import { createClient } from './supabase-client';
 
-export type PlanType = 'free' | 'pro' | 'max';
+export type PlanType = 'admin' | 'free' | 'pro' | 'max';
 export type FeatureType = 'analyze' | 'generate' | 'keyword' | 'series';
 
 const PLAN_LIMITS: Record<PlanType, number> = {
+  admin: Infinity,
   free: 3,
   pro: 15,
   max: 50,
@@ -38,6 +39,9 @@ export async function getUserPlan(): Promise<PlanType> {
     .maybeSingle();
 
   if (!data) return 'free';
+
+  // 관리자는 만료 없음
+  if (data.plan === 'admin') return 'admin';
 
   // 만료일 체크
   if (data.expires_at && new Date(data.expires_at) < new Date()) {
@@ -103,7 +107,7 @@ export async function incrementUsage(feature: FeatureType): Promise<void> {
 
 export async function getUsageSummary(): Promise<{ feature: FeatureType; label: string; current: number; limit: number }[]> {
   const plan = await getUserPlan();
-  const limit = PLAN_LIMITS[plan];
+  const limit = plan === 'admin' ? 999999 : PLAN_LIMITS[plan];
   const features: FeatureType[] = ['analyze', 'generate', 'keyword', 'series'];
 
   const results = await Promise.all(
