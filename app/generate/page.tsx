@@ -281,6 +281,15 @@ export default function GeneratePage() {
     }
   };
 
+  const [copiedTitle, setCopiedTitle] = useState(false);
+
+  const handleCopyTitle = async () => {
+    if (!result) return;
+    await navigator.clipboard.writeText(result.title);
+    setCopiedTitle(true);
+    setTimeout(() => setCopiedTitle(false), 2000);
+  };
+
   const handleCopy = async () => {
     if (!result) return;
     await navigator.clipboard.writeText(result.content);
@@ -652,17 +661,34 @@ export default function GeneratePage() {
                 </div>
                 <div className="flex items-center gap-2">
                   <button
+                    onClick={handleCopyTitle}
+                    className={`inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl transition-all duration-200 border-2 hover:shadow-md hover:scale-[1.03] ${
+                      copiedTitle
+                        ? 'bg-emerald-500 text-white border-emerald-300'
+                        : 'border-amber-300 bg-amber-50 text-amber-700 hover:bg-amber-100'
+                    }`}
+                  >
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={copiedTitle ? 'M5 13l4 4L19 7' : 'M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z'} />
+                    </svg>
+                    {copiedTitle ? '복사됨!' : '제목 복사'}
+                  </button>
+                  <button
                     onClick={handleCopy}
-                    className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl transition-all border-2 border-sky-300 bg-gray-50 text-gray-600 hover:bg-gray-100"
+                    className={`inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl transition-all duration-200 border-2 hover:shadow-md hover:scale-[1.03] ${
+                      copied
+                        ? 'bg-emerald-500 text-white border-emerald-300'
+                        : 'border-sky-300 bg-sky-50 text-sky-700 hover:bg-sky-100'
+                    }`}
                   >
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={copied ? 'M5 13l4 4L19 7' : 'M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z'} />
                     </svg>
-                    {copied ? '복사됨!' : '복사'}
+                    {copied ? '복사됨!' : '본문 복사'}
                   </button>
                   <button
                     onClick={handleReset}
-                    className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl transition-all border-2 border-violet-300 bg-gray-50 text-gray-600 hover:bg-gray-100"
+                    className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl transition-all duration-200 border-2 border-violet-300 bg-gray-50 text-gray-600 hover:bg-gray-100 hover:shadow-md hover:scale-[1.03]"
                   >
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
