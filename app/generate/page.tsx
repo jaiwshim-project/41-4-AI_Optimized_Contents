@@ -6,6 +6,7 @@ import Footer from '@/components/Footer';
 import ApiKeyPanel from '@/components/ApiKeyPanel';
 import type { ContentCategory, GenerateResponse } from '@/lib/types';
 import { saveHistoryItem, addRevision, generateId } from '@/lib/history';
+import { getProfiles, saveProfile, deleteProfile as deleteProfileSupabase, uploadImage, type Profile, type ProfileData } from '@/lib/supabase-storage';
 
 const categories: { id: ContentCategory; label: string; description: string; icon: string; color: string; bgIdle: string }[] = [
   {
@@ -119,15 +120,19 @@ export default function GeneratePage() {
   const [generatedImages, setGeneratedImages] = useState<string[]>([]);
   const [isGeneratingImages, setIsGeneratingImages] = useState(false);
   const [imageError, setImageError] = useState<string | null>(null);
+  const [showFinalContent, setShowFinalContent] = useState(false);
+  const [finalContentHtml, setFinalContentHtml] = useState('');
+  const [copiedFinal, setCopiedFinal] = useState(false);
+  const finalContentRef = useRef<HTMLDivElement>(null);
   const [bizSaved, setBizSaved] = useState(false);
   const [showProfileList, setShowProfileList] = useState(false);
-  const [savedProfiles, setSavedProfiles] = useState<{ name: string; data: typeof businessInfo; savedAt: string }[]>([]);
+  const [savedProfiles, setSavedProfiles] = useState<Profile[]>([]);
   const [profileSaveMsg, setProfileSaveMsg] = useState('');
   const contentRef = useRef<HTMLDivElement>(null);
   const saveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const profileListRef = useRef<HTMLDivElement>(null);
 
-  // localStorage에서 비즈니스 정보 + 프로필 목록 로드
+  // localStorage + Supabase에서 비즈니스 정보 + 프로필 목록 로드
   useEffect(() => {
     const saved = localStorage.getItem('aio-business-info');
     if (saved) {
@@ -136,10 +141,7 @@ export default function GeneratePage() {
         setBusinessInfo(prev => ({ ...prev, ...parsed, newStrength: '' }));
       } catch {}
     }
-    const profiles = localStorage.getItem('aio-business-profiles');
-    if (profiles) {
-      try { setSavedProfiles(JSON.parse(profiles)); } catch {}
-    }
+    getProfiles().then(profiles => setSavedProfiles(profiles));
   }, []);
 
   // 프로필 목록 외부 클릭 시 닫기
@@ -154,36 +156,27 @@ export default function GeneratePage() {
     return () => document.removeEventListener('mousedown', handler);
   }, [showProfileList]);
 
-  const saveAsProfile = () => {
+  const saveAsProfile = async () => {
     const name = businessInfo.companyName.trim() || '이름 없음';
-    const now = new Date();
-    const savedAt = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
-    const profile = { name, data: { ...businessInfo, newStrength: '' }, savedAt };
-    const existing = savedProfiles.findIndex(p => p.name === name);
-    let updated: typeof savedProfiles;
-    if (existing >= 0) {
-      updated = [...savedProfiles];
-      updated[existing] = profile;
-    } else {
-      updated = [profile, ...savedProfiles].slice(0, 10);
-    }
+    const { newStrength, ...dataToSave } = businessInfo;
+    await saveProfile(name, dataToSave as ProfileData);
+    const updated = await getProfiles();
     setSavedProfiles(updated);
-    localStorage.setItem('aio-business-profiles', JSON.stringify(updated));
     setProfileSaveMsg(`"${name}" 저장 완료`);
     setTimeout(() => setProfileSaveMsg(''), 2000);
   };
 
-  const loadProfile = (profile: typeof savedProfiles[0]) => {
+  const loadProfile = (profile: Profile) => {
     setBusinessInfo({ ...profile.data, newStrength: '' });
     autoSave({ ...profile.data, newStrength: '' });
     setShowProfileList(false);
   };
 
-  const deleteProfile = (index: number, e: React.MouseEvent) => {
+  const handleDeleteProfile = async (id: string, e: React.MouseEvent) => {
     e.stopPropagation();
-    const updated = savedProfiles.filter((_, i) => i !== index);
+    await deleteProfileSupabase(id);
+    const updated = await getProfiles();
     setSavedProfiles(updated);
-    localStorage.setItem('aio-business-profiles', JSON.stringify(updated));
   };
 
   // 변경 시 자동 저장 (1초 디바운스)
@@ -385,7 +378,7 @@ export default function GeneratePage() {
     setIsGeneratingImages(true);
     setImageError(null);
     try {
-      const geminiKey = localStorage.getItem('gemini-api-key') || '';
+      const geminiKey = localStorage.getItem('gemini-api-key') || (await (await import('@/lib/supabase-storage')).getApiKey('gemini')) || '';
       const response = await fetch('/api/generate-images', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -396,11 +389,115 @@ export default function GeneratePage() {
         throw new Error(err.error || '이미지 생성에 실패했습니다.');
       }
       const data = await response.json();
-      setGeneratedImages(data.images);
+      // Supabase Storage에 업로드 시도
+      if (currentHistoryId && data.images) {
+        const uploadedUrls = await Promise.all(
+          data.images.map((img: string) => uploadImage(currentHistoryId, img, result.title))
+        );
+        setGeneratedImages(uploadedUrls);
+      } else {
+        setGeneratedImages(data.images);
+      }
     } catch (err) {
       setImageError(err instanceof Error ? err.message : '이미지 생성 중 오류가 발생했습니다.');
     } finally {
       setIsGeneratingImages(false);
+    }
+  };
+
+  const markdownToHtml = (text: string) => {
+    return text
+      .replace(/^### (.*$)/gm, '<h3 style="font-size:1.1em;font-weight:bold;color:#1a1a1a;margin:24px 0 8px">$1</h3>')
+      .replace(/^## (.*$)/gm, '<h2 style="font-size:1.25em;font-weight:bold;color:#1a1a1a;margin:32px 0 12px;padding-bottom:8px;border-bottom:1px solid #e5e7eb">$1</h2>')
+      .replace(/^# (.*$)/gm, '<h1 style="font-size:1.5em;font-weight:bold;color:#1a1a1a;margin:32px 0 16px">$1</h1>')
+      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+      .replace(/^\- (.*$)/gm, '<li style="margin-left:16px;list-style:disc">$1</li>')
+      .replace(/^\d+\. (.*$)/gm, '<li style="margin-left:16px;list-style:decimal">$1</li>')
+      .replace(/^> (.*$)/gm, '<blockquote style="border-left:4px solid #818cf8;padding:4px 16px;margin:12px 0;background:#eef2ff;border-radius:0 8px 8px 0;color:#374151">$1</blockquote>');
+  };
+
+  const handleApplyImages = () => {
+    if (!result || generatedImages.length === 0) return;
+
+    const lines = result.content.split('\n');
+    const headingIndices: number[] = [];
+    lines.forEach((line, i) => {
+      if (/^#{1,3}\s/.test(line)) headingIndices.push(i);
+    });
+
+    // 이미지 삽입 위치 결정
+    let insertPositions: number[];
+    if (headingIndices.length >= 4) {
+      // 헤딩이 충분하면: 2번째 헤딩 앞, 중간 헤딩 앞, 마지막 헤딩 앞
+      const mid = Math.floor(headingIndices.length / 2);
+      insertPositions = [
+        headingIndices[1],
+        headingIndices[mid],
+        headingIndices[headingIndices.length - 1],
+      ];
+    } else {
+      // 균등 분할
+      const step = Math.floor(lines.length / (generatedImages.length + 1));
+      insertPositions = generatedImages.map((_, i) => step * (i + 1));
+    }
+
+    // 중복 제거 및 정렬
+    insertPositions = [...new Set(insertPositions)].sort((a, b) => a - b);
+
+    // 이미지 태그 생성
+    const imageLabels = ['핵심 요약 인포그래픽', '프로세스 인포그래픽', '데이터 인포그래픽'];
+    const imageTags = generatedImages.map((img, i) =>
+      `\n<figure style="text-align:center;margin:32px 0"><img src="${img}" alt="${imageLabels[i] || `인포그래픽 ${i+1}`}" style="width:100%;max-width:720px;border-radius:12px;box-shadow:0 4px 12px rgba(0,0,0,0.1)" /><figcaption style="font-size:0.85em;color:#6b7280;margin-top:8px">${imageLabels[i] || `인포그래픽 ${i+1}`}</figcaption></figure>\n`
+    );
+
+    // 라인 합치면서 이미지 삽입
+    const resultLines: string[] = [];
+    let imgIdx = 0;
+    for (let i = 0; i < lines.length; i++) {
+      if (imgIdx < insertPositions.length && i === insertPositions[imgIdx]) {
+        resultLines.push(imageTags[imgIdx] || '');
+        imgIdx++;
+      }
+      resultLines.push(lines[i]);
+    }
+    // 남은 이미지가 있으면 끝에 추가
+    while (imgIdx < imageTags.length) {
+      resultLines.push(imageTags[imgIdx]);
+      imgIdx++;
+    }
+
+    const mergedContent = resultLines.join('\n');
+    const html = markdownToHtml(mergedContent);
+
+    // 제목 + 본문 + 해시태그
+    let fullHtml = `<h1 style="font-size:1.8em;font-weight:bold;color:#1a1a1a;margin-bottom:16px">${result.title}</h1>\n${html}`;
+    if (result.hashtags && result.hashtags.length > 0) {
+      const tags = result.hashtags.map(t => t.startsWith('#') ? t : `#${t}`).join(' ');
+      fullHtml += `\n<p style="margin-top:24px;color:#6366f1;font-size:0.9em">${tags}</p>`;
+    }
+
+    setFinalContentHtml(fullHtml);
+    setShowFinalContent(true);
+  };
+
+  const handleCopyFinalContent = async () => {
+    if (!finalContentRef.current) return;
+    try {
+      const htmlBlob = new Blob([finalContentRef.current.innerHTML], { type: 'text/html' });
+      const textBlob = new Blob([finalContentRef.current.innerText], { type: 'text/plain' });
+      await navigator.clipboard.write([
+        new ClipboardItem({
+          'text/html': htmlBlob,
+          'text/plain': textBlob,
+        }),
+      ]);
+      setCopiedFinal(true);
+      setTimeout(() => setCopiedFinal(false), 2000);
+    } catch {
+      // 폴백: 텍스트만 복사
+      await navigator.clipboard.writeText(finalContentRef.current.innerText);
+      setCopiedFinal(true);
+      setTimeout(() => setCopiedFinal(false), 2000);
     }
   };
 
@@ -414,6 +511,8 @@ export default function GeneratePage() {
     setError(null);
     setGeneratedImages([]);
     setImageError(null);
+    setShowFinalContent(false);
+    setFinalContentHtml('');
   };
 
   return (
@@ -584,9 +683,9 @@ export default function GeneratePage() {
                               </div>
                             ) : (
                               <div className="max-h-[60vh] overflow-y-auto divide-y divide-gray-100">
-                                {savedProfiles.map((profile, i) => (
+                                {savedProfiles.map((profile) => (
                                   <div
-                                    key={i}
+                                    key={profile.id}
                                     className="px-6 py-4 hover:bg-indigo-50/50 transition-all duration-150 cursor-pointer group"
                                     onClick={() => loadProfile(profile)}
                                   >
@@ -634,7 +733,7 @@ export default function GeneratePage() {
                                         <span className="text-xs text-indigo-500 font-semibold opacity-0 group-hover:opacity-100 transition-opacity bg-indigo-50 px-3 py-1 rounded-lg border border-indigo-200">선택</span>
                                         <button
                                           type="button"
-                                          onClick={(e) => deleteProfile(i, e)}
+                                          onClick={(e) => handleDeleteProfile(profile.id, e)}
                                           className="w-7 h-7 rounded-lg flex items-center justify-center text-gray-300 hover:text-red-500 hover:bg-red-50 transition-all opacity-0 group-hover:opacity-100"
                                         >
                                           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -1241,6 +1340,15 @@ export default function GeneratePage() {
                           </>
                         ) : '다시 생성'}
                       </button>
+                      <button
+                        onClick={handleApplyImages}
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg transition-all duration-200 border-2 border-indigo-300 text-indigo-700 bg-indigo-50 hover:bg-indigo-100 hover:shadow-md hover:scale-105"
+                      >
+                        <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                        </svg>
+                        이미지 적용
+                      </button>
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                       {generatedImages.map((img, i) => (
@@ -1292,6 +1400,58 @@ export default function GeneratePage() {
       </main>
 
       <Footer />
+
+      {/* 최종 콘텐츠 모달 (이미지 + 글) */}
+      {showFinalContent && (
+        <div className="fixed inset-0 z-50 flex items-start justify-center bg-black/50 backdrop-blur-sm overflow-y-auto p-4 sm:p-8">
+          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-4xl my-4">
+            {/* 모달 헤더 */}
+            <div className="sticky top-0 bg-white border-b border-gray-200 rounded-t-2xl px-6 py-4 flex items-center justify-between z-10">
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center">
+                  <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                  </svg>
+                </div>
+                <h3 className="text-lg font-bold text-gray-900">최종 콘텐츠</h3>
+                <span className="text-xs text-gray-400">글 + 인포그래픽 이미지</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={handleCopyFinalContent}
+                  className={`inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl transition-all duration-200 border-2 hover:shadow-md hover:scale-105 ${
+                    copiedFinal
+                      ? 'bg-emerald-500 text-white border-emerald-300'
+                      : 'bg-gradient-to-r from-indigo-500 to-purple-600 text-white border-indigo-300 hover:from-indigo-600 hover:to-purple-700'
+                  }`}
+                >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={copiedFinal ? 'M5 13l4 4L19 7' : 'M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z'} />
+                  </svg>
+                  {copiedFinal ? '복사됨!' : '블로그에 붙여넣기용 복사'}
+                </button>
+                <button
+                  onClick={() => setShowFinalContent(false)}
+                  className="inline-flex items-center gap-1.5 px-3 py-2 text-sm font-medium rounded-xl border-2 border-gray-200 text-gray-600 hover:bg-gray-50 hover:border-gray-300 transition-all"
+                >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                  닫기
+                </button>
+              </div>
+            </div>
+            {/* 모달 본문 */}
+            <div className="px-6 py-8" ref={finalContentRef}>
+              <div
+                className="prose prose-sm max-w-none text-gray-800 leading-relaxed"
+                style={{ lineHeight: '1.8' }}
+                dangerouslySetInnerHTML={{ __html: finalContentHtml }}
+              />
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

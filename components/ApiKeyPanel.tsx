@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { getApiKey, saveApiKey, deleteApiKey } from '@/lib/supabase-storage';
 
 interface ApiKeyPanelProps {
   visible: boolean;
@@ -14,11 +15,10 @@ export default function ApiKeyPanel({ visible }: ApiKeyPanelProps) {
   const [hasGeminiKey, setHasGeminiKey] = useState(false);
 
   useEffect(() => {
-    // localStorage에서 저장된 키 확인
-    const savedKey = localStorage.getItem('gemini-api-key');
-    if (savedKey) {
-      setHasGeminiKey(true);
-    }
+    // Supabase (또는 localStorage 폴백)에서 저장된 키 확인
+    getApiKey('gemini').then(key => {
+      if (key) setHasGeminiKey(true);
+    });
     // 서버 측 키도 확인
     fetch('/api/set-api-key')
       .then(res => res.json())
@@ -34,7 +34,9 @@ export default function ApiKeyPanel({ visible }: ApiKeyPanelProps) {
     setGeminiKeyStatus('none');
     try {
       const key = geminiKeyInput.trim();
-      // localStorage에 영구 저장
+      // Supabase에 저장 (폴백: localStorage)
+      await saveApiKey('gemini', key);
+      // localStorage에도 저장 (기존 코드 호환 - generate-images에서 읽음)
       localStorage.setItem('gemini-api-key', key);
       // 서버에도 전송 (현재 세션용)
       const res = await fetch('/api/set-api-key', {
@@ -56,7 +58,8 @@ export default function ApiKeyPanel({ visible }: ApiKeyPanelProps) {
     }
   };
 
-  const handleDeleteGeminiKey = () => {
+  const handleDeleteGeminiKey = async () => {
+    await deleteApiKey('gemini');
     localStorage.removeItem('gemini-api-key');
     setHasGeminiKey(false);
     setGeminiKeyStatus('saved');
@@ -81,7 +84,7 @@ export default function ApiKeyPanel({ visible }: ApiKeyPanelProps) {
               </span>
             )}
           </div>
-          <p className="text-xs text-green-700 mb-3">한번 저장하면 브라우저에 영구 저장되어, 새 키를 입력하기 전까지 계속 사용됩니다.</p>
+          <p className="text-xs text-green-700 mb-3">한번 저장하면 Supabase에 영구 저장되어, 새 키를 입력하기 전까지 계속 사용됩니다.</p>
           <div className="flex gap-2">
             <input
               type="password"

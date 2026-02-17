@@ -18,9 +18,9 @@ export async function generateContentImages(
   const contentSummary = content.substring(0, 500);
 
   const prompts = [
-    `Create a clean, modern, professional infographic-style illustration for a blog article titled "${title}". The image should represent the main concept visually with icons and minimal text. Use a blue and white color scheme. No text or letters in the image.`,
-    `Create a visually appealing, professional diagram or concept map illustration related to: ${contentSummary.substring(0, 200)}. Use warm, inviting colors with a clean modern design. No text or letters in the image.`,
-    `Create a professional, eye-catching hero image for digital marketing content about "${title}". Use a gradient background with abstract geometric shapes and relevant visual metaphors. No text or letters in the image.`,
+    `Create a clean, modern infographic summarizing the key points of "${title}". Use a vertical layout with icons, visual hierarchy, section dividers, and a blue-to-indigo color scheme. Include visual representations of data or concepts using charts, icons, and diagrams. No text or letters in the image.`,
+    `Create a professional step-by-step process infographic related to: ${contentSummary.substring(0, 200)}. Use numbered visual steps with connecting arrows or flow lines, icons for each step, and a warm gradient color scheme (orange to amber). No text or letters in the image.`,
+    `Create a data-driven infographic highlighting key statistics and important points about "${title}". Use pie charts, bar graphs, percentage circles, comparison visuals, and icon-based data points. Use a green-to-teal color scheme with clean modern design. No text or letters in the image.`,
   ];
 
   const images: string[] = [];

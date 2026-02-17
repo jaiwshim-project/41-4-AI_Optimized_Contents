@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import type { HistoryItem } from '@/lib/types';
-import { getHistory, deleteHistoryItem } from '@/lib/history';
+import { getHistoryAsync, deleteHistoryItem } from '@/lib/history';
 
 type TabType = 'analysis' | 'generation';
 
@@ -16,14 +16,15 @@ export default function DashboardPage() {
   const [viewRevisionId, setViewRevisionId] = useState<string | null>(null);
 
   useEffect(() => {
-    setHistory(getHistory());
+    getHistoryAsync().then(setHistory);
   }, []);
 
   const filteredHistory = history.filter(h => h.type === activeTab);
 
-  const handleDelete = (id: string) => {
+  const handleDelete = async (id: string) => {
     deleteHistoryItem(id);
-    setHistory(getHistory());
+    const updated = await getHistoryAsync();
+    setHistory(updated);
     if (viewItem?.id === id) setViewItem(null);
   };
 
