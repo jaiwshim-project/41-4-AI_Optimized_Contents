@@ -97,15 +97,49 @@ export async function analyzeContent(request: AnalysisRequest): Promise<Analysis
     throw new Error('분석 응답을 받지 못했습니다.');
   }
 
-  const parsed = JSON.parse(extractJSON(textBlock.text)) as AnalysisResponse;
-  return parsed;
+  try {
+    const parsed = JSON.parse(extractJSON(textBlock.text)) as AnalysisResponse;
+    return parsed;
+  } catch (e) {
+    console.error('JSON parse error, raw text:', textBlock.text.slice(0, 200));
+    throw new Error('분석 결과를 파싱할 수 없습니다. 다시 시도해주세요.');
+  }
 }
 
 function extractJSON(text: string): string {
   // ```json ... ``` 코드블록 제거
   const match = text.match(/```(?:json)?\s*([\s\S]*?)```/);
-  if (match) return match[1].trim();
-  return text.trim();
+  let json = match ? match[1].trim() : text.trim();
+
+  // JSON이 잘린 경우 복구 시도
+  try {
+    JSON.parse(json);
+    return json;
+  } catch {
+    // 잘린 문자열 닫기 시도: 마지막 열린 문자열/배열/객체를 닫아줌
+    let fixed = json;
+    // 끝에 불완전한 문자열이 있으면 닫기
+    const lastQuote = fixed.lastIndexOf('"');
+    const afterLastQuote = fixed.slice(lastQuote + 1).trim();
+    if (afterLastQuote === '' || afterLastQuote === ',') {
+      fixed = fixed.slice(0, lastQuote + 1);
+    }
+    // 열린 괄호 수만큼 닫아주기
+    const opens = (fixed.match(/\{/g) || []).length;
+    const closes = (fixed.match(/\}/g) || []).length;
+    const openBrackets = (fixed.match(/\[/g) || []).length;
+    const closeBrackets = (fixed.match(/\]/g) || []).length;
+    for (let i = 0; i < openBrackets - closeBrackets; i++) fixed += ']';
+    for (let i = 0; i < opens - closes; i++) fixed += '}';
+
+    try {
+      JSON.parse(fixed);
+      return fixed;
+    } catch {
+      // 복구 실패 시 원본 반환
+      return json;
+    }
+  }
 }
 
 function buildUserMessage(request: AnalysisRequest): string {
@@ -184,8 +218,13 @@ ${request.originalContent}
     throw new Error('최적화 응답을 받지 못했습니다.');
   }
 
-  const parsed = JSON.parse(extractJSON(textBlock.text)) as OptimizeResponse;
-  return parsed;
+  try {
+    const parsed = JSON.parse(extractJSON(textBlock.text)) as OptimizeResponse;
+    return parsed;
+  } catch (e) {
+    console.error('JSON parse error, raw text:', textBlock.text.slice(0, 200));
+    throw new Error('최적화 결과를 파싱할 수 없습니다. 다시 시도해주세요.');
+  }
 }
 
 // === 콘텐츠 생성 ===
@@ -249,7 +288,7 @@ AIO/GEO에 최적화된 고품질 콘텐츠를 마크다운 형식으로 작성�
 
   const message = await getClient().messages.create({
     model: 'claude-sonnet-4-5-20250929',
-    max_tokens: 8192,
+    max_tokens: 16384,
     system: GENERATE_SYSTEM_PROMPT,
     messages: [{ role: 'user', content: userMessage }],
   });
@@ -259,6 +298,11 @@ AIO/GEO에 최적화된 고품질 콘텐츠를 마크다운 형식으로 작성�
     throw new Error('콘텐츠 생성 응답을 받지 못했습니다.');
   }
 
-  const parsed = JSON.parse(extractJSON(textBlock.text)) as GenerateResponse;
-  return parsed;
+  try {
+    const parsed = JSON.parse(extractJSON(textBlock.text)) as GenerateResponse;
+    return parsed;
+  } catch (e) {
+    console.error('JSON parse error, raw text:', textBlock.text.slice(0, 200));
+    throw new Error('콘텐츠 생성 결과를 파싱할 수 없습니다. 다시 시도해주세요.');
+  }
 }
