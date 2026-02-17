@@ -46,18 +46,27 @@ create table if not exists generated_images (
   created_at timestamptz default now()
 );
 
+-- 5. 생성 결과 테이블 (결과 페이지 데이터 전달용)
+create table if not exists generate_results (
+  id text primary key,
+  data jsonb not null,
+  created_at timestamptz default now()
+);
+
 -- RLS (Row Level Security) 비활성화 (단일 사용자 앱)
 -- 필요 시 활성화하고 정책 추가
 alter table business_profiles enable row level security;
 alter table history enable row level security;
 alter table api_keys enable row level security;
 alter table generated_images enable row level security;
+alter table generate_results enable row level security;
 
 -- 모든 사용자에게 접근 허용 (anon key 사용)
 create policy "Allow all on business_profiles" on business_profiles for all using (true) with check (true);
 create policy "Allow all on history" on history for all using (true) with check (true);
 create policy "Allow all on api_keys" on api_keys for all using (true) with check (true);
 create policy "Allow all on generated_images" on generated_images for all using (true) with check (true);
+create policy "Allow all on generate_results" on generate_results for all using (true) with check (true);
 
 -- Storage 버킷 생성은 Supabase 대시보드에서 수행:
 -- 버킷명: generated-images (public)

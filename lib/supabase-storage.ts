@@ -1,5 +1,10 @@
-import { supabase, isSupabaseConfigured } from './supabase';
-import type { HistoryItem, RevisionItem } from './types';
+import { supabase as supabaseClient, isSupabaseConfigured } from './supabase';
+import type { HistoryItem, RevisionItem, ContentCategory, GenerateResponse } from './types';
+
+// isSupabaseConfigured()가 true일 때만 호출되므로 non-null assertion 안전
+function getSupabase() {
+  return supabaseClient!;
+}
 
 // ============================
 // 프로필 CRUD
@@ -32,7 +37,7 @@ export interface Profile {
 export async function getProfiles(): Promise<Profile[]> {
   if (!isSupabaseConfigured()) return getProfilesLocal();
   try {
-    const { data, error } = await supabase
+    const { data, error } = await getSupabase()
       .from('business_profiles')
       .select('*')
       .order('created_at', { ascending: false });
@@ -55,20 +60,20 @@ export async function saveProfile(name: string, data: ProfileData): Promise<void
   }
   try {
     // upsert by name
-    const { data: existing } = await supabase
+    const { data: existing } = await getSupabase()
       .from('business_profiles')
       .select('id')
       .eq('name', name)
       .maybeSingle();
 
     if (existing) {
-      const { error } = await supabase
+      const { error } = await getSupabase()
         .from('business_profiles')
         .update({ data, created_at: new Date().toISOString() })
         .eq('id', existing.id);
       if (error) throw error;
     } else {
-      const { error } = await supabase
+      const { error } = await getSupabase()
         .from('business_profiles')
         .insert({ name, data });
       if (error) throw error;
@@ -84,7 +89,7 @@ export async function deleteProfile(id: string): Promise<void> {
     return;
   }
   try {
-    const { error } = await supabase.from('business_profiles').delete().eq('id', id);
+    const { error } = await getSupabase().from('business_profiles').delete().eq('id', id);
     if (error) throw error;
   } catch {
     deleteProfileLocal(id);
@@ -133,7 +138,7 @@ function deleteProfileLocal(id: string): void {
 export async function getHistoryItems(): Promise<HistoryItem[]> {
   if (!isSupabaseConfigured()) return getHistoryLocal();
   try {
-    const { data, error } = await supabase
+    const { data, error } = await getSupabase()
       .from('history')
       .select('*')
       .order('created_at', { ascending: false })
@@ -165,7 +170,7 @@ export async function saveHistoryItemSupabase(item: HistoryItem): Promise<void> 
     return;
   }
   try {
-    const { error } = await supabase.from('history').insert({
+    const { error } = await getSupabase().from('history').insert({
       id: item.id,
       type: item.type,
       title: item.title,
@@ -192,7 +197,7 @@ export async function deleteHistoryItemSupabase(id: string): Promise<void> {
     return;
   }
   try {
-    const { error } = await supabase.from('history').delete().eq('id', id);
+    const { error } = await getSupabase().from('history').delete().eq('id', id);
     if (error) throw error;
   } catch {
     deleteHistoryLocal(id);
@@ -206,7 +211,7 @@ export async function addRevisionSupabase(historyId: string, revision: RevisionI
   }
   try {
     // 기존 revisions 가져오기
-    const { data, error: fetchError } = await supabase
+    const { data, error: fetchError } = await getSupabase()
       .from('history')
       .select('revisions')
       .eq('id', historyId)
@@ -214,7 +219,7 @@ export async function addRevisionSupabase(historyId: string, revision: RevisionI
     if (fetchError) throw fetchError;
 
     const revisions = [...(data?.revisions || []), revision];
-    const { error } = await supabase
+    const { error } = await getSupabase()
       .from('history')
       .update({ revisions })
       .eq('id', historyId);
@@ -269,7 +274,7 @@ function addRevisionLocal(historyId: string, revision: RevisionItem): void {
 export async function getApiKey(keyType: string): Promise<string | null> {
   if (!isSupabaseConfigured()) return getApiKeyLocal(keyType);
   try {
-    const { data, error } = await supabase
+    const { data, error } = await getSupabase()
       .from('api_keys')
       .select('encrypted_key')
       .eq('key_type', keyType)
@@ -287,20 +292,20 @@ export async function saveApiKey(keyType: string, key: string): Promise<void> {
     return;
   }
   try {
-    const { data: existing } = await supabase
+    const { data: existing } = await getSupabase()
       .from('api_keys')
       .select('id')
       .eq('key_type', keyType)
       .maybeSingle();
 
     if (existing) {
-      const { error } = await supabase
+      const { error } = await getSupabase()
         .from('api_keys')
         .update({ encrypted_key: key })
         .eq('id', existing.id);
       if (error) throw error;
     } else {
-      const { error } = await supabase
+      const { error } = await getSupabase()
         .from('api_keys')
         .insert({ key_type: keyType, encrypted_key: key });
       if (error) throw error;
@@ -316,7 +321,7 @@ export async function deleteApiKey(keyType: string): Promise<void> {
     return;
   }
   try {
-    const { error } = await supabase.from('api_keys').delete().eq('key_type', keyType);
+    const { error } = await getSupabase().from('api_keys').delete().eq('key_type', keyType);
     if (error) throw error;
   } catch {
     deleteApiKeyLocal(keyType);
@@ -337,6 +342,69 @@ function saveApiKeyLocal(keyType: string, key: string): void {
 function deleteApiKeyLocal(keyType: string): void {
   if (typeof window === 'undefined') return;
   localStorage.removeItem(`${keyType}-api-key`);
+}
+
+// ============================
+// 생성 결과 저장/조회
+// ============================
+
+export interface GenerateResultData {
+  result: GenerateResponse;
+  category: ContentCategory;
+  topic: string;
+  targetKeyword: string;
+  tone: string;
+  historyId: string;
+}
+
+export async function saveGenerateResult(data: GenerateResultData): Promise<string> {
+  const id = `gr_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
+  if (!isSupabaseConfigured()) {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('aio-generate-result', JSON.stringify({ id, ...data }));
+    }
+    return id;
+  }
+  try {
+    const { error } = await getSupabase()
+      .from('generate_results')
+      .insert({ id, data });
+    if (error) throw error;
+    return id;
+  } catch {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('aio-generate-result', JSON.stringify({ id, ...data }));
+    }
+    return id;
+  }
+}
+
+export async function getGenerateResult(id: string): Promise<GenerateResultData | null> {
+  if (!isSupabaseConfigured()) {
+    return getGenerateResultLocal();
+  }
+  try {
+    const { data, error } = await getSupabase()
+      .from('generate_results')
+      .select('data')
+      .eq('id', id)
+      .single();
+    if (error) throw error;
+    return data?.data as GenerateResultData || null;
+  } catch {
+    return getGenerateResultLocal();
+  }
+}
+
+function getGenerateResultLocal(): GenerateResultData | null {
+  if (typeof window === 'undefined') return null;
+  try {
+    const raw = localStorage.getItem('aio-generate-result');
+    if (!raw) return null;
+    return JSON.parse(raw) as GenerateResultData;
+  } catch {
+    return null;
+  }
 }
 
 // ============================
@@ -362,19 +430,19 @@ export async function uploadImage(historyId: string, base64: string, prompt: str
     const ext = contentType.includes('png') ? 'png' : 'jpg';
     const fileName = `${historyId}/${Date.now()}.${ext}`;
 
-    const { error: uploadError } = await supabase.storage
+    const { error: uploadError } = await getSupabase().storage
       .from('generated-images')
       .upload(fileName, bytes, { contentType, upsert: true });
     if (uploadError) throw uploadError;
 
-    const { data: urlData } = supabase.storage
+    const { data: urlData } = getSupabase().storage
       .from('generated-images')
       .getPublicUrl(fileName);
 
     const imageUrl = urlData.publicUrl;
 
     // DB에 메타데이터 저장
-    await supabase.from('generated_images').insert({
+    await getSupabase().from('generated_images').insert({
       history_id: historyId,
       image_url: imageUrl,
       prompt,
@@ -389,7 +457,7 @@ export async function uploadImage(historyId: string, base64: string, prompt: str
 export async function getImages(historyId: string): Promise<{ url: string; prompt: string }[]> {
   if (!isSupabaseConfigured()) return [];
   try {
-    const { data, error } = await supabase
+    const { data, error } = await getSupabase()
       .from('generated_images')
       .select('image_url, prompt')
       .eq('history_id', historyId)
