@@ -6,6 +6,7 @@ import Footer from '@/components/Footer';
 
 interface UserData {
   id: string;
+  name: string;
   email: string;
   created_at: string;
   last_sign_in_at: string | null;
@@ -105,7 +106,8 @@ export default function AdminPage() {
   };
 
   const filteredUsers = users.filter(u =>
-    u.email.toLowerCase().includes(searchTerm.toLowerCase())
+    u.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    u.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const planStats = {
@@ -211,7 +213,7 @@ export default function AdminPage() {
               type="text"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              placeholder="이메일로 검색..."
+              placeholder="이름 또는 이메일로 검색..."
               className="w-full pl-10 pr-4 py-2.5 border-2 border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-transparent"
             />
           </div>
@@ -238,6 +240,7 @@ export default function AdminPage() {
             <table className="w-full text-sm">
               <thead>
                 <tr className="bg-gray-50 border-b-2 border-gray-200">
+                  <th className="text-left px-4 py-3 font-semibold text-gray-700">이름</th>
                   <th className="text-left px-4 py-3 font-semibold text-gray-700">이메일</th>
                   <th className="text-center px-4 py-3 font-semibold text-gray-700">등급</th>
                   <th className="text-center px-4 py-3 font-semibold text-gray-700">등급 변경</th>
@@ -252,7 +255,7 @@ export default function AdminPage() {
               <tbody>
                 {loading && users.length === 0 ? (
                   <tr>
-                    <td colSpan={9} className="text-center py-12 text-gray-400">
+                    <td colSpan={10} className="text-center py-12 text-gray-400">
                       <svg className="w-6 h-6 animate-spin mx-auto mb-2" fill="none" viewBox="0 0 24 24">
                         <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                         <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
@@ -262,7 +265,7 @@ export default function AdminPage() {
                   </tr>
                 ) : filteredUsers.length === 0 ? (
                   <tr>
-                    <td colSpan={9} className="text-center py-12 text-gray-400">
+                    <td colSpan={10} className="text-center py-12 text-gray-400">
                       {searchTerm ? '검색 결과가 없습니다.' : '회원이 없습니다.'}
                     </td>
                   </tr>
@@ -272,7 +275,10 @@ export default function AdminPage() {
                     return (
                       <tr key={user.id} className="border-b border-gray-100 hover:bg-gray-50/50 transition-colors">
                         <td className="px-4 py-3">
-                          <span className="font-medium text-gray-800">{user.email}</span>
+                          <span className="font-medium text-gray-800">{user.name || '-'}</span>
+                        </td>
+                        <td className="px-4 py-3">
+                          <span className="text-gray-600 text-xs">{user.email}</span>
                         </td>
                         <td className="text-center px-4 py-3">
                           <span className={`inline-block px-2.5 py-1 text-xs font-bold rounded-full border ${badge.color}`}>

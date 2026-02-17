@@ -105,7 +105,7 @@ export default function Header({ showApiKeyButton = false, onToggleApiKey, apiKe
                 <Link href="/pricing" className={`px-2 py-0.5 text-[10px] font-bold rounded-full border ${PLAN_LABELS[plan].style} hover:opacity-80 transition-all`}>
                   {PLAN_LABELS[plan].name}
                 </Link>
-                <span className="text-xs text-gray-500 max-w-[120px] truncate">{user.email}</span>
+                <span className="text-xs text-gray-500 max-w-[120px] truncate">{user.user_metadata?.full_name || user.email}</span>
                 {plan === 'admin' && (
                   <Link
                     href="/admin"
@@ -216,7 +216,7 @@ export default function Header({ showApiKeyButton = false, onToggleApiKey, apiKe
                     <Link href="/pricing" onClick={() => setMobileOpen(false)} className={`px-2.5 py-0.5 text-[11px] font-bold rounded-full border ${PLAN_LABELS[plan].style}`}>
                       {PLAN_LABELS[plan].name}
                     </Link>
-                    <span className="text-xs text-gray-500 truncate">{user.email}</span>
+                    <span className="text-xs text-gray-500 truncate">{user.user_metadata?.full_name || user.email}</span>
                     {plan === 'admin' && (
                       <Link
                         href="/admin"

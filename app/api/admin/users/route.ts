@@ -55,6 +55,7 @@ export async function GET(request: NextRequest) {
       const usage = usageMap.get(user.id) || {};
       return {
         id: user.id,
+        name: user.user_metadata?.full_name || '',
         email: user.email || '',
         created_at: user.created_at,
         last_sign_in_at: user.last_sign_in_at,
