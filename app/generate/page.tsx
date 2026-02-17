@@ -345,24 +345,24 @@ export default function GeneratePage() {
               </button>
 
               {showBusinessInfo && (
-                <div className="px-6 pb-6 space-y-5 border-t border-teal-100">
+                <div className="px-6 pb-6 space-y-5 border-t border-teal-100 bg-gradient-to-b from-teal-50/30 to-white">
                   {/* 회사/브랜드 정보 */}
-                  <div className="pt-5">
+                  <div className="pt-5 bg-white/80 rounded-xl p-4 border border-teal-100 shadow-sm">
                     <h3 className="text-sm font-semibold text-teal-800 mb-3 flex items-center gap-2">
-                      <span className="w-5 h-5 bg-teal-100 rounded text-center text-xs leading-5 font-bold text-teal-600">1</span>
+                      <span className="w-6 h-6 bg-gradient-to-br from-teal-500 to-emerald-600 rounded-lg text-center text-xs leading-6 font-bold text-white shadow-sm">1</span>
                       회사/브랜드 정보
                     </h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                      <input type="text" value={businessInfo.companyName} onChange={e => updateBiz('companyName', e.target.value)} placeholder="회사/브랜드명" className="px-4 py-2.5 border-2 border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-400 focus:border-transparent" />
-                      <input type="text" value={businessInfo.location} onChange={e => updateBiz('location', e.target.value)} placeholder="지역/위치 (예: 서울 강남구)" className="px-4 py-2.5 border-2 border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-400 focus:border-transparent" />
+                      <input type="text" value={businessInfo.companyName} onChange={e => updateBiz('companyName', e.target.value)} placeholder="회사/브랜드명" className="px-4 py-2.5 bg-teal-50/50 border-2 border-teal-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-400 focus:border-transparent placeholder-teal-400/60" />
+                      <input type="text" value={businessInfo.location} onChange={e => updateBiz('location', e.target.value)} placeholder="지역/위치 (예: 서울 강남구)" className="px-4 py-2.5 bg-teal-50/50 border-2 border-teal-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-400 focus:border-transparent placeholder-teal-400/60" />
                     </div>
-                    <input type="text" value={businessInfo.website} onChange={e => updateBiz('website', e.target.value)} placeholder="웹사이트/SNS (예: www.example.com)" className="mt-3 w-full px-4 py-2.5 border-2 border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-400 focus:border-transparent" />
+                    <input type="text" value={businessInfo.website} onChange={e => updateBiz('website', e.target.value)} placeholder="웹사이트/SNS (예: www.example.com)" className="mt-3 w-full px-4 py-2.5 bg-teal-50/50 border-2 border-teal-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-400 focus:border-transparent placeholder-teal-400/60" />
                   </div>
 
                   {/* 산업 분야 */}
-                  <div>
-                    <h3 className="text-sm font-semibold text-teal-800 mb-3 flex items-center gap-2">
-                      <span className="w-5 h-5 bg-teal-100 rounded text-center text-xs leading-5 font-bold text-teal-600">2</span>
+                  <div className="bg-white/80 rounded-xl p-4 border border-amber-100 shadow-sm">
+                    <h3 className="text-sm font-semibold text-amber-800 mb-3 flex items-center gap-2">
+                      <span className="w-6 h-6 bg-gradient-to-br from-amber-500 to-orange-600 rounded-lg text-center text-xs leading-6 font-bold text-white shadow-sm">2</span>
                       산업 분야
                     </h3>
                     <div className="flex flex-wrap gap-2">
@@ -373,8 +373,8 @@ export default function GeneratePage() {
                           onClick={() => updateBiz('industry', ind.value)}
                           className={`px-3 py-1.5 text-xs rounded-lg border-2 transition-all duration-200 hover:shadow-md hover:scale-105 ${
                             businessInfo.industry === ind.value
-                              ? 'bg-teal-600 text-white border-teal-300'
-                              : 'bg-gray-50 text-gray-600 border-gray-200 hover:border-teal-300'
+                              ? 'bg-gradient-to-r from-amber-500 to-orange-500 text-white border-amber-300 shadow-sm'
+                              : 'bg-amber-50/50 text-amber-700 border-amber-200 hover:border-amber-400 hover:bg-amber-50'
                           }`}
                         >
                           {ind.label}
@@ -382,69 +382,69 @@ export default function GeneratePage() {
                       ))}
                     </div>
                     {businessInfo.industry === '기타' && (
-                      <input type="text" value={businessInfo.customIndustry} onChange={e => updateBiz('customIndustry', e.target.value)} placeholder="산업 분야를 직접 입력" className="mt-3 w-full px-4 py-2.5 border-2 border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-400 focus:border-transparent" />
+                      <input type="text" value={businessInfo.customIndustry} onChange={e => updateBiz('customIndustry', e.target.value)} placeholder="산업 분야를 직접 입력" className="mt-3 w-full px-4 py-2.5 bg-amber-50/50 border-2 border-amber-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent placeholder-amber-400/60" />
                     )}
                   </div>
 
                   {/* 제품/서비스 정보 */}
-                  <div>
-                    <h3 className="text-sm font-semibold text-teal-800 mb-3 flex items-center gap-2">
-                      <span className="w-5 h-5 bg-teal-100 rounded text-center text-xs leading-5 font-bold text-teal-600">3</span>
+                  <div className="bg-white/80 rounded-xl p-4 border border-sky-100 shadow-sm">
+                    <h3 className="text-sm font-semibold text-sky-800 mb-3 flex items-center gap-2">
+                      <span className="w-6 h-6 bg-gradient-to-br from-sky-500 to-blue-600 rounded-lg text-center text-xs leading-6 font-bold text-white shadow-sm">3</span>
                       제품/서비스 정보
                     </h3>
-                    <input type="text" value={businessInfo.mainProduct} onChange={e => updateBiz('mainProduct', e.target.value)} placeholder="주요 제품/서비스 (예: 프리미엄 커피, 영어 회화 수업)" className="w-full px-4 py-2.5 border-2 border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-400 focus:border-transparent" />
-                    <textarea value={businessInfo.productDescription} onChange={e => updateBiz('productDescription', e.target.value)} placeholder="제품/서비스 상세 설명 (특징, 장점, 차별점)" rows={2} className="mt-3 w-full px-4 py-2.5 border-2 border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-400 focus:border-transparent resize-none" />
+                    <input type="text" value={businessInfo.mainProduct} onChange={e => updateBiz('mainProduct', e.target.value)} placeholder="주요 제품/서비스 (예: 프리미엄 커피, 영어 회화 수업)" className="w-full px-4 py-2.5 bg-sky-50/50 border-2 border-sky-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-sky-400 focus:border-transparent placeholder-sky-400/60" />
+                    <textarea value={businessInfo.productDescription} onChange={e => updateBiz('productDescription', e.target.value)} placeholder="제품/서비스 상세 설명 (특징, 장점, 차별점)" rows={2} className="mt-3 w-full px-4 py-2.5 bg-sky-50/50 border-2 border-sky-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-sky-400 focus:border-transparent resize-none placeholder-sky-400/60" />
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-3">
-                      <input type="text" value={businessInfo.priceRange} onChange={e => updateBiz('priceRange', e.target.value)} placeholder="가격대 (예: 5,000원~15,000원)" className="px-4 py-2.5 border-2 border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-400 focus:border-transparent" />
-                      <input type="text" value={businessInfo.mainBenefit} onChange={e => updateBiz('mainBenefit', e.target.value)} placeholder="주요 혜택 (예: 30% 할인, 무료 배송)" className="px-4 py-2.5 border-2 border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-400 focus:border-transparent" />
+                      <input type="text" value={businessInfo.priceRange} onChange={e => updateBiz('priceRange', e.target.value)} placeholder="가격대 (예: 5,000원~15,000원)" className="px-4 py-2.5 bg-sky-50/50 border-2 border-sky-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-sky-400 focus:border-transparent placeholder-sky-400/60" />
+                      <input type="text" value={businessInfo.mainBenefit} onChange={e => updateBiz('mainBenefit', e.target.value)} placeholder="주요 혜택 (예: 30% 할인, 무료 배송)" className="px-4 py-2.5 bg-sky-50/50 border-2 border-sky-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-sky-400 focus:border-transparent placeholder-sky-400/60" />
                     </div>
                   </div>
 
                   {/* 타겟 고객 */}
-                  <div>
-                    <h3 className="text-sm font-semibold text-teal-800 mb-3 flex items-center gap-2">
-                      <span className="w-5 h-5 bg-teal-100 rounded text-center text-xs leading-5 font-bold text-teal-600">4</span>
+                  <div className="bg-white/80 rounded-xl p-4 border border-violet-100 shadow-sm">
+                    <h3 className="text-sm font-semibold text-violet-800 mb-3 flex items-center gap-2">
+                      <span className="w-6 h-6 bg-gradient-to-br from-violet-500 to-purple-600 rounded-lg text-center text-xs leading-6 font-bold text-white shadow-sm">4</span>
                       타겟 고객
                     </h3>
-                    <input type="text" value={businessInfo.targetAudience} onChange={e => updateBiz('targetAudience', e.target.value)} placeholder="주요 타겟 고객층 (예: 20-30대 직장인)" className="w-full px-4 py-2.5 border-2 border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-400 focus:border-transparent" />
+                    <input type="text" value={businessInfo.targetAudience} onChange={e => updateBiz('targetAudience', e.target.value)} placeholder="주요 타겟 고객층 (예: 20-30대 직장인)" className="w-full px-4 py-2.5 bg-violet-50/50 border-2 border-violet-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-violet-400 focus:border-transparent placeholder-violet-400/60" />
                     <div className="flex flex-wrap gap-1.5 mt-2">
                       {['10대 청소년', '20대 대학생', '20-30대 직장인', '30-40대 주부', '40-50대 중년층', '시니어'].map(t => (
                         <button key={t} type="button" onClick={() => updateBiz('targetAudience', businessInfo.targetAudience ? `${businessInfo.targetAudience}, ${t}` : t)}
-                          className="px-2.5 py-1 text-xs bg-gray-100 text-gray-600 rounded-lg border border-gray-200 hover:bg-teal-50 hover:border-teal-300 hover:scale-105 transition-all duration-200"
+                          className="px-2.5 py-1 text-xs bg-violet-50 text-violet-600 rounded-lg border border-violet-200 hover:bg-violet-100 hover:border-violet-400 hover:scale-105 transition-all duration-200"
                         >{t}</button>
                       ))}
                     </div>
-                    <textarea value={businessInfo.customerNeeds} onChange={e => updateBiz('customerNeeds', e.target.value)} placeholder="고객의 주요 고민/니즈" rows={2} className="mt-3 w-full px-4 py-2.5 border-2 border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-400 focus:border-transparent resize-none" />
+                    <textarea value={businessInfo.customerNeeds} onChange={e => updateBiz('customerNeeds', e.target.value)} placeholder="고객의 주요 고민/니즈" rows={2} className="mt-3 w-full px-4 py-2.5 bg-violet-50/50 border-2 border-violet-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-violet-400 focus:border-transparent resize-none placeholder-violet-400/60" />
                   </div>
 
                   {/* 강점 및 차별점 */}
-                  <div>
-                    <h3 className="text-sm font-semibold text-teal-800 mb-3 flex items-center gap-2">
-                      <span className="w-5 h-5 bg-teal-100 rounded text-center text-xs leading-5 font-bold text-teal-600">5</span>
+                  <div className="bg-white/80 rounded-xl p-4 border border-rose-100 shadow-sm">
+                    <h3 className="text-sm font-semibold text-rose-800 mb-3 flex items-center gap-2">
+                      <span className="w-6 h-6 bg-gradient-to-br from-rose-500 to-pink-600 rounded-lg text-center text-xs leading-6 font-bold text-white shadow-sm">5</span>
                       강점 및 차별점
                     </h3>
                     {businessInfo.strengths.length > 0 && (
                       <div className="flex flex-wrap gap-2 mb-3">
                         {businessInfo.strengths.map((s, i) => (
-                          <span key={i} className="inline-flex items-center gap-1.5 px-3 py-1 bg-gradient-to-r from-teal-500 to-emerald-500 text-white text-xs rounded-full">
+                          <span key={i} className="inline-flex items-center gap-1.5 px-3 py-1 bg-gradient-to-r from-rose-500 to-pink-500 text-white text-xs rounded-full shadow-sm">
                             {s}
-                            <button type="button" onClick={() => removeStrength(i)} className="hover:text-teal-200 transition-colors">x</button>
+                            <button type="button" onClick={() => removeStrength(i)} className="hover:text-rose-200 transition-colors">x</button>
                           </span>
                         ))}
                       </div>
                     )}
                     <div className="flex gap-2">
-                      <input type="text" value={businessInfo.newStrength} onChange={e => updateBiz('newStrength', e.target.value)} onKeyDown={e => e.key === 'Enter' && (e.preventDefault(), addStrength())} placeholder="강점 입력 (최대 5개)" className="flex-1 px-4 py-2.5 border-2 border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-400 focus:border-transparent" />
-                      <button type="button" onClick={addStrength} className="px-4 py-2.5 bg-teal-600 text-white text-sm font-medium rounded-xl hover:bg-teal-700 hover:shadow-md hover:scale-105 transition-all duration-200 border-2 border-teal-300">추가</button>
+                      <input type="text" value={businessInfo.newStrength} onChange={e => updateBiz('newStrength', e.target.value)} onKeyDown={e => e.key === 'Enter' && (e.preventDefault(), addStrength())} placeholder="강점 입력 (최대 5개)" className="flex-1 px-4 py-2.5 bg-rose-50/50 border-2 border-rose-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-rose-400 focus:border-transparent placeholder-rose-400/60" />
+                      <button type="button" onClick={addStrength} className="px-4 py-2.5 bg-gradient-to-r from-rose-500 to-pink-600 text-white text-sm font-medium rounded-xl hover:from-rose-600 hover:to-pink-700 hover:shadow-md hover:scale-105 transition-all duration-200 border-2 border-rose-300 shadow-sm">추가</button>
                     </div>
                     <div className="flex flex-wrap gap-1.5 mt-2">
                       {['합리적인 가격', '전문가 상담', '풍부한 경험', '빠른 서비스', '고품질', '친절한 응대'].map(s => (
                         <button key={s} type="button" onClick={() => { if (businessInfo.strengths.length < 5 && !businessInfo.strengths.includes(s)) setBusinessInfo(prev => ({ ...prev, strengths: [...prev.strengths, s] })); }}
-                          className="px-2.5 py-1 text-xs bg-gray-100 text-gray-600 rounded-lg border border-gray-200 hover:bg-teal-50 hover:border-teal-300 hover:scale-105 transition-all duration-200"
+                          className="px-2.5 py-1 text-xs bg-rose-50 text-rose-600 rounded-lg border border-rose-200 hover:bg-rose-100 hover:border-rose-400 hover:scale-105 transition-all duration-200"
                         >{s}</button>
                       ))}
                     </div>
-                    <textarea value={businessInfo.uniquePoint} onChange={e => updateBiz('uniquePoint', e.target.value)} placeholder="경쟁사 대비 차별점" rows={2} className="mt-3 w-full px-4 py-2.5 border-2 border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-400 focus:border-transparent resize-none" />
+                    <textarea value={businessInfo.uniquePoint} onChange={e => updateBiz('uniquePoint', e.target.value)} placeholder="경쟁사 대비 차별점" rows={2} className="mt-3 w-full px-4 py-2.5 bg-rose-50/50 border-2 border-rose-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-rose-400 focus:border-transparent resize-none placeholder-rose-400/60" />
                   </div>
                 </div>
               )}
