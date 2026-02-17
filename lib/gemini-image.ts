@@ -1,10 +1,10 @@
 import { GoogleGenAI } from '@google/genai';
 
 const IMAGE_MODELS = [
+  'gemini-2.5-flash-image',
+  'gemini-3-pro-image-preview',
   'gemini-2.5-flash-preview-04-17',
   'gemini-2.0-flash-exp-image-generation',
-  'gemini-2.0-flash-exp',
-  'gemini-2.0-flash',
 ];
 
 export async function generateContentImages(
