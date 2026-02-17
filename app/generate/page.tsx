@@ -1329,30 +1329,32 @@ export default function GeneratePage() {
                         </svg>
                         AI 생성 이미지 ({generatedImages.length}장)
                       </span>
-                      <button
-                        onClick={handleApplyImages}
-                        className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg transition-all duration-200 border-2 border-indigo-300 text-white bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 hover:shadow-md hover:scale-105"
-                      >
-                        <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                        </svg>
-                        본문에 추가
-                      </button>
-                      <button
-                        onClick={handleGenerateImages}
-                        disabled={isGeneratingImages}
-                        className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg transition-all duration-200 border-2 border-emerald-300 text-emerald-700 bg-emerald-50 hover:bg-emerald-100 hover:shadow-md hover:scale-105 disabled:opacity-50"
-                      >
-                        {isGeneratingImages ? (
-                          <>
-                            <svg className="w-3.5 h-3.5 animate-spin" fill="none" viewBox="0 0 24 24">
-                              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
-                            </svg>
-                            재생성 중...
-                          </>
-                        ) : '다시 생성'}
-                      </button>
+                      <div className="flex items-center gap-2">
+                        <button
+                          onClick={handleApplyImages}
+                          className="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-semibold rounded-xl transition-all duration-200 border-2 border-indigo-300 text-white bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 hover:shadow-lg hover:scale-105 shadow-sm"
+                        >
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                          </svg>
+                          본문에 삽입
+                        </button>
+                        <button
+                          onClick={handleGenerateImages}
+                          disabled={isGeneratingImages}
+                          className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg transition-all duration-200 border-2 border-emerald-300 text-emerald-700 bg-emerald-50 hover:bg-emerald-100 hover:shadow-md hover:scale-105 disabled:opacity-50"
+                        >
+                          {isGeneratingImages ? (
+                            <>
+                              <svg className="w-3.5 h-3.5 animate-spin" fill="none" viewBox="0 0 24 24">
+                                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                              </svg>
+                              재생성 중...
+                            </>
+                          ) : '다시 생성'}
+                        </button>
+                      </div>
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                       {generatedImages.map((img, i) => (
