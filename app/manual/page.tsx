@@ -46,10 +46,10 @@ export default function ManualPage() {
         </div>
       </header>
 
-      <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+      <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-5">
         {/* 소개 */}
-        <section className="bg-gradient-to-br from-indigo-50 to-purple-50 rounded-xl shadow-sm border-2 border-indigo-200 p-8">
-          <h2 className="text-[14pt] font-bold bg-gradient-to-r from-indigo-700 to-purple-700 bg-clip-text text-transparent mb-4">AIO/GEO Optimizer란?</h2>
+        <section className="bg-gradient-to-br from-indigo-50 to-purple-50 rounded-xl shadow-sm border-2 border-indigo-200 p-6">
+          <h2 className="text-[14pt] font-bold bg-gradient-to-r from-indigo-700 to-purple-700 bg-clip-text text-transparent mb-3">AIO/GEO Optimizer란?</h2>
           <p className="text-[9pt] text-gray-800 leading-relaxed">
             AIO/GEO Optimizer는 AI 검색엔진(AI Overview, Generative Engine)에 최적화된 콘텐츠를 작성할 수 있도록
             도와주는 분석 도구입니다. Claude API를 활용하여 콘텐츠를 다각도로 분석하고,
@@ -58,13 +58,13 @@ export default function ManualPage() {
         </section>
 
         {/* API 키 설정 */}
-        <section className="bg-white rounded-xl shadow-sm border-2 border-amber-200 p-8">
-          <h2 className="text-[14pt] font-bold text-gray-900 mb-4 flex items-center gap-2">
+        <section className="bg-white rounded-xl shadow-sm border-2 border-amber-200 p-6">
+          <h2 className="text-[14pt] font-bold text-gray-900 mb-3 flex items-center gap-2">
             <span className="w-8 h-8 bg-gradient-to-br from-amber-500 to-orange-600 text-white rounded-lg flex items-center justify-center text-sm font-bold shadow-sm">1</span>
             <span className="bg-gradient-to-r from-amber-700 to-orange-600 bg-clip-text text-transparent">API 키 설정</span>
           </h2>
-          <p className="text-[9pt] text-gray-800 mb-4">콘텐츠 분석/생성 및 이미지 생성을 위해 API 키를 입력해야 합니다. 상단 네비게이션의 &quot;API Key&quot; 버튼을 클릭하면 입력 패널이 열립니다.</p>
-          <div className="space-y-4">
+          <p className="text-[9pt] text-gray-800 mb-3">콘텐츠 분석/생성 및 이미지 생성을 위해 API 키를 입력해야 합니다. 상단 네비게이션의 &quot;API Key&quot; 버튼을 클릭하면 입력 패널이 열립니다.</p>
+          <div className="space-y-3">
             <div className="bg-amber-50 rounded-xl p-4 border border-amber-100">
               <h3 className="text-[12pt] font-semibold text-amber-800 mb-2 flex items-center gap-2">
                 Gemini API Key
@@ -89,12 +89,12 @@ export default function ManualPage() {
         </section>
 
         {/* 시작하기 */}
-        <section className="bg-white rounded-xl shadow-sm border-2 border-blue-200 p-8">
-          <h2 className="text-[14pt] font-bold text-gray-900 mb-4 flex items-center gap-2">
+        <section className="bg-white rounded-xl shadow-sm border-2 border-blue-200 p-6">
+          <h2 className="text-[14pt] font-bold text-gray-900 mb-3 flex items-center gap-2">
             <span className="w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-600 text-white rounded-lg flex items-center justify-center text-sm font-bold shadow-sm">2</span>
             <span className="bg-gradient-to-r from-blue-700 to-blue-600 bg-clip-text text-transparent">콘텐츠 분석 시작하기</span>
           </h2>
-          <div className="space-y-4 text-gray-800">
+          <div className="space-y-3 text-gray-800">
             <div className="bg-blue-50 rounded-xl p-4 border border-blue-100">
               <h3 className="text-[12pt] font-semibold text-blue-800 mb-2">콘텐츠 입력</h3>
               <p className="text-[9pt]">분석하고 싶은 콘텐츠(블로그 글, 기사, 웹페이지 텍스트 등)를 텍스트 입력 영역에 붙여넣기 합니다.</p>
@@ -111,13 +111,13 @@ export default function ManualPage() {
         </section>
 
         {/* 콘텐츠 생성 */}
-        <section className="bg-white rounded-xl shadow-sm border-2 border-emerald-200 p-8">
-          <h2 className="text-[14pt] font-bold text-gray-900 mb-4 flex items-center gap-2">
+        <section className="bg-white rounded-xl shadow-sm border-2 border-emerald-200 p-6">
+          <h2 className="text-[14pt] font-bold text-gray-900 mb-3 flex items-center gap-2">
             <span className="w-8 h-8 bg-gradient-to-br from-emerald-500 to-green-600 text-white rounded-lg flex items-center justify-center text-sm font-bold shadow-sm">3</span>
             <span className="bg-gradient-to-r from-emerald-700 to-green-600 bg-clip-text text-transparent">콘텐츠 생성</span>
           </h2>
-          <p className="text-[9pt] text-gray-800 mb-4">AI가 AIO/GEO에 최적화된 콘텐츠를 자동으로 생성합니다. 주제, 카테고리, 톤을 설정하면 맞춤형 콘텐츠가 만들어집니다.</p>
-          <div className="space-y-4">
+          <p className="text-[9pt] text-gray-800 mb-3">AI가 AIO/GEO에 최적화된 콘텐츠를 자동으로 생성합니다. 주제, 카테고리, 톤을 설정하면 맞춤형 콘텐츠가 만들어집니다.</p>
+          <div className="space-y-3">
             <div className="bg-emerald-50 rounded-xl p-4 border border-emerald-100">
               <h3 className="text-[12pt] font-semibold text-emerald-800 mb-2">기본 설정</h3>
               <ul className="space-y-2 text-[9pt] text-gray-800">
@@ -148,12 +148,12 @@ export default function ManualPage() {
         </section>
 
         {/* 분석 결과 탭 */}
-        <section className="bg-white rounded-xl shadow-sm border-2 border-sky-200 p-8">
-          <h2 className="text-[14pt] font-bold text-gray-900 mb-4 flex items-center gap-2">
+        <section className="bg-white rounded-xl shadow-sm border-2 border-sky-200 p-6">
+          <h2 className="text-[14pt] font-bold text-gray-900 mb-3 flex items-center gap-2">
             <span className="w-8 h-8 bg-gradient-to-br from-sky-500 to-blue-600 text-white rounded-lg flex items-center justify-center text-sm font-bold shadow-sm">4</span>
             <span className="bg-gradient-to-r from-sky-700 to-blue-600 bg-clip-text text-transparent">분석 결과 이해하기</span>
           </h2>
-          <div className="space-y-6">
+          <div className="space-y-3">
             <div className="bg-sky-50 rounded-xl p-4 border border-sky-100">
               <h3 className="text-[12pt] font-semibold text-sky-800 mb-2">종합 개요</h3>
               <p className="text-[9pt] text-gray-800">전체 AIO/GEO 점수와 주요 지표를 한눈에 확인할 수 있는 대시보드입니다. 콘텐츠의 전반적인 AI 최적화 수준을 빠르게 파악할 수 있습니다.</p>
@@ -178,21 +178,21 @@ export default function ManualPage() {
         </section>
 
         {/* 대시보드 */}
-        <section className="bg-white rounded-xl shadow-sm border-2 border-violet-200 p-8">
-          <h2 className="text-[14pt] font-bold text-gray-900 mb-4 flex items-center gap-2">
+        <section className="bg-white rounded-xl shadow-sm border-2 border-violet-200 p-6">
+          <h2 className="text-[14pt] font-bold text-gray-900 mb-3 flex items-center gap-2">
             <span className="w-8 h-8 bg-gradient-to-br from-violet-500 to-purple-600 text-white rounded-lg flex items-center justify-center text-sm font-bold shadow-sm">5</span>
             <span className="bg-gradient-to-r from-violet-700 to-purple-600 bg-clip-text text-transparent">대시보드 활용하기</span>
           </h2>
-          <p className="text-[9pt] text-gray-800 mb-4">대시보드에서는 분석 및 생성한 모든 콘텐츠의 이력을 관리하고, 다양한 방식으로 콘텐츠를 활용할 수 있습니다.</p>
+          <p className="text-[9pt] text-gray-800 mb-3">대시보드에서는 분석 및 생성한 모든 콘텐츠의 이력을 관리하고, 다양한 방식으로 콘텐츠를 활용할 수 있습니다.</p>
 
-          <div className="space-y-4">
-            <div className="bg-violet-50 rounded-xl p-5 border border-violet-100">
+          <div className="space-y-3">
+            <div className="bg-violet-50 rounded-xl p-4 border border-violet-100">
               <h3 className="text-[12pt] font-semibold text-violet-800 mb-3">이력 목록</h3>
               <p className="text-[9pt] text-gray-800 mb-2">생성하거나 분석한 모든 콘텐츠가 날짜순으로 정리됩니다. 각 항목에는 제목, 날짜, 카테고리가 표시되며, &quot;보기&quot; 버튼을 클릭하면 상세 페이지로 이동합니다.</p>
               <p className="text-[9pt] text-gray-700">수정/재생성한 콘텐츠는 원본 아래에 수정본으로 표시됩니다.</p>
             </div>
 
-            <div className="bg-violet-50 rounded-xl p-5 border border-violet-100">
+            <div className="bg-violet-50 rounded-xl p-4 border border-violet-100">
               <h3 className="text-[12pt] font-semibold text-violet-800 mb-3">상세 페이지 기능</h3>
               <p className="text-[9pt] text-gray-800 mb-3">각 콘텐츠의 상세 페이지(<code className="bg-violet-100 px-1.5 py-0.5 rounded text-violet-700 text-[8pt]">/dashboard/[id]</code>)에서는 고유한 URL로 언제든 다시 접근할 수 있습니다.</p>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -235,7 +235,7 @@ export default function ManualPage() {
               </div>
             </div>
 
-            <div className="bg-violet-50 rounded-xl p-5 border border-violet-100">
+            <div className="bg-violet-50 rounded-xl p-4 border border-violet-100">
               <h3 className="text-[12pt] font-semibold text-violet-800 mb-3 flex items-center gap-2">
                 본문 수정 기능
                 <span className="px-2 py-0.5 bg-violet-200 text-violet-700 text-[8pt] font-bold rounded-full">NEW</span>
@@ -271,7 +271,7 @@ export default function ManualPage() {
               </div>
             </div>
 
-            <div className="bg-violet-50 rounded-xl p-5 border border-violet-100">
+            <div className="bg-violet-50 rounded-xl p-4 border border-violet-100">
               <h3 className="text-[12pt] font-semibold text-violet-800 mb-2">수정본 관리</h3>
               <p className="text-[9pt] text-gray-800">콘텐츠 생성 결과 페이지에서 수정/재생성한 이력이 있으면, 상세 페이지에서 &quot;원본&quot;과 &quot;수정 #1, #2...&quot; 버튼으로 각 버전을 전환하여 확인할 수 있습니다.</p>
             </div>
@@ -279,8 +279,8 @@ export default function ManualPage() {
         </section>
 
         {/* 점수 해석 */}
-        <section className="bg-white rounded-xl shadow-sm border-2 border-purple-200 p-8">
-          <h2 className="text-[14pt] font-bold text-gray-900 mb-4 flex items-center gap-2">
+        <section className="bg-white rounded-xl shadow-sm border-2 border-purple-200 p-6">
+          <h2 className="text-[14pt] font-bold text-gray-900 mb-3 flex items-center gap-2">
             <span className="w-8 h-8 bg-gradient-to-br from-purple-500 to-pink-600 text-white rounded-lg flex items-center justify-center text-sm font-bold shadow-sm">6</span>
             <span className="bg-gradient-to-r from-purple-700 to-pink-600 bg-clip-text text-transparent">점수 해석 가이드</span>
           </h2>
@@ -304,8 +304,8 @@ export default function ManualPage() {
         </section>
 
         {/* 용어 설명 */}
-        <section className="bg-white rounded-xl shadow-sm border-2 border-teal-200 p-8">
-          <h2 className="text-[14pt] font-bold text-gray-900 mb-4 flex items-center gap-2">
+        <section className="bg-white rounded-xl shadow-sm border-2 border-teal-200 p-6">
+          <h2 className="text-[14pt] font-bold text-gray-900 mb-3 flex items-center gap-2">
             <span className="w-8 h-8 bg-gradient-to-br from-teal-500 to-cyan-600 text-white rounded-lg flex items-center justify-center text-sm font-bold shadow-sm">7</span>
             <span className="bg-gradient-to-r from-teal-700 to-cyan-600 bg-clip-text text-transparent">용어 설명</span>
           </h2>
@@ -334,15 +334,15 @@ export default function ManualPage() {
         </div>
 
         {/* 7. 콘텐츠 구조 재구성 */}
-        <section className="bg-white rounded-xl shadow-sm border-2 border-rose-200 p-8">
-          <h2 className="text-[14pt] font-bold text-gray-900 mb-4 flex items-center gap-2">
+        <section className="bg-white rounded-xl shadow-sm border-2 border-rose-200 p-6">
+          <h2 className="text-[14pt] font-bold text-gray-900 mb-3 flex items-center gap-2">
             <span className="w-8 h-8 bg-gradient-to-br from-rose-500 to-pink-600 text-white rounded-lg flex items-center justify-center text-sm font-bold shadow-sm">8</span>
             <span className="bg-gradient-to-r from-rose-700 to-pink-600 bg-clip-text text-transparent">콘텐츠 구조 재구성법</span>
           </h2>
-          <p className="text-[9pt] text-gray-800 mb-5">AI 검색엔진은 잘 구조화된 콘텐츠를 선호합니다. 다음 원칙에 따라 콘텐츠를 재구성하면 AIO/GEO 점수가 크게 향상됩니다.</p>
+          <p className="text-[9pt] text-gray-800 mb-3">AI 검색엔진은 잘 구조화된 콘텐츠를 선호합니다. 다음 원칙에 따라 콘텐츠를 재구성하면 AIO/GEO 점수가 크게 향상됩니다.</p>
 
-          <div className="space-y-4">
-            <div className="bg-rose-50 rounded-xl p-5 border border-rose-100">
+          <div className="space-y-3">
+            <div className="bg-rose-50 rounded-xl p-4 border border-rose-100">
               <h3 className="text-[12pt] font-semibold text-gray-800 mb-3 flex items-center gap-2">
                 <span className="w-6 h-6 bg-rose-200 text-rose-700 rounded-full flex items-center justify-center text-xs font-bold">1</span>
                 역피라미드 구조 적용
@@ -360,7 +360,7 @@ export default function ManualPage() {
               </div>
             </div>
 
-            <div className="bg-rose-50 rounded-xl p-5 border border-rose-100">
+            <div className="bg-rose-50 rounded-xl p-4 border border-rose-100">
               <h3 className="text-[12pt] font-semibold text-gray-800 mb-3 flex items-center gap-2">
                 <span className="w-6 h-6 bg-rose-200 text-rose-700 rounded-full flex items-center justify-center text-xs font-bold">2</span>
                 명확한 헤딩 계층 구조
@@ -376,7 +376,7 @@ export default function ManualPage() {
               </div>
             </div>
 
-            <div className="bg-rose-50 rounded-xl p-5 border border-rose-100">
+            <div className="bg-rose-50 rounded-xl p-4 border border-rose-100">
               <h3 className="text-[12pt] font-semibold text-gray-800 mb-3 flex items-center gap-2">
                 <span className="w-6 h-6 bg-rose-200 text-rose-700 rounded-full flex items-center justify-center text-xs font-bold">3</span>
                 리스트와 표 적극 활용
@@ -399,7 +399,7 @@ export default function ManualPage() {
               </div>
             </div>
 
-            <div className="bg-rose-50 rounded-xl p-5 border border-rose-100">
+            <div className="bg-rose-50 rounded-xl p-4 border border-rose-100">
               <h3 className="text-[12pt] font-semibold text-gray-800 mb-3 flex items-center gap-2">
                 <span className="w-6 h-6 bg-rose-200 text-rose-700 rounded-full flex items-center justify-center text-xs font-bold">4</span>
                 한 문단 한 주제 원칙
@@ -410,15 +410,15 @@ export default function ManualPage() {
         </section>
 
         {/* 8. 키워드 최적화 방법 */}
-        <section className="bg-white rounded-xl shadow-sm border-2 border-amber-200 p-8">
-          <h2 className="text-[14pt] font-bold text-gray-900 mb-4 flex items-center gap-2">
+        <section className="bg-white rounded-xl shadow-sm border-2 border-amber-200 p-6">
+          <h2 className="text-[14pt] font-bold text-gray-900 mb-3 flex items-center gap-2">
             <span className="w-8 h-8 bg-gradient-to-br from-amber-500 to-orange-600 text-white rounded-lg flex items-center justify-center text-sm font-bold shadow-sm">9</span>
             <span className="bg-gradient-to-r from-amber-700 to-orange-600 bg-clip-text text-transparent">키워드 최적화 방법</span>
           </h2>
-          <p className="text-[9pt] text-gray-800 mb-5">올바른 키워드 전략은 AI 검색 노출의 핵심입니다. 단순한 키워드 반복이 아닌, 의미 중심의 최적화가 필요합니다.</p>
+          <p className="text-[9pt] text-gray-800 mb-3">올바른 키워드 전략은 AI 검색 노출의 핵심입니다. 단순한 키워드 반복이 아닌, 의미 중심의 최적화가 필요합니다.</p>
 
-          <div className="space-y-4">
-            <div className="bg-amber-50 rounded-xl p-5 border border-amber-100">
+          <div className="space-y-3">
+            <div className="bg-amber-50 rounded-xl p-4 border border-amber-100">
               <h3 className="text-[12pt] font-semibold text-amber-800 mb-2">키워드 배치 핵심 위치</h3>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-2 mb-3">
                 {['제목 (H1)', '소제목 (H2~H3)', '첫 문단 (100자 이내)', '메타 디스크립션'].map((pos) => (
@@ -430,7 +430,7 @@ export default function ManualPage() {
               <p className="text-[9pt] text-gray-800">핵심 키워드는 위 4곳에 반드시 포함시키세요. AI는 이 위치의 텍스트를 콘텐츠 주제 파악에 가장 많이 활용합니다.</p>
             </div>
 
-            <div className="bg-amber-50 rounded-xl p-5 border border-amber-100">
+            <div className="bg-amber-50 rounded-xl p-4 border border-amber-100">
               <h3 className="text-[12pt] font-semibold text-amber-800 mb-2">적정 키워드 밀도</h3>
               <div className="space-y-3">
                 <div>
@@ -454,7 +454,7 @@ export default function ManualPage() {
               </div>
             </div>
 
-            <div className="bg-amber-50 rounded-xl p-5 border border-amber-100">
+            <div className="bg-amber-50 rounded-xl p-4 border border-amber-100">
               <h3 className="text-[12pt] font-semibold text-amber-800 mb-2">의미적 키워드 확장 (Semantic SEO)</h3>
               <p className="text-[9pt] text-gray-800 mb-3">AI는 단순 키워드 매칭이 아니라 의미를 이해합니다. 관련 주제를 폭넓게 다뤄야 합니다.</p>
               <div className="bg-white rounded-lg p-4 border border-amber-200">
@@ -468,7 +468,7 @@ export default function ManualPage() {
               </div>
             </div>
 
-            <div className="bg-amber-50 rounded-xl p-5 border border-amber-100">
+            <div className="bg-amber-50 rounded-xl p-4 border border-amber-100">
               <h3 className="text-[12pt] font-semibold text-amber-800 mb-2">롱테일 키워드 활용</h3>
               <p className="text-[9pt] text-gray-800 mb-3">구체적인 질문형 롱테일 키워드를 소제목이나 FAQ에 활용하면 AI 검색 노출 확률이 높아집니다.</p>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -486,16 +486,16 @@ export default function ManualPage() {
         </section>
 
         {/* 9. E-E-A-T 강화법 */}
-        <section className="bg-white rounded-xl shadow-sm border-2 border-violet-200 p-8">
-          <h2 className="text-[14pt] font-bold text-gray-900 mb-4 flex items-center gap-2">
+        <section className="bg-white rounded-xl shadow-sm border-2 border-violet-200 p-6">
+          <h2 className="text-[14pt] font-bold text-gray-900 mb-3 flex items-center gap-2">
             <span className="w-8 h-8 bg-gradient-to-br from-violet-500 to-indigo-600 text-white rounded-lg flex items-center justify-center text-sm font-bold shadow-sm">10</span>
             <span className="bg-gradient-to-r from-violet-700 to-indigo-600 bg-clip-text text-transparent">E-E-A-T 강화법</span>
           </h2>
-          <p className="text-[9pt] text-gray-800 mb-5">E-E-A-T(경험, 전문성, 권위, 신뢰)는 AI가 콘텐츠를 인용할지 결정하는 핵심 기준입니다. 각 요소를 강화하는 구체적인 방법을 안내합니다.</p>
+          <p className="text-[9pt] text-gray-800 mb-3">E-E-A-T(경험, 전문성, 권위, 신뢰)는 AI가 콘텐츠를 인용할지 결정하는 핵심 기준입니다. 각 요소를 강화하는 구체적인 방법을 안내합니다.</p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {/* Experience */}
-            <div className="bg-gradient-to-br from-blue-50 to-sky-50 rounded-xl p-5 border border-blue-200">
+            <div className="bg-gradient-to-br from-blue-50 to-sky-50 rounded-xl p-4 border border-blue-200">
               <div className="flex items-center gap-2 mb-3">
                 <span className="w-8 h-8 bg-gradient-to-br from-blue-500 to-sky-600 text-white rounded-lg flex items-center justify-center text-xs font-bold shadow-sm">E</span>
                 <h3 className="text-[10pt] font-semibold text-blue-800">Experience (경험)</h3>
@@ -522,7 +522,7 @@ export default function ManualPage() {
             </div>
 
             {/* Expertise */}
-            <div className="bg-gradient-to-br from-purple-50 to-violet-50 rounded-xl p-5 border border-purple-200">
+            <div className="bg-gradient-to-br from-purple-50 to-violet-50 rounded-xl p-4 border border-purple-200">
               <div className="flex items-center gap-2 mb-3">
                 <span className="w-8 h-8 bg-gradient-to-br from-purple-500 to-violet-600 text-white rounded-lg flex items-center justify-center text-xs font-bold shadow-sm">E</span>
                 <h3 className="text-[10pt] font-semibold text-purple-800">Expertise (전문성)</h3>
@@ -549,7 +549,7 @@ export default function ManualPage() {
             </div>
 
             {/* Authoritativeness */}
-            <div className="bg-gradient-to-br from-amber-50 to-orange-50 rounded-xl p-5 border border-amber-200">
+            <div className="bg-gradient-to-br from-amber-50 to-orange-50 rounded-xl p-4 border border-amber-200">
               <div className="flex items-center gap-2 mb-3">
                 <span className="w-8 h-8 bg-gradient-to-br from-amber-500 to-orange-600 text-white rounded-lg flex items-center justify-center text-xs font-bold shadow-sm">A</span>
                 <h3 className="text-[10pt] font-semibold text-amber-800">Authoritativeness (권위)</h3>
@@ -576,7 +576,7 @@ export default function ManualPage() {
             </div>
 
             {/* Trustworthiness */}
-            <div className="bg-gradient-to-br from-emerald-50 to-green-50 rounded-xl p-5 border border-emerald-200">
+            <div className="bg-gradient-to-br from-emerald-50 to-green-50 rounded-xl p-4 border border-emerald-200">
               <div className="flex items-center gap-2 mb-3">
                 <span className="w-8 h-8 bg-gradient-to-br from-emerald-500 to-green-600 text-white rounded-lg flex items-center justify-center text-xs font-bold shadow-sm">T</span>
                 <h3 className="text-[10pt] font-semibold text-emerald-800">Trustworthiness (신뢰)</h3>
@@ -605,15 +605,15 @@ export default function ManualPage() {
         </section>
 
         {/* 10. FAQ 생성법 */}
-        <section className="bg-white rounded-xl shadow-sm border-2 border-cyan-200 p-8">
-          <h2 className="text-[14pt] font-bold text-gray-900 mb-4 flex items-center gap-2">
+        <section className="bg-white rounded-xl shadow-sm border-2 border-cyan-200 p-6">
+          <h2 className="text-[14pt] font-bold text-gray-900 mb-3 flex items-center gap-2">
             <span className="w-8 h-8 bg-gradient-to-br from-cyan-500 to-teal-600 text-white rounded-lg flex items-center justify-center text-sm font-bold shadow-sm">11</span>
             <span className="bg-gradient-to-r from-cyan-700 to-teal-600 bg-clip-text text-transparent">FAQ 섹션 생성법</span>
           </h2>
-          <p className="text-[9pt] text-gray-800 mb-5">FAQ는 AI Overview에 직접 인용될 확률이 가장 높은 콘텐츠 형식입니다. 효과적인 FAQ를 만드는 방법을 안내합니다.</p>
+          <p className="text-[9pt] text-gray-800 mb-3">FAQ는 AI Overview에 직접 인용될 확률이 가장 높은 콘텐츠 형식입니다. 효과적인 FAQ를 만드는 방법을 안내합니다.</p>
 
-          <div className="space-y-4">
-            <div className="bg-cyan-50 rounded-xl p-5 border border-cyan-100">
+          <div className="space-y-3">
+            <div className="bg-cyan-50 rounded-xl p-4 border border-cyan-100">
               <h3 className="text-[12pt] font-semibold text-cyan-800 mb-3">FAQ 작성 원칙</h3>
               <div className="space-y-3">
                 <div className="flex items-start gap-3">
@@ -647,9 +647,9 @@ export default function ManualPage() {
               </div>
             </div>
 
-            <div className="bg-cyan-50 rounded-xl p-5 border border-cyan-100">
+            <div className="bg-cyan-50 rounded-xl p-4 border border-cyan-100">
               <h3 className="text-[12pt] font-semibold text-cyan-800 mb-3">효과적인 FAQ 예시</h3>
-              <div className="space-y-4">
+              <div className="space-y-3">
                 <div className="bg-white rounded-lg p-4 border border-cyan-200">
                   <p className="text-[10pt] font-semibold text-cyan-700 mb-2">Q: AIO(AI Overview)에 콘텐츠가 노출되려면 어떻게 해야 하나요?</p>
                   <p className="text-[9pt] text-gray-800">AIO에 노출되려면 콘텐츠를 질문-답변 형식으로 구성하고, 핵심 답변을 2~3문장으로 간결하게 작성해야 합니다. 또한 통계와 출처를 포함하여 신뢰도를 높이고, 명확한 헤딩 구조로 AI가 내용을 쉽게 파악할 수 있도록 해야 합니다.</p>
@@ -661,7 +661,7 @@ export default function ManualPage() {
               </div>
             </div>
 
-            <div className="bg-cyan-50 rounded-xl p-5 border border-cyan-100">
+            <div className="bg-cyan-50 rounded-xl p-4 border border-cyan-100">
               <h3 className="text-[12pt] font-semibold text-cyan-800 mb-3">FAQ 질문 유형별 템플릿</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 {[
@@ -683,15 +683,15 @@ export default function ManualPage() {
         </section>
 
         {/* 11. 인용 최적화 (Citability) */}
-        <section className="bg-white rounded-xl shadow-sm border-2 border-pink-200 p-8">
-          <h2 className="text-[14pt] font-bold text-gray-900 mb-4 flex items-center gap-2">
+        <section className="bg-white rounded-xl shadow-sm border-2 border-pink-200 p-6">
+          <h2 className="text-[14pt] font-bold text-gray-900 mb-3 flex items-center gap-2">
             <span className="w-8 h-8 bg-gradient-to-br from-pink-500 to-rose-600 text-white rounded-lg flex items-center justify-center text-sm font-bold shadow-sm">12</span>
             <span className="bg-gradient-to-r from-pink-700 to-rose-600 bg-clip-text text-transparent">AI 인용 최적화 (Citability)</span>
           </h2>
-          <p className="text-[9pt] text-gray-800 mb-5">AI가 콘텐츠를 인용하기 쉽게 만드는 것이 AIO/GEO의 최종 목표입니다.</p>
+          <p className="text-[9pt] text-gray-800 mb-3">AI가 콘텐츠를 인용하기 쉽게 만드는 것이 AIO/GEO의 최종 목표입니다.</p>
 
-          <div className="space-y-4">
-            <div className="bg-pink-50 rounded-xl p-5 border border-pink-100">
+          <div className="space-y-3">
+            <div className="bg-pink-50 rounded-xl p-4 border border-pink-100">
               <h3 className="text-[12pt] font-semibold text-pink-800 mb-3">인용되기 쉬운 문장 작성법</h3>
               <div className="space-y-3">
                 {[
@@ -712,15 +712,15 @@ export default function ManualPage() {
         </section>
 
         {/* 13. 키워드 경쟁 분석 */}
-        <section className="bg-white rounded-xl shadow-sm border-2 border-cyan-200 p-8">
-          <h2 className="text-[14pt] font-bold flex items-center gap-3 mb-4">
+        <section className="bg-white rounded-xl shadow-sm border-2 border-cyan-200 p-6">
+          <h2 className="text-[14pt] font-bold flex items-center gap-3 mb-3">
             <span className="w-8 h-8 bg-gradient-to-br from-cyan-500 to-blue-600 text-white rounded-lg flex items-center justify-center text-sm font-bold shadow-sm">13</span>
             <span className="bg-gradient-to-r from-cyan-700 to-blue-600 bg-clip-text text-transparent">키워드 경쟁 분석</span>
           </h2>
-          <p className="text-[9pt] text-gray-800 mb-5">타겟 키워드의 AI 검색 경쟁도를 분석하고, 차별화 전략을 수립합니다.</p>
+          <p className="text-[9pt] text-gray-800 mb-3">타겟 키워드의 AI 검색 경쟁도를 분석하고, 차별화 전략을 수립합니다.</p>
 
-          <div className="space-y-4">
-            <div className="bg-cyan-50 rounded-xl p-5 border border-cyan-100">
+          <div className="space-y-3">
+            <div className="bg-cyan-50 rounded-xl p-4 border border-cyan-100">
               <h3 className="text-[12pt] font-semibold text-cyan-800 mb-3">사용 방법</h3>
               <div className="space-y-2 text-[9pt] text-gray-700">
                 <p>1. 상단 네비게이션에서 <span className="font-semibold text-cyan-700">키워드 분석</span> 클릭</p>
@@ -729,7 +729,7 @@ export default function ManualPage() {
                 <p>4. <span className="font-semibold">분석 시작</span> 클릭</p>
               </div>
             </div>
-            <div className="bg-white rounded-xl p-5 border border-cyan-100">
+            <div className="bg-white rounded-xl p-4 border border-cyan-100">
               <h3 className="text-[12pt] font-semibold text-cyan-800 mb-3">분석 결과 항목</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 {[
@@ -751,15 +751,15 @@ export default function ManualPage() {
         </section>
 
         {/* 14. A/B 버전 생성 */}
-        <section className="bg-white rounded-xl shadow-sm border-2 border-amber-200 p-8">
-          <h2 className="text-[14pt] font-bold flex items-center gap-3 mb-4">
+        <section className="bg-white rounded-xl shadow-sm border-2 border-amber-200 p-6">
+          <h2 className="text-[14pt] font-bold flex items-center gap-3 mb-3">
             <span className="w-8 h-8 bg-gradient-to-br from-amber-500 to-orange-600 text-white rounded-lg flex items-center justify-center text-sm font-bold shadow-sm">14</span>
             <span className="bg-gradient-to-r from-amber-700 to-orange-600 bg-clip-text text-transparent">A/B 버전 생성</span>
           </h2>
-          <p className="text-[9pt] text-gray-800 mb-5">같은 주제로 3가지 다른 톤의 콘텐츠를 동시에 생성하여 최적의 버전을 선택합니다.</p>
+          <p className="text-[9pt] text-gray-800 mb-3">같은 주제로 3가지 다른 톤의 콘텐츠를 동시에 생성하여 최적의 버전을 선택합니다.</p>
 
-          <div className="space-y-4">
-            <div className="bg-amber-50 rounded-xl p-5 border border-amber-100">
+          <div className="space-y-3">
+            <div className="bg-amber-50 rounded-xl p-4 border border-amber-100">
               <h3 className="text-[12pt] font-semibold text-amber-800 mb-3">사용 방법</h3>
               <div className="space-y-2 text-[9pt] text-gray-700">
                 <p>1. 콘텐츠 생성 페이지에서 주제, 카테고리 등 기본 정보 입력</p>
@@ -769,7 +769,7 @@ export default function ManualPage() {
                 <p>5. 가장 적합한 버전을 선택하여 활용</p>
               </div>
             </div>
-            <div className="bg-white rounded-xl p-5 border border-amber-100">
+            <div className="bg-white rounded-xl p-4 border border-amber-100">
               <h3 className="text-[12pt] font-semibold text-amber-800 mb-3">3가지 톤</h3>
               <div className="grid grid-cols-3 gap-3">
                 {[
@@ -788,15 +788,15 @@ export default function ManualPage() {
         </section>
 
         {/* 15. SNS 채널별 변환 */}
-        <section className="bg-white rounded-xl shadow-sm border-2 border-teal-200 p-8">
-          <h2 className="text-[14pt] font-bold flex items-center gap-3 mb-4">
+        <section className="bg-white rounded-xl shadow-sm border-2 border-teal-200 p-6">
+          <h2 className="text-[14pt] font-bold flex items-center gap-3 mb-3">
             <span className="w-8 h-8 bg-gradient-to-br from-teal-500 to-emerald-600 text-white rounded-lg flex items-center justify-center text-sm font-bold shadow-sm">15</span>
             <span className="bg-gradient-to-r from-teal-700 to-emerald-600 bg-clip-text text-transparent">SNS 채널별 콘텐츠 변환</span>
           </h2>
-          <p className="text-[9pt] text-gray-800 mb-5">생성된 콘텐츠를 각 SNS 채널에 최적화된 형식으로 자동 변환합니다.</p>
+          <p className="text-[9pt] text-gray-800 mb-3">생성된 콘텐츠를 각 SNS 채널에 최적화된 형식으로 자동 변환합니다.</p>
 
-          <div className="space-y-4">
-            <div className="bg-teal-50 rounded-xl p-5 border border-teal-100">
+          <div className="space-y-3">
+            <div className="bg-teal-50 rounded-xl p-4 border border-teal-100">
               <h3 className="text-[12pt] font-semibold text-teal-800 mb-3">지원 채널</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 {[
@@ -816,7 +816,7 @@ export default function ManualPage() {
                 ))}
               </div>
             </div>
-            <div className="bg-white rounded-xl p-5 border border-teal-100">
+            <div className="bg-white rounded-xl p-4 border border-teal-100">
               <h3 className="text-[12pt] font-semibold text-teal-800 mb-3">사용 방법</h3>
               <div className="space-y-2 text-[9pt] text-gray-700">
                 <p>1. 콘텐츠 생성 후 결과 페이지 하단의 <span className="font-semibold text-teal-700">SNS 채널별 변환</span> 섹션 확인</p>
@@ -829,15 +829,15 @@ export default function ManualPage() {
         </section>
 
         {/* 16. 대시보드 통계 */}
-        <section className="bg-white rounded-xl shadow-sm border-2 border-violet-200 p-8">
-          <h2 className="text-[14pt] font-bold flex items-center gap-3 mb-4">
+        <section className="bg-white rounded-xl shadow-sm border-2 border-violet-200 p-6">
+          <h2 className="text-[14pt] font-bold flex items-center gap-3 mb-3">
             <span className="w-8 h-8 bg-gradient-to-br from-violet-500 to-purple-600 text-white rounded-lg flex items-center justify-center text-sm font-bold shadow-sm">16</span>
             <span className="bg-gradient-to-r from-violet-700 to-purple-600 bg-clip-text text-transparent">대시보드 통계 & 차트</span>
           </h2>
-          <p className="text-[9pt] text-gray-800 mb-5">콘텐츠 생성/분석 현황을 차트와 통계로 한눈에 파악합니다.</p>
+          <p className="text-[9pt] text-gray-800 mb-3">콘텐츠 생성/분석 현황을 차트와 통계로 한눈에 파악합니다.</p>
 
-          <div className="space-y-4">
-            <div className="bg-violet-50 rounded-xl p-5 border border-violet-100">
+          <div className="space-y-3">
+            <div className="bg-violet-50 rounded-xl p-4 border border-violet-100">
               <h3 className="text-[12pt] font-semibold text-violet-800 mb-3">통계 항목</h3>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                 {[
@@ -853,7 +853,7 @@ export default function ManualPage() {
                 ))}
               </div>
             </div>
-            <div className="bg-white rounded-xl p-5 border border-violet-100">
+            <div className="bg-white rounded-xl p-4 border border-violet-100">
               <h3 className="text-[12pt] font-semibold text-violet-800 mb-3">차트</h3>
               <div className="space-y-2 text-[9pt] text-gray-700">
                 <p><span className="font-semibold text-violet-700">월별 생성 추이:</span> 바 차트로 월별 콘텐츠 생성 수 시각화</p>
@@ -865,15 +865,15 @@ export default function ManualPage() {
         </section>
 
         {/* 17. 시리즈 기획 */}
-        <section className="bg-white rounded-xl shadow-sm border-2 border-orange-200 p-8">
-          <h2 className="text-[14pt] font-bold flex items-center gap-3 mb-4">
+        <section className="bg-white rounded-xl shadow-sm border-2 border-orange-200 p-6">
+          <h2 className="text-[14pt] font-bold flex items-center gap-3 mb-3">
             <span className="w-8 h-8 bg-gradient-to-br from-orange-500 to-red-600 text-white rounded-lg flex items-center justify-center text-sm font-bold shadow-sm">17</span>
             <span className="bg-gradient-to-r from-orange-700 to-red-600 bg-clip-text text-transparent">콘텐츠 시리즈 기획</span>
           </h2>
-          <p className="text-[9pt] text-gray-800 mb-5">하나의 주제로 연관된 시리즈 콘텐츠 기획안을 자동으로 생성합니다.</p>
+          <p className="text-[9pt] text-gray-800 mb-3">하나의 주제로 연관된 시리즈 콘텐츠 기획안을 자동으로 생성합니다.</p>
 
-          <div className="space-y-4">
-            <div className="bg-orange-50 rounded-xl p-5 border border-orange-100">
+          <div className="space-y-3">
+            <div className="bg-orange-50 rounded-xl p-4 border border-orange-100">
               <h3 className="text-[12pt] font-semibold text-orange-800 mb-3">사용 방법</h3>
               <div className="space-y-2 text-[9pt] text-gray-700">
                 <p>1. 상단 네비게이션에서 <span className="font-semibold text-orange-700">시리즈 기획</span> 클릭</p>
@@ -883,7 +883,7 @@ export default function ManualPage() {
                 <p>5. <span className="font-semibold">시리즈 기획 생성</span> 클릭</p>
               </div>
             </div>
-            <div className="bg-white rounded-xl p-5 border border-orange-100">
+            <div className="bg-white rounded-xl p-4 border border-orange-100">
               <h3 className="text-[12pt] font-semibold text-orange-800 mb-3">기획안에 포함되는 내용</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 {[
@@ -908,8 +908,8 @@ export default function ManualPage() {
         </section>
 
         {/* 팁 */}
-        <section className="bg-gradient-to-br from-indigo-50 to-purple-50 rounded-xl shadow-sm border-2 border-indigo-300 p-8">
-          <h2 className="text-[14pt] font-bold bg-gradient-to-r from-indigo-700 to-purple-700 bg-clip-text text-transparent mb-4">최적화 팁</h2>
+        <section className="bg-gradient-to-br from-indigo-50 to-purple-50 rounded-xl shadow-sm border-2 border-indigo-300 p-6">
+          <h2 className="text-[14pt] font-bold bg-gradient-to-r from-indigo-700 to-purple-700 bg-clip-text text-transparent mb-3">최적화 팁</h2>
           <ul className="space-y-3">
             {[
               '질문-답변 형식으로 콘텐츠를 구성하면 AI Overview에 인용될 확률이 높아집니다.',

@@ -151,7 +151,7 @@ export default function IntroductionPage() {
             </h2>
             <p className="text-[9pt] text-gray-800 mb-3">검색의 패러다임이 바뀌고 있습니다. 이제 사용자는 링크 목록이 아닌 AI가 생성한 답변을 먼저 봅니다.</p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-              <div className="bg-gradient-to-br from-red-50 to-orange-50 rounded-xl p-5 border border-red-200">
+              <div className="bg-gradient-to-br from-red-50 to-orange-50 rounded-xl p-4 border border-red-200">
                 <div className="flex items-center gap-2 mb-3">
                   <span className="w-8 h-8 bg-red-100 text-red-600 rounded-lg flex items-center justify-center text-lg">&#9888;</span>
                   <h3 className="text-[11pt] font-semibold text-red-800">기존 방식의 한계</h3>
@@ -163,7 +163,7 @@ export default function IntroductionPage() {
                   <li className="flex items-start gap-2"><span className="text-red-400">&#10005;</span> 경쟁사가 먼저 대응하면 시장 선점 기회 상실</li>
                 </ul>
               </div>
-              <div className="bg-gradient-to-br from-emerald-50 to-green-50 rounded-xl p-5 border border-emerald-200">
+              <div className="bg-gradient-to-br from-emerald-50 to-green-50 rounded-xl p-4 border border-emerald-200">
                 <div className="flex items-center gap-2 mb-3">
                   <span className="w-8 h-8 bg-emerald-100 text-emerald-600 rounded-lg flex items-center justify-center text-lg">&#10004;</span>
                   <h3 className="text-[11pt] font-semibold text-emerald-800">AIO/GEO 최적화 후</h3>
@@ -201,7 +201,7 @@ export default function IntroductionPage() {
                 { title: '대시보드 통계 & 차트', desc: '생성/분석 이력을 시각화된 통계와 차트로 확인하고, 월별 트렌드와 카테고리 분포를 파악합니다.', color: 'violet', icon: 'M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z' },
                 { title: '편집 도구 & 내보내기', desc: '마크다운 편집기, 찾기/바꾸기, 블로그 붙여넣기, 이미지 캡처, DOCX/PDF 다운로드를 지원합니다.', color: 'sky', icon: 'M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z' },
               ].map((feat) => (
-                <div key={feat.title} className={`bg-${feat.color}-50 rounded-xl p-5 border border-${feat.color}-200`}>
+                <div key={feat.title} className={`bg-${feat.color}-50 rounded-xl p-4 border border-${feat.color}-200`}>
                   <div className="flex items-center gap-2 mb-2">
                     <div className={`w-8 h-8 bg-gradient-to-br from-${feat.color}-500 to-${feat.color}-600 rounded-lg flex items-center justify-center`}>
                       <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={feat.icon} /></svg>
@@ -221,17 +221,17 @@ export default function IntroductionPage() {
               <span className="bg-gradient-to-r from-rose-700 to-pink-600 bg-clip-text text-transparent">고객이 얻는 가치</span>
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-              <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-5 border border-blue-200 text-center">
+              <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-4 border border-blue-200 text-center">
                 <div className="text-2xl font-extrabold text-blue-600 mb-2">&#8593; 트래픽</div>
                 <h3 className="text-[11pt] font-semibold text-blue-800 mb-2">검색 노출 극대화</h3>
                 <p className="text-[9pt] text-gray-700">AI Overview 상위 인용을 통해 자연 검색 유입량을 획기적으로 증가시킵니다.</p>
               </div>
-              <div className="bg-gradient-to-br from-emerald-50 to-green-50 rounded-xl p-5 border border-emerald-200 text-center">
+              <div className="bg-gradient-to-br from-emerald-50 to-green-50 rounded-xl p-4 border border-emerald-200 text-center">
                 <div className="text-2xl font-extrabold text-emerald-600 mb-2">80%&#8595;</div>
                 <h3 className="text-[11pt] font-semibold text-emerald-800 mb-2">시간 절약</h3>
                 <p className="text-[9pt] text-gray-700">콘텐츠 기획부터 작성, 최적화까지 소요 시간을 최대 80% 단축합니다.</p>
               </div>
-              <div className="bg-gradient-to-br from-purple-50 to-violet-50 rounded-xl p-5 border border-purple-200 text-center">
+              <div className="bg-gradient-to-br from-purple-50 to-violet-50 rounded-xl p-4 border border-purple-200 text-center">
                 <div className="text-2xl font-extrabold text-purple-600 mb-2">&#9733; 신뢰</div>
                 <h3 className="text-[11pt] font-semibold text-purple-800 mb-2">브랜드 권위 강화</h3>
                 <p className="text-[9pt] text-gray-700">E-E-A-T 최적화로 전문적이고 신뢰성 있는 브랜드 이미지를 구축합니다.</p>
@@ -291,7 +291,7 @@ export default function IntroductionPage() {
                 { who: '콘텐츠 에이전시', scenario: '다양한 클라이언트의 콘텐츠를 표준화된 품질로 대량 생산하고, 분석 결과를 기반으로 성과를 입증합니다.', color: 'purple' },
                 { who: '전문직 / 컨설턴트', scenario: '전문 지식을 AI가 인용하기 쉬운 형태로 변환하여 해당 분야의 온라인 권위를 구축합니다.', color: 'amber' },
               ].map((item) => (
-                <div key={item.who} className={`bg-${item.color}-50 rounded-xl p-5 border border-${item.color}-200`}>
+                <div key={item.who} className={`bg-${item.color}-50 rounded-xl p-4 border border-${item.color}-200`}>
                   <h3 className={`text-[11pt] font-semibold text-${item.color}-800 mb-2`}>{item.who}</h3>
                   <p className="text-[9pt] text-gray-700">{item.scenario}</p>
                 </div>

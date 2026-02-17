@@ -725,7 +725,7 @@ export default function PromotionLandingPage() {
       {/* 에이전시 특별 섹션 */}
       {/* ============================================ */}
       <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
-        <div className="bg-gradient-to-br from-violet-50 to-indigo-50 rounded-3xl border-2 border-violet-200 p-5 md:p-12">
+        <div className="bg-gradient-to-br from-violet-50 to-indigo-50 rounded-2xl border-2 border-violet-200 p-5 md:p-12">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
             <div>
               <div className="inline-flex items-center gap-2 px-3 py-1 bg-violet-100 text-violet-700 text-xs font-bold rounded-full mb-3">
