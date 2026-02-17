@@ -695,6 +695,20 @@ export default function GeneratePage() {
                     </div>
                     <textarea value={businessInfo.uniquePoint} onChange={e => updateBiz('uniquePoint', e.target.value)} placeholder="경쟁사 대비 차별점" rows={2} className="mt-3 w-full px-4 py-2.5 bg-rose-50/50 border-2 border-rose-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-rose-400 focus:border-transparent resize-none placeholder-rose-400/60" />
                   </div>
+
+                  {/* 하단 현재 정보 저장 버튼 */}
+                  <div className="flex justify-center relative">
+                    <button
+                      type="button"
+                      onClick={saveAsProfile}
+                      className="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-semibold rounded-xl transition-all duration-200 border-2 bg-white text-teal-700 border-teal-300 hover:bg-teal-50 hover:shadow-lg hover:scale-105"
+                    >
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
+                      </svg>
+                      현재 정보 저장
+                    </button>
+                  </div>
                 </div>
               )}
             </div>
