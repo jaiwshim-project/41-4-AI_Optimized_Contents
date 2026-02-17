@@ -10,6 +10,7 @@ const plans = [
     id: 'free' as PlanType,
     name: '무료',
     price: '₩0',
+    originalPrice: '',
     period: '/월',
     description: '기본 기능을 체험해보세요',
     limit: 3,
@@ -17,11 +18,13 @@ const plans = [
     border: 'border-gray-300',
     bg: 'bg-gray-50',
     badge: '',
+    discount: '',
   },
   {
     id: 'pro' as PlanType,
     name: '프로',
     price: '₩29,000',
+    originalPrice: '₩59,000',
     period: '/월',
     description: '전문적인 콘텐츠 최적화',
     limit: 15,
@@ -29,11 +32,13 @@ const plans = [
     border: 'border-blue-300',
     bg: 'bg-blue-50',
     badge: '인기',
+    discount: '51% OFF',
   },
   {
     id: 'max' as PlanType,
     name: '맥스',
     price: '₩79,000',
+    originalPrice: '₩149,000',
     period: '/월',
     description: '대량 콘텐츠 최적화에 최적',
     limit: 50,
@@ -41,6 +46,7 @@ const plans = [
     border: 'border-violet-300',
     bg: 'bg-violet-50',
     badge: '최대',
+    discount: '47% OFF',
   },
 ];
 
@@ -70,9 +76,29 @@ export default function PricingPage() {
     <div className="min-h-screen bg-gray-50">
       <Header />
       <main className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="text-center mb-12">
+        <div className="text-center mb-6">
           <h2 className="text-3xl font-bold text-gray-900 mb-3">요금제</h2>
           <p className="text-gray-500">필요에 맞는 플랜을 선택하세요</p>
+        </div>
+
+        {/* 프로모션 배너 */}
+        <div className="mb-10 bg-gradient-to-r from-orange-500 via-red-500 to-pink-500 rounded-2xl p-6 text-white shadow-lg border-2 border-orange-300 relative overflow-hidden">
+          <div className="absolute -right-4 -top-4 w-24 h-24 bg-white/10 rounded-full" />
+          <div className="absolute -right-8 -bottom-8 w-32 h-32 bg-white/5 rounded-full" />
+          <div className="relative flex items-center gap-4">
+            <div className="w-14 h-14 bg-white/20 rounded-xl flex items-center justify-center shrink-0">
+              <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7" />
+              </svg>
+            </div>
+            <div>
+              <div className="flex items-center gap-2 mb-1">
+                <h3 className="text-xl font-bold">Grand Open 프로모션</h3>
+                <span className="px-2.5 py-0.5 bg-yellow-400 text-yellow-900 text-xs font-bold rounded-full">SALE</span>
+              </div>
+              <p className="text-white/90 text-sm">그랜드 오픈을 기념하여 <strong>최대 51% 할인</strong>된 특별 가격으로 제공합니다</p>
+            </div>
+          </div>
         </div>
 
         {/* 관리자 배너 */}
@@ -103,7 +129,12 @@ export default function PricingPage() {
                   isCurrent ? 'ring-2 ring-indigo-400 shadow-lg' : 'shadow-sm'
                 } transition-all`}
               >
-                {plan.badge && (
+                {plan.discount && (
+                  <span className="absolute -top-3 right-4 px-3 py-0.5 bg-gradient-to-r from-orange-500 to-red-500 text-white text-xs font-bold rounded-full">
+                    {plan.discount}
+                  </span>
+                )}
+                {plan.badge && !plan.discount && (
                   <span className={`absolute -top-3 right-4 px-3 py-0.5 bg-gradient-to-r ${plan.color} text-white text-xs font-bold rounded-full`}>
                     {plan.badge}
                   </span>
@@ -118,8 +149,18 @@ export default function PricingPage() {
                 <p className="text-sm text-gray-500 mb-4">{plan.description}</p>
 
                 <div className="mb-6">
+                  {plan.originalPrice && (
+                    <div className="mb-1">
+                      <span className="text-sm text-gray-400 line-through">{plan.originalPrice}</span>
+                    </div>
+                  )}
                   <span className="text-3xl font-bold text-gray-900">{plan.price}</span>
                   <span className="text-sm text-gray-500">{plan.period}</span>
+                  {plan.originalPrice && (
+                    <span className="ml-2 text-xs font-bold text-orange-600 bg-orange-50 px-2 py-0.5 rounded-full border border-orange-200">
+                      프로모션가
+                    </span>
+                  )}
                 </div>
 
                 <div className="space-y-3 mb-6">
@@ -199,6 +240,18 @@ export default function PricingPage() {
               </tr>
             </thead>
             <tbody>
+              <tr className="bg-orange-50/50 border-b border-orange-100">
+                <td className="px-6 py-3 text-gray-700 font-medium">월 요금</td>
+                <td className="text-center px-4 py-3 text-gray-600">₩0</td>
+                <td className="text-center px-4 py-3">
+                  <span className="text-xs text-gray-400 line-through block">₩59,000</span>
+                  <span className="text-blue-600 font-bold">₩29,000</span>
+                </td>
+                <td className="text-center px-4 py-3">
+                  <span className="text-xs text-gray-400 line-through block">₩149,000</span>
+                  <span className="text-violet-600 font-bold">₩79,000</span>
+                </td>
+              </tr>
               {features.map((f, i) => (
                 <tr key={f.key} className={i % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
                   <td className="px-6 py-3 text-gray-700">{f.label}</td>
