@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import ApiKeyPanel from '@/components/ApiKeyPanel';
@@ -92,6 +92,45 @@ export default function GeneratePage() {
   const [error, setError] = useState<string | null>(null);
   const [showApiKeyInput, setShowApiKeyInput] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [copiedContent, setCopiedContent] = useState(false);
+  const [showEditInput, setShowEditInput] = useState(false);
+  const [editNotes, setEditNotes] = useState('');
+  const [isRegenerating, setIsRegenerating] = useState(false);
+  const contentRef = useRef<HTMLDivElement>(null);
+
+  const handleRegenerate = async () => {
+    if (!selectedCategory || !result || !editNotes.trim()) return;
+    setIsRegenerating(true);
+    setError(null);
+
+    try {
+      const response = await fetch('/api/generate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          category: selectedCategory,
+          topic: topic.trim(),
+          targetKeyword: targetKeyword.trim() || undefined,
+          tone,
+          additionalNotes: `기존 생성된 콘텐츠를 아래 수정 요청에 따라 다시 작성해주세요.\n\n[수정/추가 요청]\n${editNotes.trim()}\n\n[기존 콘텐츠]\n${result.content}`,
+        }),
+      });
+
+      if (!response.ok) {
+        const err = await response.json();
+        throw new Error(err.error || '콘텐츠 재생성에 실패했습니다.');
+      }
+
+      const data = await response.json();
+      setResult(data);
+      setEditNotes('');
+      setShowEditInput(false);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : '알 수 없는 오류가 발생했습니다.');
+    } finally {
+      setIsRegenerating(false);
+    }
+  };
 
   const handleGenerate = async () => {
     if (!selectedCategory || !topic.trim()) return;
@@ -411,8 +450,59 @@ export default function GeneratePage() {
             </div>
 
             {/* 생성된 콘텐츠 */}
-            <div className="bg-white rounded-2xl shadow-sm border-2 border-indigo-200 p-6">
-              <div className="prose prose-sm max-w-none">
+            <div className="bg-white rounded-2xl shadow-sm border-2 border-indigo-200 p-6 relative">
+              {/* 상단 버튼 그룹 */}
+              <div className="absolute top-4 right-4 flex items-center gap-2">
+                <button
+                  onClick={() => {
+                    if (!contentRef.current) return;
+                    const range = document.createRange();
+                    range.selectNodeContents(contentRef.current);
+                    const selection = window.getSelection();
+                    if (selection) {
+                      selection.removeAllRanges();
+                      selection.addRange(range);
+                    }
+                    const html = contentRef.current.innerHTML;
+                    const blob = new Blob([html], { type: 'text/html' });
+                    const textBlob = new Blob([contentRef.current.innerText], { type: 'text/plain' });
+                    navigator.clipboard.write([
+                      new ClipboardItem({
+                        'text/html': blob,
+                        'text/plain': textBlob,
+                      }),
+                    ]).then(() => {
+                      selection?.removeAllRanges();
+                      setCopiedContent(true);
+                      setTimeout(() => setCopiedContent(false), 2000);
+                    });
+                  }}
+                  className={`inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg transition-all border-2 ${
+                    copiedContent
+                      ? 'bg-emerald-500 text-white border-emerald-300'
+                      : 'bg-gray-50 text-gray-500 border-gray-200 hover:bg-gray-100 hover:border-indigo-300'
+                  }`}
+                >
+                  <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={copiedContent ? 'M5 13l4 4L19 7' : 'M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z'} />
+                  </svg>
+                  {copiedContent ? '복사됨!' : '복사'}
+                </button>
+                <button
+                  onClick={() => setShowEditInput(!showEditInput)}
+                  className={`inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg transition-all border-2 ${
+                    showEditInput
+                      ? 'bg-violet-500 text-white border-violet-300'
+                      : 'bg-gray-50 text-gray-500 border-gray-200 hover:bg-gray-100 hover:border-violet-300'
+                  }`}
+                >
+                  <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                  </svg>
+                  수정
+                </button>
+              </div>
+              <div className="prose prose-sm max-w-none" ref={contentRef}>
                 <div
                   className="whitespace-pre-wrap text-sm text-gray-800 leading-relaxed"
                   dangerouslySetInnerHTML={{
@@ -427,6 +517,47 @@ export default function GeneratePage() {
                   }}
                 />
               </div>
+
+              {/* 수정 입력창 */}
+              {showEditInput && (
+                <div className="mt-6 pt-5 border-t-2 border-violet-200">
+                  <div className="flex items-center gap-2 mb-3">
+                    <svg className="w-4 h-4 text-violet-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                    </svg>
+                    <h4 className="text-sm font-semibold text-violet-800">콘텐츠 수정 요청</h4>
+                  </div>
+                  <textarea
+                    value={editNotes}
+                    onChange={(e) => setEditNotes(e.target.value)}
+                    placeholder="수정하거나 추가하고 싶은 내용을 입력하세요...&#10;예: '서론을 더 강렬하게', '통계 데이터 추가', 'FAQ 섹션 보강'"
+                    rows={4}
+                    className="w-full px-4 py-3 border-2 border-violet-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-violet-400 focus:border-transparent placeholder-gray-400 resize-none bg-violet-50/50"
+                  />
+                  <button
+                    onClick={handleRegenerate}
+                    disabled={isRegenerating || !editNotes.trim()}
+                    className="mt-3 w-full py-3 bg-gradient-to-r from-violet-600 to-purple-600 text-white font-medium rounded-xl hover:from-violet-700 hover:to-purple-700 transition-all shadow-sm disabled:opacity-50 disabled:cursor-not-allowed border-2 border-violet-300 flex items-center justify-center gap-2"
+                  >
+                    {isRegenerating ? (
+                      <>
+                        <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
+                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                        </svg>
+                        수정 반영하여 재생성 중...
+                      </>
+                    ) : (
+                      <>
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                        </svg>
+                        재생성
+                      </>
+                    )}
+                  </button>
+                </div>
+              )}
             </div>
           </>
         )}
