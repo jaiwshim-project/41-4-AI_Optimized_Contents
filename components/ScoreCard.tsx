@@ -9,11 +9,11 @@ interface ScoreCardProps {
 }
 
 const colorMap = {
-  blue: { bg: 'bg-blue-50', text: 'text-blue-600', ring: 'stroke-blue-500', track: 'stroke-blue-100' },
-  green: { bg: 'bg-green-50', text: 'text-green-600', ring: 'stroke-green-500', track: 'stroke-green-100' },
-  purple: { bg: 'bg-purple-50', text: 'text-purple-600', ring: 'stroke-purple-500', track: 'stroke-purple-100' },
-  orange: { bg: 'bg-orange-50', text: 'text-orange-600', ring: 'stroke-orange-500', track: 'stroke-orange-100' },
-  red: { bg: 'bg-red-50', text: 'text-red-600', ring: 'stroke-red-500', track: 'stroke-red-100' },
+  blue: { bg: 'bg-blue-50', border: 'border-blue-200', text: 'text-blue-600', ring: 'stroke-blue-500', track: 'stroke-blue-100', hoverBorder: 'hover:border-blue-400' },
+  green: { bg: 'bg-emerald-50', border: 'border-emerald-200', text: 'text-emerald-600', ring: 'stroke-emerald-500', track: 'stroke-emerald-100', hoverBorder: 'hover:border-emerald-400' },
+  purple: { bg: 'bg-violet-50', border: 'border-violet-200', text: 'text-violet-600', ring: 'stroke-violet-500', track: 'stroke-violet-100', hoverBorder: 'hover:border-violet-400' },
+  orange: { bg: 'bg-amber-50', border: 'border-amber-200', text: 'text-amber-600', ring: 'stroke-amber-500', track: 'stroke-amber-100', hoverBorder: 'hover:border-amber-400' },
+  red: { bg: 'bg-red-50', border: 'border-red-200', text: 'text-red-600', ring: 'stroke-red-500', track: 'stroke-red-100', hoverBorder: 'hover:border-red-400' },
 };
 
 function getScoreLabel(score: number): string {
@@ -29,7 +29,7 @@ export default function ScoreCard({ title, score, description, icon, color }: Sc
   const offset = circumference - (score / 100) * circumference;
 
   return (
-    <div className={`${colors.bg} rounded-2xl p-5 flex items-center gap-4`}>
+    <div className={`${colors.bg} rounded-2xl p-5 flex items-center gap-4 border-2 ${colors.border} ${colors.hoverBorder} hover:shadow-md transition-all duration-200`}>
       <div className="relative w-20 h-20 flex-shrink-0">
         <svg className="w-20 h-20 -rotate-90" viewBox="0 0 100 100">
           <circle cx="50" cy="50" r="40" fill="none" strokeWidth="8" className={colors.track} />
@@ -51,7 +51,7 @@ export default function ScoreCard({ title, score, description, icon, color }: Sc
           <span className={colors.text}>{icon}</span>
           <h3 className="font-semibold text-gray-900 text-sm">{title}</h3>
         </div>
-        <p className={`text-xs font-medium ${colors.text} mb-0.5`}>{getScoreLabel(score)}</p>
+        <p className={`text-xs font-semibold ${colors.text} mb-0.5`}>{getScoreLabel(score)}</p>
         {description && <p className="text-xs text-gray-500 truncate">{description}</p>}
       </div>
     </div>
