@@ -5,6 +5,13 @@ import { usePathname, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { createClient } from '@/lib/supabase-client';
 import type { User } from '@supabase/supabase-js';
+import { getUserPlan, type PlanType } from '@/lib/usage';
+
+const PLAN_LABELS: Record<PlanType, { name: string; style: string }> = {
+  free: { name: '무료', style: 'bg-gray-100 text-gray-600 border-gray-300' },
+  pro: { name: '프로', style: 'bg-gradient-to-r from-blue-500 to-indigo-500 text-white border-blue-300' },
+  max: { name: '맥스', style: 'bg-gradient-to-r from-violet-500 to-purple-500 text-white border-violet-300' },
+};
 
 interface HeaderProps {
   showApiKeyButton?: boolean;
@@ -24,12 +31,18 @@ export default function Header({ showApiKeyButton = false, onToggleApiKey, apiKe
   const router = useRouter();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [user, setUser] = useState<User | null>(null);
+  const [plan, setPlan] = useState<PlanType>('free');
 
   useEffect(() => {
     const supabase = createClient();
-    supabase.auth.getUser().then(({ data: { user } }) => setUser(user));
+    supabase.auth.getUser().then(({ data: { user } }) => {
+      setUser(user);
+      if (user) getUserPlan().then(setPlan).catch(() => {});
+    });
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       setUser(session?.user ?? null);
+      if (session?.user) getUserPlan().then(setPlan).catch(() => {});
+      else setPlan('free');
     });
     return () => subscription.unsubscribe();
   }, []);
@@ -88,6 +101,9 @@ export default function Header({ showApiKeyButton = false, onToggleApiKey, apiKe
             {/* 로그인/로그아웃 */}
             {user ? (
               <div className="flex items-center gap-1.5">
+                <Link href="/pricing" className={`px-2 py-0.5 text-[10px] font-bold rounded-full border ${PLAN_LABELS[plan].style} hover:opacity-80 transition-all`}>
+                  {PLAN_LABELS[plan].name}
+                </Link>
                 <span className="text-xs text-gray-500 max-w-[120px] truncate">{user.email}</span>
                 <Link
                   href="/change-password"
@@ -184,7 +200,12 @@ export default function Header({ showApiKeyButton = false, onToggleApiKey, apiKe
             <div className="border-t border-green-200 pt-2 mt-1">
               {user ? (
                 <div className="px-4 py-2.5 space-y-2">
-                  <span className="text-xs text-gray-500 truncate block">{user.email}</span>
+                  <div className="flex items-center gap-2">
+                    <Link href="/pricing" onClick={() => setMobileOpen(false)} className={`px-2.5 py-0.5 text-[11px] font-bold rounded-full border ${PLAN_LABELS[plan].style}`}>
+                      {PLAN_LABELS[plan].name}
+                    </Link>
+                    <span className="text-xs text-gray-500 truncate">{user.email}</span>
+                  </div>
                   <div className="flex items-center gap-2">
                     <Link
                       href="/change-password"
