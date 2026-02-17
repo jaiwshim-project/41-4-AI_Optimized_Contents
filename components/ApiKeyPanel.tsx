@@ -166,7 +166,7 @@ export default function ApiKeyPanel({ visible }: ApiKeyPanelProps) {
               rel="noopener noreferrer"
               className="px-4 py-2.5 bg-white border-2 border-green-300 text-green-700 text-sm font-medium rounded-xl hover:bg-green-100 transition-all whitespace-nowrap inline-flex items-center gap-1.5"
             >
-              키 발급
+              🍌 Nano Banana 키 발급
               <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
               </svg>
