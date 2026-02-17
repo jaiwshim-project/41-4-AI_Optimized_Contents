@@ -177,7 +177,7 @@ export default function LandingPage() {
 
       {/* 자료 이미지 섹션 */}
       <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-        <img src="/ai-search-engine.png" alt="AI 검색 엔진의 선택" className="w-full rounded-xl shadow-md border-2 border-indigo-200" />
+        <img src="/geo-playbook.png" alt="GEO Playbook" className="w-full rounded-xl shadow-md border-2 border-indigo-200" />
       </section>
 
       {/* 주요 기능 소개 */}

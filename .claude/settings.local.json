@@ -1,0 +1,37 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx create-next-app@latest aio-geo-optimizer --typescript --tailwind --eslint --app --src=no --import-alias=\"@/*\" --use-npm)",
+      "Bash(npx create-next-app:*)",
+      "Bash(yes:*)",
+      "Bash(npm install:*)",
+      "Bash(npx next build)",
+      "Bash(npm run dev:*)",
+      "Bash(taskkill:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git remote add:*)",
+      "Bash(git push:*)",
+      "Bash(npx vercel:*)",
+      "Bash(git init:*)",
+      "Bash(npm run build:*)",
+      "WebSearch",
+      "WebFetch(domain:ai.google.dev)",
+      "Bash(npm uninstall:*)",
+      "Bash(gh api:*)",
+      "WebFetch(domain:supabase.com)",
+      "Bash(node -e \"\nconst { createClient } = require\\(''@supabase/supabase-js''\\);\nconst supabase = createClient\\(\n  ''https://haxcktfnuudlqciyljtp.supabase.co'',\n  ''eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhheGNrdGZudXVkbHFjaXlsanRwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjkzMDUwNDAsImV4cCI6MjA4NDg4MTA0MH0.suN7BeaHx3MjaNlMDQa0940P-rMl2XPyk4ksoQEU3YM''\n\\);\n\nasync function test\\(\\) {\n  console.log\\(''=== Supabase 연결 테스트 ===\\\\n''\\);\n\n  // 1. business_profiles 테이블\n  const r1 = await supabase.from\\(''business_profiles''\\).select\\(''*''\\).limit\\(1\\);\n  console.log\\(''1. business_profiles:'', r1.error ? ''FAIL - '' + r1.error.message : ''OK''\\);\n\n  // 2. history 테이블\n  const r2 = await supabase.from\\(''history''\\).select\\(''*''\\).limit\\(1\\);\n  console.log\\(''2. history:'', r2.error ? ''FAIL - '' + r2.error.message : ''OK''\\);\n\n  // 3. api_keys 테이블\n  const r3 = await supabase.from\\(''api_keys''\\).select\\(''*''\\).limit\\(1\\);\n  console.log\\(''3. api_keys:'', r3.error ? ''FAIL - '' + r3.error.message : ''OK''\\);\n\n  // 4. generated_images 테이블\n  const r4 = await supabase.from\\(''generated_images''\\).select\\(''*''\\).limit\\(1\\);\n  console.log\\(''4. generated_images:'', r4.error ? ''FAIL - '' + r4.error.message : ''OK''\\);\n\n  // 5. INSERT 테스트 \\(business_profiles\\)\n  const r5 = await supabase.from\\(''business_profiles''\\).insert\\({ name: ''__test__'', data: { test: true } }\\).select\\(\\);\n  console.log\\(''5. INSERT 테스트:'', r5.error ? ''FAIL - '' + r5.error.message : ''OK \\(id: '' + r5.data[0].id + ''\\)''\\);\n\n  // 6. DELETE 테스트\n  if \\(!r5.error\\) {\n    const r6 = await supabase.from\\(''business_profiles''\\).delete\\(\\).eq\\(''id'', r5.data[0].id\\);\n    console.log\\(''6. DELETE 테스트:'', r6.error ? ''FAIL - '' + r6.error.message : ''OK''\\);\n  }\n\n  // 7. Storage 버킷 확인\n  const r7 = await supabase.storage.listBuckets\\(\\);\n  const bucket = r7.data?.find\\(b => b.name === ''generated-images''\\);\n  console.log\\(''7. Storage 버킷:'', r7.error ? ''FAIL - '' + r7.error.message : \\(bucket ? ''OK \\(generated-images 존재\\)'' : ''WARN - generated-images 버킷 없음''\\)\\);\n\n  console.log\\(''\\\\n=== 테스트 완료 ===''\\);\n}\ntest\\(\\).catch\\(e => console.error\\(''Error:'', e\\)\\);\n\")",
+      "Bash(node -e \"\nconst { createClient } = require\\(''@supabase/supabase-js''\\);\nconst supabase = createClient\\(\n  ''https://haxcktfnuudlqciyljtp.supabase.co'',\n  ''eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhheGNrdGZudXVkbHFjaXlsanRwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjkzMDUwNDAsImV4cCI6MjA4NDg4MTA0MH0.suN7BeaHx3MjaNlMDQa0940P-rMl2XPyk4ksoQEU3YM''\n\\);\nasync function test\\(\\) {\n  const r = await supabase.storage.listBuckets\\(\\);\n  const bucket = r.data?.find\\(b => b.name === ''generated-images''\\);\n  console.log\\(bucket ? ''OK - generated-images 버킷 확인 \\(public: '' + bucket.public + ''\\)'' : ''FAIL - 버킷 없음''\\);\n}\ntest\\(\\);\n\")",
+      "Bash(git pull:*)",
+      "Bash(git stash:*)",
+      "Bash(git rebase:*)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:aio-geo-optimizer.vercel.app)",
+      "Bash(curl:*)",
+      "Bash(node -e:*)",
+      "Bash(npx next build:*)",
+      "Bash(git checkout:*)",
+      "Bash(python:*)"
+    ]
+  }
+}

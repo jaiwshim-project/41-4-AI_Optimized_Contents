@@ -5,8 +5,8 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
 const tabs = [
-  { id: 'search-engine', label: 'AI 검색 엔진의 선택', image: '/ai-search-engine.png', pdf: '/ai-search-engine.pdf' },
-  { id: 'search-victory', label: 'AI 검색 시대의 승리', image: '/ai-search-victory.png', pdf: '/ai-search-victory.pdf' },
+  { id: 'geo-playbook', label: 'GEO Playbook', image: '/geo-playbook.png', pdf: '/geo-playbook.pdf' },
+  { id: 'aio-geo-guide', label: 'AIO/GEO Optimizer', image: '/aio-geo-optimizer-guide.png', pdf: '/aio-geo-optimizer-guide.pdf' },
 ];
 
 export default function ResourcesPage() {
@@ -40,7 +40,7 @@ export default function ResourcesPage() {
           ))}
         </div>
 
-        {/* 이미지 뷰어 */}
+        {/* 이미지 + PDF 뷰어 */}
         <div className="bg-white rounded-xl border-2 border-indigo-200 shadow-md overflow-hidden">
           <img
             key={active.id}
