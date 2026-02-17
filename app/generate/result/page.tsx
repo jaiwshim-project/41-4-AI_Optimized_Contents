@@ -186,9 +186,34 @@ export default function GenerateResultPage() {
     }
   };
 
+  const parseTable = (block: string): string => {
+    const lines = block.trim().split('\n').filter(l => l.trim().startsWith('|'));
+    if (lines.length < 2) return '';
+    const parseCells = (line: string) =>
+      line.split('|').slice(1, -1).map(c => c.trim());
+    const headers = parseCells(lines[0]);
+    const startIdx = /^[\s|:-]+$/.test(lines[1]) ? 2 : 1;
+    const rows = lines.slice(startIdx).map(parseCells);
+    const thStyle = 'padding:10px 16px;text-align:left;font-weight:600;font-size:0.85em;color:#ffffff;background:linear-gradient(135deg,#6366f1,#8b5cf6);border:1px solid #818cf8;white-space:nowrap';
+    const tdBaseStyle = 'padding:10px 16px;font-size:0.85em;border:1px solid #e5e7eb;color:#374151';
+    let html = '<table style="width:100%;border-collapse:collapse;margin:20px 0;border-radius:12px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.08)">';
+    html += '<thead><tr>' + headers.map(h => `<th style="${thStyle}">${h.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')}</th>`).join('') + '</tr></thead>';
+    html += '<tbody>';
+    rows.forEach((row, i) => {
+      const bg = i % 2 === 0 ? '#ffffff' : '#f8fafc';
+      html += '<tr>' + row.map(cell => `<td style="${tdBaseStyle};background:${bg}">${cell.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')}</td>`).join('') + '</tr>';
+    });
+    html += '</tbody></table>';
+    return html;
+  };
+
   const markdownToHtml = (text: string) => {
     const paragraphs = text.split(/\n\n+/);
     return paragraphs.map(para => {
+      const lines = para.trim().split('\n');
+      if (lines.length >= 2 && lines[0].trim().startsWith('|') && lines[1].trim().startsWith('|')) {
+        return parseTable(para);
+      }
       let html = para
         .replace(/^### (.*$)/gm, '<h3 style="font-size:1.1em;font-weight:bold;color:#1a1a1a;margin:24px 0 8px">$1</h3>')
         .replace(/^## (.*$)/gm, '<h2 style="font-size:1.25em;font-weight:bold;color:#1a1a1a;margin:32px 0 12px;padding-bottom:8px;border-bottom:1px solid #e5e7eb">$1</h2>')
@@ -198,7 +223,7 @@ export default function GenerateResultPage() {
         .replace(/^\d+\. (.*$)/gm, '<li style="margin-left:20px;list-style:decimal;margin-bottom:4px">$1</li>')
         .replace(/^> (.*$)/gm, '<blockquote style="border-left:4px solid #818cf8;padding:4px 16px;margin:12px 0;background:#eef2ff;border-radius:0 8px 8px 0;color:#374151">$1</blockquote>');
       const trimmed = html.trim();
-      const isBlock = /^<(h[1-6]|li|blockquote|ul|ol|figure|div)/.test(trimmed);
+      const isBlock = /^<(h[1-6]|li|blockquote|ul|ol|figure|div|table)/.test(trimmed);
       if (isBlock) return html;
       html = html.replace(/\n/g, '<br>');
       return `<p style="margin-bottom:1em;line-height:1.8">${html}</p>`;
@@ -483,24 +508,7 @@ export default function GenerateResultPage() {
             <div
               className="text-sm text-gray-800 leading-relaxed"
               dangerouslySetInnerHTML={{
-                __html: (() => {
-                  const paragraphs = result.content.split(/\n\n+/);
-                  return paragraphs.map(para => {
-                    let html = para
-                      .replace(/^### (.*$)/gm, '<h3 style="font-size:1.1em;font-weight:bold;color:#1a1a1a;margin:24px 0 8px">$1</h3>')
-                      .replace(/^## (.*$)/gm, '<h2 style="font-size:1.25em;font-weight:bold;color:#1a1a1a;margin:32px 0 12px;padding-bottom:8px;border-bottom:1px solid #e5e7eb">$1</h2>')
-                      .replace(/^# (.*$)/gm, '<h1 style="font-size:1.5em;font-weight:bold;color:#1a1a1a;margin:32px 0 16px">$1</h1>')
-                      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-                      .replace(/^\- (.*$)/gm, '<li style="margin-left:20px;list-style:disc;margin-bottom:4px">$1</li>')
-                      .replace(/^\d+\. (.*$)/gm, '<li style="margin-left:20px;list-style:decimal;margin-bottom:4px">$1</li>')
-                      .replace(/^> (.*$)/gm, '<blockquote style="border-left:4px solid #818cf8;padding:4px 16px;margin:12px 0;background:#eef2ff;border-radius:0 8px 8px 0;color:#374151">$1</blockquote>');
-                    const trimmed = html.trim();
-                    const isBlock = /^<(h[1-6]|li|blockquote|ul|ol|figure|div)/.test(trimmed);
-                    if (isBlock) return html;
-                    html = html.replace(/\n/g, '<br>');
-                    return `<p style="margin-bottom:1em;line-height:1.8">${html}</p>`;
-                  }).join('');
-                })()
+                __html: markdownToHtml(result.content)
               }}
             />
             {/* 해시태그 - 본문 안에 포함하여 복사 시 함께 복사됨 */}
