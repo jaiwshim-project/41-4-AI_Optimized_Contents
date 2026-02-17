@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import ApiKeyPanel from '@/components/ApiKeyPanel';
@@ -115,17 +115,31 @@ export default function GeneratePage() {
     location: '',
     website: '',
   });
+  const [bizSaved, setBizSaved] = useState(false);
   const contentRef = useRef<HTMLDivElement>(null);
+  const saveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // localStorage에서 비즈니스 정보 로드
-  useState(() => {
-    if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('aio-business-info');
-      if (saved) {
-        try { setBusinessInfo(prev => ({ ...prev, ...JSON.parse(saved) })); } catch {}
-      }
+  useEffect(() => {
+    const saved = localStorage.getItem('aio-business-info');
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved);
+        setBusinessInfo(prev => ({ ...prev, ...parsed, newStrength: '' }));
+      } catch {}
     }
-  });
+  }, []);
+
+  // 변경 시 자동 저장 (1초 디바운스)
+  const autoSave = useCallback((info: typeof businessInfo) => {
+    if (saveTimerRef.current) clearTimeout(saveTimerRef.current);
+    saveTimerRef.current = setTimeout(() => {
+      const toSave = { ...info, newStrength: '' };
+      localStorage.setItem('aio-business-info', JSON.stringify(toSave));
+      setBizSaved(true);
+      setTimeout(() => setBizSaved(false), 2000);
+    }, 1000);
+  }, []);
 
   const saveBusinessInfo = () => {
     const toSave = { ...businessInfo, newStrength: '' };
@@ -133,18 +147,30 @@ export default function GeneratePage() {
   };
 
   const updateBiz = (field: string, value: string) => {
-    setBusinessInfo(prev => ({ ...prev, [field]: value }));
+    setBusinessInfo(prev => {
+      const next = { ...prev, [field]: value };
+      autoSave(next);
+      return next;
+    });
   };
 
   const addStrength = () => {
     const val = businessInfo.newStrength.trim();
     if (val && businessInfo.strengths.length < 5 && !businessInfo.strengths.includes(val)) {
-      setBusinessInfo(prev => ({ ...prev, strengths: [...prev.strengths, val], newStrength: '' }));
+      setBusinessInfo(prev => {
+        const next = { ...prev, strengths: [...prev.strengths, val], newStrength: '' };
+        autoSave(next);
+        return next;
+      });
     }
   };
 
   const removeStrength = (index: number) => {
-    setBusinessInfo(prev => ({ ...prev, strengths: prev.strengths.filter((_, i) => i !== index) }));
+    setBusinessInfo(prev => {
+      const next = { ...prev, strengths: prev.strengths.filter((_, i) => i !== index) };
+      autoSave(next);
+      return next;
+    });
   };
 
   const industries = [
@@ -335,7 +361,21 @@ export default function GeneratePage() {
                     </svg>
                   </div>
                   <div className="text-left">
-                    <h2 className="text-sm font-semibold text-gray-900">비즈니스 정보 입력</h2>
+                    <h2 className="text-sm font-semibold text-gray-900 flex items-center gap-2">
+                      비즈니스 정보 입력
+                      {bizSaved && (
+                        <span className="inline-flex items-center gap-1 text-[10px] font-medium text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200 animate-pulse">
+                          <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                          자동 저장됨
+                        </span>
+                      )}
+                      {!bizSaved && businessInfo.companyName && (
+                        <span className="inline-flex items-center gap-1 text-[10px] font-medium text-teal-600 bg-teal-50 px-2 py-0.5 rounded-full border border-teal-200">
+                          <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                          저장된 정보 있음
+                        </span>
+                      )}
+                    </h2>
                     <p className="text-xs text-gray-500">회사, 제품, 타겟 고객 정보를 입력하면 더 정확한 콘텐츠를 생성합니다</p>
                   </div>
                 </div>
@@ -439,7 +479,7 @@ export default function GeneratePage() {
                     </div>
                     <div className="flex flex-wrap gap-1.5 mt-2">
                       {['합리적인 가격', '전문가 상담', '풍부한 경험', '빠른 서비스', '고품질', '친절한 응대'].map(s => (
-                        <button key={s} type="button" onClick={() => { if (businessInfo.strengths.length < 5 && !businessInfo.strengths.includes(s)) setBusinessInfo(prev => ({ ...prev, strengths: [...prev.strengths, s] })); }}
+                        <button key={s} type="button" onClick={() => { if (businessInfo.strengths.length < 5 && !businessInfo.strengths.includes(s)) setBusinessInfo(prev => { const next = { ...prev, strengths: [...prev.strengths, s] }; autoSave(next); return next; }); }}
                           className="px-2.5 py-1 text-xs bg-rose-50 text-rose-600 rounded-lg border border-rose-200 hover:bg-rose-100 hover:border-rose-400 hover:scale-105 transition-all duration-200"
                         >{s}</button>
                       ))}
