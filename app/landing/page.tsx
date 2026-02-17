@@ -259,10 +259,10 @@ export default function PromotionLandingPage() {
       <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         <div className="bg-white rounded-xl border-2 border-indigo-200 shadow-md overflow-hidden">
           <div className="aspect-[4/3] w-full">
-            <embed
-              src="/ai-search-engine.pdf"
-              type="application/pdf"
-              className="w-full h-full"
+            <iframe
+              src="/ai-search-engine.pdf#toolbar=0&navpanes=0&scrollbar=1"
+              className="w-full h-full border-0"
+              title="AI 검색 엔진의 선택"
             />
           </div>
           <div className="p-4 bg-gray-50 border-t border-gray-200 flex items-center justify-between">
