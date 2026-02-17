@@ -175,30 +175,9 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* PDF 자료 섹션 */}
+      {/* 자료 이미지 섹션 */}
       <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-        <div className="bg-white rounded-xl border-2 border-indigo-200 shadow-md overflow-hidden">
-          <div className="aspect-[4/3] w-full">
-            <iframe
-              src="/ai-search-engine.pdf#toolbar=0&navpanes=0&scrollbar=1"
-              className="w-full h-full border-0"
-              title="AI 검색 엔진의 선택"
-            />
-          </div>
-          <div className="p-4 bg-gray-50 border-t border-gray-200 flex items-center justify-between">
-            <p className="text-sm font-medium text-gray-700">AI 검색 엔진의 선택</p>
-            <a
-              href="/ai-search-engine.pdf"
-              download
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-indigo-600 text-white text-xs font-medium rounded-lg hover:bg-indigo-700 transition-all"
-            >
-              <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-              </svg>
-              PDF 다운로드
-            </a>
-          </div>
-        </div>
+        <img src="/ai-search-engine.png" alt="AI 검색 엔진의 선택" className="w-full rounded-xl shadow-md border-2 border-indigo-200" />
       </section>
 
       {/* 주요 기능 소개 */}

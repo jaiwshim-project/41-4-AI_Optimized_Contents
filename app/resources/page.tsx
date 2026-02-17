@@ -4,14 +4,14 @@ import { useState } from 'react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
-const pdfTabs = [
-  { id: 'search-engine', label: 'AI 검색 엔진의 선택', file: '/ai-search-engine.pdf' },
-  { id: 'search-victory', label: 'AI 검색 시대의 승리', file: '/ai-search-victory.pdf' },
+const tabs = [
+  { id: 'search-engine', label: 'AI 검색 엔진의 선택', image: '/ai-search-engine.png', pdf: '/ai-search-engine.pdf' },
+  { id: 'search-victory', label: 'AI 검색 시대의 승리', image: '/ai-search-victory.png', pdf: '/ai-search-victory.pdf' },
 ];
 
 export default function ResourcesPage() {
-  const [activeTab, setActiveTab] = useState(pdfTabs[0].id);
-  const activePdf = pdfTabs.find(t => t.id === activeTab)!;
+  const [activeTab, setActiveTab] = useState(tabs[0].id);
+  const active = tabs.find(t => t.id === activeTab)!;
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -25,7 +25,7 @@ export default function ResourcesPage() {
 
         {/* 탭 */}
         <div className="flex gap-2 mb-4">
-          {pdfTabs.map(tab => (
+          {tabs.map(tab => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
@@ -40,20 +40,18 @@ export default function ResourcesPage() {
           ))}
         </div>
 
-        {/* PDF 뷰어 */}
+        {/* 이미지 뷰어 */}
         <div className="bg-white rounded-xl border-2 border-indigo-200 shadow-md overflow-hidden">
-          <div className="w-full" style={{ height: '80vh' }}>
-            <iframe
-              key={activePdf.id}
-              src={`${activePdf.file}#toolbar=0&navpanes=0&scrollbar=1`}
-              className="w-full h-full border-0"
-              title={activePdf.label}
-            />
-          </div>
+          <img
+            key={active.id}
+            src={active.image}
+            alt={active.label}
+            className="w-full"
+          />
           <div className="p-3 bg-gray-50 border-t border-gray-200 flex items-center justify-between">
-            <p className="text-sm font-medium text-gray-700">{activePdf.label}</p>
+            <p className="text-sm font-medium text-gray-700">{active.label}</p>
             <a
-              href={activePdf.file}
+              href={active.pdf}
               download
               className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-indigo-600 text-white text-xs font-medium rounded-lg hover:bg-indigo-700 transition-all"
             >
