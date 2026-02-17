@@ -5,8 +5,8 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
 const tabs = [
-  { id: 'geo-playbook', label: 'GEO Playbook', image: '/geo-playbook.png', pdf: '/geo-playbook.pdf' },
-  { id: 'aio-geo-guide', label: 'AIO/GEO Optimizer', image: '/aio-geo-optimizer-guide.png', pdf: '/aio-geo-optimizer-guide.pdf' },
+  { id: 'geo-playbook', label: 'GEO Playbook', pdf: '/geo-playbook.pdf' },
+  { id: 'aio-geo-guide', label: 'AIO/GEO Optimizer', pdf: '/aio-geo-optimizer-guide.pdf' },
 ];
 
 export default function ResourcesPage() {
@@ -40,14 +40,16 @@ export default function ResourcesPage() {
           ))}
         </div>
 
-        {/* 이미지 + PDF 뷰어 */}
+        {/* PDF 뷰어 (스크롤 가능) */}
         <div className="bg-white rounded-xl border-2 border-indigo-200 shadow-md overflow-hidden">
-          <img
-            key={active.id}
-            src={active.image}
-            alt={active.label}
-            className="w-full"
-          />
+          <div className="w-full" style={{ height: '85vh' }}>
+            <iframe
+              key={active.id}
+              src={`${active.pdf}#toolbar=0&navpanes=0&scrollbar=1&view=FitH`}
+              className="w-full h-full border-0"
+              title={active.label}
+            />
+          </div>
           <div className="p-3 bg-gray-50 border-t border-gray-200 flex items-center justify-between">
             <p className="text-sm font-medium text-gray-700">{active.label}</p>
             <a
