@@ -348,6 +348,64 @@ export default function GeneratePage() {
         {/* 결과가 없을 때: 카테고리 선택 + 입력 폼 */}
         {!result && (
           <>
+            {/* 히어로 스텝 가이드 */}
+            <div className="bg-white rounded-2xl shadow-sm border-2 border-indigo-100 p-5 overflow-hidden relative">
+              <div className="absolute inset-0 bg-gradient-to-r from-teal-50/40 via-indigo-50/40 to-purple-50/40 pointer-events-none" />
+              <div className="relative flex items-center justify-center gap-0">
+                {/* 1단계 */}
+                <div className={`flex items-center gap-3 px-5 py-3 rounded-xl transition-all duration-300 ${showBusinessInfo ? 'bg-gradient-to-r from-teal-500 to-emerald-500 text-white shadow-lg shadow-teal-200 scale-105' : 'bg-teal-50 text-teal-700 border-2 border-teal-200'}`}>
+                  <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold shrink-0 ${showBusinessInfo ? 'bg-white/20 text-white' : 'bg-teal-200 text-teal-700'}`}>1</div>
+                  <div className="text-left">
+                    <p className={`text-xs font-bold ${showBusinessInfo ? 'text-white/80' : 'text-teal-500'}`}>STEP 1</p>
+                    <p className="text-sm font-semibold whitespace-nowrap">비즈니스 정보 입력</p>
+                  </div>
+                  <svg className={`w-4 h-4 shrink-0 ${showBusinessInfo ? 'text-white/60' : 'text-teal-400'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                  </svg>
+                </div>
+
+                {/* 화살표 커넥터 */}
+                <div className="flex items-center px-3">
+                  <div className="w-12 h-0.5 bg-gradient-to-r from-teal-300 to-indigo-300" />
+                  <svg className="w-5 h-5 text-indigo-400 -ml-1" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd" />
+                  </svg>
+                </div>
+
+                {/* 2단계 */}
+                <div className={`flex items-center gap-3 px-5 py-3 rounded-xl transition-all duration-300 ${selectedCategory ? 'bg-gradient-to-r from-indigo-500 to-purple-500 text-white shadow-lg shadow-indigo-200 scale-105' : 'bg-indigo-50 text-indigo-700 border-2 border-indigo-200'}`}>
+                  <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold shrink-0 ${selectedCategory ? 'bg-white/20 text-white' : 'bg-indigo-200 text-indigo-700'}`}>2</div>
+                  <div className="text-left">
+                    <p className={`text-xs font-bold ${selectedCategory ? 'text-white/80' : 'text-indigo-500'}`}>STEP 2</p>
+                    <p className="text-sm font-semibold whitespace-nowrap">콘텐츠 유형 선택</p>
+                  </div>
+                  <svg className={`w-4 h-4 shrink-0 ${selectedCategory ? 'text-white/60' : 'text-indigo-400'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h7" />
+                  </svg>
+                </div>
+
+                {/* 화살표 커넥터 */}
+                <div className="flex items-center px-3">
+                  <div className="w-12 h-0.5 bg-gradient-to-r from-indigo-300 to-purple-300" />
+                  <svg className="w-5 h-5 text-purple-400 -ml-1" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd" />
+                  </svg>
+                </div>
+
+                {/* 3단계 */}
+                <div className={`flex items-center gap-3 px-5 py-3 rounded-xl transition-all duration-300 ${isGenerating ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg shadow-purple-200 scale-105 animate-pulse' : 'bg-purple-50 text-purple-700 border-2 border-purple-200'}`}>
+                  <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold shrink-0 ${isGenerating ? 'bg-white/20 text-white' : 'bg-purple-200 text-purple-700'}`}>3</div>
+                  <div className="text-left">
+                    <p className={`text-xs font-bold ${isGenerating ? 'text-white/80' : 'text-purple-500'}`}>STEP 3</p>
+                    <p className="text-sm font-semibold whitespace-nowrap">콘텐츠 생성</p>
+                  </div>
+                  <svg className={`w-4 h-4 shrink-0 ${isGenerating ? 'text-white/60' : 'text-purple-400'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                  </svg>
+                </div>
+              </div>
+            </div>
+
             {/* 비즈니스 정보 입력 (접이식) */}
             <div className="bg-white rounded-2xl shadow-sm border-2 border-teal-200 overflow-hidden">
               <button
