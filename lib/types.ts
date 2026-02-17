@@ -165,9 +165,37 @@ export interface GenerateRequest {
 export interface GenerateResponse {
   title: string;
   content: string;
+  hashtags?: string[];
   metadata: {
     wordCount: number;
     estimatedReadTime: string;
     seoTips: string[];
   };
+}
+
+// === 이력 관리 ===
+
+export interface HistoryItem {
+  id: string;
+  type: 'analysis' | 'generation';
+  title: string;
+  summary: string;
+  date: string;
+  category?: ContentCategory;
+  targetKeyword?: string;
+  // 분석용
+  analysisResult?: AnalysisResponse;
+  originalContent?: string;
+  // 생성용
+  generateResult?: GenerateResponse;
+  topic?: string;
+  tone?: string;
+  revisions?: RevisionItem[];
+}
+
+export interface RevisionItem {
+  id: string;
+  date: string;
+  editNotes: string;
+  result: GenerateResponse;
 }

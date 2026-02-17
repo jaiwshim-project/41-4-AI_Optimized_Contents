@@ -218,12 +218,19 @@ const GENERATE_SYSTEM_PROMPT = `당신은 AIO(AI Overview)와 GEO(Generative Eng
 {
   "title": "생성된 콘텐츠 제목",
   "content": "전체 콘텐츠 (마크다운 형식)",
+  "hashtags": ["#해시태그1", "#해시태그2", ... "#해시태그10"],
   "metadata": {
     "wordCount": 예상_글자수,
     "estimatedReadTime": "약 N분",
     "seoTips": ["SEO 팁1", "SEO 팁2", "SEO 팁3"]
   }
-}`;
+}
+
+hashtags 규칙:
+- 콘텐츠의 핵심 키워드와 관련 토픽을 기반으로 10개의 해시태그 생성
+- 소셜 미디어 공유 시 발견성을 높이는 태그로 구성
+- 반드시 # 기호로 시작
+- 한국어 태그와 영어 태그를 적절히 혼합`;
 
 export async function generateContent(request: GenerateRequest): Promise<GenerateResponse> {
   const categoryLabel = CATEGORY_LABELS[request.category] || request.category;

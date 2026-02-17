@@ -12,6 +12,7 @@ import OptimizedContent from './OptimizedContent';
 import Header from './Header';
 import Footer from './Footer';
 import ApiKeyPanel from './ApiKeyPanel';
+import { saveHistoryItem, generateId } from '@/lib/history';
 
 const tabs: { id: AnalysisTab; label: string }[] = [
   { id: 'overview', label: '종합 개요' },
@@ -57,6 +58,19 @@ export default function Dashboard() {
       setOriginalContent(content);
       setTargetKeyword(targetKeyword);
       setActiveTab('overview');
+      // 이력 저장
+      const now = new Date();
+      const keywords = data.keywords?.primaryKeywords?.map((k: { keyword: string }) => k.keyword).join(', ') || '';
+      saveHistoryItem({
+        id: generateId(),
+        type: 'analysis',
+        title: targetKeyword || content.substring(0, 50).trim() + '...',
+        summary: `종합 ${data.overallScore}점 | AIO ${data.aio.total}점 | GEO ${data.geo.total}점${keywords ? ` | ${keywords}` : ''}`,
+        date: `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`,
+        targetKeyword: targetKeyword || undefined,
+        analysisResult: data,
+        originalContent: content,
+      });
     } catch (err) {
       setError(err instanceof Error ? err.message : '알 수 없는 오류가 발생했습니다.');
     } finally {

@@ -5,6 +5,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import ApiKeyPanel from '@/components/ApiKeyPanel';
 import type { ContentCategory, GenerateResponse } from '@/lib/types';
+import { saveHistoryItem, addRevision, generateId } from '@/lib/history';
 
 const categories: { id: ContentCategory; label: string; description: string; icon: string; color: string; bgIdle: string }[] = [
   {
@@ -96,7 +97,92 @@ export default function GeneratePage() {
   const [showEditInput, setShowEditInput] = useState(false);
   const [editNotes, setEditNotes] = useState('');
   const [isRegenerating, setIsRegenerating] = useState(false);
+  const [currentHistoryId, setCurrentHistoryId] = useState<string | null>(null);
+  const [showBusinessInfo, setShowBusinessInfo] = useState(false);
+  const [businessInfo, setBusinessInfo] = useState({
+    companyName: '',
+    industry: '',
+    customIndustry: '',
+    mainProduct: '',
+    productDescription: '',
+    priceRange: '',
+    mainBenefit: '',
+    targetAudience: '',
+    customerNeeds: '',
+    strengths: [] as string[],
+    newStrength: '',
+    uniquePoint: '',
+    location: '',
+    website: '',
+  });
   const contentRef = useRef<HTMLDivElement>(null);
+
+  // localStorage에서 비즈니스 정보 로드
+  useState(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('aio-business-info');
+      if (saved) {
+        try { setBusinessInfo(prev => ({ ...prev, ...JSON.parse(saved) })); } catch {}
+      }
+    }
+  });
+
+  const saveBusinessInfo = () => {
+    const toSave = { ...businessInfo, newStrength: '' };
+    localStorage.setItem('aio-business-info', JSON.stringify(toSave));
+  };
+
+  const updateBiz = (field: string, value: string) => {
+    setBusinessInfo(prev => ({ ...prev, [field]: value }));
+  };
+
+  const addStrength = () => {
+    const val = businessInfo.newStrength.trim();
+    if (val && businessInfo.strengths.length < 5 && !businessInfo.strengths.includes(val)) {
+      setBusinessInfo(prev => ({ ...prev, strengths: [...prev.strengths, val], newStrength: '' }));
+    }
+  };
+
+  const removeStrength = (index: number) => {
+    setBusinessInfo(prev => ({ ...prev, strengths: prev.strengths.filter((_, i) => i !== index) }));
+  };
+
+  const industries = [
+    { value: '음식/요식업', label: '음식/요식업' },
+    { value: '소매/유통', label: '소매/유통' },
+    { value: '뷰티/미용', label: '뷰티/미용' },
+    { value: '헬스/피트니스', label: '헬스/피트니스' },
+    { value: '교육/학원', label: '교육/학원' },
+    { value: 'IT/테크', label: 'IT/테크' },
+    { value: '의료/건강', label: '의료/건강' },
+    { value: '금융/보험', label: '금융/보험' },
+    { value: '부동산', label: '부동산' },
+    { value: '여행/관광/숙박', label: '여행/관광/숙박' },
+    { value: '법률/컨설팅', label: '법률/컨설팅' },
+    { value: '기타', label: '기타' },
+  ];
+
+  const buildAdditionalNotes = () => {
+    const parts: string[] = [];
+    if (additionalNotes.trim()) parts.push(additionalNotes.trim());
+    const biz = businessInfo;
+    const bizParts: string[] = [];
+    if (biz.companyName) bizParts.push(`회사/브랜드: ${biz.companyName}`);
+    const ind = biz.industry === '기타' ? biz.customIndustry : biz.industry;
+    if (ind) bizParts.push(`산업 분야: ${ind}`);
+    if (biz.mainProduct) bizParts.push(`주요 제품/서비스: ${biz.mainProduct}`);
+    if (biz.productDescription) bizParts.push(`제품 설명: ${biz.productDescription}`);
+    if (biz.priceRange) bizParts.push(`가격대: ${biz.priceRange}`);
+    if (biz.mainBenefit) bizParts.push(`주요 혜택: ${biz.mainBenefit}`);
+    if (biz.targetAudience) bizParts.push(`타겟 고객: ${biz.targetAudience}`);
+    if (biz.customerNeeds) bizParts.push(`고객 니즈: ${biz.customerNeeds}`);
+    if (biz.strengths.length > 0) bizParts.push(`강점: ${biz.strengths.join(', ')}`);
+    if (biz.uniquePoint) bizParts.push(`차별점: ${biz.uniquePoint}`);
+    if (biz.location) bizParts.push(`위치: ${biz.location}`);
+    if (biz.website) bizParts.push(`웹사이트: ${biz.website}`);
+    if (bizParts.length > 0) parts.push(`[비즈니스 정보]\n${bizParts.join('\n')}`);
+    return parts.length > 0 ? parts.join('\n\n') : undefined;
+  };
 
   const handleRegenerate = async () => {
     if (!selectedCategory || !result || !editNotes.trim()) return;
@@ -123,6 +209,16 @@ export default function GeneratePage() {
 
       const data = await response.json();
       setResult(data);
+      // 수정 이력 저장
+      if (currentHistoryId) {
+        const now = new Date();
+        addRevision(currentHistoryId, {
+          id: generateId(),
+          date: `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`,
+          editNotes: editNotes.trim(),
+          result: data,
+        });
+      }
       setEditNotes('');
       setShowEditInput(false);
     } catch (err) {
@@ -147,9 +243,12 @@ export default function GeneratePage() {
           topic: topic.trim(),
           targetKeyword: targetKeyword.trim() || undefined,
           tone,
-          additionalNotes: additionalNotes.trim() || undefined,
+          additionalNotes: buildAdditionalNotes(),
         }),
       });
+
+      // 비즈니스 정보 자동 저장
+      saveBusinessInfo();
 
       if (!response.ok) {
         const err = await response.json();
@@ -158,6 +257,23 @@ export default function GeneratePage() {
 
       const data = await response.json();
       setResult(data);
+      // 이력 저장
+      const now = new Date();
+      const historyId = generateId();
+      setCurrentHistoryId(historyId);
+      saveHistoryItem({
+        id: historyId,
+        type: 'generation',
+        title: data.title || topic.trim(),
+        summary: `${categories.find(c => c.id === selectedCategory)?.label || ''} | ${topic.trim()}`,
+        date: `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`,
+        category: selectedCategory || undefined,
+        targetKeyword: targetKeyword.trim() || undefined,
+        generateResult: data,
+        topic: topic.trim(),
+        tone,
+        revisions: [],
+      });
     } catch (err) {
       setError(err instanceof Error ? err.message : '알 수 없는 오류가 발생했습니다.');
     } finally {
@@ -197,6 +313,134 @@ export default function GeneratePage() {
         {/* 결과가 없을 때: 카테고리 선택 + 입력 폼 */}
         {!result && (
           <>
+            {/* 비즈니스 정보 입력 (접이식) */}
+            <div className="bg-white rounded-2xl shadow-sm border-2 border-teal-200 overflow-hidden">
+              <button
+                onClick={() => setShowBusinessInfo(!showBusinessInfo)}
+                className="w-full flex items-center justify-between px-6 py-4 hover:bg-teal-50 transition-all duration-200"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 bg-gradient-to-br from-teal-500 to-emerald-600 rounded-lg flex items-center justify-center">
+                    <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                    </svg>
+                  </div>
+                  <div className="text-left">
+                    <h2 className="text-sm font-semibold text-gray-900">비즈니스 정보 입력</h2>
+                    <p className="text-xs text-gray-500">회사, 제품, 타겟 고객 정보를 입력하면 더 정확한 콘텐츠를 생성합니다</p>
+                  </div>
+                </div>
+                <svg className={`w-5 h-5 text-gray-400 transition-transform duration-200 ${showBusinessInfo ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+
+              {showBusinessInfo && (
+                <div className="px-6 pb-6 space-y-5 border-t border-teal-100">
+                  {/* 회사/브랜드 정보 */}
+                  <div className="pt-5">
+                    <h3 className="text-sm font-semibold text-teal-800 mb-3 flex items-center gap-2">
+                      <span className="w-5 h-5 bg-teal-100 rounded text-center text-xs leading-5 font-bold text-teal-600">1</span>
+                      회사/브랜드 정보
+                    </h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                      <input type="text" value={businessInfo.companyName} onChange={e => updateBiz('companyName', e.target.value)} placeholder="회사/브랜드명" className="px-4 py-2.5 border-2 border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-400 focus:border-transparent" />
+                      <input type="text" value={businessInfo.location} onChange={e => updateBiz('location', e.target.value)} placeholder="지역/위치 (예: 서울 강남구)" className="px-4 py-2.5 border-2 border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-400 focus:border-transparent" />
+                    </div>
+                    <input type="text" value={businessInfo.website} onChange={e => updateBiz('website', e.target.value)} placeholder="웹사이트/SNS (예: www.example.com)" className="mt-3 w-full px-4 py-2.5 border-2 border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-400 focus:border-transparent" />
+                  </div>
+
+                  {/* 산업 분야 */}
+                  <div>
+                    <h3 className="text-sm font-semibold text-teal-800 mb-3 flex items-center gap-2">
+                      <span className="w-5 h-5 bg-teal-100 rounded text-center text-xs leading-5 font-bold text-teal-600">2</span>
+                      산업 분야
+                    </h3>
+                    <div className="flex flex-wrap gap-2">
+                      {industries.map(ind => (
+                        <button
+                          key={ind.value}
+                          type="button"
+                          onClick={() => updateBiz('industry', ind.value)}
+                          className={`px-3 py-1.5 text-xs rounded-lg border-2 transition-all duration-200 hover:shadow-md hover:scale-105 ${
+                            businessInfo.industry === ind.value
+                              ? 'bg-teal-600 text-white border-teal-300'
+                              : 'bg-gray-50 text-gray-600 border-gray-200 hover:border-teal-300'
+                          }`}
+                        >
+                          {ind.label}
+                        </button>
+                      ))}
+                    </div>
+                    {businessInfo.industry === '기타' && (
+                      <input type="text" value={businessInfo.customIndustry} onChange={e => updateBiz('customIndustry', e.target.value)} placeholder="산업 분야를 직접 입력" className="mt-3 w-full px-4 py-2.5 border-2 border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-400 focus:border-transparent" />
+                    )}
+                  </div>
+
+                  {/* 제품/서비스 정보 */}
+                  <div>
+                    <h3 className="text-sm font-semibold text-teal-800 mb-3 flex items-center gap-2">
+                      <span className="w-5 h-5 bg-teal-100 rounded text-center text-xs leading-5 font-bold text-teal-600">3</span>
+                      제품/서비스 정보
+                    </h3>
+                    <input type="text" value={businessInfo.mainProduct} onChange={e => updateBiz('mainProduct', e.target.value)} placeholder="주요 제품/서비스 (예: 프리미엄 커피, 영어 회화 수업)" className="w-full px-4 py-2.5 border-2 border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-400 focus:border-transparent" />
+                    <textarea value={businessInfo.productDescription} onChange={e => updateBiz('productDescription', e.target.value)} placeholder="제품/서비스 상세 설명 (특징, 장점, 차별점)" rows={2} className="mt-3 w-full px-4 py-2.5 border-2 border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-400 focus:border-transparent resize-none" />
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-3">
+                      <input type="text" value={businessInfo.priceRange} onChange={e => updateBiz('priceRange', e.target.value)} placeholder="가격대 (예: 5,000원~15,000원)" className="px-4 py-2.5 border-2 border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-400 focus:border-transparent" />
+                      <input type="text" value={businessInfo.mainBenefit} onChange={e => updateBiz('mainBenefit', e.target.value)} placeholder="주요 혜택 (예: 30% 할인, 무료 배송)" className="px-4 py-2.5 border-2 border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-400 focus:border-transparent" />
+                    </div>
+                  </div>
+
+                  {/* 타겟 고객 */}
+                  <div>
+                    <h3 className="text-sm font-semibold text-teal-800 mb-3 flex items-center gap-2">
+                      <span className="w-5 h-5 bg-teal-100 rounded text-center text-xs leading-5 font-bold text-teal-600">4</span>
+                      타겟 고객
+                    </h3>
+                    <input type="text" value={businessInfo.targetAudience} onChange={e => updateBiz('targetAudience', e.target.value)} placeholder="주요 타겟 고객층 (예: 20-30대 직장인)" className="w-full px-4 py-2.5 border-2 border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-400 focus:border-transparent" />
+                    <div className="flex flex-wrap gap-1.5 mt-2">
+                      {['10대 청소년', '20대 대학생', '20-30대 직장인', '30-40대 주부', '40-50대 중년층', '시니어'].map(t => (
+                        <button key={t} type="button" onClick={() => updateBiz('targetAudience', businessInfo.targetAudience ? `${businessInfo.targetAudience}, ${t}` : t)}
+                          className="px-2.5 py-1 text-xs bg-gray-100 text-gray-600 rounded-lg border border-gray-200 hover:bg-teal-50 hover:border-teal-300 hover:scale-105 transition-all duration-200"
+                        >{t}</button>
+                      ))}
+                    </div>
+                    <textarea value={businessInfo.customerNeeds} onChange={e => updateBiz('customerNeeds', e.target.value)} placeholder="고객의 주요 고민/니즈" rows={2} className="mt-3 w-full px-4 py-2.5 border-2 border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-400 focus:border-transparent resize-none" />
+                  </div>
+
+                  {/* 강점 및 차별점 */}
+                  <div>
+                    <h3 className="text-sm font-semibold text-teal-800 mb-3 flex items-center gap-2">
+                      <span className="w-5 h-5 bg-teal-100 rounded text-center text-xs leading-5 font-bold text-teal-600">5</span>
+                      강점 및 차별점
+                    </h3>
+                    {businessInfo.strengths.length > 0 && (
+                      <div className="flex flex-wrap gap-2 mb-3">
+                        {businessInfo.strengths.map((s, i) => (
+                          <span key={i} className="inline-flex items-center gap-1.5 px-3 py-1 bg-gradient-to-r from-teal-500 to-emerald-500 text-white text-xs rounded-full">
+                            {s}
+                            <button type="button" onClick={() => removeStrength(i)} className="hover:text-teal-200 transition-colors">x</button>
+                          </span>
+                        ))}
+                      </div>
+                    )}
+                    <div className="flex gap-2">
+                      <input type="text" value={businessInfo.newStrength} onChange={e => updateBiz('newStrength', e.target.value)} onKeyDown={e => e.key === 'Enter' && (e.preventDefault(), addStrength())} placeholder="강점 입력 (최대 5개)" className="flex-1 px-4 py-2.5 border-2 border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-400 focus:border-transparent" />
+                      <button type="button" onClick={addStrength} className="px-4 py-2.5 bg-teal-600 text-white text-sm font-medium rounded-xl hover:bg-teal-700 hover:shadow-md hover:scale-105 transition-all duration-200 border-2 border-teal-300">추가</button>
+                    </div>
+                    <div className="flex flex-wrap gap-1.5 mt-2">
+                      {['합리적인 가격', '전문가 상담', '풍부한 경험', '빠른 서비스', '고품질', '친절한 응대'].map(s => (
+                        <button key={s} type="button" onClick={() => { if (businessInfo.strengths.length < 5 && !businessInfo.strengths.includes(s)) setBusinessInfo(prev => ({ ...prev, strengths: [...prev.strengths, s] })); }}
+                          className="px-2.5 py-1 text-xs bg-gray-100 text-gray-600 rounded-lg border border-gray-200 hover:bg-teal-50 hover:border-teal-300 hover:scale-105 transition-all duration-200"
+                        >{s}</button>
+                      ))}
+                    </div>
+                    <textarea value={businessInfo.uniquePoint} onChange={e => updateBiz('uniquePoint', e.target.value)} placeholder="경쟁사 대비 차별점" rows={2} className="mt-3 w-full px-4 py-2.5 border-2 border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-400 focus:border-transparent resize-none" />
+                  </div>
+                </div>
+              )}
+            </div>
+
             {/* 카테고리 선택 */}
             <div className="bg-white rounded-2xl shadow-sm border-2 border-indigo-200 p-6">
               <h2 className="text-lg font-semibold text-gray-900 mb-1">콘텐츠 유형 선택</h2>
@@ -449,6 +693,47 @@ export default function GeneratePage() {
               )}
             </div>
 
+            {/* 수정 입력창 (콘텐츠 위에 배치) */}
+            {showEditInput && (
+              <div className="bg-violet-50 rounded-2xl shadow-sm border-2 border-violet-300 p-5">
+                <div className="flex items-center gap-2 mb-3">
+                  <svg className="w-4 h-4 text-violet-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                  </svg>
+                  <h4 className="text-sm font-semibold text-violet-800">콘텐츠 수정 요청</h4>
+                </div>
+                <textarea
+                  value={editNotes}
+                  onChange={(e) => setEditNotes(e.target.value)}
+                  placeholder="수정하거나 추가하고 싶은 내용을 입력하세요...&#10;예: '서론을 더 강렬하게', '통계 데이터 추가', 'FAQ 섹션 보강'"
+                  rows={3}
+                  className="w-full px-4 py-3 border-2 border-violet-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-violet-400 focus:border-transparent placeholder-gray-400 resize-none bg-white"
+                />
+                <button
+                  onClick={handleRegenerate}
+                  disabled={isRegenerating || !editNotes.trim()}
+                  className="mt-3 w-full py-3 bg-gradient-to-r from-violet-600 to-purple-600 text-white font-medium rounded-xl hover:from-violet-700 hover:to-purple-700 hover:shadow-lg hover:scale-[1.01] transition-all duration-200 shadow-sm disabled:opacity-50 disabled:cursor-not-allowed border-2 border-violet-300 flex items-center justify-center gap-2"
+                >
+                  {isRegenerating ? (
+                    <>
+                      <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                      </svg>
+                      수정 반영하여 재생성 중...
+                    </>
+                  ) : (
+                    <>
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                      </svg>
+                      재생성
+                    </>
+                  )}
+                </button>
+              </div>
+            )}
+
             {/* 생성된 콘텐츠 */}
             <div className="bg-white rounded-2xl shadow-sm border-2 border-indigo-200 p-6 relative">
               {/* 상단 버튼 그룹 */}
@@ -477,7 +762,7 @@ export default function GeneratePage() {
                       setTimeout(() => setCopiedContent(false), 2000);
                     });
                   }}
-                  className={`inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg transition-all border-2 ${
+                  className={`inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg transition-all duration-200 border-2 hover:shadow-md hover:scale-105 ${
                     copiedContent
                       ? 'bg-emerald-500 text-white border-emerald-300'
                       : 'bg-gray-50 text-gray-500 border-gray-200 hover:bg-gray-100 hover:border-indigo-300'
@@ -490,7 +775,7 @@ export default function GeneratePage() {
                 </button>
                 <button
                   onClick={() => setShowEditInput(!showEditInput)}
-                  className={`inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg transition-all border-2 ${
+                  className={`inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg transition-all duration-200 border-2 hover:shadow-md hover:scale-105 ${
                     showEditInput
                       ? 'bg-violet-500 text-white border-violet-300'
                       : 'bg-gray-50 text-gray-500 border-gray-200 hover:bg-gray-100 hover:border-violet-300'
@@ -518,44 +803,14 @@ export default function GeneratePage() {
                 />
               </div>
 
-              {/* 수정 입력창 */}
-              {showEditInput && (
-                <div className="mt-6 pt-5 border-t-2 border-violet-200">
-                  <div className="flex items-center gap-2 mb-3">
-                    <svg className="w-4 h-4 text-violet-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                    </svg>
-                    <h4 className="text-sm font-semibold text-violet-800">콘텐츠 수정 요청</h4>
-                  </div>
-                  <textarea
-                    value={editNotes}
-                    onChange={(e) => setEditNotes(e.target.value)}
-                    placeholder="수정하거나 추가하고 싶은 내용을 입력하세요...&#10;예: '서론을 더 강렬하게', '통계 데이터 추가', 'FAQ 섹션 보강'"
-                    rows={4}
-                    className="w-full px-4 py-3 border-2 border-violet-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-violet-400 focus:border-transparent placeholder-gray-400 resize-none bg-violet-50/50"
-                  />
-                  <button
-                    onClick={handleRegenerate}
-                    disabled={isRegenerating || !editNotes.trim()}
-                    className="mt-3 w-full py-3 bg-gradient-to-r from-violet-600 to-purple-600 text-white font-medium rounded-xl hover:from-violet-700 hover:to-purple-700 transition-all shadow-sm disabled:opacity-50 disabled:cursor-not-allowed border-2 border-violet-300 flex items-center justify-center gap-2"
-                  >
-                    {isRegenerating ? (
-                      <>
-                        <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
-                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
-                        </svg>
-                        수정 반영하여 재생성 중...
-                      </>
-                    ) : (
-                      <>
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-                        </svg>
-                        재생성
-                      </>
-                    )}
-                  </button>
+              {/* 해시태그 */}
+              {result.hashtags && result.hashtags.length > 0 && (
+                <div className="mt-6 pt-4 border-t border-gray-200 flex flex-wrap gap-2">
+                  {result.hashtags.map((tag, i) => (
+                    <span key={i} className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-indigo-50 text-indigo-600 border border-indigo-200 hover:bg-indigo-100 hover:scale-105 transition-all duration-200 cursor-default">
+                      {tag.startsWith('#') ? tag : `#${tag}`}
+                    </span>
+                  ))}
                 </div>
               )}
             </div>
