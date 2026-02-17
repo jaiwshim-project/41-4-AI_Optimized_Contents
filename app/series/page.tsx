@@ -121,9 +121,9 @@ export default function SeriesPage() {
     <div className="min-h-screen bg-gradient-to-br from-purple-50 via-pink-50 to-blue-50">
       <Header />
 
-      <main className="container mx-auto px-4 py-12 max-w-6xl">
-        <div className="text-center mb-12">
-          <h1 className="text-5xl font-bold mb-4 bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 bg-clip-text text-transparent">
+      <main className="container mx-auto px-4 py-8 max-w-6xl">
+        <div className="text-center mb-8">
+          <h1 className="text-4xl font-bold mb-3 bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 bg-clip-text text-transparent">
             콘텐츠 시리즈 기획
           </h1>
           <p className="text-lg text-gray-600">
@@ -131,8 +131,8 @@ export default function SeriesPage() {
           </p>
         </div>
 
-        <div className="bg-white rounded-xl shadow-2xl p-8 border-2 border-purple-200 mb-8">
-          <form onSubmit={handleSubmit} className="space-y-6">
+        <div className="bg-white rounded-xl shadow-2xl p-6 border-2 border-purple-200 mb-5">
+          <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <label htmlFor="topic" className="block text-lg font-semibold text-gray-800 mb-2">
                 시리즈 주제 <span className="text-red-500">*</span>
@@ -244,12 +244,12 @@ export default function SeriesPage() {
         </div>
 
         {result && (
-          <div className="space-y-8">
+          <div className="space-y-5">
             {/* Series Overview */}
-            <div className="bg-white rounded-xl shadow-2xl p-8 border-2 border-blue-200">
-              <div className="mb-6">
-                <h2 className="text-3xl font-bold text-gray-800 mb-3">{result.seriesTitle}</h2>
-                <p className="text-lg text-gray-600 mb-4">{result.description}</p>
+            <div className="bg-white rounded-xl shadow-2xl p-6 border-2 border-blue-200">
+              <div className="mb-4">
+                <h2 className="text-2xl font-bold text-gray-800 mb-3">{result.seriesTitle}</h2>
+                <p className="text-lg text-gray-600 mb-3">{result.description}</p>
                 <div className="inline-block">
                   <span className="px-4 py-2 bg-gradient-to-r from-green-400 to-blue-500 text-white font-semibold rounded-full text-sm shadow-md">
                     타겟 독자: {result.targetAudience}
@@ -259,8 +259,8 @@ export default function SeriesPage() {
             </div>
 
             {/* Episodes */}
-            <div className="space-y-4">
-              <h3 className="text-2xl font-bold text-gray-800 mb-4">에피소드 목록</h3>
+            <div className="space-y-3">
+              <h3 className="text-xl font-bold text-gray-800 mb-3">에피소드 목록</h3>
               {result.episodes.map((episode) => {
                 const isExpanded = expandedEpisodes.has(episode.number);
                 return (
@@ -270,7 +270,7 @@ export default function SeriesPage() {
                   >
                     <div
                       onClick={() => toggleEpisode(episode.number)}
-                      className="p-6 cursor-pointer hover:bg-gradient-to-r hover:from-indigo-50 hover:to-purple-50 transition-colors"
+                      className="p-4 cursor-pointer hover:bg-gradient-to-r hover:from-indigo-50 hover:to-purple-50 transition-colors"
                     >
                       <div className="flex items-start justify-between">
                         <div className="flex-1">
@@ -299,7 +299,7 @@ export default function SeriesPage() {
                     </div>
 
                     {isExpanded && (
-                      <div className="px-6 pb-6 space-y-4 border-t-2 border-gray-100 pt-4">
+                      <div className="px-4 pb-4 space-y-3 border-t-2 border-gray-100 pt-3">
                         <div>
                           <h5 className="font-semibold text-gray-800 mb-2">요약</h5>
                           <p className="text-gray-600">{episode.summary}</p>
@@ -358,8 +358,8 @@ export default function SeriesPage() {
             </div>
 
             {/* Linking Strategy */}
-            <div className="bg-white rounded-xl shadow-2xl p-8 border-2 border-green-200">
-              <h3 className="text-2xl font-bold text-gray-800 mb-4 flex items-center gap-2">
+            <div className="bg-white rounded-xl shadow-2xl p-6 border-2 border-green-200">
+              <h3 className="text-xl font-bold text-gray-800 mb-3 flex items-center gap-2">
                 <span className="text-green-500">🔗</span>
                 링킹 전략
               </h3>
@@ -367,8 +367,8 @@ export default function SeriesPage() {
             </div>
 
             {/* Publishing Schedule */}
-            <div className="bg-white rounded-xl shadow-2xl p-8 border-2 border-orange-200">
-              <h3 className="text-2xl font-bold text-gray-800 mb-4 flex items-center gap-2">
+            <div className="bg-white rounded-xl shadow-2xl p-6 border-2 border-orange-200">
+              <h3 className="text-xl font-bold text-gray-800 mb-3 flex items-center gap-2">
                 <span className="text-orange-500">📅</span>
                 발행 일정
               </h3>
@@ -376,8 +376,8 @@ export default function SeriesPage() {
             </div>
 
             {/* Expected Outcome */}
-            <div className="bg-white rounded-xl shadow-2xl p-8 border-2 border-yellow-200">
-              <h3 className="text-2xl font-bold text-gray-800 mb-4 flex items-center gap-2">
+            <div className="bg-white rounded-xl shadow-2xl p-6 border-2 border-yellow-200">
+              <h3 className="text-xl font-bold text-gray-800 mb-3 flex items-center gap-2">
                 <span className="text-yellow-500">🎯</span>
                 기대 효과
               </h3>

@@ -114,7 +114,7 @@ export default function DashboardStats({ history }: DashboardStatsProps) {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       {/* 요약 카드 */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
         <div className="bg-gradient-to-br from-indigo-50 to-blue-50 rounded-xl p-4 border-2 border-indigo-200">
@@ -136,7 +136,7 @@ export default function DashboardStats({ history }: DashboardStatsProps) {
       </div>
 
       {/* 차트 영역 */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
         {/* 월별 생성 추이 */}
         <div className="bg-white rounded-xl p-4 border-2 border-blue-200">
           <h3 className="text-sm font-bold text-gray-800 mb-3 flex items-center gap-2">

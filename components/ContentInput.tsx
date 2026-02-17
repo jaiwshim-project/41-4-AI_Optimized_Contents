@@ -22,7 +22,7 @@ export default function ContentInput({ onAnalyze, isAnalyzing }: ContentInputPro
   return (
     <form onSubmit={handleSubmit} className="bg-white rounded-2xl shadow-sm border-2 border-blue-200 overflow-hidden">
       {/* 헤더 */}
-      <div className="px-6 py-4 bg-gradient-to-r from-blue-50 to-indigo-50 border-b border-blue-100">
+      <div className="px-4 py-3 bg-gradient-to-r from-blue-50 to-indigo-50 border-b border-blue-100">
         <div className="flex items-center gap-3">
           <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-lg flex items-center justify-center shadow-sm">
             <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -36,8 +36,8 @@ export default function ContentInput({ onAnalyze, isAnalyzing }: ContentInputPro
         </div>
       </div>
 
-      <div className="p-6 space-y-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="p-5 space-y-3">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
           <div>
             <label className="block text-xs font-semibold text-gray-600 mb-1.5">
               타겟 키워드 <span className="text-gray-400 font-normal">(선택)</span>

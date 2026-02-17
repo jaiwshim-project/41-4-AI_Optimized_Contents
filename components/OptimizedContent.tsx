@@ -95,9 +95,9 @@ export default function OptimizedContent({ result, originalContent, targetKeywor
   // 최적화 전 초기 화면
   if (!optimized && !isOptimizing) {
     return (
-      <div className="bg-emerald-50 rounded-2xl shadow-sm border-2 border-emerald-200 p-8">
+      <div className="bg-emerald-50 rounded-2xl shadow-sm border-2 border-emerald-200 p-6">
         <div className="text-center max-w-lg mx-auto">
-          <div className="w-16 h-16 bg-gradient-to-br from-emerald-100 to-teal-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+          <div className="w-16 h-16 bg-gradient-to-br from-emerald-100 to-teal-100 rounded-xl flex items-center justify-center mx-auto mb-3">
             <svg className="w-8 h-8 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
             </svg>
@@ -106,7 +106,7 @@ export default function OptimizedContent({ result, originalContent, targetKeywor
           <p className="text-sm text-gray-500 mb-2">
             분석 결과와 개선 제안을 바탕으로 콘텐츠를 AI 검색엔진에 최적화된 버전으로 자동 변환합니다.
           </p>
-          <div className="flex flex-wrap justify-center gap-2 mb-6">
+          <div className="flex flex-wrap justify-center gap-2 mb-4">
             {['구조 재구성', 'FAQ 추가', 'E-E-A-T 강화', '인용 최적화', '키워드 배치'].map((tag) => (
               <span key={tag} className="text-xs bg-emerald-50 text-emerald-600 px-3 py-1 rounded-full font-medium">
                 {tag}
@@ -146,7 +146,7 @@ export default function OptimizedContent({ result, originalContent, targetKeywor
 
           {/* API Key 입력 섹션 */}
           {hasApiKey === false && (
-            <div className="bg-amber-50 border border-amber-200 rounded-xl p-5 mb-6 text-left">
+            <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 mb-4 text-left">
               <div className="flex items-center gap-2 mb-3">
                 <svg className="w-5 h-5 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
@@ -194,7 +194,7 @@ export default function OptimizedContent({ result, originalContent, targetKeywor
 
           {/* API Key 등록 완료 상태 */}
           {hasApiKey === true && (
-            <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-3 mb-6 flex items-center justify-center gap-2">
+            <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-3 mb-4 flex items-center justify-center gap-2">
               <svg className="w-4 h-4 text-emerald-500" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
               </svg>
@@ -221,15 +221,15 @@ export default function OptimizedContent({ result, originalContent, targetKeywor
   // 변환 중 로딩
   if (isOptimizing) {
     return (
-      <div className="bg-emerald-50 rounded-2xl shadow-sm border-2 border-emerald-200 p-12">
+      <div className="bg-emerald-50 rounded-2xl shadow-sm border-2 border-emerald-200 p-8">
         <div className="text-center">
-          <div className="w-16 h-16 mx-auto mb-4 relative">
+          <div className="w-16 h-16 mx-auto mb-3 relative">
             <div className="absolute inset-0 rounded-full border-4 border-emerald-100" />
             <div className="absolute inset-0 rounded-full border-4 border-emerald-500 border-t-transparent animate-spin" />
           </div>
           <h3 className="text-lg font-semibold text-gray-900 mb-2">콘텐츠 최적화 중...</h3>
           <p className="text-sm text-gray-500">AI가 분석 결과를 반영하여 콘텐츠를 재구성하고 있습니다</p>
-          <div className="mt-6 flex flex-col gap-2 max-w-xs mx-auto">
+          <div className="mt-4 flex flex-col gap-2 max-w-xs mx-auto">
             {['구조 재구성', '키워드 최적화', 'E-E-A-T 강화', 'FAQ 생성'].map((step, i) => (
               <div key={step} className="flex items-center gap-2 text-sm text-gray-400 animate-pulse" style={{ animationDelay: `${i * 0.3}s` }}>
                 <div className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
@@ -244,11 +244,11 @@ export default function OptimizedContent({ result, originalContent, targetKeywor
 
   // 결과 표시
   return (
-    <div className="space-y-4">
+    <div className="space-y-3">
       {/* 예상 점수 향상 */}
-      <div className="bg-emerald-50 rounded-2xl shadow-sm border-2 border-emerald-200 p-6">
-        <h2 className="text-lg font-semibold text-gray-900 mb-4">예상 점수 변화</h2>
-        <div className="grid grid-cols-3 gap-4">
+      <div className="bg-emerald-50 rounded-2xl shadow-sm border-2 border-emerald-200 p-5">
+        <h2 className="text-lg font-semibold text-gray-900 mb-3">예상 점수 변화</h2>
+        <div className="grid grid-cols-3 gap-3">
           {([
             { label: '종합 점수', before: result.overallScore, after: optimized!.expectedScoreImprovement.overall, color: 'blue' },
             { label: 'AIO 점수', before: result.aio.total, after: optimized!.expectedScoreImprovement.aio, color: 'indigo' },
@@ -277,8 +277,8 @@ export default function OptimizedContent({ result, originalContent, targetKeywor
       </div>
 
       {/* 변경사항 요약 */}
-      <div className="bg-emerald-50 rounded-2xl shadow-sm border-2 border-emerald-200 p-6">
-        <h2 className="text-lg font-semibold text-gray-900 mb-3">변경사항 요약</h2>
+      <div className="bg-emerald-50 rounded-2xl shadow-sm border-2 border-emerald-200 p-5">
+        <h2 className="text-lg font-semibold text-gray-900 mb-2">변경사항 요약</h2>
         <div className="space-y-2">
           {optimized!.changeSummary.map((change, i) => (
             <div key={i} className="flex items-start gap-2">
@@ -292,8 +292,8 @@ export default function OptimizedContent({ result, originalContent, targetKeywor
       </div>
 
       {/* 최적화된 콘텐츠 */}
-      <div className="bg-emerald-50 rounded-2xl shadow-sm border-2 border-emerald-200 p-6">
-        <div className="flex items-center justify-between mb-4">
+      <div className="bg-emerald-50 rounded-2xl shadow-sm border-2 border-emerald-200 p-5">
+        <div className="flex items-center justify-between mb-3">
           <h2 className="text-lg font-semibold text-gray-900">최적화된 콘텐츠</h2>
           <div className="flex items-center gap-2">
             {/* 보기 모드 토글 */}
@@ -340,13 +340,13 @@ export default function OptimizedContent({ result, originalContent, targetKeywor
         </div>
 
         {viewMode === 'optimized' ? (
-          <div className="bg-gray-50 rounded-xl p-6 prose prose-sm max-w-none">
+          <div className="bg-gray-50 rounded-xl p-5 prose prose-sm max-w-none">
             <div className="whitespace-pre-wrap text-sm text-gray-700 leading-relaxed">
               {optimized!.optimizedContent}
             </div>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             <div>
               <div className="flex items-center gap-2 mb-2">
                 <span className="text-xs font-medium text-red-500 bg-red-50 px-2 py-0.5 rounded-full">원본</span>

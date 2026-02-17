@@ -444,7 +444,7 @@ export default function GenerateResultPage() {
       />
       <ApiKeyPanel visible={showApiKeyInput} />
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 space-y-4">
         {/* 에러 */}
         {error && (
           <div className="bg-red-50 border-2 border-red-200 rounded-xl p-4 flex items-start gap-3">
@@ -456,8 +456,8 @@ export default function GenerateResultPage() {
         )}
 
         {/* 결과 헤더 */}
-        <div className="bg-white rounded-2xl shadow-sm border-2 border-emerald-200 p-6">
-          <div className="flex items-center justify-between mb-4">
+        <div className="bg-white rounded-xl shadow-sm border-2 border-emerald-200 p-5">
+          <div className="flex items-center justify-between mb-3">
             <div>
               <h2 className="text-lg font-semibold text-gray-900">{result.title}</h2>
               <div className="flex items-center gap-4 mt-1">
@@ -532,8 +532,8 @@ export default function GenerateResultPage() {
 
           {/* SEO 팁 */}
           {result.metadata.seoTips.length > 0 && (
-            <div className="bg-blue-50 rounded-xl p-4 border-2 border-blue-200">
-              <h3 className="text-sm font-semibold text-blue-800 mb-2 flex items-center gap-1.5">
+            <div className="bg-blue-50 rounded-xl p-3 border-2 border-blue-200">
+              <h3 className="text-sm font-semibold text-blue-800 mb-1.5 flex items-center gap-1.5">
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
@@ -553,7 +553,7 @@ export default function GenerateResultPage() {
 
         {/* 수정 입력창 */}
         {showEditInput && (
-          <div className="bg-violet-50 rounded-2xl shadow-sm border-2 border-violet-300 p-5">
+          <div className="bg-violet-50 rounded-xl shadow-sm border-2 border-violet-300 p-4">
             <div className="flex items-center gap-2 mb-3">
               <svg className="w-4 h-4 text-violet-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
@@ -593,7 +593,7 @@ export default function GenerateResultPage() {
         )}
 
         {/* 생성된 콘텐츠 */}
-        <div className="bg-white rounded-2xl shadow-sm border-2 border-indigo-200 p-6 relative">
+        <div className="bg-white rounded-xl shadow-sm border-2 border-indigo-200 p-5 relative">
           {/* 상단 버튼 그룹 */}
           <div className="absolute top-4 right-4 flex items-center gap-2">
             <button
@@ -647,7 +647,7 @@ export default function GenerateResultPage() {
             />
             {/* 해시태그 - 본문 안에 포함하여 복사 시 함께 복사됨 */}
             {result.hashtags && result.hashtags.length > 0 && (
-              <div className="mt-8 pt-4 flex flex-wrap gap-2">
+              <div className="mt-5 pt-3 flex flex-wrap gap-2">
                 {result.hashtags.map((tag, i) => (
                   <span key={i} className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-indigo-50 text-indigo-600 border border-indigo-200 hover:bg-indigo-100 hover:scale-105 transition-all duration-200 cursor-default">
                     {tag.startsWith('#') ? tag : `#${tag}`}
@@ -658,7 +658,7 @@ export default function GenerateResultPage() {
           </div>
 
           {/* AI 이미지 생성 */}
-          <div className="mt-6 pt-4 border-t border-gray-200">
+          <div className="mt-4 pt-3 border-t border-gray-200">
             {generatedImages.length === 0 ? (
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
@@ -763,8 +763,8 @@ export default function GenerateResultPage() {
 
           {/* A/B 버전 비교 */}
           {abVersions.length > 1 && (
-            <div className="bg-white rounded-2xl shadow-sm border-2 border-amber-200 overflow-hidden">
-              <div className="bg-gradient-to-r from-amber-50 to-orange-50 px-6 py-3 border-b border-amber-200">
+            <div className="bg-white rounded-xl shadow-sm border-2 border-amber-200 overflow-hidden">
+              <div className="bg-gradient-to-r from-amber-50 to-orange-50 px-5 py-2 border-b border-amber-200">
                 <h3 className="text-sm font-bold text-amber-800 flex items-center gap-2">
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" /></svg>
                   A/B 버전 비교 ({abVersions.length}개 버전)
@@ -792,15 +792,15 @@ export default function GenerateResultPage() {
           )}
 
           {/* SNS 채널별 변환 */}
-          <div className="bg-white rounded-2xl shadow-sm border-2 border-teal-200 overflow-hidden">
-            <div className="bg-gradient-to-r from-teal-50 to-cyan-50 px-6 py-3 border-b border-teal-200">
+          <div className="bg-white rounded-xl shadow-sm border-2 border-teal-200 overflow-hidden">
+            <div className="bg-gradient-to-r from-teal-50 to-cyan-50 px-5 py-2 border-b border-teal-200">
               <h3 className="text-sm font-bold text-teal-800 flex items-center gap-2">
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" /></svg>
                 SNS 채널별 변환
               </h3>
             </div>
-            <div className="p-4">
-              <div className="flex flex-wrap gap-2 mb-4">
+            <div className="p-3">
+              <div className="flex flex-wrap gap-2 mb-3">
                 {[
                   { id: 'instagram', label: '인스타그램', icon: '📸', color: 'pink' },
                   { id: 'linkedin', label: '링크드인', icon: '💼', color: 'blue' },
@@ -860,8 +860,8 @@ export default function GenerateResultPage() {
 
       {/* 최종 콘텐츠 모달 (이미지 + 글) */}
       {showFinalContent && (
-        <div className="fixed inset-0 z-50 flex items-start justify-center bg-black/50 backdrop-blur-sm overflow-y-auto p-4 sm:p-8">
-          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-4xl my-4">
+        <div className="fixed inset-0 z-50 flex items-start justify-center bg-black/50 backdrop-blur-sm overflow-y-auto p-3 sm:p-6">
+          <div className="bg-white rounded-xl shadow-2xl w-full max-w-4xl my-4">
             <div className="sticky top-0 bg-white border-b border-gray-200 rounded-t-2xl px-6 py-4 flex items-center justify-between z-10">
               <div className="flex items-center gap-3">
                 <div className="w-8 h-8 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center">
@@ -897,7 +897,7 @@ export default function GenerateResultPage() {
                 </button>
               </div>
             </div>
-            <div className="px-6 py-8" ref={finalContentRef}>
+            <div className="px-5 py-6" ref={finalContentRef}>
               <div
                 className="prose prose-sm max-w-none text-gray-800 leading-relaxed"
                 style={{ lineHeight: '1.8' }}

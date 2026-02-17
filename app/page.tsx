@@ -86,21 +86,21 @@ export default function LandingPage() {
       {/* 히어로 섹션 */}
       <section className="relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-indigo-50 to-violet-50" />
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 text-center">
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 text-center">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-white rounded-full border-2 border-indigo-200 text-sm text-indigo-600 font-medium mb-6 shadow-sm">
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
             </svg>
-            Powered by Claude AI
+            Powered by AI
           </div>
 
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4 leading-tight">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 leading-tight">
             AI 검색엔진에 최적화된<br />
             <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
               콘텐츠를 분석하고 생성하세요
             </span>
           </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto mb-10">
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto mb-6">
             AIO(AI Overview)와 GEO(Generative Engine Optimization) 관점에서
             콘텐츠를 종합 분석하고, AI 검색에 최적화된 고품질 콘텐츠를 자동으로 생성합니다.
           </p>
@@ -175,20 +175,46 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* PDF 자료 섹션 */}
+      <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        <div className="bg-white rounded-xl border-2 border-indigo-200 shadow-md overflow-hidden">
+          <div className="aspect-[4/3] w-full">
+            <embed
+              src="/ai-search-engine.pdf"
+              type="application/pdf"
+              className="w-full h-full"
+            />
+          </div>
+          <div className="p-4 bg-gray-50 border-t border-gray-200 flex items-center justify-between">
+            <p className="text-sm font-medium text-gray-700">AI 검색 엔진의 선택</p>
+            <a
+              href="/ai-search-engine.pdf"
+              download
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-indigo-600 text-white text-xs font-medium rounded-lg hover:bg-indigo-700 transition-all"
+            >
+              <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+              PDF 다운로드
+            </a>
+          </div>
+        </div>
+      </section>
+
       {/* 주요 기능 소개 */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="text-center mb-12">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        <div className="text-center mb-8">
           <h3 className="text-2xl font-bold text-gray-900 mb-3">주요 기능</h3>
           <p className="text-gray-500">AI 검색엔진 최적화를 위한 올인원 솔루션</p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
           {features.map((feature) => (
             <div
               key={feature.title}
-              className={`rounded-2xl p-6 shadow-sm border-2 transition-all duration-200 group hover:shadow-md ${feature.card}`}
+              className={`rounded-2xl p-5 shadow-sm border-2 transition-all duration-200 group hover:shadow-md ${feature.card}`}
             >
-              <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${feature.color} flex items-center justify-center mb-4`}>
+              <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${feature.color} flex items-center justify-center mb-3`}>
                 <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={feature.icon} />
                 </svg>
@@ -201,16 +227,16 @@ export default function LandingPage() {
       </section>
 
       {/* 콘텐츠 분석 프로세스 */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="text-center mb-12">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        <div className="text-center mb-8">
           <h3 className="text-2xl font-bold text-gray-900 mb-3">콘텐츠 분석 &rarr; AI 최적화 변환</h3>
           <p className="text-gray-500">내 콘텐츠를 입력하면, AI가 분석하고 최적화된 버전까지 자동으로 제공합니다</p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           {/* Step 1 */}
-          <div className="relative bg-white rounded-2xl p-6 border-2 border-blue-200 shadow-sm">
-            <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-indigo-600 text-white rounded-xl flex items-center justify-center text-sm font-bold mb-4">1</div>
+          <div className="relative bg-white rounded-xl p-5 border-2 border-blue-200 shadow-sm">
+            <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-indigo-600 text-white rounded-xl flex items-center justify-center text-sm font-bold mb-3">1</div>
             <h4 className="text-base font-bold text-gray-900 mb-2">콘텐츠 입력</h4>
             <p className="text-sm text-gray-600">기존에 작성한 콘텐츠를 입력하고 타겟 키워드를 설정합니다.</p>
             <div className="hidden md:block absolute -right-3 top-1/2 -translate-y-1/2 z-10">
@@ -219,8 +245,8 @@ export default function LandingPage() {
           </div>
 
           {/* Step 2 */}
-          <div className="relative bg-white rounded-2xl p-6 border-2 border-purple-200 shadow-sm">
-            <div className="w-10 h-10 bg-gradient-to-br from-purple-500 to-violet-600 text-white rounded-xl flex items-center justify-center text-sm font-bold mb-4">2</div>
+          <div className="relative bg-white rounded-xl p-5 border-2 border-purple-200 shadow-sm">
+            <div className="w-10 h-10 bg-gradient-to-br from-purple-500 to-violet-600 text-white rounded-xl flex items-center justify-center text-sm font-bold mb-3">2</div>
             <h4 className="text-base font-bold text-gray-900 mb-2">종합 분석</h4>
             <p className="text-sm text-gray-600">AIO/GEO 점수, E-E-A-T 평가, 키워드 밀도, 구조화 수준을 종합 분석합니다.</p>
             <div className="mt-3 flex flex-wrap gap-1.5">
@@ -235,8 +261,8 @@ export default function LandingPage() {
           </div>
 
           {/* Step 3 */}
-          <div className="relative bg-white rounded-2xl p-6 border-2 border-amber-200 shadow-sm">
-            <div className="w-10 h-10 bg-gradient-to-br from-amber-500 to-orange-600 text-white rounded-xl flex items-center justify-center text-sm font-bold mb-4">3</div>
+          <div className="relative bg-white rounded-xl p-5 border-2 border-amber-200 shadow-sm">
+            <div className="w-10 h-10 bg-gradient-to-br from-amber-500 to-orange-600 text-white rounded-xl flex items-center justify-center text-sm font-bold mb-3">3</div>
             <h4 className="text-base font-bold text-gray-900 mb-2">개선 제안</h4>
             <p className="text-sm text-gray-600">우선순위별 구체적인 최적화 액션 아이템과 Before/After 예시를 제공합니다.</p>
             <div className="hidden md:block absolute -right-3 top-1/2 -translate-y-1/2 z-10">
@@ -245,8 +271,8 @@ export default function LandingPage() {
           </div>
 
           {/* Step 4 */}
-          <div className="bg-gradient-to-br from-rose-50 to-pink-50 rounded-2xl p-6 border-2 border-rose-300 shadow-sm ring-2 ring-rose-100">
-            <div className="w-10 h-10 bg-gradient-to-br from-rose-500 to-pink-600 text-white rounded-xl flex items-center justify-center text-sm font-bold mb-4">4</div>
+          <div className="bg-gradient-to-br from-rose-50 to-pink-50 rounded-xl p-5 border-2 border-rose-300 shadow-sm ring-2 ring-rose-100">
+            <div className="w-10 h-10 bg-gradient-to-br from-rose-500 to-pink-600 text-white rounded-xl flex items-center justify-center text-sm font-bold mb-3">4</div>
             <h4 className="text-base font-bold text-gray-900 mb-2">AI 최적화 변환</h4>
             <p className="text-sm text-gray-600">분석 결과를 바탕으로 AI가 최적화된 버전의 콘텐츠를 자동 생성합니다.</p>
             <div className="mt-3 flex flex-wrap gap-1.5">
@@ -257,7 +283,7 @@ export default function LandingPage() {
           </div>
         </div>
 
-        <div className="mt-8 bg-gradient-to-r from-indigo-50 to-violet-50 rounded-2xl p-6 border-2 border-indigo-200">
+        <div className="mt-5 bg-gradient-to-r from-indigo-50 to-violet-50 rounded-xl p-5 border-2 border-indigo-200">
           <div className="flex flex-col md:flex-row md:items-center gap-4">
             <div className="flex-1">
               <h4 className="text-base font-bold text-indigo-900 mb-2">콘텐츠 생성도 한 번에</h4>
@@ -283,10 +309,10 @@ export default function LandingPage() {
       <ApiKeyPanel visible={showApiKey} />
 
       {/* CTA 섹션 */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
-        <div className="bg-gradient-to-r from-blue-600 to-indigo-600 rounded-3xl p-10 text-center border-2 border-sky-300 shadow-lg">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-10">
+        <div className="bg-gradient-to-r from-blue-600 to-indigo-600 rounded-2xl p-6 text-center border-2 border-sky-300 shadow-lg">
           <h3 className="text-2xl font-bold text-white mb-3">지금 바로 시작하세요</h3>
-          <p className="text-blue-100 mb-8 max-w-lg mx-auto">
+          <p className="text-blue-100 mb-5 max-w-lg mx-auto">
             콘텐츠를 입력하면 즉시 AIO/GEO 분석 결과와 구체적인 개선 방안을 확인할 수 있습니다.
           </p>
           <div className="flex items-center justify-center gap-4">

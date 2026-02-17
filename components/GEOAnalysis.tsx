@@ -24,7 +24,7 @@ export default function GEOAnalysis({ geo }: GEOAnalysisProps) {
   return (
     <div className="bg-white rounded-2xl shadow-sm border-2 border-purple-200 overflow-hidden">
       {/* 헤더 */}
-      <div className="px-6 py-4 bg-gradient-to-r from-purple-50 to-violet-50 border-b border-purple-100">
+      <div className="px-4 py-3 bg-gradient-to-r from-purple-50 to-violet-50 border-b border-purple-100">
         <div className="flex items-center gap-3">
           <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-violet-600 rounded-lg flex items-center justify-center shadow-sm">
             <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -38,10 +38,10 @@ export default function GEOAnalysis({ geo }: GEOAnalysisProps) {
         </div>
       </div>
 
-      <div className="p-6">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="p-5">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           {/* GEO 메트릭 바 */}
-          <div className="space-y-4">
+          <div className="space-y-3">
             <h3 className="text-xs font-bold text-purple-600 uppercase tracking-wide">GEO 핵심 지표</h3>
             {geoMetrics.map((metric) => (
               <div key={metric.label} className="bg-purple-50/50 rounded-xl p-3 border border-purple-100">
@@ -60,7 +60,7 @@ export default function GEOAnalysis({ geo }: GEOAnalysisProps) {
 
             {/* 상세 분석 */}
             {geo.details.length > 0 && (
-              <div className="mt-4 space-y-3">
+              <div className="mt-3 space-y-2">
                 {geo.details.map((detail, i) => (
                   <div key={i} className="bg-violet-50/50 rounded-xl p-3 border border-violet-100 hover:border-violet-300 transition-all duration-200">
                     <div className="flex justify-between items-center mb-1">

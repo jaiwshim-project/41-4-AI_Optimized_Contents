@@ -383,7 +383,7 @@ export default function DashboardDetailPage() {
   return (
     <div className="min-h-screen bg-gray-50">
       <Header />
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 space-y-4">
         {/* 뒤로가기 */}
         <button
           onClick={() => router.push('/dashboard')}
@@ -396,8 +396,8 @@ export default function DashboardDetailPage() {
         </button>
 
         {/* 헤더 정보 */}
-        <div className="bg-white rounded-2xl shadow-sm border-2 border-indigo-200 p-6">
-          <div className="flex items-center justify-between flex-wrap gap-3">
+        <div className="bg-white rounded-xl shadow-sm border-2 border-indigo-200 p-5">
+          <div className="flex items-center justify-between flex-wrap gap-2">
             <div>
               <h2 className="text-lg font-bold text-gray-900">{item.title}</h2>
               <div className="flex items-center gap-3 mt-1">
@@ -536,18 +536,18 @@ export default function DashboardDetailPage() {
 
         {/* 분석 결과 점수 (분석인 경우) */}
         {!isGeneration && item.analysisResult && (
-          <div className="bg-white rounded-2xl shadow-sm border-2 border-sky-200 p-6">
-            <h3 className="text-sm font-semibold text-gray-900 mb-4">분석 점수</h3>
-            <div className="grid grid-cols-3 gap-4">
-              <div className="text-center p-4 bg-blue-50 rounded-xl border border-blue-200">
+          <div className="bg-white rounded-xl shadow-sm border-2 border-sky-200 p-5">
+            <h3 className="text-sm font-semibold text-gray-900 mb-3">분석 점수</h3>
+            <div className="grid grid-cols-3 gap-3">
+              <div className="text-center p-3 bg-blue-50 rounded-xl border border-blue-200">
                 <p className="text-2xl font-bold text-blue-600">{item.analysisResult.overallScore}</p>
                 <p className="text-xs text-gray-500 mt-1">종합 점수</p>
               </div>
-              <div className="text-center p-4 bg-indigo-50 rounded-xl border border-indigo-200">
+              <div className="text-center p-3 bg-indigo-50 rounded-xl border border-indigo-200">
                 <p className="text-2xl font-bold text-indigo-600">{item.analysisResult.aio.total}</p>
                 <p className="text-xs text-gray-500 mt-1">AIO 점수</p>
               </div>
-              <div className="text-center p-4 bg-purple-50 rounded-xl border border-purple-200">
+              <div className="text-center p-3 bg-purple-50 rounded-xl border border-purple-200">
                 <p className="text-2xl font-bold text-purple-600">{item.analysisResult.geo.total}</p>
                 <p className="text-xs text-gray-500 mt-1">GEO 점수</p>
               </div>
@@ -556,7 +556,7 @@ export default function DashboardDetailPage() {
         )}
 
         {/* 콘텐츠 */}
-        <div className="bg-white rounded-2xl shadow-sm border-2 border-indigo-200 p-6">
+        <div className="bg-white rounded-xl shadow-sm border-2 border-indigo-200 p-5">
           {isEditing ? (
             <div>
               <div className="flex items-center gap-2 mb-3">
@@ -666,7 +666,7 @@ export default function DashboardDetailPage() {
                 dangerouslySetInnerHTML={{ __html: renderContent(content || '') }}
               />
               {hashtags && hashtags.length > 0 && (
-                <div className="mt-8 pt-4 flex flex-wrap gap-2">
+                <div className="mt-5 pt-3 flex flex-wrap gap-2">
                   {hashtags.map((tag, i) => (
                     <span key={i} className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-indigo-50 text-indigo-600 border border-indigo-200">
                       {tag.startsWith('#') ? tag : `#${tag}`}

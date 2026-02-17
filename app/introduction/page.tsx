@@ -128,29 +128,29 @@ export default function IntroductionPage() {
         </div>
       </header>
 
-      <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div ref={contentRef} className="space-y-8">
+      <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        <div ref={contentRef} className="space-y-5">
 
           {/* 타이틀 히어로 */}
-          <section className="bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-600 rounded-2xl shadow-lg p-10 text-center text-white">
-            <div className="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center mx-auto mb-4 backdrop-blur-sm">
+          <section className="bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-600 rounded-xl shadow-lg p-7 text-center text-white">
+            <div className="w-16 h-16 bg-white/20 rounded-xl flex items-center justify-center mx-auto mb-3 backdrop-blur-sm">
               <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
               </svg>
             </div>
-            <h1 className="text-3xl font-extrabold mb-3">AIO/GEO Optimizer</h1>
+            <h1 className="text-2xl font-extrabold mb-3">AIO/GEO Optimizer</h1>
             <p className="text-lg font-medium text-white/90 mb-2">AI 검색엔진 콘텐츠 최적화 플랫폼</p>
             <p className="text-sm text-white/70 max-w-lg mx-auto">AI가 주도하는 검색의 시대, 콘텐츠가 AI에 의해 발견되고 인용되기 위한 전략적 도구</p>
           </section>
 
           {/* 시장 변화: 왜 필요한가? */}
-          <section className="bg-white rounded-2xl shadow-sm border-2 border-indigo-200 p-8">
-            <h2 className="text-[14pt] font-bold mb-4 flex items-center gap-2">
+          <section className="bg-white rounded-xl shadow-sm border-2 border-indigo-200 p-6">
+            <h2 className="text-[14pt] font-bold mb-3 flex items-center gap-2">
               <span className="w-8 h-8 bg-gradient-to-br from-indigo-500 to-blue-600 text-white rounded-lg flex items-center justify-center text-sm font-bold shadow-sm">1</span>
               <span className="bg-gradient-to-r from-indigo-700 to-blue-600 bg-clip-text text-transparent">왜 AIO/GEO 최적화가 필요한가?</span>
             </h2>
-            <p className="text-[9pt] text-gray-800 mb-5">검색의 패러다임이 바뀌고 있습니다. 이제 사용자는 링크 목록이 아닌 AI가 생성한 답변을 먼저 봅니다.</p>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <p className="text-[9pt] text-gray-800 mb-3">검색의 패러다임이 바뀌고 있습니다. 이제 사용자는 링크 목록이 아닌 AI가 생성한 답변을 먼저 봅니다.</p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
               <div className="bg-gradient-to-br from-red-50 to-orange-50 rounded-xl p-5 border border-red-200">
                 <div className="flex items-center gap-2 mb-3">
                   <span className="w-8 h-8 bg-red-100 text-red-600 rounded-lg flex items-center justify-center text-lg">&#9888;</span>
@@ -176,19 +176,19 @@ export default function IntroductionPage() {
                 </ul>
               </div>
             </div>
-            <div className="mt-5 bg-indigo-50 rounded-xl p-4 border border-indigo-200 text-center">
+            <div className="mt-4 bg-indigo-50 rounded-xl p-3 border border-indigo-200 text-center">
               <p className="text-[10pt] font-semibold text-indigo-800">Google 검색의 <span className="text-xl font-extrabold text-indigo-600">40%+</span>에서 AI Overview가 표시됩니다</p>
               <p className="text-[8pt] text-indigo-600 mt-1">당신의 콘텐츠가 AI에 의해 선택되지 않으면, 보이지 않습니다.</p>
             </div>
           </section>
 
           {/* 핵심 기능 */}
-          <section className="bg-white rounded-2xl shadow-sm border-2 border-purple-200 p-8">
-            <h2 className="text-[14pt] font-bold mb-4 flex items-center gap-2">
+          <section className="bg-white rounded-xl shadow-sm border-2 border-purple-200 p-6">
+            <h2 className="text-[14pt] font-bold mb-3 flex items-center gap-2">
               <span className="w-8 h-8 bg-gradient-to-br from-purple-500 to-violet-600 text-white rounded-lg flex items-center justify-center text-sm font-bold shadow-sm">2</span>
               <span className="bg-gradient-to-r from-purple-700 to-violet-600 bg-clip-text text-transparent">핵심 기능</span>
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
               {[
                 { title: 'AI 콘텐츠 분석', desc: 'AIO/GEO 점수, E-E-A-T 평가, 키워드 밀도, 구조화 수준을 종합 분석하여 개선 포인트를 제시합니다.', color: 'blue', icon: 'M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4' },
                 { title: 'AI 콘텐츠 생성', desc: '블로그, FAQ, How-to 등 8가지 카테고리의 AIO/GEO 최적화 콘텐츠를 자동으로 생성합니다.', color: 'purple', icon: 'M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z' },
@@ -215,24 +215,24 @@ export default function IntroductionPage() {
           </section>
 
           {/* 고객 가치 */}
-          <section className="bg-white rounded-2xl shadow-sm border-2 border-rose-200 p-8">
-            <h2 className="text-[14pt] font-bold mb-4 flex items-center gap-2">
+          <section className="bg-white rounded-xl shadow-sm border-2 border-rose-200 p-6">
+            <h2 className="text-[14pt] font-bold mb-3 flex items-center gap-2">
               <span className="w-8 h-8 bg-gradient-to-br from-rose-500 to-pink-600 text-white rounded-lg flex items-center justify-center text-sm font-bold shadow-sm">3</span>
               <span className="bg-gradient-to-r from-rose-700 to-pink-600 bg-clip-text text-transparent">고객이 얻는 가치</span>
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
               <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-5 border border-blue-200 text-center">
-                <div className="text-3xl font-extrabold text-blue-600 mb-2">&#8593; 트래픽</div>
+                <div className="text-2xl font-extrabold text-blue-600 mb-2">&#8593; 트래픽</div>
                 <h3 className="text-[11pt] font-semibold text-blue-800 mb-2">검색 노출 극대화</h3>
                 <p className="text-[9pt] text-gray-700">AI Overview 상위 인용을 통해 자연 검색 유입량을 획기적으로 증가시킵니다.</p>
               </div>
               <div className="bg-gradient-to-br from-emerald-50 to-green-50 rounded-xl p-5 border border-emerald-200 text-center">
-                <div className="text-3xl font-extrabold text-emerald-600 mb-2">80%&#8595;</div>
+                <div className="text-2xl font-extrabold text-emerald-600 mb-2">80%&#8595;</div>
                 <h3 className="text-[11pt] font-semibold text-emerald-800 mb-2">시간 절약</h3>
                 <p className="text-[9pt] text-gray-700">콘텐츠 기획부터 작성, 최적화까지 소요 시간을 최대 80% 단축합니다.</p>
               </div>
               <div className="bg-gradient-to-br from-purple-50 to-violet-50 rounded-xl p-5 border border-purple-200 text-center">
-                <div className="text-3xl font-extrabold text-purple-600 mb-2">&#9733; 신뢰</div>
+                <div className="text-2xl font-extrabold text-purple-600 mb-2">&#9733; 신뢰</div>
                 <h3 className="text-[11pt] font-semibold text-purple-800 mb-2">브랜드 권위 강화</h3>
                 <p className="text-[9pt] text-gray-700">E-E-A-T 최적화로 전문적이고 신뢰성 있는 브랜드 이미지를 구축합니다.</p>
               </div>
@@ -240,8 +240,8 @@ export default function IntroductionPage() {
           </section>
 
           {/* 경쟁 차별성 */}
-          <section className="bg-white rounded-2xl shadow-sm border-2 border-amber-200 p-8">
-            <h2 className="text-[14pt] font-bold mb-4 flex items-center gap-2">
+          <section className="bg-white rounded-xl shadow-sm border-2 border-amber-200 p-6">
+            <h2 className="text-[14pt] font-bold mb-3 flex items-center gap-2">
               <span className="w-8 h-8 bg-gradient-to-br from-amber-500 to-orange-600 text-white rounded-lg flex items-center justify-center text-sm font-bold shadow-sm">4</span>
               <span className="bg-gradient-to-r from-amber-700 to-orange-600 bg-clip-text text-transparent">경쟁 차별성</span>
             </h2>
@@ -279,12 +279,12 @@ export default function IntroductionPage() {
           </section>
 
           {/* 활용 시나리오 */}
-          <section className="bg-white rounded-2xl shadow-sm border-2 border-cyan-200 p-8">
-            <h2 className="text-[14pt] font-bold mb-4 flex items-center gap-2">
+          <section className="bg-white rounded-xl shadow-sm border-2 border-cyan-200 p-6">
+            <h2 className="text-[14pt] font-bold mb-3 flex items-center gap-2">
               <span className="w-8 h-8 bg-gradient-to-br from-cyan-500 to-teal-600 text-white rounded-lg flex items-center justify-center text-sm font-bold shadow-sm">5</span>
               <span className="bg-gradient-to-r from-cyan-700 to-teal-600 bg-clip-text text-transparent">활용 시나리오</span>
             </h2>
-            <div className="space-y-4">
+            <div className="space-y-3">
               {[
                 { who: '마케팅 담당자', scenario: '블로그, SNS 콘텐츠를 AI 검색에 최적화하여 자연 유입을 극대화합니다. 매달 수십 편의 콘텐츠를 일관된 품질로 빠르게 생산합니다.', color: 'blue' },
                 { who: '중소기업 / 스타트업', scenario: '제한된 마케팅 예산으로도 대기업 수준의 SEO/AIO 최적화 콘텐츠를 생산하여 온라인 가시성을 확보합니다.', color: 'emerald' },
@@ -300,9 +300,9 @@ export default function IntroductionPage() {
           </section>
 
           {/* CTA */}
-          <section className="bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-600 rounded-2xl shadow-lg p-10 text-center text-white">
+          <section className="bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-600 rounded-xl shadow-lg p-7 text-center text-white">
             <h2 className="text-xl font-extrabold mb-3">AI 검색 시대, 지금 시작하세요</h2>
-            <p className="text-sm text-white/80 max-w-lg mx-auto mb-6">
+            <p className="text-sm text-white/80 max-w-lg mx-auto mb-4">
               경쟁사보다 먼저 AI 검색엔진에 최적화된 콘텐츠를 만들어 보세요.
               AIO/GEO Optimizer가 당신의 콘텐츠를 AI가 선택하는 콘텐츠로 만들어 드립니다.
             </p>
@@ -317,8 +317,8 @@ export default function IntroductionPage() {
           </section>
 
           {/* 연락처 & 법적 보호 */}
-          <section className="bg-gray-50 rounded-2xl p-6 border border-gray-200">
-            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+          <section className="bg-gray-50 rounded-xl p-6 border border-gray-200">
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
               <div>
                 <h3 className="text-[11pt] font-bold text-gray-800 mb-2">문의 및 연락처</h3>
                 <div className="space-y-1 text-[9pt] text-gray-600">

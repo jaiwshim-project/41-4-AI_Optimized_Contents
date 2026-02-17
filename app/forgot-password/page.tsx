@@ -34,8 +34,8 @@ export default function ForgotPasswordPage() {
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-violet-50 flex items-center justify-center px-4">
         <div className="w-full max-w-md">
-          <div className="bg-white rounded-2xl shadow-lg border-2 border-emerald-200 p-8 text-center">
-            <div className="w-16 h-16 bg-emerald-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+          <div className="bg-white rounded-xl shadow-lg border-2 border-emerald-200 p-6 text-center">
+            <div className="w-16 h-16 bg-emerald-100 rounded-xl flex items-center justify-center mx-auto mb-3">
               <svg className="w-8 h-8 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
               </svg>
@@ -44,7 +44,7 @@ export default function ForgotPasswordPage() {
             <p className="text-sm text-gray-600 mb-4">
               <span className="font-semibold text-indigo-600">{email}</span>으로 비밀번호 재설정 링크를 보냈습니다.
             </p>
-            <p className="text-xs text-gray-400 mb-6">메일이 오지 않으면 스팸함을 확인해주세요.</p>
+            <p className="text-xs text-gray-400 mb-4">메일이 오지 않으면 스팸함을 확인해주세요.</p>
             <Link
               href="/login"
               className="inline-flex items-center gap-2 px-6 py-2.5 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold rounded-xl hover:from-blue-700 hover:to-indigo-700 transition-all shadow-md border-2 border-sky-300"
@@ -60,7 +60,7 @@ export default function ForgotPasswordPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-violet-50 flex items-center justify-center px-4">
       <div className="w-full max-w-md">
-        <div className="text-center mb-8">
+        <div className="text-center mb-5">
           <Link href="/" className="inline-flex items-center gap-2.5">
             <div className="w-12 h-12 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-xl flex items-center justify-center shadow-lg">
               <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -74,9 +74,9 @@ export default function ForgotPasswordPage() {
           </Link>
         </div>
 
-        <div className="bg-white rounded-2xl shadow-lg border-2 border-indigo-200 p-8">
+        <div className="bg-white rounded-xl shadow-lg border-2 border-indigo-200 p-6">
           <h2 className="text-xl font-bold text-gray-900 mb-1">비밀번호 찾기</h2>
-          <p className="text-sm text-gray-500 mb-6">가입한 이메일을 입력하면 비밀번호 재설정 링크를 보내드립니다</p>
+          <p className="text-sm text-gray-500 mb-4">가입한 이메일을 입력하면 비밀번호 재설정 링크를 보내드립니다</p>
 
           {error && (
             <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-xl text-sm text-red-700 flex items-center gap-2">
@@ -87,7 +87,7 @@ export default function ForgotPasswordPage() {
             </div>
           )}
 
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-3">
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">이메일</label>
               <input
@@ -118,7 +118,7 @@ export default function ForgotPasswordPage() {
             </button>
           </form>
 
-          <div className="mt-6 text-center">
+          <div className="mt-4 text-center">
             <Link href="/login" className="text-sm text-indigo-600 font-semibold hover:text-indigo-700 transition-colors">
               &larr; 로그인으로 돌아가기
             </Link>

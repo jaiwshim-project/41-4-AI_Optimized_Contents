@@ -75,14 +75,14 @@ export default function PricingPage() {
   return (
     <div className="min-h-screen bg-gray-50">
       <Header />
-      <main className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="text-center mb-6">
-          <h2 className="text-3xl font-bold text-gray-900 mb-3">요금제</h2>
+      <main className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="text-center mb-4">
+          <h2 className="text-2xl font-bold text-gray-900 mb-3">요금제</h2>
           <p className="text-gray-500">필요에 맞는 플랜을 선택하세요</p>
         </div>
 
         {/* 프로모션 배너 */}
-        <div className="mb-10 bg-gradient-to-r from-orange-500 via-red-500 to-pink-500 rounded-2xl p-6 text-white shadow-lg border-2 border-orange-300 relative overflow-hidden">
+        <div className="mb-6 bg-gradient-to-r from-orange-500 via-red-500 to-pink-500 rounded-xl p-5 text-white shadow-lg border-2 border-orange-300 relative overflow-hidden">
           <div className="absolute -right-4 -top-4 w-24 h-24 bg-white/10 rounded-full" />
           <div className="absolute -right-8 -bottom-8 w-32 h-32 bg-white/5 rounded-full" />
           <div className="relative flex items-center gap-4">
@@ -103,7 +103,7 @@ export default function PricingPage() {
 
         {/* 관리자 배너 */}
         {!loading && currentPlan === 'admin' && (
-          <div className="mb-8 bg-gradient-to-r from-red-500 to-rose-500 rounded-2xl p-6 text-white shadow-lg border-2 border-red-300">
+          <div className="mb-5 bg-gradient-to-r from-red-500 to-rose-500 rounded-xl p-5 text-white shadow-lg border-2 border-red-300">
             <div className="flex items-center gap-3">
               <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -119,13 +119,13 @@ export default function PricingPage() {
         )}
 
         {/* 요금제 카드 */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
           {plans.map((plan) => {
             const isCurrent = currentPlan === plan.id;
             return (
               <div
                 key={plan.id}
-                className={`relative rounded-2xl p-6 border-2 ${plan.border} ${plan.bg} ${
+                className={`relative rounded-xl p-5 border-2 ${plan.border} ${plan.bg} ${
                   isCurrent ? 'ring-2 ring-indigo-400 shadow-lg' : 'shadow-sm'
                 } transition-all`}
               >
@@ -146,15 +146,15 @@ export default function PricingPage() {
                 )}
 
                 <h3 className="text-lg font-bold text-gray-900 mb-1">{plan.name}</h3>
-                <p className="text-sm text-gray-500 mb-4">{plan.description}</p>
+                <p className="text-sm text-gray-500 mb-3">{plan.description}</p>
 
-                <div className="mb-6">
+                <div className="mb-4">
                   {plan.originalPrice && (
                     <div className="mb-1">
                       <span className="text-sm text-gray-400 line-through">{plan.originalPrice}</span>
                     </div>
                   )}
-                  <span className="text-3xl font-bold text-gray-900">{plan.price}</span>
+                  <span className="text-2xl font-bold text-gray-900">{plan.price}</span>
                   <span className="text-sm text-gray-500">{plan.period}</span>
                   {plan.originalPrice && (
                     <span className="ml-2 text-xs font-bold text-orange-600 bg-orange-50 px-2 py-0.5 rounded-full border border-orange-200">
@@ -163,7 +163,7 @@ export default function PricingPage() {
                   )}
                 </div>
 
-                <div className="space-y-3 mb-6">
+                <div className="space-y-3 mb-4">
                   {features.map((f) => (
                     <div key={f.key} className="flex items-center justify-between text-sm">
                       <span className="text-gray-700">{f.label}</span>
@@ -195,8 +195,8 @@ export default function PricingPage() {
 
         {/* 이번 달 사용량 */}
         {!loading && usage.length > 0 && (
-          <div className="bg-white rounded-2xl shadow-sm border-2 border-red-400 p-6">
-            <h3 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
+          <div className="bg-white rounded-xl shadow-sm border-2 border-red-400 p-5">
+            <h3 className="text-lg font-bold text-gray-900 mb-3 flex items-center gap-2">
               이번 달 사용량
               <span className={`px-2.5 py-0.5 text-xs font-bold rounded-full border ${
                 currentPlan === 'admin' ? 'bg-red-100 text-red-700 border-red-300'
@@ -207,7 +207,7 @@ export default function PricingPage() {
                 {currentPlan === 'admin' ? '관리자' : currentPlan === 'pro' ? '프로' : currentPlan === 'max' ? '맥스' : '무료'}
               </span>
             </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
               {usage.map((u) => {
                 const isUnlimited = currentPlan === 'admin';
                 const percentage = isUnlimited ? 0 : Math.min((u.current / u.limit) * 100, 100);
@@ -239,7 +239,7 @@ export default function PricingPage() {
         )}
 
         {/* 비교표 */}
-        <div className="mt-12 bg-white rounded-2xl shadow-sm border-2 border-gray-200 overflow-hidden">
+        <div className="mt-8 bg-white rounded-xl shadow-sm border-2 border-gray-200 overflow-hidden">
           <table className="w-full text-sm">
             <thead>
               <tr className="bg-gray-50 border-b border-gray-200">

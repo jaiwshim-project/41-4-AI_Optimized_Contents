@@ -10,7 +10,7 @@ export default function KeywordAnalysis({ keywords }: KeywordAnalysisProps) {
   return (
     <div className="bg-white rounded-2xl shadow-sm border-2 border-teal-200 overflow-hidden">
       {/* 헤더 */}
-      <div className="px-6 py-4 bg-gradient-to-r from-teal-50 to-emerald-50 border-b border-teal-100">
+      <div className="px-4 py-3 bg-gradient-to-r from-teal-50 to-emerald-50 border-b border-teal-100">
         <div className="flex items-center gap-3">
           <div className="w-8 h-8 bg-gradient-to-br from-teal-500 to-emerald-600 rounded-lg flex items-center justify-center shadow-sm">
             <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -24,8 +24,8 @@ export default function KeywordAnalysis({ keywords }: KeywordAnalysisProps) {
         </div>
       </div>
 
-      <div className="p-6">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="p-5">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           {/* 주요 키워드 */}
           <div>
             <h3 className="text-xs font-bold text-teal-600 uppercase tracking-wide mb-3">주요 키워드</h3>
@@ -69,7 +69,7 @@ export default function KeywordAnalysis({ keywords }: KeywordAnalysisProps) {
           </div>
 
           {/* 관련 키워드 & 롱테일 */}
-          <div className="space-y-5">
+          <div className="space-y-3">
             <div>
               <h3 className="text-xs font-bold text-cyan-600 uppercase tracking-wide mb-3">관련 키워드 제안</h3>
               <div className="flex flex-wrap gap-2">

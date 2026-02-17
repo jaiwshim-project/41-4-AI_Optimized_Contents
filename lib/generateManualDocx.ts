@@ -463,7 +463,7 @@ export async function downloadManualDocx() {
             border: { top: { style: BorderStyle.SINGLE, size: 4, color: 'e5e7eb' } },
             children: [
               new TextRun({
-                text: 'AIO/GEO Optimizer - AI 검색엔진 콘텐츠 최적화 도구 | Powered by Claude API',
+                text: 'AIO/GEO Optimizer - AI 검색엔진 콘텐츠 최적화 도구 | Powered by AI',
                 size: 18,
                 color: '9ca3af',
               }),

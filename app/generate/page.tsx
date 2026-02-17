@@ -470,12 +470,12 @@ export default function GeneratePage() {
       {/* API Key 입력 패널 */}
       <ApiKeyPanel visible={showApiKeyInput} />
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 space-y-4">
         {/* 카테고리 선택 + 입력 폼 */}
         {(
           <>
             {/* 히어로 스텝 가이드 */}
-            <div className="bg-white rounded-2xl shadow-sm border-2 border-indigo-100 p-5 overflow-hidden relative">
+            <div className="bg-white rounded-xl shadow-sm border-2 border-indigo-100 p-4 overflow-hidden relative">
               <div className="absolute inset-0 bg-gradient-to-r from-teal-50/40 via-indigo-50/40 to-purple-50/40 pointer-events-none" />
               <div className="relative flex items-center justify-center gap-0">
                 {/* 1단계 */}
@@ -569,7 +569,7 @@ export default function GeneratePage() {
               </button>
 
               {showBusinessInfo && (
-                <div className="px-6 pb-6 space-y-5 border-t border-teal-100 bg-gradient-to-b from-teal-50/30 to-white">
+                <div className="px-4 pb-4 space-y-4 border-t border-teal-100 bg-gradient-to-b from-teal-50/30 to-white">
                   {/* 프로필 저장/불러오기 */}
                   <div className="pt-4 flex items-center justify-center gap-3 relative">
                     {/* 저장 정보 가져오기 */}
@@ -848,18 +848,18 @@ export default function GeneratePage() {
             </div>
 
             {/* 카테고리 선택 */}
-            <div className="bg-white rounded-2xl shadow-sm border-2 border-indigo-200 p-6">
+            <div className="bg-white rounded-xl shadow-sm border-2 border-indigo-200 p-5">
               <h2 className="text-lg font-semibold text-gray-900 mb-1">콘텐츠 유형 선택</h2>
-              <p className="text-sm text-gray-500 mb-5">생성할 콘텐츠의 유형을 선택하세요</p>
+              <p className="text-sm text-gray-500 mb-3">생성할 콘텐츠의 유형을 선택하세요</p>
 
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
                 {categories.map((cat) => {
                   const isSelected = selectedCategory === cat.id;
                   return (
                     <button
                       key={cat.id}
                       onClick={() => setSelectedCategory(cat.id)}
-                      className={`relative p-4 rounded-xl text-left transition-all duration-200 border-2 ${
+                      className={`relative p-3 rounded-xl text-left transition-all duration-200 border-2 ${
                         isSelected
                           ? `bg-gradient-to-br ${cat.color} text-white shadow-lg`
                           : `${cat.bgIdle} hover:shadow-md`
@@ -894,13 +894,13 @@ export default function GeneratePage() {
 
             {/* 입력 폼 */}
             {selectedCategory && (
-              <div className="bg-white rounded-2xl shadow-sm border-2 border-sky-200 p-6">
+              <div className="bg-white rounded-xl shadow-sm border-2 border-sky-200 p-5">
                 <h2 className="text-lg font-semibold text-gray-900 mb-1">콘텐츠 정보 입력</h2>
-                <p className="text-sm text-gray-500 mb-5">
+                <p className="text-sm text-gray-500 mb-3">
                   {categories.find(c => c.id === selectedCategory)?.label} 생성을 위한 정보를 입력하세요
                 </p>
 
-                <div className="space-y-4">
+                <div className="space-y-3">
                   {/* 주제 */}
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -1105,8 +1105,8 @@ export default function GeneratePage() {
 
             {/* 로딩 애니메이션 */}
             {isGenerating && (
-              <div className="bg-white rounded-2xl shadow-sm border-2 border-blue-200 p-12 text-center">
-                <div className="w-16 h-16 mx-auto mb-4 relative">
+              <div className="bg-white rounded-xl shadow-sm border-2 border-blue-200 p-8 text-center">
+                <div className="w-16 h-16 mx-auto mb-3 relative">
                   <div className="absolute inset-0 rounded-full border-4 border-blue-100" />
                   <div className="absolute inset-0 rounded-full border-4 border-blue-500 border-t-transparent animate-spin" />
                 </div>
@@ -1117,8 +1117,8 @@ export default function GeneratePage() {
 
             {/* 초기 안내 (카테고리 미선택 시) */}
             {!selectedCategory && !isGenerating && (
-              <div className="bg-white rounded-2xl shadow-sm border-2 border-violet-200 p-12 text-center">
-                <div className="w-16 h-16 bg-gradient-to-br from-indigo-100 to-violet-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+              <div className="bg-white rounded-xl shadow-sm border-2 border-violet-200 p-8 text-center">
+                <div className="w-16 h-16 bg-gradient-to-br from-indigo-100 to-violet-100 rounded-xl flex items-center justify-center mx-auto mb-3">
                   <svg className="w-8 h-8 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                   </svg>
@@ -1128,7 +1128,7 @@ export default function GeneratePage() {
                   위에서 원하는 콘텐츠 유형을 선택하면 AIO/GEO에 최적화된
                   고품질 콘텐츠를 AI가 자동으로 생성합니다.
                 </p>
-                <div className="mt-6 grid grid-cols-2 md:grid-cols-4 gap-3 max-w-lg mx-auto">
+                <div className="mt-4 grid grid-cols-2 md:grid-cols-4 gap-2 max-w-lg mx-auto">
                   {[
                     { label: 'AIO 최적화', bg: 'bg-blue-50', border: 'border-blue-200', text: 'text-blue-700' },
                     { label: 'E-E-A-T 내장', bg: 'bg-violet-50', border: 'border-violet-200', text: 'text-violet-700' },

@@ -44,7 +44,7 @@ export default function DashboardPage() {
     <div className="min-h-screen bg-gray-50">
       <Header />
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 space-y-4">
         {/* 페이지 제목 */}
         <div>
           <h2 className="text-2xl font-bold text-gray-900">대시보드</h2>
@@ -52,7 +52,7 @@ export default function DashboardPage() {
         </div>
 
         {/* 통계 */}
-        <div className="bg-white rounded-2xl shadow-sm border-2 border-violet-200 overflow-hidden">
+        <div className="bg-white rounded-xl shadow-sm border-2 border-violet-200 overflow-hidden">
           <button
             onClick={() => setShowStats(!showStats)}
             className="w-full flex items-center justify-between px-6 py-3 hover:bg-violet-50 transition-colors"
@@ -64,14 +64,14 @@ export default function DashboardPage() {
             <svg className={`w-4 h-4 text-gray-400 transition-transform ${showStats ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
           </button>
           {showStats && (
-            <div className="px-6 pb-5">
+            <div className="px-5 pb-4">
               <DashboardStats history={history} />
             </div>
           )}
         </div>
 
         {/* 탭 */}
-        <div className="bg-white rounded-2xl shadow-sm border-2 border-indigo-200 p-1.5 flex gap-1">
+        <div className="bg-white rounded-xl shadow-sm border-2 border-indigo-200 p-1.5 flex gap-1">
           <button
             onClick={() => setActiveTab('analysis')}
             className={`flex-1 px-4 py-2.5 rounded-xl text-sm font-medium transition-all border-2 hover:shadow-md ${
@@ -108,8 +108,8 @@ export default function DashboardPage() {
 
         {/* 이력 목록 */}
         {filteredHistory.length === 0 ? (
-          <div className="bg-white rounded-2xl shadow-sm border-2 border-gray-200 p-12 text-center">
-            <div className="w-16 h-16 bg-gradient-to-br from-gray-100 to-gray-200 rounded-2xl flex items-center justify-center mx-auto mb-4">
+          <div className="bg-white rounded-xl shadow-sm border-2 border-gray-200 p-8 text-center">
+            <div className="w-16 h-16 bg-gradient-to-br from-gray-100 to-gray-200 rounded-xl flex items-center justify-center mx-auto mb-3">
               <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
               </svg>
@@ -124,8 +124,8 @@ export default function DashboardPage() {
             {filteredHistory.map((item) => (
               <div key={item.id}>
                 {/* 메인 항목 */}
-                <div className="bg-white rounded-2xl shadow-sm border-2 border-gray-200 hover:border-indigo-300 hover:shadow-md transition-all">
-                  <div className="flex items-center gap-4 px-6 py-4">
+                <div className="bg-white rounded-xl shadow-sm border-2 border-gray-200 hover:border-indigo-300 hover:shadow-md transition-all">
+                  <div className="flex items-center gap-3 px-5 py-3">
                     {/* 날짜 */}
                     <div className="text-center min-w-[60px]">
                       <p className="text-xs text-gray-400">{item.date.split(' ')[0]}</p>

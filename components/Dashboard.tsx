@@ -102,7 +102,7 @@ export default function Dashboard() {
       {/* API Key 입력 패널 */}
       <ApiKeyPanel visible={showApiKeyInput} />
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 space-y-4">
         {/* 콘텐츠 입력 */}
         <ContentInput onAnalyze={handleAnalyze} isAnalyzing={isAnalyzing} />
 
@@ -159,8 +159,8 @@ export default function Dashboard() {
 
         {/* 초기 안내 */}
         {!result && !isAnalyzing && !error && (
-          <div className="bg-white rounded-2xl shadow-sm border-2 border-violet-200 p-12 text-center">
-            <div className="w-16 h-16 bg-gradient-to-br from-blue-100 to-indigo-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+          <div className="bg-white rounded-2xl shadow-sm border-2 border-violet-200 p-8 text-center">
+            <div className="w-16 h-16 bg-gradient-to-br from-blue-100 to-indigo-100 rounded-xl flex items-center justify-center mx-auto mb-3">
               <svg className="w-8 h-8 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
               </svg>
@@ -170,7 +170,7 @@ export default function Dashboard() {
               위에 콘텐츠를 입력하면 AIO/GEO 관점에서 종합적인 분석 결과와
               구체적인 개선 방안을 제공합니다.
             </p>
-            <div className="mt-6 grid grid-cols-2 md:grid-cols-4 gap-3 max-w-lg mx-auto">
+            <div className="mt-4 grid grid-cols-2 md:grid-cols-4 gap-3 max-w-lg mx-auto">
               {[
                 { label: 'AIO 점수', bg: 'bg-sky-50', border: 'border-sky-200', text: 'text-sky-700' },
                 { label: 'GEO 최적화', bg: 'bg-purple-50', border: 'border-purple-200', text: 'text-purple-700' },

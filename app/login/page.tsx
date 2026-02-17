@@ -64,7 +64,7 @@ function LoginContent() {
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-violet-50 flex items-center justify-center px-4">
       <div className="w-full max-w-md">
         {/* 로고 */}
-        <div className="text-center mb-8">
+        <div className="text-center mb-5">
           <Link href="/" className="inline-flex items-center gap-2.5">
             <div className="w-12 h-12 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-xl flex items-center justify-center shadow-lg">
               <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -79,12 +79,12 @@ function LoginContent() {
         </div>
 
         {/* 로그인 폼 */}
-        <div className="bg-white rounded-2xl shadow-lg border-2 border-indigo-200 p-8">
+        <div className="bg-white rounded-2xl shadow-lg border-2 border-indigo-200 p-6">
           <h2 className="text-xl font-bold text-gray-900 mb-1">로그인</h2>
-          <p className="text-sm text-gray-500 mb-6">계정에 로그인하여 콘텐츠 최적화를 시작하세요</p>
+          <p className="text-sm text-gray-500 mb-4">계정에 로그인하여 콘텐츠 최적화를 시작하세요</p>
 
           {error && (
-            <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-xl text-sm text-red-700 flex items-center gap-2">
+            <div className="mb-3 p-3 bg-red-50 border border-red-200 rounded-xl text-sm text-red-700 flex items-center gap-2">
               <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
@@ -92,7 +92,7 @@ function LoginContent() {
             </div>
           )}
 
-          <form onSubmit={handleLogin} className="space-y-4">
+          <form onSubmit={handleLogin} className="space-y-3">
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">이메일</label>
               <input
@@ -142,14 +142,14 @@ function LoginContent() {
           </form>
 
           {/* 구분선 */}
-          <div className="mt-6 flex items-center gap-3">
+          <div className="mt-4 flex items-center gap-3">
             <div className="flex-1 h-px bg-gray-200" />
             <span className="text-xs text-gray-400">또는</span>
             <div className="flex-1 h-px bg-gray-200" />
           </div>
 
           {/* 소셜 로그인 */}
-          <div className="mt-4 space-y-3">
+          <div className="mt-3 space-y-3">
             <button
               type="button"
               onClick={() => handleSocialLogin('google')}
@@ -175,7 +175,7 @@ function LoginContent() {
             </button>
           </div>
 
-          <div className="mt-6 text-center">
+          <div className="mt-4 text-center">
             <p className="text-sm text-gray-500">
               계정이 없으신가요?{' '}
               <Link href="/signup" className="text-indigo-600 font-semibold hover:text-indigo-700 transition-colors">

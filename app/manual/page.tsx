@@ -48,7 +48,7 @@ export default function ManualPage() {
 
       <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
         {/* 소개 */}
-        <section className="bg-gradient-to-br from-indigo-50 to-purple-50 rounded-2xl shadow-sm border-2 border-indigo-200 p-8">
+        <section className="bg-gradient-to-br from-indigo-50 to-purple-50 rounded-xl shadow-sm border-2 border-indigo-200 p-8">
           <h2 className="text-[14pt] font-bold bg-gradient-to-r from-indigo-700 to-purple-700 bg-clip-text text-transparent mb-4">AIO/GEO Optimizer란?</h2>
           <p className="text-[9pt] text-gray-800 leading-relaxed">
             AIO/GEO Optimizer는 AI 검색엔진(AI Overview, Generative Engine)에 최적화된 콘텐츠를 작성할 수 있도록
@@ -58,7 +58,7 @@ export default function ManualPage() {
         </section>
 
         {/* API 키 설정 */}
-        <section className="bg-white rounded-2xl shadow-sm border-2 border-amber-200 p-8">
+        <section className="bg-white rounded-xl shadow-sm border-2 border-amber-200 p-8">
           <h2 className="text-[14pt] font-bold text-gray-900 mb-4 flex items-center gap-2">
             <span className="w-8 h-8 bg-gradient-to-br from-amber-500 to-orange-600 text-white rounded-lg flex items-center justify-center text-sm font-bold shadow-sm">1</span>
             <span className="bg-gradient-to-r from-amber-700 to-orange-600 bg-clip-text text-transparent">API 키 설정</span>
@@ -89,7 +89,7 @@ export default function ManualPage() {
         </section>
 
         {/* 시작하기 */}
-        <section className="bg-white rounded-2xl shadow-sm border-2 border-blue-200 p-8">
+        <section className="bg-white rounded-xl shadow-sm border-2 border-blue-200 p-8">
           <h2 className="text-[14pt] font-bold text-gray-900 mb-4 flex items-center gap-2">
             <span className="w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-600 text-white rounded-lg flex items-center justify-center text-sm font-bold shadow-sm">2</span>
             <span className="bg-gradient-to-r from-blue-700 to-blue-600 bg-clip-text text-transparent">콘텐츠 분석 시작하기</span>
@@ -111,7 +111,7 @@ export default function ManualPage() {
         </section>
 
         {/* 콘텐츠 생성 */}
-        <section className="bg-white rounded-2xl shadow-sm border-2 border-emerald-200 p-8">
+        <section className="bg-white rounded-xl shadow-sm border-2 border-emerald-200 p-8">
           <h2 className="text-[14pt] font-bold text-gray-900 mb-4 flex items-center gap-2">
             <span className="w-8 h-8 bg-gradient-to-br from-emerald-500 to-green-600 text-white rounded-lg flex items-center justify-center text-sm font-bold shadow-sm">3</span>
             <span className="bg-gradient-to-r from-emerald-700 to-green-600 bg-clip-text text-transparent">콘텐츠 생성</span>
@@ -148,7 +148,7 @@ export default function ManualPage() {
         </section>
 
         {/* 분석 결과 탭 */}
-        <section className="bg-white rounded-2xl shadow-sm border-2 border-sky-200 p-8">
+        <section className="bg-white rounded-xl shadow-sm border-2 border-sky-200 p-8">
           <h2 className="text-[14pt] font-bold text-gray-900 mb-4 flex items-center gap-2">
             <span className="w-8 h-8 bg-gradient-to-br from-sky-500 to-blue-600 text-white rounded-lg flex items-center justify-center text-sm font-bold shadow-sm">4</span>
             <span className="bg-gradient-to-r from-sky-700 to-blue-600 bg-clip-text text-transparent">분석 결과 이해하기</span>
@@ -178,7 +178,7 @@ export default function ManualPage() {
         </section>
 
         {/* 대시보드 */}
-        <section className="bg-white rounded-2xl shadow-sm border-2 border-violet-200 p-8">
+        <section className="bg-white rounded-xl shadow-sm border-2 border-violet-200 p-8">
           <h2 className="text-[14pt] font-bold text-gray-900 mb-4 flex items-center gap-2">
             <span className="w-8 h-8 bg-gradient-to-br from-violet-500 to-purple-600 text-white rounded-lg flex items-center justify-center text-sm font-bold shadow-sm">5</span>
             <span className="bg-gradient-to-r from-violet-700 to-purple-600 bg-clip-text text-transparent">대시보드 활용하기</span>
@@ -279,7 +279,7 @@ export default function ManualPage() {
         </section>
 
         {/* 점수 해석 */}
-        <section className="bg-white rounded-2xl shadow-sm border-2 border-purple-200 p-8">
+        <section className="bg-white rounded-xl shadow-sm border-2 border-purple-200 p-8">
           <h2 className="text-[14pt] font-bold text-gray-900 mb-4 flex items-center gap-2">
             <span className="w-8 h-8 bg-gradient-to-br from-purple-500 to-pink-600 text-white rounded-lg flex items-center justify-center text-sm font-bold shadow-sm">6</span>
             <span className="bg-gradient-to-r from-purple-700 to-pink-600 bg-clip-text text-transparent">점수 해석 가이드</span>
@@ -304,7 +304,7 @@ export default function ManualPage() {
         </section>
 
         {/* 용어 설명 */}
-        <section className="bg-white rounded-2xl shadow-sm border-2 border-teal-200 p-8">
+        <section className="bg-white rounded-xl shadow-sm border-2 border-teal-200 p-8">
           <h2 className="text-[14pt] font-bold text-gray-900 mb-4 flex items-center gap-2">
             <span className="w-8 h-8 bg-gradient-to-br from-teal-500 to-cyan-600 text-white rounded-lg flex items-center justify-center text-sm font-bold shadow-sm">7</span>
             <span className="bg-gradient-to-r from-teal-700 to-cyan-600 bg-clip-text text-transparent">용어 설명</span>
@@ -334,7 +334,7 @@ export default function ManualPage() {
         </div>
 
         {/* 7. 콘텐츠 구조 재구성 */}
-        <section className="bg-white rounded-2xl shadow-sm border-2 border-rose-200 p-8">
+        <section className="bg-white rounded-xl shadow-sm border-2 border-rose-200 p-8">
           <h2 className="text-[14pt] font-bold text-gray-900 mb-4 flex items-center gap-2">
             <span className="w-8 h-8 bg-gradient-to-br from-rose-500 to-pink-600 text-white rounded-lg flex items-center justify-center text-sm font-bold shadow-sm">8</span>
             <span className="bg-gradient-to-r from-rose-700 to-pink-600 bg-clip-text text-transparent">콘텐츠 구조 재구성법</span>
@@ -410,7 +410,7 @@ export default function ManualPage() {
         </section>
 
         {/* 8. 키워드 최적화 방법 */}
-        <section className="bg-white rounded-2xl shadow-sm border-2 border-amber-200 p-8">
+        <section className="bg-white rounded-xl shadow-sm border-2 border-amber-200 p-8">
           <h2 className="text-[14pt] font-bold text-gray-900 mb-4 flex items-center gap-2">
             <span className="w-8 h-8 bg-gradient-to-br from-amber-500 to-orange-600 text-white rounded-lg flex items-center justify-center text-sm font-bold shadow-sm">9</span>
             <span className="bg-gradient-to-r from-amber-700 to-orange-600 bg-clip-text text-transparent">키워드 최적화 방법</span>
@@ -486,7 +486,7 @@ export default function ManualPage() {
         </section>
 
         {/* 9. E-E-A-T 강화법 */}
-        <section className="bg-white rounded-2xl shadow-sm border-2 border-violet-200 p-8">
+        <section className="bg-white rounded-xl shadow-sm border-2 border-violet-200 p-8">
           <h2 className="text-[14pt] font-bold text-gray-900 mb-4 flex items-center gap-2">
             <span className="w-8 h-8 bg-gradient-to-br from-violet-500 to-indigo-600 text-white rounded-lg flex items-center justify-center text-sm font-bold shadow-sm">10</span>
             <span className="bg-gradient-to-r from-violet-700 to-indigo-600 bg-clip-text text-transparent">E-E-A-T 강화법</span>
@@ -605,7 +605,7 @@ export default function ManualPage() {
         </section>
 
         {/* 10. FAQ 생성법 */}
-        <section className="bg-white rounded-2xl shadow-sm border-2 border-cyan-200 p-8">
+        <section className="bg-white rounded-xl shadow-sm border-2 border-cyan-200 p-8">
           <h2 className="text-[14pt] font-bold text-gray-900 mb-4 flex items-center gap-2">
             <span className="w-8 h-8 bg-gradient-to-br from-cyan-500 to-teal-600 text-white rounded-lg flex items-center justify-center text-sm font-bold shadow-sm">11</span>
             <span className="bg-gradient-to-r from-cyan-700 to-teal-600 bg-clip-text text-transparent">FAQ 섹션 생성법</span>
@@ -683,7 +683,7 @@ export default function ManualPage() {
         </section>
 
         {/* 11. 인용 최적화 (Citability) */}
-        <section className="bg-white rounded-2xl shadow-sm border-2 border-pink-200 p-8">
+        <section className="bg-white rounded-xl shadow-sm border-2 border-pink-200 p-8">
           <h2 className="text-[14pt] font-bold text-gray-900 mb-4 flex items-center gap-2">
             <span className="w-8 h-8 bg-gradient-to-br from-pink-500 to-rose-600 text-white rounded-lg flex items-center justify-center text-sm font-bold shadow-sm">12</span>
             <span className="bg-gradient-to-r from-pink-700 to-rose-600 bg-clip-text text-transparent">AI 인용 최적화 (Citability)</span>
@@ -712,7 +712,7 @@ export default function ManualPage() {
         </section>
 
         {/* 13. 키워드 경쟁 분석 */}
-        <section className="bg-white rounded-2xl shadow-sm border-2 border-cyan-200 p-8">
+        <section className="bg-white rounded-xl shadow-sm border-2 border-cyan-200 p-8">
           <h2 className="text-[14pt] font-bold flex items-center gap-3 mb-4">
             <span className="w-8 h-8 bg-gradient-to-br from-cyan-500 to-blue-600 text-white rounded-lg flex items-center justify-center text-sm font-bold shadow-sm">13</span>
             <span className="bg-gradient-to-r from-cyan-700 to-blue-600 bg-clip-text text-transparent">키워드 경쟁 분석</span>
@@ -751,7 +751,7 @@ export default function ManualPage() {
         </section>
 
         {/* 14. A/B 버전 생성 */}
-        <section className="bg-white rounded-2xl shadow-sm border-2 border-amber-200 p-8">
+        <section className="bg-white rounded-xl shadow-sm border-2 border-amber-200 p-8">
           <h2 className="text-[14pt] font-bold flex items-center gap-3 mb-4">
             <span className="w-8 h-8 bg-gradient-to-br from-amber-500 to-orange-600 text-white rounded-lg flex items-center justify-center text-sm font-bold shadow-sm">14</span>
             <span className="bg-gradient-to-r from-amber-700 to-orange-600 bg-clip-text text-transparent">A/B 버전 생성</span>
@@ -788,7 +788,7 @@ export default function ManualPage() {
         </section>
 
         {/* 15. SNS 채널별 변환 */}
-        <section className="bg-white rounded-2xl shadow-sm border-2 border-teal-200 p-8">
+        <section className="bg-white rounded-xl shadow-sm border-2 border-teal-200 p-8">
           <h2 className="text-[14pt] font-bold flex items-center gap-3 mb-4">
             <span className="w-8 h-8 bg-gradient-to-br from-teal-500 to-emerald-600 text-white rounded-lg flex items-center justify-center text-sm font-bold shadow-sm">15</span>
             <span className="bg-gradient-to-r from-teal-700 to-emerald-600 bg-clip-text text-transparent">SNS 채널별 콘텐츠 변환</span>
@@ -829,7 +829,7 @@ export default function ManualPage() {
         </section>
 
         {/* 16. 대시보드 통계 */}
-        <section className="bg-white rounded-2xl shadow-sm border-2 border-violet-200 p-8">
+        <section className="bg-white rounded-xl shadow-sm border-2 border-violet-200 p-8">
           <h2 className="text-[14pt] font-bold flex items-center gap-3 mb-4">
             <span className="w-8 h-8 bg-gradient-to-br from-violet-500 to-purple-600 text-white rounded-lg flex items-center justify-center text-sm font-bold shadow-sm">16</span>
             <span className="bg-gradient-to-r from-violet-700 to-purple-600 bg-clip-text text-transparent">대시보드 통계 & 차트</span>
@@ -865,7 +865,7 @@ export default function ManualPage() {
         </section>
 
         {/* 17. 시리즈 기획 */}
-        <section className="bg-white rounded-2xl shadow-sm border-2 border-orange-200 p-8">
+        <section className="bg-white rounded-xl shadow-sm border-2 border-orange-200 p-8">
           <h2 className="text-[14pt] font-bold flex items-center gap-3 mb-4">
             <span className="w-8 h-8 bg-gradient-to-br from-orange-500 to-red-600 text-white rounded-lg flex items-center justify-center text-sm font-bold shadow-sm">17</span>
             <span className="bg-gradient-to-r from-orange-700 to-red-600 bg-clip-text text-transparent">콘텐츠 시리즈 기획</span>
@@ -908,7 +908,7 @@ export default function ManualPage() {
         </section>
 
         {/* 팁 */}
-        <section className="bg-gradient-to-br from-indigo-50 to-purple-50 rounded-2xl shadow-sm border-2 border-indigo-300 p-8">
+        <section className="bg-gradient-to-br from-indigo-50 to-purple-50 rounded-xl shadow-sm border-2 border-indigo-300 p-8">
           <h2 className="text-[14pt] font-bold bg-gradient-to-r from-indigo-700 to-purple-700 bg-clip-text text-transparent mb-4">최적화 팁</h2>
           <ul className="space-y-3">
             {[

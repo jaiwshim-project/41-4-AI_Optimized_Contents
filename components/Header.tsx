@@ -25,6 +25,7 @@ const navItems = [
   { href: '/keyword-analysis', label: '키워드 분석', icon: 'M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z', activeStyle: 'bg-gradient-to-r from-cyan-600 to-teal-600 text-white border-cyan-300', idleStyle: 'text-cyan-700 border-cyan-300 hover:bg-cyan-50 hover:border-cyan-400 hover:shadow-md' },
   { href: '/series', label: '시리즈 기획', icon: 'M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10', activeStyle: 'bg-gradient-to-r from-amber-600 to-orange-600 text-white border-amber-300', idleStyle: 'text-amber-700 border-amber-300 hover:bg-amber-50 hover:border-amber-400 hover:shadow-md' },
   { href: '/pricing', label: '요금', icon: 'M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z', activeStyle: 'bg-gradient-to-r from-rose-600 to-pink-600 text-white border-rose-300', idleStyle: 'text-rose-700 border-rose-300 hover:bg-rose-50 hover:border-rose-400 hover:shadow-md' },
+  { href: '/resources', label: '자료실', icon: 'M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4', activeStyle: 'bg-gradient-to-r from-slate-600 to-gray-700 text-white border-slate-300', idleStyle: 'text-slate-700 border-slate-300 hover:bg-slate-50 hover:border-slate-400 hover:shadow-md' },
 ];
 
 export default function Header({ showApiKeyButton = false, onToggleApiKey, apiKeyOpen }: HeaderProps) {
@@ -57,7 +58,7 @@ export default function Header({ showApiKeyButton = false, onToggleApiKey, apiKe
   };
 
   return (
-    <header className="bg-[#F0FFF4] border-b border-green-100">
+    <header className="bg-violet-50 border-b border-violet-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2.5">
         <div className="flex items-center justify-between">
           {/* 로고 */}

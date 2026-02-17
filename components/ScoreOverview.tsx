@@ -23,7 +23,7 @@ export default function ScoreOverview({ result }: ScoreOverviewProps) {
   return (
     <div className="bg-white rounded-2xl shadow-sm border-2 border-indigo-200 overflow-hidden">
       {/* 헤더 */}
-      <div className="px-6 py-4 bg-gradient-to-r from-indigo-50 to-violet-50 border-b border-indigo-100">
+      <div className="px-4 py-3 bg-gradient-to-r from-indigo-50 to-violet-50 border-b border-indigo-100">
         <div className="flex items-center gap-3">
           <div className="w-8 h-8 bg-gradient-to-br from-indigo-500 to-violet-600 rounded-lg flex items-center justify-center shadow-sm">
             <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -34,11 +34,11 @@ export default function ScoreOverview({ result }: ScoreOverviewProps) {
         </div>
       </div>
 
-      <div className="p-6">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="p-5">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           {/* 종합 점수 */}
           <div className="flex flex-col items-center justify-center">
-            <div className="relative w-40 h-40 mb-4">
+            <div className="relative w-40 h-40 mb-3">
               <svg className="w-40 h-40 -rotate-90" viewBox="0 0 160 160">
                 <circle cx="80" cy="80" r="68" fill="none" strokeWidth="12" className="stroke-gray-100" />
                 <circle
@@ -51,7 +51,7 @@ export default function ScoreOverview({ result }: ScoreOverviewProps) {
                 />
               </svg>
               <div className="absolute inset-0 flex flex-col items-center justify-center">
-                <span className={`text-4xl font-bold ${overallColor}`}>{result.overallScore}</span>
+                <span className={`text-3xl font-bold ${overallColor}`}>{result.overallScore}</span>
                 <span className="text-xs text-gray-400 mt-1">/ 100</span>
               </div>
             </div>
@@ -62,7 +62,7 @@ export default function ScoreOverview({ result }: ScoreOverviewProps) {
               {result.overallScore < 40 && 'AI 검색 최적화를 위한 상당한 개선이 필요합니다.'}
             </p>
 
-            <div className="grid grid-cols-2 gap-3 mt-4 w-full">
+            <div className="grid grid-cols-2 gap-3 mt-3 w-full">
               <div className="text-center bg-sky-50 rounded-xl p-3 border-2 border-sky-200">
                 <p className="text-2xl font-bold text-sky-600">{result.aio.total}</p>
                 <p className="text-xs font-medium text-sky-500 mt-1">AIO 점수</p>

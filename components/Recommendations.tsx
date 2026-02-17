@@ -33,7 +33,7 @@ export default function Recommendations({ recommendations }: RecommendationsProp
   return (
     <div className="bg-white rounded-2xl shadow-sm border-2 border-amber-200 overflow-hidden">
       {/* 헤더 */}
-      <div className="px-6 py-4 bg-gradient-to-r from-amber-50 to-orange-50 border-b border-amber-100">
+      <div className="px-4 py-3 bg-gradient-to-r from-amber-50 to-orange-50 border-b border-amber-100">
         <div className="flex items-center gap-3">
           <div className="w-8 h-8 bg-gradient-to-br from-amber-500 to-orange-600 rounded-lg flex items-center justify-center shadow-sm">
             <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -47,20 +47,20 @@ export default function Recommendations({ recommendations }: RecommendationsProp
         </div>
       </div>
 
-      <div className="p-6">
+      <div className="p-5">
         {sorted.length === 0 ? (
-          <div className="text-center py-8">
+          <div className="text-center py-6">
             <svg className="w-12 h-12 text-emerald-400 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
             <p className="text-gray-600 font-medium">모든 항목이 잘 최적화되어 있습니다!</p>
           </div>
         ) : (
-          <div className="space-y-4">
+          <div className="space-y-3">
             {sorted.map((rec) => {
               const pConfig = priorityConfig[rec.priority];
               return (
-                <div key={rec.id} className={`border-2 ${pConfig.border} rounded-xl p-4 ${pConfig.bg} ${pConfig.hoverBorder} transition-all duration-200`}>
+                <div key={rec.id} className={`border-2 ${pConfig.border} rounded-xl p-3 ${pConfig.bg} ${pConfig.hoverBorder} transition-all duration-200`}>
                   <div className="flex items-start justify-between mb-2">
                     <div className="flex items-center gap-2">
                       <span className={`text-xs font-bold px-2.5 py-0.5 rounded-full ${pConfig.badge} ${pConfig.text}`}>
@@ -72,10 +72,10 @@ export default function Recommendations({ recommendations }: RecommendationsProp
                     </div>
                   </div>
                   <h3 className="text-sm font-bold text-gray-900 mb-1">{rec.title}</h3>
-                  <p className="text-sm text-gray-600 mb-3">{rec.description}</p>
+                  <p className="text-sm text-gray-600 mb-2">{rec.description}</p>
 
                   {rec.before && rec.after && (
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-3">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-2">
                       <div className="bg-white/70 rounded-xl p-3 border-2 border-red-100">
                         <p className="text-xs font-bold text-red-500 mb-1">Before</p>
                         <p className="text-xs text-gray-700 whitespace-pre-wrap">{rec.before}</p>

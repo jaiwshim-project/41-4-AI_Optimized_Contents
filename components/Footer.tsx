@@ -4,9 +4,9 @@ import Link from 'next/link';
 
 export default function Footer() {
   return (
-    <footer className="border-t-2 border-pink-200 mt-12 bg-pink-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+    <footer className="border-t-2 border-pink-200 mt-8 bg-pink-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-5 mb-5">
           <div className="md:col-span-2">
             <div className="flex items-center gap-2 mb-3">
               <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-lg flex items-center justify-center">
@@ -39,8 +39,8 @@ export default function Footer() {
           </div>
         </div>
         {/* 연락처 & 법적 보호 */}
-        <div className="border-t border-pink-200 pt-6 mb-6">
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <div className="border-t border-pink-200 pt-4 mb-4">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
             <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-xs text-gray-600">
               <span className="font-semibold text-gray-800">심재우 대표</span>
               <a href="tel:010-2397-5734" className="flex items-center gap-1.5 hover:text-indigo-600 transition-colors">
@@ -64,7 +64,7 @@ export default function Footer() {
             &copy; 2026 AIO/GEO Optimizer &mdash; AI 검색엔진 콘텐츠 최적화 도구
           </p>
           <p className="text-xs text-gray-400">
-            Powered by Claude API
+            Powered by AI
           </p>
         </div>
       </div>
