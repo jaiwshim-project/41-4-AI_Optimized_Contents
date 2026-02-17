@@ -139,7 +139,7 @@ export default function PromotionLandingPage() {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* 네비게이션 */}
-      <nav className="bg-white/80 backdrop-blur-md border-b border-gray-100 sticky top-0 z-50">
+      <nav className="bg-sky-50/90 backdrop-blur-md border-b border-sky-200 sticky top-0 z-50">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
           <div className="flex items-center justify-between">
             <Link href="/" className="flex items-center gap-2">
@@ -453,6 +453,159 @@ export default function PromotionLandingPage() {
               </div>
             </div>
           ))}
+        </div>
+      </section>
+
+      {/* ============================================ */}
+      {/* 산업 분야별 활용 섹션 */}
+      {/* ============================================ */}
+      <section className="bg-gradient-to-br from-slate-50 to-gray-100 py-20 border-y border-gray-200">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-14">
+            <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-4">
+              어떤 산업이든, AI 검색에 대비해야 합니다
+            </h2>
+            <p className="text-lg text-gray-500 max-w-2xl mx-auto">
+              고객이 AI에게 &ldquo;추천해줘&rdquo;라고 물을 때, 당신의 비즈니스가 답변에 포함되어야 합니다.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-5">
+            {[
+              {
+                emoji: '🍽️',
+                name: '음식/요식업',
+                example: '"강남 맛집 추천해줘"',
+                pain: '리뷰 사이트에만 의존하면 AI가 추천 못함',
+                benefit: '메뉴, 분위기, 후기를 AI가 인용하는 구조로 최적화',
+                color: 'orange',
+              },
+              {
+                emoji: '🏪',
+                name: '소매/유통',
+                example: '"가성비 좋은 OO 추천"',
+                pain: '상품 스펙만 나열하면 AI가 경쟁사 제품을 추천',
+                benefit: '제품 비교, 장단점을 AI 친화 구조로 변환',
+                color: 'blue',
+              },
+              {
+                emoji: '💅',
+                name: '뷰티/미용',
+                example: '"피부 타입별 화장품 추천"',
+                pain: '블로그 체험기가 AI 검색에 노출되지 않음',
+                benefit: '성분, 효과, 사용법을 E-E-A-T 기반으로 구조화',
+                color: 'pink',
+              },
+              {
+                emoji: '💪',
+                name: '헬스/피트니스',
+                example: '"초보자 헬스 루틴 알려줘"',
+                pain: '운동법 콘텐츠가 AI 답변에 인용되지 않음',
+                benefit: '전문성 있는 가이드로 AI 피트니스 추천에 포함',
+                color: 'red',
+              },
+              {
+                emoji: '🎓',
+                name: '교육/학원',
+                example: '"영어 학원 추천해줘"',
+                pain: '학원 홍보 글이 AI에게 신뢰받지 못함',
+                benefit: '커리큘럼, 성과 데이터를 AI가 인용하는 형태로 제작',
+                color: 'indigo',
+              },
+              {
+                emoji: '💻',
+                name: 'IT/테크',
+                example: '"프로젝트 관리 툴 비교"',
+                pain: '기술 문서가 AI 검색에서 경쟁사에 밀림',
+                benefit: '기술 비교, 사례를 구조화하여 AI 추천 1순위 확보',
+                color: 'cyan',
+              },
+              {
+                emoji: '🏥',
+                name: '의료/건강',
+                example: '"무릎 통증 원인과 치료법"',
+                pain: '의료 정보의 E-E-A-T가 부족하면 AI가 무시',
+                benefit: '전문의 경험 기반 콘텐츠로 의료 AI 답변에 인용',
+                color: 'emerald',
+              },
+              {
+                emoji: '💰',
+                name: '금융/보험',
+                example: '"30대 보험 추천해줘"',
+                pain: '금융 상품 설명이 AI 비교 답변에 빠짐',
+                benefit: '상품 비교, FAQ를 AI가 참조하는 구조로 최적화',
+                color: 'yellow',
+              },
+              {
+                emoji: '🏠',
+                name: '부동산',
+                example: '"신혼부부 아파트 추천"',
+                pain: '매물 정보만으로는 AI가 추천하지 않음',
+                benefit: '지역 분석, 투자 가이드를 AI 인용 가능하게 제작',
+                color: 'amber',
+              },
+              {
+                emoji: '✈️',
+                name: '여행/관광/숙박',
+                example: '"제주도 3박4일 코스 추천"',
+                pain: '여행 블로그가 AI 여행 플래너에 반영 안 됨',
+                benefit: '코스, 숙소, 맛집을 구조화하여 AI 여행 추천에 포함',
+                color: 'sky',
+              },
+              {
+                emoji: '⚖️',
+                name: '법률/컨설팅',
+                example: '"이혼 절차 알려줘"',
+                pain: '법률 콘텐츠의 전문성이 AI에게 전달되지 않음',
+                benefit: '법률 FAQ, 절차 가이드를 AI가 신뢰하는 형태로 변환',
+                color: 'violet',
+              },
+              {
+                emoji: '📦',
+                name: '기타 산업',
+                example: '"OO 분야 전문 업체 추천"',
+                pain: '어떤 분야든 AI 검색에 빠지면 고객을 잃음',
+                benefit: '업종 맞춤 콘텐츠를 AI 최적화 구조로 자동 생성',
+                color: 'gray',
+              },
+            ].map((industry) => (
+              <div
+                key={industry.name}
+                className={`group bg-white rounded-2xl p-5 border-2 border-${industry.color}-100 hover:border-${industry.color}-300 hover:shadow-lg transition-all duration-300 cursor-default`}
+              >
+                <div className="text-3xl mb-3">{industry.emoji}</div>
+                <h3 className="text-sm font-bold text-gray-900 mb-2">{industry.name}</h3>
+                <p className={`text-xs font-semibold text-${industry.color}-600 mb-2`}>{industry.example}</p>
+                <div className="hidden group-hover:block transition-all">
+                  <div className="mt-2 pt-2 border-t border-gray-100 space-y-2">
+                    <div className="flex items-start gap-1.5">
+                      <span className="text-red-400 text-xs mt-0.5 shrink-0">&#10005;</span>
+                      <p className="text-xs text-gray-500 leading-relaxed">{industry.pain}</p>
+                    </div>
+                    <div className="flex items-start gap-1.5">
+                      <span className="text-emerald-500 text-xs mt-0.5 shrink-0">&#10003;</span>
+                      <p className="text-xs text-gray-700 leading-relaxed font-medium">{industry.benefit}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-10 text-center">
+            <p className="text-sm text-gray-500 mb-5">
+              어떤 산업이든 AI에게 물어보는 시대가 왔습니다. 지금 당신의 업종을 테스트해 보세요.
+            </p>
+            <Link
+              href="/analyze"
+              className="inline-flex items-center gap-2 px-7 py-3.5 bg-gradient-to-r from-indigo-600 to-violet-600 text-white text-sm font-bold rounded-2xl hover:from-indigo-700 hover:to-violet-700 transition-all shadow-lg"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+              </svg>
+              내 업종 콘텐츠 분석해 보기
+            </Link>
+          </div>
         </div>
       </section>
 

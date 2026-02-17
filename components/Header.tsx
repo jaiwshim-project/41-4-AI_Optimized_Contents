@@ -1,8 +1,10 @@
 'use client';
 
-import { useState } from 'react';
-import { usePathname } from 'next/navigation';
+import { useState, useEffect } from 'react';
+import { usePathname, useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { createClient } from '@/lib/supabase-client';
+import type { User } from '@supabase/supabase-js';
 
 interface HeaderProps {
   showApiKeyButton?: boolean;
@@ -19,7 +21,26 @@ const navItems = [
 
 export default function Header({ showApiKeyButton = false, onToggleApiKey, apiKeyOpen }: HeaderProps) {
   const pathname = usePathname();
+  const router = useRouter();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [user, setUser] = useState<User | null>(null);
+
+  useEffect(() => {
+    const supabase = createClient();
+    supabase.auth.getUser().then(({ data: { user } }) => setUser(user));
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null);
+    });
+    return () => subscription.unsubscribe();
+  }, []);
+
+  const handleLogout = async () => {
+    const supabase = createClient();
+    await supabase.auth.signOut();
+    setUser(null);
+    router.push('/');
+    router.refresh();
+  };
 
   return (
     <header className="bg-[#F0FFF4] border-b border-green-100">
@@ -123,6 +144,37 @@ export default function Header({ showApiKeyButton = false, onToggleApiKey, apiKe
               </svg>
               홍보페이지
             </Link>
+
+            {/* 로그인/로그아웃 */}
+            {user ? (
+              <div className="flex items-center gap-1.5">
+                <span className="text-xs text-gray-500 max-w-[120px] truncate">{user.email}</span>
+                <button
+                  onClick={handleLogout}
+                  className="inline-flex items-center gap-1 px-2.5 py-1.5 text-xs font-medium rounded-lg bg-gray-100 text-gray-600 border-2 border-gray-300 hover:bg-red-50 hover:text-red-600 hover:border-red-300 transition-all"
+                >
+                  <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                  </svg>
+                  로그아웃
+                </button>
+              </div>
+            ) : (
+              <div className="flex items-center gap-1">
+                <Link
+                  href="/login"
+                  className="inline-flex items-center gap-1 px-2.5 py-1.5 text-xs font-medium rounded-lg bg-gray-50 text-gray-700 border-2 border-gray-300 hover:bg-indigo-50 hover:border-indigo-300 transition-all"
+                >
+                  로그인
+                </Link>
+                <Link
+                  href="/signup"
+                  className="inline-flex items-center gap-1 px-2.5 py-1.5 text-xs font-medium rounded-lg bg-gradient-to-r from-emerald-500 to-green-600 text-white border-2 border-emerald-300 hover:from-emerald-600 hover:to-green-700 transition-all"
+                >
+                  회원가입
+                </Link>
+              </div>
+            )}
           </div>
 
           {/* 모바일 햄버거 + API Key */}
@@ -223,6 +275,41 @@ export default function Header({ showApiKeyButton = false, onToggleApiKey, apiKe
               </svg>
               홍보페이지
             </Link>
+
+            {/* 모바일 로그인/로그아웃 */}
+            <div className="border-t border-green-200 pt-2 mt-1">
+              {user ? (
+                <div className="flex items-center justify-between px-4 py-2.5">
+                  <span className="text-xs text-gray-500 truncate max-w-[200px]">{user.email}</span>
+                  <button
+                    onClick={() => { handleLogout(); setMobileOpen(false); }}
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded-lg bg-red-50 text-red-600 border-2 border-red-200"
+                  >
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                    </svg>
+                    로그아웃
+                  </button>
+                </div>
+              ) : (
+                <div className="flex items-center gap-2 px-4 py-2.5">
+                  <Link
+                    href="/login"
+                    onClick={() => setMobileOpen(false)}
+                    className="flex-1 text-center py-2.5 text-sm font-medium rounded-xl bg-gray-50 text-gray-700 border-2 border-gray-300"
+                  >
+                    로그인
+                  </Link>
+                  <Link
+                    href="/signup"
+                    onClick={() => setMobileOpen(false)}
+                    className="flex-1 text-center py-2.5 text-sm font-medium rounded-xl bg-gradient-to-r from-emerald-500 to-green-600 text-white border-2 border-emerald-300"
+                  >
+                    회원가입
+                  </Link>
+                </div>
+              )}
+            </div>
           </div>
         )}
       </div>
