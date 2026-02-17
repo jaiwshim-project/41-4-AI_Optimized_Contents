@@ -150,22 +150,22 @@ export default function PromotionLandingPage() {
               </div>
               <span className="text-lg font-bold text-gray-900">AIO/GEO Optimizer</span>
             </Link>
-            <div className="flex items-center gap-3">
-              <Link href="/" className="inline-flex items-center gap-1.5 text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors">
+            <div className="flex items-center gap-2">
+              <Link href="/" className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium text-gray-700 bg-gray-50 rounded-lg border-2 border-indigo-200 hover:border-indigo-400 hover:bg-indigo-50 transition-all">
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
                 </svg>
                 홈
               </Link>
-              <Link href="/analyze" className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors hidden sm:block">
+              <Link href="/analyze" className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium text-gray-700 bg-gray-50 rounded-lg border-2 border-blue-200 hover:border-blue-400 hover:bg-blue-50 transition-all">
                 콘텐츠 분석
               </Link>
-              <Link href="/generate" className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors hidden sm:block">
+              <Link href="/generate" className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium text-gray-700 bg-gray-50 rounded-lg border-2 border-purple-200 hover:border-purple-400 hover:bg-purple-50 transition-all">
                 콘텐츠 생성
               </Link>
               <Link
                 href="/analyze"
-                className="inline-flex items-center gap-1.5 px-5 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white text-sm font-semibold rounded-xl hover:from-blue-700 hover:to-indigo-700 transition-all shadow-md"
+                className="inline-flex items-center gap-1.5 px-5 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white text-sm font-semibold rounded-xl hover:from-blue-700 hover:to-indigo-700 transition-all shadow-md border-2 border-sky-300"
               >
                 무료로 시작
               </Link>
@@ -237,7 +237,7 @@ export default function PromotionLandingPage() {
               <svg className="w-5 h-5 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
               </svg>
-              <span>특허 기술 보호</span>
+              <span>특허기술 &middot; 저작권 등록 보호</span>
             </div>
             <div className="flex items-center gap-2">
               <svg className="w-5 h-5 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -466,18 +466,55 @@ export default function PromotionLandingPage() {
               분석부터 생성, 변환까지 원스톱
             </h2>
             <p className="text-lg text-gray-500">
-              6가지 핵심 기능으로 AI 검색 시대를 완벽하게 대비합니다.
+              10가지 핵심 기능으로 AI 검색 시대를 완벽하게 대비합니다.
             </p>
+          </div>
+
+          {/* 콘텐츠 분석 프로세스 */}
+          <div className="mb-10">
+            <h3 className="text-lg font-bold text-gray-800 mb-5 flex items-center gap-2">
+              <span className="w-7 h-7 bg-gradient-to-br from-blue-500 to-indigo-600 text-white rounded-lg flex items-center justify-center text-xs font-bold">A</span>
+              콘텐츠 분석 &rarr; AI 최적화 변환
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+              {[
+                { step: '01', title: '콘텐츠 입력', desc: '기존 콘텐츠를 붙여넣거나 PDF/DOCX/PPTX 파일을 업로드', color: 'blue', tags: [] },
+                { step: '02', title: '종합 분석', desc: 'AIO/GEO 점수, E-E-A-T 평가, 키워드 밀도를 종합 분석', color: 'purple', tags: ['AIO 점수', 'GEO 점수', 'E-E-A-T', '키워드'] },
+                { step: '03', title: '개선 제안', desc: '우선순위별 구체적인 최적화 액션 아이템 제시', color: 'amber', tags: [] },
+                { step: '04', title: 'AI 최적화 변환', desc: '분석 결과 바탕으로 AI가 최적화 콘텐츠를 자동 생성', color: 'rose', tags: ['최적화 콘텐츠', '변경사항 요약', '예상 점수'] },
+              ].map((s) => (
+                <div key={s.step} className={`relative rounded-2xl p-5 border-2 border-${s.color}-200 bg-${s.color}-50/30 hover:border-${s.color}-400 hover:shadow-md transition-all`}>
+                  <div className={`text-2xl font-extrabold text-${s.color}-200 mb-2`}>{s.step}</div>
+                  <h4 className="text-sm font-bold text-gray-900 mb-1">{s.title}</h4>
+                  <p className="text-xs text-gray-600 leading-relaxed">{s.desc}</p>
+                  {s.tags.length > 0 && (
+                    <div className="mt-2 flex flex-wrap gap-1">
+                      {s.tags.map(t => (
+                        <span key={t} className={`px-1.5 py-0.5 text-[10px] font-medium bg-${s.color}-100 text-${s.color}-700 rounded`}>{t}</span>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* 콘텐츠 생성 & 추가 기능 */}
+          <div className="mb-6">
+            <h3 className="text-lg font-bold text-gray-800 mb-5 flex items-center gap-2">
+              <span className="w-7 h-7 bg-gradient-to-br from-emerald-500 to-teal-600 text-white rounded-lg flex items-center justify-center text-xs font-bold">B</span>
+              콘텐츠 생성 & 확장 기능
+            </h3>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
             {[
-              { title: 'AIO 점수 분석', desc: 'Google AI Overview 노출 확률, 구조화된 답변 적합성, 명확성, 인용 가능성을 0~100점으로 즉시 평가', color: 'blue', icon: 'M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z' },
-              { title: 'GEO 최적화 분석', desc: 'AI 검색엔진 친화도, E-E-A-T 신호 강도, 의미적 완성도를 세부 항목별로 분석', color: 'purple', icon: 'M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z' },
-              { title: '키워드 분석', desc: '주요 키워드 밀도, 관련 키워드, 롱테일 기회, 최적 배치 전략을 한눈에 제시', color: 'teal', icon: 'M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z' },
               { title: 'AI 콘텐츠 생성', desc: '블로그, 제품 설명, FAQ, How-to 등 8가지 유형의 AIO/GEO 최적화 콘텐츠를 자동 생성', color: 'emerald', icon: 'M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z' },
-              { title: '개선 제안', desc: '우선순위별 액션 아이템과 Before/After 예시로 구체적인 개선 방향 제시', color: 'amber', icon: 'M13 7h8m0 0v8m0-8l-8 8-4-4-6 6' },
-              { title: '자동 변환', desc: '기존 콘텐츠를 AI 검색에 최적화된 버전으로 원클릭 자동 변환', color: 'rose', icon: 'M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15' },
+              { title: 'A/B 버전 생성', desc: '전문적·친근한·설득적 3가지 톤으로 동시 생성하여 최적의 콘텐츠를 비교 선택', color: 'amber', icon: 'M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z' },
+              { title: 'SNS 채널별 변환', desc: '인스타그램, 링크드인, 네이버 블로그, 카드뉴스, 요약본으로 자동 변환', color: 'pink', icon: 'M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z' },
+              { title: '키워드 경쟁 분석', desc: '타겟 키워드의 경쟁 난이도, 검색 의도, AI 인용 핵심 요소, 차별화 전략 분석', color: 'teal', icon: 'M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z' },
+              { title: '시리즈 기획', desc: '하나의 주제로 3~12편의 연재 시리즈를 자동 기획, 에피소드별 키워드·개요 제공', color: 'violet', icon: 'M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10' },
+              { title: 'AI 인포그래픽 이미지', desc: 'Gemini AI로 콘텐츠에 맞는 인포그래픽 이미지 3장을 자동 생성하여 본문에 삽입', color: 'sky', icon: 'M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z' },
             ].map((feat) => (
               <div key={feat.title} className={`rounded-2xl p-6 border-2 border-${feat.color}-100 bg-${feat.color}-50/30 hover:border-${feat.color}-300 hover:shadow-md transition-all`}>
                 <div className={`w-11 h-11 bg-gradient-to-br from-${feat.color}-500 to-${feat.color}-600 rounded-xl flex items-center justify-center mb-4`}>
