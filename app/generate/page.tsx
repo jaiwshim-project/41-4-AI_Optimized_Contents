@@ -101,6 +101,7 @@ export default function GeneratePage() {
   const [showBusinessInfo, setShowBusinessInfo] = useState(false);
   const [businessInfo, setBusinessInfo] = useState({
     companyName: '',
+    brandName: '',
     industry: '',
     customIndustry: '',
     mainProduct: '',
@@ -115,6 +116,9 @@ export default function GeneratePage() {
     location: '',
     website: '',
   });
+  const [generatedImages, setGeneratedImages] = useState<string[]>([]);
+  const [isGeneratingImages, setIsGeneratingImages] = useState(false);
+  const [imageError, setImageError] = useState<string | null>(null);
   const [bizSaved, setBizSaved] = useState(false);
   const [showProfileList, setShowProfileList] = useState(false);
   const [savedProfiles, setSavedProfiles] = useState<{ name: string; data: typeof businessInfo; savedAt: string }[]>([]);
@@ -245,7 +249,8 @@ export default function GeneratePage() {
     if (additionalNotes.trim()) parts.push(additionalNotes.trim());
     const biz = businessInfo;
     const bizParts: string[] = [];
-    if (biz.companyName) bizParts.push(`회사/브랜드: ${biz.companyName}`);
+    if (biz.companyName) bizParts.push(`회사명: ${biz.companyName}`);
+    if (biz.brandName) bizParts.push(`브랜드명: ${biz.brandName}`);
     const ind = biz.industry === '기타' ? biz.customIndustry : biz.industry;
     if (ind) bizParts.push(`산업 분야: ${ind}`);
     if (biz.mainProduct) bizParts.push(`주요 제품/서비스: ${biz.mainProduct}`);
@@ -375,6 +380,29 @@ export default function GeneratePage() {
     setTimeout(() => setCopied(false), 2000);
   };
 
+  const handleGenerateImages = async () => {
+    if (!result) return;
+    setIsGeneratingImages(true);
+    setImageError(null);
+    try {
+      const response = await fetch('/api/generate-images', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ content: result.content, title: result.title }),
+      });
+      if (!response.ok) {
+        const err = await response.json();
+        throw new Error(err.error || '이미지 생성에 실패했습니다.');
+      }
+      const data = await response.json();
+      setGeneratedImages(data.images);
+    } catch (err) {
+      setImageError(err instanceof Error ? err.message : '이미지 생성 중 오류가 발생했습니다.');
+    } finally {
+      setIsGeneratingImages(false);
+    }
+  };
+
   const handleReset = () => {
     setSelectedCategory(null);
     setTopic('');
@@ -383,6 +411,8 @@ export default function GeneratePage() {
     setAdditionalNotes('');
     setResult(null);
     setError(null);
+    setGeneratedImages([]);
+    setImageError(null);
   };
 
   return (
@@ -595,17 +625,26 @@ export default function GeneratePage() {
                     )}
                   </div>
 
-                  {/* 회사/브랜드 정보 */}
+                  {/* 회사 정보 */}
                   <div className="pt-5 bg-white/80 rounded-xl p-4 border border-teal-100 shadow-sm">
                     <h3 className="text-sm font-semibold text-teal-800 mb-3 flex items-center gap-2">
                       <span className="w-6 h-6 bg-gradient-to-br from-teal-500 to-emerald-600 rounded-lg text-center text-xs leading-6 font-bold text-white shadow-sm">1</span>
-                      회사/브랜드 정보
+                      회사 정보
                     </h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                      <input type="text" value={businessInfo.companyName} onChange={e => updateBiz('companyName', e.target.value)} placeholder="회사/브랜드명" className="px-4 py-2.5 bg-teal-50/50 border-2 border-teal-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-400 focus:border-transparent placeholder-teal-400/60" />
+                      <input type="text" value={businessInfo.companyName} onChange={e => updateBiz('companyName', e.target.value)} placeholder="회사명 (예: ○○주식회사)" className="px-4 py-2.5 bg-teal-50/50 border-2 border-teal-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-400 focus:border-transparent placeholder-teal-400/60" />
                       <input type="text" value={businessInfo.location} onChange={e => updateBiz('location', e.target.value)} placeholder="지역/위치 (예: 서울 강남구)" className="px-4 py-2.5 bg-teal-50/50 border-2 border-teal-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-400 focus:border-transparent placeholder-teal-400/60" />
                     </div>
                     <input type="text" value={businessInfo.website} onChange={e => updateBiz('website', e.target.value)} placeholder="웹사이트/SNS (예: www.example.com)" className="mt-3 w-full px-4 py-2.5 bg-teal-50/50 border-2 border-teal-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-400 focus:border-transparent placeholder-teal-400/60" />
+                  </div>
+
+                  {/* 브랜드 정보 */}
+                  <div className="bg-white/80 rounded-xl p-4 border border-cyan-100 shadow-sm">
+                    <h3 className="text-sm font-semibold text-cyan-800 mb-3 flex items-center gap-2">
+                      <span className="w-6 h-6 bg-gradient-to-br from-cyan-500 to-teal-600 rounded-lg text-center text-xs leading-6 font-bold text-white shadow-sm">✦</span>
+                      브랜드 정보
+                    </h3>
+                    <input type="text" value={businessInfo.brandName} onChange={e => updateBiz('brandName', e.target.value)} placeholder="브랜드명 (예: 브랜드 이름, 서비스명)" className="w-full px-4 py-2.5 bg-cyan-50/50 border-2 border-cyan-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-transparent placeholder-cyan-400/60" />
                   </div>
 
                   {/* 산업 분야 */}
@@ -1090,6 +1129,99 @@ export default function GeneratePage() {
                       .replace(/^> (.*$)/gm, '<blockquote class="border-l-4 border-indigo-300 pl-4 py-1 my-3 bg-indigo-50 rounded-r-lg text-gray-700">$1</blockquote>')
                   }}
                 />
+              </div>
+
+              {/* AI 이미지 생성 */}
+              <div className="mt-6 pt-4 border-t border-gray-200">
+                {generatedImages.length === 0 ? (
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <svg className="w-5 h-5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                      </svg>
+                      <span className="text-sm font-semibold text-gray-700">AI 이미지 생성</span>
+                      <span className="text-xs text-gray-400">Gemini로 콘텐츠 관련 이미지 3장을 생성합니다</span>
+                    </div>
+                    <button
+                      onClick={handleGenerateImages}
+                      disabled={isGeneratingImages}
+                      className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl transition-all duration-200 border-2 bg-gradient-to-r from-emerald-500 to-teal-500 text-white border-emerald-300 hover:from-emerald-600 hover:to-teal-600 hover:shadow-lg hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
+                    >
+                      {isGeneratingImages ? (
+                        <>
+                          <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
+                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                          </svg>
+                          생성 중...
+                        </>
+                      ) : (
+                        <>
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                          </svg>
+                          이미지 3장 생성
+                        </>
+                      )}
+                    </button>
+                  </div>
+                ) : (
+                  <div>
+                    <div className="flex items-center justify-between mb-3">
+                      <span className="text-sm font-semibold text-gray-700 flex items-center gap-2">
+                        <svg className="w-5 h-5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                        AI 생성 이미지 ({generatedImages.length}장)
+                      </span>
+                      <button
+                        onClick={handleGenerateImages}
+                        disabled={isGeneratingImages}
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg transition-all duration-200 border-2 border-emerald-300 text-emerald-700 bg-emerald-50 hover:bg-emerald-100 hover:shadow-md hover:scale-105 disabled:opacity-50"
+                      >
+                        {isGeneratingImages ? (
+                          <>
+                            <svg className="w-3.5 h-3.5 animate-spin" fill="none" viewBox="0 0 24 24">
+                              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                            </svg>
+                            재생성 중...
+                          </>
+                        ) : '다시 생성'}
+                      </button>
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                      {generatedImages.map((img, i) => (
+                        <div key={i} className="relative group rounded-xl overflow-hidden border-2 border-gray-200 shadow-sm hover:shadow-lg transition-all duration-200">
+                          <img src={img} alt={`AI 생성 이미지 ${i + 1}`} className="w-full aspect-video object-cover" />
+                          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-all duration-200 flex items-center justify-center">
+                            <a
+                              href={img}
+                              download={`ai-image-${i + 1}.png`}
+                              className="opacity-0 group-hover:opacity-100 inline-flex items-center gap-1.5 px-3 py-1.5 bg-white/90 text-gray-800 text-xs font-medium rounded-lg shadow-md hover:bg-white transition-all"
+                            >
+                              <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                              </svg>
+                              다운로드
+                            </a>
+                          </div>
+                          <div className="absolute top-2 left-2 bg-black/50 text-white text-[10px] font-bold px-2 py-0.5 rounded-md">
+                            {i + 1}/{generatedImages.length}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+                {imageError && (
+                  <div className="mt-3 bg-red-50 border border-red-200 rounded-lg p-3 flex items-start gap-2">
+                    <svg className="w-4 h-4 text-red-500 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <p className="text-xs text-red-700">{imageError}</p>
+                  </div>
+                )}
               </div>
 
               {/* 해시태그 */}
