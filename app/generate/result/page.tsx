@@ -87,15 +87,25 @@ export default function GenerateResultPage() {
   };
 
   const handleCopy = async () => {
-    if (!result) return;
-    let text = result.content;
-    if (result.hashtags && result.hashtags.length > 0) {
-      const tags = result.hashtags.map(t => t.startsWith('#') ? t : `#${t}`).join(' ');
-      text += '\n\n' + tags;
+    if (!contentRef.current) return;
+    try {
+      const htmlBlob = new Blob([contentRef.current.innerHTML], { type: 'text/html' });
+      const textBlob = new Blob([contentRef.current.innerText], { type: 'text/plain' });
+      await navigator.clipboard.write([
+        new ClipboardItem({
+          'text/html': htmlBlob,
+          'text/plain': textBlob,
+        }),
+      ]);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      if (contentRef.current) {
+        await navigator.clipboard.writeText(contentRef.current.innerText);
+      }
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
     }
-    await navigator.clipboard.writeText(text);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
   };
 
   const handleRegenerate = async () => {

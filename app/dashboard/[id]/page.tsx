@@ -119,25 +119,23 @@ export default function DashboardDetailPage() {
   };
 
   const handleCopyContent = async () => {
-    if (!item) return;
-    const isGen = item.type === 'generation';
-    const text = isGen
-      ? (revisionId
-          ? item.revisions?.find(r => r.id === revisionId)?.result.content
-          : item.generateResult?.content)
-      : item.originalContent;
-    const tags = isGen
-      ? (revisionId
-          ? item.revisions?.find(r => r.id === revisionId)?.result.hashtags
-          : item.generateResult?.hashtags)
-      : undefined;
-    let copyText = text || '';
-    if (tags && tags.length > 0) {
-      copyText += '\n\n' + tags.map(t => t.startsWith('#') ? t : `#${t}`).join(' ');
+    if (!contentRef.current) return;
+    try {
+      const htmlBlob = new Blob([contentRef.current.innerHTML], { type: 'text/html' });
+      const textBlob = new Blob([contentRef.current.innerText], { type: 'text/plain' });
+      await navigator.clipboard.write([
+        new ClipboardItem({
+          'text/html': htmlBlob,
+          'text/plain': textBlob,
+        }),
+      ]);
+      setCopiedContent(true);
+      setTimeout(() => setCopiedContent(false), 2000);
+    } catch {
+      await navigator.clipboard.writeText(contentRef.current.innerText);
+      setCopiedContent(true);
+      setTimeout(() => setCopiedContent(false), 2000);
     }
-    await navigator.clipboard.writeText(copyText);
-    setCopiedContent(true);
-    setTimeout(() => setCopiedContent(false), 2000);
   };
 
   const handleStartEdit = () => {
