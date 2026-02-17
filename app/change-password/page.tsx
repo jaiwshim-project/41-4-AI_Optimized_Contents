@@ -126,6 +126,13 @@ export default function ChangePasswordPage() {
                 </span>
               ) : '비밀번호 변경'}
             </button>
+            <button
+              type="button"
+              onClick={() => router.back()}
+              className="w-full py-3 bg-gray-100 text-gray-600 font-semibold rounded-xl hover:bg-gray-200 transition-all border-2 border-gray-300"
+            >
+              취소
+            </button>
           </form>
         </div>
       </main>
