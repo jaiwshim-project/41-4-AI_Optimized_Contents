@@ -6,18 +6,6 @@ export async function POST(request: NextRequest) {
   try {
     const { apiKey, geminiApiKey } = await request.json();
 
-    const envPath = join(process.cwd(), '.env.local');
-
-    // 기존 .env.local 읽기
-    let envContent = '';
-    try {
-      envContent = await readFile(envPath, 'utf-8');
-    } catch {
-      // 파일이 없으면 새로 생성
-    }
-
-    const lines = envContent.split('\n');
-
     // Anthropic API Key 처리
     if (apiKey !== undefined) {
       if (apiKey && !apiKey.startsWith('sk-ant-')) {
@@ -26,6 +14,33 @@ export async function POST(request: NextRequest) {
           { status: 400 }
         );
       }
+      if (apiKey) {
+        process.env.ANTHROPIC_API_KEY = apiKey;
+      }
+    }
+
+    // Gemini API Key 처리 (접두사 검증 제거 - 다양한 형식 허용)
+    if (geminiApiKey !== undefined) {
+      if (!geminiApiKey || geminiApiKey.trim().length < 10) {
+        return NextResponse.json(
+          { error: '유효한 Gemini API Key를 입력해주세요.' },
+          { status: 400 }
+        );
+      }
+      process.env.GEMINI_API_KEY = geminiApiKey;
+    }
+
+    // 로컬 개발 환경에서만 .env.local 파일에 저장 시도
+    try {
+      const envPath = join(process.cwd(), '.env.local');
+      let envContent = '';
+      try {
+        envContent = await readFile(envPath, 'utf-8');
+      } catch {
+        // 파일이 없으면 새로 생성
+      }
+
+      const lines = envContent.split('\n');
 
       if (apiKey) {
         const keyLineIndex = lines.findIndex(line => line.startsWith('ANTHROPIC_API_KEY='));
@@ -34,17 +49,6 @@ export async function POST(request: NextRequest) {
         } else {
           lines.push(`ANTHROPIC_API_KEY=${apiKey}`);
         }
-        process.env.ANTHROPIC_API_KEY = apiKey;
-      }
-    }
-
-    // Gemini API Key 처리
-    if (geminiApiKey !== undefined) {
-      if (geminiApiKey && !geminiApiKey.startsWith('AI')) {
-        return NextResponse.json(
-          { error: 'AI 로 시작하는 유효한 Gemini API Key를 입력해주세요.' },
-          { status: 400 }
-        );
       }
 
       if (geminiApiKey) {
@@ -54,11 +58,12 @@ export async function POST(request: NextRequest) {
         } else {
           lines.push(`GEMINI_API_KEY=${geminiApiKey}`);
         }
-        process.env.GEMINI_API_KEY = geminiApiKey;
       }
-    }
 
-    await writeFile(envPath, lines.join('\n').trim() + '\n', 'utf-8');
+      await writeFile(envPath, lines.join('\n').trim() + '\n', 'utf-8');
+    } catch {
+      // Vercel 등 서버리스 환경에서는 파일 쓰기 불가 - 런타임 메모리에만 저장됨
+    }
 
     return NextResponse.json({ success: true });
   } catch (error) {
