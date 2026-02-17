@@ -4,6 +4,7 @@ import {
   saveHistoryItemSupabase,
   deleteHistoryItemSupabase,
   addRevisionSupabase,
+  updateHistoryContentSupabase,
 } from './supabase-storage';
 
 const HISTORY_KEY = 'aio-optimizer-history';
@@ -50,6 +51,22 @@ export function addRevision(historyId: string, revision: RevisionItem): void {
   }
   // Supabase에도 비동기로 저장
   addRevisionSupabase(historyId, revision).catch(() => {});
+}
+
+export async function updateHistoryContent(id: string, content: string): Promise<void> {
+  // localStorage에 즉시 저장 (동기)
+  const history = getHistoryLocal();
+  const item = history.find(h => h.id === id);
+  if (item) {
+    if (item.type === 'generation' && item.generateResult) {
+      item.generateResult.content = content;
+    } else {
+      item.originalContent = content;
+    }
+    localStorage.setItem(HISTORY_KEY, JSON.stringify(history));
+  }
+  // Supabase에도 비동기로 저장
+  await updateHistoryContentSupabase(id, content).catch(() => {});
 }
 
 export function deleteHistoryItem(id: string): void {

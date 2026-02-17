@@ -5,7 +5,7 @@ import { useParams, useRouter } from 'next/navigation';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import type { HistoryItem } from '@/lib/types';
-import { getHistoryAsync } from '@/lib/history';
+import { getHistoryAsync, updateHistoryContent } from '@/lib/history';
 
 export default function DashboardDetailPage() {
   const params = useParams();
@@ -18,6 +18,9 @@ export default function DashboardDetailPage() {
   const [copiedBlog, setCopiedBlog] = useState(false);
   const [copiedTitle, setCopiedTitle] = useState(false);
   const [copiedContent, setCopiedContent] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editContent, setEditContent] = useState('');
+  const [savedMessage, setSavedMessage] = useState(false);
   const contentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -137,6 +140,37 @@ export default function DashboardDetailPage() {
     setTimeout(() => setCopiedContent(false), 2000);
   };
 
+  const handleStartEdit = () => {
+    const isGen = item?.type === 'generation';
+    const currentContent = isGen
+      ? (revisionId
+          ? item?.revisions?.find(r => r.id === revisionId)?.result.content
+          : item?.generateResult?.content)
+      : item?.originalContent;
+    setEditContent(currentContent || '');
+    setIsEditing(true);
+  };
+
+  const handleSaveEdit = async () => {
+    if (!item) return;
+    // item의 content를 업데이트
+    if (item.type === 'generation' && item.generateResult) {
+      if (revisionId) {
+        const rev = item.revisions?.find(r => r.id === revisionId);
+        if (rev) rev.result.content = editContent;
+      } else {
+        item.generateResult.content = editContent;
+      }
+    } else {
+      item.originalContent = editContent;
+    }
+    setItem({ ...item });
+    await updateHistoryContent(item.id, editContent);
+    setIsEditing(false);
+    setSavedMessage(true);
+    setTimeout(() => setSavedMessage(false), 2000);
+  };
+
   if (loading || !item) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
@@ -244,6 +278,33 @@ export default function DashboardDetailPage() {
                 </svg>
                 {copiedContent ? '복사됨!' : '본문 복사'}
               </button>
+              {/* 본문 수정 */}
+              <button
+                onClick={isEditing ? handleSaveEdit : handleStartEdit}
+                className={`inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl transition-all duration-200 border-2 hover:shadow-md hover:scale-[1.03] ${
+                  savedMessage
+                    ? 'bg-emerald-500 text-white border-emerald-300'
+                    : isEditing
+                    ? 'bg-gradient-to-r from-emerald-500 to-green-600 text-white border-emerald-300 hover:from-emerald-600 hover:to-green-700'
+                    : 'border-violet-300 bg-violet-50 text-violet-700 hover:bg-violet-100'
+                }`}
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={savedMessage ? 'M5 13l4 4L19 7' : 'M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z'} />
+                </svg>
+                {savedMessage ? '저장됨!' : isEditing ? '저장하기' : '본문 수정'}
+              </button>
+              {isEditing && (
+                <button
+                  onClick={() => setIsEditing(false)}
+                  className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl transition-all duration-200 border-2 border-gray-300 bg-gray-50 text-gray-600 hover:bg-gray-100 hover:shadow-md hover:scale-[1.03]"
+                >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                  취소
+                </button>
+              )}
               {/* 수정 이력 선택 */}
               {isGeneration && item.revisions && item.revisions.length > 0 && (
                 <div className="flex items-center gap-2">
@@ -295,21 +356,38 @@ export default function DashboardDetailPage() {
 
         {/* 콘텐츠 */}
         <div className="bg-white rounded-2xl shadow-sm border-2 border-indigo-200 p-6">
-          <div ref={contentRef}>
-            <div
-              className="prose prose-sm max-w-none text-sm text-gray-800 leading-relaxed"
-              dangerouslySetInnerHTML={{ __html: renderContent(content || '') }}
-            />
-            {hashtags && hashtags.length > 0 && (
-              <div className="mt-8 pt-4 flex flex-wrap gap-2">
-                {hashtags.map((tag, i) => (
-                  <span key={i} className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-indigo-50 text-indigo-600 border border-indigo-200">
-                    {tag.startsWith('#') ? tag : `#${tag}`}
-                  </span>
-                ))}
+          {isEditing ? (
+            <div>
+              <div className="flex items-center gap-2 mb-3">
+                <svg className="w-4 h-4 text-violet-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                </svg>
+                <span className="text-sm font-semibold text-violet-700">본문 수정 모드</span>
+                <span className="text-xs text-gray-400">마크다운 형식으로 편집하세요</span>
               </div>
-            )}
-          </div>
+              <textarea
+                value={editContent}
+                onChange={(e) => setEditContent(e.target.value)}
+                className="w-full min-h-[500px] px-4 py-3 border-2 border-violet-200 rounded-xl text-sm font-mono leading-relaxed focus:outline-none focus:ring-2 focus:ring-violet-400 focus:border-transparent resize-y bg-gray-50"
+              />
+            </div>
+          ) : (
+            <div ref={contentRef}>
+              <div
+                className="prose prose-sm max-w-none text-sm text-gray-800 leading-relaxed"
+                dangerouslySetInnerHTML={{ __html: renderContent(content || '') }}
+              />
+              {hashtags && hashtags.length > 0 && (
+                <div className="mt-8 pt-4 flex flex-wrap gap-2">
+                  {hashtags.map((tag, i) => (
+                    <span key={i} className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-indigo-50 text-indigo-600 border border-indigo-200">
+                      {tag.startsWith('#') ? tag : `#${tag}`}
+                    </span>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
         </div>
       </main>
       <Footer />

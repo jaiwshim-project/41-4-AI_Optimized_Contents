@@ -191,6 +191,39 @@ export async function saveHistoryItemSupabase(item: HistoryItem): Promise<void> 
   }
 }
 
+export async function updateHistoryContentSupabase(id: string, content: string): Promise<void> {
+  if (!isSupabaseConfigured()) {
+    updateHistoryContentLocal(id, content);
+    return;
+  }
+  try {
+    // 기존 generate_result 가져오기
+    const { data, error: fetchError } = await getSupabase()
+      .from('history')
+      .select('generate_result, original_content, type')
+      .eq('id', id)
+      .single();
+    if (fetchError) throw fetchError;
+
+    if (data?.type === 'generation' && data?.generate_result) {
+      const updated = { ...data.generate_result, content };
+      const { error } = await getSupabase()
+        .from('history')
+        .update({ generate_result: updated })
+        .eq('id', id);
+      if (error) throw error;
+    } else {
+      const { error } = await getSupabase()
+        .from('history')
+        .update({ original_content: content })
+        .eq('id', id);
+      if (error) throw error;
+    }
+  } catch {
+    updateHistoryContentLocal(id, content);
+  }
+}
+
 export async function deleteHistoryItemSupabase(id: string): Promise<void> {
   if (!isSupabaseConfigured()) {
     deleteHistoryLocal(id);
@@ -254,6 +287,20 @@ function deleteHistoryLocal(id: string): void {
   if (typeof window === 'undefined') return;
   const history = getHistoryLocal().filter(h => h.id !== id);
   localStorage.setItem(HISTORY_KEY, JSON.stringify(history));
+}
+
+function updateHistoryContentLocal(id: string, content: string): void {
+  if (typeof window === 'undefined') return;
+  const history = getHistoryLocal();
+  const item = history.find(h => h.id === id);
+  if (item) {
+    if (item.type === 'generation' && item.generateResult) {
+      item.generateResult.content = content;
+    } else {
+      item.originalContent = content;
+    }
+    localStorage.setItem(HISTORY_KEY, JSON.stringify(history));
+  }
 }
 
 function addRevisionLocal(historyId: string, revision: RevisionItem): void {
