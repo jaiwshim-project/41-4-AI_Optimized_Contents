@@ -32,8 +32,7 @@ export default function Footer() {
           <div>
             <h4 className="text-xs font-semibold text-gray-800 uppercase tracking-wider mb-3">리소스</h4>
             <ul className="space-y-2">
-              <li><a href="https://console.anthropic.com/settings/keys" target="_blank" rel="noopener noreferrer" className="text-xs text-gray-500 hover:text-indigo-600 transition-colors">API Key 발급</a></li>
-              <li><a href="https://docs.anthropic.com" target="_blank" rel="noopener noreferrer" className="text-xs text-gray-500 hover:text-indigo-600 transition-colors">Claude API 문서</a></li>
+              <li><a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener noreferrer" className="text-xs text-gray-500 hover:text-indigo-600 transition-colors">Gemini API Key 발급</a></li>
             </ul>
           </div>
         </div>
