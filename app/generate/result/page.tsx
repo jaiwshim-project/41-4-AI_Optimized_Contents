@@ -432,13 +432,8 @@ export default function GenerateResultPage() {
             <button
               onClick={() => {
                 if (!contentRef.current) return;
-                let html = contentRef.current.innerHTML;
-                let text = contentRef.current.innerText;
-                if (result?.hashtags && result.hashtags.length > 0) {
-                  const tags = result.hashtags.map(t => t.startsWith('#') ? t : `#${t}`).join(' ');
-                  html += `<p style="margin-top:24px;color:#6366f1;font-size:0.9em">${tags}</p>`;
-                  text += '\n\n' + tags;
-                }
+                const html = contentRef.current.innerHTML;
+                const text = contentRef.current.innerText;
                 const blob = new Blob([html], { type: 'text/html' });
                 const textBlob = new Blob([text], { type: 'text/plain' });
                 navigator.clipboard.write([
@@ -490,6 +485,16 @@ export default function GenerateResultPage() {
                   .replace(/^> (.*$)/gm, '<blockquote class="border-l-4 border-indigo-300 pl-4 py-1 my-3 bg-indigo-50 rounded-r-lg text-gray-700">$1</blockquote>')
               }}
             />
+            {/* 해시태그 - 본문 안에 포함하여 복사 시 함께 복사됨 */}
+            {result.hashtags && result.hashtags.length > 0 && (
+              <div className="mt-8 pt-4 flex flex-wrap gap-2">
+                {result.hashtags.map((tag, i) => (
+                  <span key={i} className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-indigo-50 text-indigo-600 border border-indigo-200 hover:bg-indigo-100 hover:scale-105 transition-all duration-200 cursor-default">
+                    {tag.startsWith('#') ? tag : `#${tag}`}
+                  </span>
+                ))}
+              </div>
+            )}
           </div>
 
           {/* AI 이미지 생성 */}
@@ -596,16 +601,6 @@ export default function GenerateResultPage() {
             )}
           </div>
 
-          {/* 해시태그 */}
-          {result.hashtags && result.hashtags.length > 0 && (
-            <div className="mt-6 pt-4 border-t border-gray-200 flex flex-wrap gap-2">
-              {result.hashtags.map((tag, i) => (
-                <span key={i} className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-indigo-50 text-indigo-600 border border-indigo-200 hover:bg-indigo-100 hover:scale-105 transition-all duration-200 cursor-default">
-                  {tag.startsWith('#') ? tag : `#${tag}`}
-                </span>
-              ))}
-            </div>
-          )}
         </div>
       </main>
 
