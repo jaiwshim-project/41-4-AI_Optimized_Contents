@@ -385,10 +385,11 @@ export default function GeneratePage() {
     setIsGeneratingImages(true);
     setImageError(null);
     try {
+      const geminiKey = localStorage.getItem('gemini-api-key') || '';
       const response = await fetch('/api/generate-images', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ content: result.content, title: result.title }),
+        body: JSON.stringify({ content: result.content, title: result.title, geminiApiKey: geminiKey }),
       });
       if (!response.ok) {
         const err = await response.json();

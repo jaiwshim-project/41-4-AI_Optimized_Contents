@@ -9,12 +9,9 @@ const IMAGE_MODELS = [
 
 export async function generateContentImages(
   content: string,
-  title: string
+  title: string,
+  apiKey: string
 ): Promise<string[]> {
-  const apiKey = process.env.GEMINI_API_KEY;
-  if (!apiKey) {
-    throw new Error('Gemini API 키가 설정되지 않았습니다. API Key 설정에서 Gemini 키를 입력해주세요.');
-  }
 
   const ai = new GoogleGenAI({ apiKey });
 
