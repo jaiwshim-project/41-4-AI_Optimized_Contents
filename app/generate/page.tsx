@@ -94,6 +94,7 @@ export default function GeneratePage() {
   const [referenceFiles, setReferenceFiles] = useState<{ name: string; content: string }[]>([]);
   const [isGenerating, setIsGenerating] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [abTestMode, setAbTestMode] = useState(false);
   const [showApiKeyInput, setShowApiKeyInput] = useState(false);
   const [showBusinessInfo, setShowBusinessInfo] = useState(false);
   const [businessInfo, setBusinessInfo] = useState({
@@ -357,54 +358,97 @@ export default function GeneratePage() {
     setError(null);
 
     try {
-      const response = await fetch('/api/generate', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          category: selectedCategory,
-          topic: topic.trim(),
-          targetKeyword: targetKeyword.trim() || undefined,
-          tone,
-          additionalNotes: buildAdditionalNotes(),
-        }),
-      });
-
-      // 비즈니스 정보 자동 저장
       saveBusinessInfo();
+      const notes = buildAdditionalNotes();
 
-      if (!response.ok) {
-        const err = await response.json();
-        throw new Error(err.error || '콘텐츠 생성에 실패했습니다.');
+      if (abTestMode) {
+        // A/B 버전: 3가지 톤으로 동시 생성
+        const tones = [
+          { value: '전문적이고 신뢰감 있는', label: '전문적' },
+          { value: '친근하고 대화체의', label: '친근한' },
+          { value: '설득력 있고 강렬한', label: '설득적' },
+        ];
+        const results = await Promise.all(
+          tones.map(async (t) => {
+            const res = await fetch('/api/generate', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                category: selectedCategory,
+                topic: topic.trim(),
+                targetKeyword: targetKeyword.trim() || undefined,
+                tone: t.value,
+                additionalNotes: notes,
+              }),
+            });
+            if (!res.ok) throw new Error('생성 실패');
+            const data = await res.json();
+            return { ...data, toneName: t.label };
+          })
+        );
+        // A/B 결과를 localStorage에 저장하고 결과 페이지로
+        const now = new Date();
+        const dateStr = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
+        // 각 버전을 이력에 저장
+        for (const r of results) {
+          const hid = generateId();
+          saveHistoryItem({
+            id: hid, type: 'generation',
+            title: `[${r.toneName}] ${r.title || topic.trim()}`,
+            summary: `A/B 테스트 | ${r.toneName} 버전`,
+            date: dateStr, category: selectedCategory || undefined,
+            targetKeyword: targetKeyword.trim() || undefined,
+            generateResult: r, topic: topic.trim(), tone: r.toneName, revisions: [],
+          });
+        }
+        // 첫 번째 결과를 메인으로 저장
+        const { saveGenerateResult } = await import('@/lib/supabase-storage');
+        const mainResult = { ...results[0], abVersions: results };
+        const resultId = await saveGenerateResult({
+          result: mainResult, category: selectedCategory,
+          topic: topic.trim(), targetKeyword: targetKeyword.trim(),
+          tone: 'A/B 테스트', historyId: generateId(),
+        });
+        router.push(`/generate/result?id=${resultId}`);
+      } else {
+        // 일반 단일 생성
+        const response = await fetch('/api/generate', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            category: selectedCategory,
+            topic: topic.trim(),
+            targetKeyword: targetKeyword.trim() || undefined,
+            tone,
+            additionalNotes: notes,
+          }),
+        });
+
+        if (!response.ok) {
+          const err = await response.json();
+          throw new Error(err.error || '콘텐츠 생성에 실패했습니다.');
+        }
+
+        const data = await response.json();
+        const now = new Date();
+        const historyId = generateId();
+        saveHistoryItem({
+          id: historyId, type: 'generation',
+          title: data.title || topic.trim(),
+          summary: `${categories.find(c => c.id === selectedCategory)?.label || ''} | ${topic.trim()}`,
+          date: `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`,
+          category: selectedCategory || undefined,
+          targetKeyword: targetKeyword.trim() || undefined,
+          generateResult: data, topic: topic.trim(), tone, revisions: [],
+        });
+        const { saveGenerateResult } = await import('@/lib/supabase-storage');
+        const resultId = await saveGenerateResult({
+          result: data, category: selectedCategory,
+          topic: topic.trim(), targetKeyword: targetKeyword.trim(),
+          tone, historyId,
+        });
+        router.push(`/generate/result?id=${resultId}`);
       }
-
-      const data = await response.json();
-      // 이력 저장
-      const now = new Date();
-      const historyId = generateId();
-      saveHistoryItem({
-        id: historyId,
-        type: 'generation',
-        title: data.title || topic.trim(),
-        summary: `${categories.find(c => c.id === selectedCategory)?.label || ''} | ${topic.trim()}`,
-        date: `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`,
-        category: selectedCategory || undefined,
-        targetKeyword: targetKeyword.trim() || undefined,
-        generateResult: data,
-        topic: topic.trim(),
-        tone,
-        revisions: [],
-      });
-      // 결과 데이터를 Supabase에 저장하고 결과 페이지로 이동
-      const { saveGenerateResult } = await import('@/lib/supabase-storage');
-      const resultId = await saveGenerateResult({
-        result: data,
-        category: selectedCategory,
-        topic: topic.trim(),
-        targetKeyword: targetKeyword.trim(),
-        tone,
-        historyId,
-      });
-      router.push(`/generate/result?id=${resultId}`);
     } catch (err) {
       setError(err instanceof Error ? err.message : '알 수 없는 오류가 발생했습니다.');
     } finally {
@@ -994,6 +1038,23 @@ export default function GeneratePage() {
                         ))}
                       </div>
                     )}
+                  </div>
+
+                  {/* A/B 테스트 모드 */}
+                  <div className="flex items-center gap-3 p-3 bg-gradient-to-r from-orange-50 to-amber-50 rounded-xl border-2 border-amber-200">
+                    <label className="relative inline-flex items-center cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={abTestMode}
+                        onChange={(e) => setAbTestMode(e.target.checked)}
+                        className="sr-only peer"
+                      />
+                      <div className="w-9 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-amber-500"></div>
+                    </label>
+                    <div>
+                      <p className="text-sm font-semibold text-amber-800">A/B 버전 생성</p>
+                      <p className="text-[10px] text-amber-600">전문적 / 친근한 / 설득적 3가지 톤으로 동시 생성하여 비교</p>
+                    </div>
                   </div>
 
                   {/* 생성 버튼 */}

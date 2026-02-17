@@ -59,6 +59,16 @@ export default function GenerateResultPage() {
   const finalContentRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
 
+  // SNS 변환
+  const [snsChannel, setSnsChannel] = useState<string | null>(null);
+  const [snsResult, setSnsResult] = useState<string | null>(null);
+  const [snsLoading, setSnsLoading] = useState(false);
+  const [snsCopied, setSnsCopied] = useState(false);
+
+  // A/B 버전
+  const [abVersions, setAbVersions] = useState<(GenerateResponse & { toneName?: string })[]>([]);
+  const [activeAbTab, setActiveAbTab] = useState(0);
+
   // Supabase 또는 localStorage에서 결과 데이터 로드
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -78,8 +88,42 @@ export default function GenerateResultPage() {
       setTargetKeyword(data.targetKeyword);
       setTone(data.tone);
       setCurrentHistoryId(data.historyId);
+      // A/B 버전이 있으면 로드
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      if ((data.result as any)?.abVersions) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        setAbVersions((data.result as any).abVersions);
+      }
     });
   }, [router]);
+
+  const handleSnsConvert = async (channel: string) => {
+    if (!result?.content) return;
+    setSnsChannel(channel);
+    setSnsLoading(true);
+    setSnsResult(null);
+    try {
+      const res = await fetch('/api/convert-content', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ content: result.content, channel, title: result.title }),
+      });
+      if (!res.ok) throw new Error('변환 실패');
+      const data = await res.json();
+      setSnsResult(data.result);
+    } catch {
+      setSnsResult('변환 중 오류가 발생했습니다.');
+    } finally {
+      setSnsLoading(false);
+    }
+  };
+
+  const handleCopySns = async () => {
+    if (!snsResult) return;
+    await navigator.clipboard.writeText(snsResult);
+    setSnsCopied(true);
+    setTimeout(() => setSnsCopied(false), 2000);
+  };
 
   const handleCopyTitle = async () => {
     if (!result) return;
@@ -716,6 +760,98 @@ export default function GenerateResultPage() {
                 <p className="text-xs text-red-700">{imageError}</p>
               </div>
             )}
+          </div>
+
+          {/* A/B 버전 비교 */}
+          {abVersions.length > 1 && (
+            <div className="bg-white rounded-2xl shadow-sm border-2 border-amber-200 overflow-hidden">
+              <div className="bg-gradient-to-r from-amber-50 to-orange-50 px-6 py-3 border-b border-amber-200">
+                <h3 className="text-sm font-bold text-amber-800 flex items-center gap-2">
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" /></svg>
+                  A/B 버전 비교 ({abVersions.length}개 버전)
+                </h3>
+              </div>
+              <div className="flex border-b border-amber-100">
+                {abVersions.map((v, i) => (
+                  <button
+                    key={i}
+                    onClick={() => { setActiveAbTab(i); setResult(v); }}
+                    className={`flex-1 px-4 py-2.5 text-xs font-semibold transition-all ${
+                      activeAbTab === i
+                        ? 'bg-amber-500 text-white'
+                        : 'text-amber-700 hover:bg-amber-50'
+                    }`}
+                  >
+                    {v.toneName || `버전 ${i + 1}`}
+                  </button>
+                ))}
+              </div>
+              <div className="p-4">
+                <p className="text-xs text-amber-600">위 탭을 클릭하면 해당 버전의 콘텐츠로 전환됩니다. 각 버전을 비교한 후 가장 적합한 버전을 선택하세요.</p>
+              </div>
+            </div>
+          )}
+
+          {/* SNS 채널별 변환 */}
+          <div className="bg-white rounded-2xl shadow-sm border-2 border-teal-200 overflow-hidden">
+            <div className="bg-gradient-to-r from-teal-50 to-cyan-50 px-6 py-3 border-b border-teal-200">
+              <h3 className="text-sm font-bold text-teal-800 flex items-center gap-2">
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" /></svg>
+                SNS 채널별 변환
+              </h3>
+            </div>
+            <div className="p-4">
+              <div className="flex flex-wrap gap-2 mb-4">
+                {[
+                  { id: 'instagram', label: '인스타그램', icon: '📸', color: 'pink' },
+                  { id: 'linkedin', label: '링크드인', icon: '💼', color: 'blue' },
+                  { id: 'naver_blog', label: '네이버 블로그', icon: '📝', color: 'green' },
+                  { id: 'card_news', label: '카드뉴스', icon: '🎴', color: 'purple' },
+                  { id: 'summary', label: '핵심 요약', icon: '📋', color: 'amber' },
+                ].map(ch => (
+                  <button
+                    key={ch.id}
+                    onClick={() => handleSnsConvert(ch.id)}
+                    disabled={snsLoading}
+                    className={`inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold rounded-xl border-2 transition-all hover:shadow-md hover:scale-105 disabled:opacity-50 ${
+                      snsChannel === ch.id
+                        ? `bg-${ch.color}-500 text-white border-${ch.color}-300`
+                        : `bg-${ch.color}-50 text-${ch.color}-700 border-${ch.color}-200 hover:bg-${ch.color}-100`
+                    }`}
+                  >
+                    <span>{ch.icon}</span>
+                    {ch.label}
+                  </button>
+                ))}
+              </div>
+              {snsLoading && (
+                <div className="flex items-center gap-2 text-sm text-teal-600 py-4">
+                  <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                  </svg>
+                  변환 중...
+                </div>
+              )}
+              {snsResult && !snsLoading && (
+                <div>
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-xs font-semibold text-gray-600">변환 결과</span>
+                    <button
+                      onClick={handleCopySns}
+                      className={`inline-flex items-center gap-1 px-3 py-1.5 text-xs font-medium rounded-lg border-2 transition-all ${
+                        snsCopied ? 'bg-emerald-500 text-white border-emerald-300' : 'bg-teal-50 text-teal-700 border-teal-200 hover:bg-teal-100'
+                      }`}
+                    >
+                      {snsCopied ? '복사됨!' : '복사'}
+                    </button>
+                  </div>
+                  <div className="bg-gray-50 rounded-xl p-4 border border-gray-200 text-sm text-gray-800 whitespace-pre-wrap max-h-96 overflow-y-auto">
+                    {snsResult}
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
 
         </div>
