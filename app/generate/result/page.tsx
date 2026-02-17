@@ -261,24 +261,42 @@ export default function GenerateResultPage() {
 
   const markdownToHtml = (text: string) => {
     const paragraphs = text.split(/\n\n+/);
+    let h2Index = 0;
+    const sectionColors = [
+      { bg: '#eef2ff', border: '#818cf8', accent: '#4f46e5', gradient: 'linear-gradient(135deg, #6366f1, #818cf8)' },
+      { bg: '#ecfdf5', border: '#6ee7b7', accent: '#059669', gradient: 'linear-gradient(135deg, #10b981, #34d399)' },
+      { bg: '#fef3c7', border: '#fbbf24', accent: '#d97706', gradient: 'linear-gradient(135deg, #f59e0b, #fbbf24)' },
+      { bg: '#fce7f3', border: '#f9a8d4', accent: '#db2777', gradient: 'linear-gradient(135deg, #ec4899, #f9a8d4)' },
+      { bg: '#e0e7ff', border: '#a5b4fc', accent: '#4338ca', gradient: 'linear-gradient(135deg, #6366f1, #a5b4fc)' },
+      { bg: '#f0fdf4', border: '#86efac', accent: '#16a34a', gradient: 'linear-gradient(135deg, #22c55e, #86efac)' },
+      { bg: '#fff7ed', border: '#fdba74', accent: '#ea580c', gradient: 'linear-gradient(135deg, #f97316, #fdba74)' },
+      { bg: '#fdf2f8', border: '#f9a8d4', accent: '#be185d', gradient: 'linear-gradient(135deg, #ec4899, #f9a8d4)' },
+    ];
     return paragraphs.map(para => {
       const lines = para.trim().split('\n');
       if (lines.length >= 2 && lines[0].trim().startsWith('|') && lines[1].trim().startsWith('|')) {
         return parseTable(para);
       }
-      let html = para
-        .replace(/^### (.*$)/gm, '<h3 style="font-size:1.1em;font-weight:bold;color:#1a1a1a;margin:24px 0 8px">$1</h3>')
-        .replace(/^## (.*$)/gm, '<h2 style="font-size:1.25em;font-weight:bold;color:#1a1a1a;margin:32px 0 12px;padding-bottom:8px;border-bottom:1px solid #e5e7eb">$1</h2>')
-        .replace(/^# (.*$)/gm, '<h1 style="font-size:1.5em;font-weight:bold;color:#1a1a1a;margin:32px 0 16px">$1</h1>')
-        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-        .replace(/^\- (.*$)/gm, '<li style="margin-left:20px;list-style:disc;margin-bottom:4px">$1</li>')
-        .replace(/^\d+\. (.*$)/gm, '<li style="margin-left:20px;list-style:decimal;margin-bottom:4px">$1</li>')
-        .replace(/^> (.*$)/gm, '<blockquote style="border-left:4px solid #818cf8;padding:4px 16px;margin:12px 0;background:#eef2ff;border-radius:0 8px 8px 0;color:#374151">$1</blockquote>');
+      let html = para;
+      // H2 with colored accent bar
+      html = html.replace(/^## (.*$)/gm, (_match, title) => {
+        const color = sectionColors[h2Index % sectionColors.length];
+        h2Index++;
+        return `<div style="margin:36px 0 16px;padding:12px 20px;background:${color.bg};border-left:4px solid ${color.border};border-radius:0 12px 12px 0"><h2 style="font-size:1.2em;font-weight:700;color:${color.accent};margin:0">${title}</h2></div>`;
+      });
+      // H3 with subtle style
+      html = html
+        .replace(/^### (.*$)/gm, '<h3 style="font-size:1.05em;font-weight:700;color:#374151;margin:24px 0 8px;padding-left:12px;border-left:3px solid #c7d2fe">$1</h3>')
+        .replace(/^# (.*$)/gm, '<h1 style="font-size:1.5em;font-weight:800;background:linear-gradient(135deg,#4f46e5,#7c3aed);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin:32px 0 16px">$1</h1>')
+        .replace(/\*\*(.*?)\*\*/g, '<strong style="color:#1e293b">$1</strong>')
+        .replace(/^\- (.*$)/gm, '<li style="margin-left:20px;list-style:none;margin-bottom:6px;padding-left:8px;position:relative"><span style="position:absolute;left:-14px;color:#6366f1;font-weight:bold">&#8226;</span>$1</li>')
+        .replace(/^\d+\. (.*$)/gm, '<li style="margin-left:20px;list-style:decimal;margin-bottom:6px;padding-left:4px;color:#374151">$1</li>')
+        .replace(/^> (.*$)/gm, '<blockquote style="border-left:4px solid #818cf8;padding:12px 20px;margin:16px 0;background:linear-gradient(135deg,#eef2ff,#e0e7ff);border-radius:0 12px 12px 0;color:#374151;font-style:italic">$1</blockquote>');
       const trimmed = html.trim();
       const isBlock = /^<(h[1-6]|li|blockquote|ul|ol|figure|div|table)/.test(trimmed);
       if (isBlock) return html;
       html = html.replace(/\n/g, '<br>');
-      return `<p style="margin-bottom:1em;line-height:1.8">${html}</p>`;
+      return `<p style="margin-bottom:1em;line-height:1.9;color:#374151">${html}</p>`;
     }).join('');
   };
 

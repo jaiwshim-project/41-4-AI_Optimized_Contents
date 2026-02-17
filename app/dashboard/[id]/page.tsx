@@ -23,7 +23,13 @@ export default function DashboardDetailPage() {
   const [isEditing, setIsEditing] = useState(false);
   const [editContent, setEditContent] = useState('');
   const [savedMessage, setSavedMessage] = useState(false);
+  const [showFindReplace, setShowFindReplace] = useState(false);
+  const [findText, setFindText] = useState('');
+  const [replaceText, setReplaceText] = useState('');
+  const [findCount, setFindCount] = useState(0);
+  const [currentFindIndex, setCurrentFindIndex] = useState(0);
   const contentRef = useRef<HTMLDivElement>(null);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
     // URL query에서 revision 파라미터 확인
@@ -65,25 +71,40 @@ export default function DashboardDetailPage() {
 
   const renderContent = (content: string) => {
     const paragraphs = content.split(/\n\n+/);
+    let h2Index = 0;
+    const sectionColors = [
+      { bg: '#eef2ff', border: '#818cf8', accent: '#4f46e5' },
+      { bg: '#ecfdf5', border: '#6ee7b7', accent: '#059669' },
+      { bg: '#fef3c7', border: '#fbbf24', accent: '#d97706' },
+      { bg: '#fce7f3', border: '#f9a8d4', accent: '#db2777' },
+      { bg: '#e0e7ff', border: '#a5b4fc', accent: '#4338ca' },
+      { bg: '#f0fdf4', border: '#86efac', accent: '#16a34a' },
+      { bg: '#fff7ed', border: '#fdba74', accent: '#ea580c' },
+      { bg: '#fdf2f8', border: '#f9a8d4', accent: '#be185d' },
+    ];
     return paragraphs.map(para => {
-      // 테이블 감지: 줄이 |로 시작하는 블록
       const lines = para.trim().split('\n');
       if (lines.length >= 2 && lines[0].trim().startsWith('|') && lines[1].trim().startsWith('|')) {
         return parseTable(para);
       }
-      let html = para
-        .replace(/^### (.*$)/gm, '<h3 style="font-size:1.1em;font-weight:bold;color:#1a1a1a;margin:24px 0 8px">$1</h3>')
-        .replace(/^## (.*$)/gm, '<h2 style="font-size:1.25em;font-weight:bold;color:#1a1a1a;margin:32px 0 12px;padding-bottom:8px;border-bottom:1px solid #e5e7eb">$1</h2>')
-        .replace(/^# (.*$)/gm, '<h1 style="font-size:1.5em;font-weight:bold;color:#1a1a1a;margin:32px 0 16px">$1</h1>')
-        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-        .replace(/^\- (.*$)/gm, '<li style="margin-left:20px;list-style:disc;margin-bottom:4px">$1</li>')
-        .replace(/^\d+\. (.*$)/gm, '<li style="margin-left:20px;list-style:decimal;margin-bottom:4px">$1</li>')
-        .replace(/^> (.*$)/gm, '<blockquote style="border-left:4px solid #818cf8;padding:4px 16px;margin:12px 0;background:#eef2ff;border-radius:0 8px 8px 0;color:#374151">$1</blockquote>');
+      let html = para;
+      html = html.replace(/^## (.*$)/gm, (_match: string, title: string) => {
+        const color = sectionColors[h2Index % sectionColors.length];
+        h2Index++;
+        return `<div style="margin:36px 0 16px;padding:12px 20px;background:${color.bg};border-left:4px solid ${color.border};border-radius:0 12px 12px 0"><h2 style="font-size:1.2em;font-weight:700;color:${color.accent};margin:0">${title}</h2></div>`;
+      });
+      html = html
+        .replace(/^### (.*$)/gm, '<h3 style="font-size:1.05em;font-weight:700;color:#374151;margin:24px 0 8px;padding-left:12px;border-left:3px solid #c7d2fe">$1</h3>')
+        .replace(/^# (.*$)/gm, '<h1 style="font-size:1.5em;font-weight:800;background:linear-gradient(135deg,#4f46e5,#7c3aed);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin:32px 0 16px">$1</h1>')
+        .replace(/\*\*(.*?)\*\*/g, '<strong style="color:#1e293b">$1</strong>')
+        .replace(/^\- (.*$)/gm, '<li style="margin-left:20px;list-style:none;margin-bottom:6px;padding-left:8px;position:relative"><span style="position:absolute;left:-14px;color:#6366f1;font-weight:bold">&#8226;</span>$1</li>')
+        .replace(/^\d+\. (.*$)/gm, '<li style="margin-left:20px;list-style:decimal;margin-bottom:6px;padding-left:4px;color:#374151">$1</li>')
+        .replace(/^> (.*$)/gm, '<blockquote style="border-left:4px solid #818cf8;padding:12px 20px;margin:16px 0;background:linear-gradient(135deg,#eef2ff,#e0e7ff);border-radius:0 12px 12px 0;color:#374151;font-style:italic">$1</blockquote>');
       const trimmed = html.trim();
       const isBlock = /^<(h[1-6]|li|blockquote|ul|ol|figure|div|table)/.test(trimmed);
       if (isBlock) return html;
       html = html.replace(/\n/g, '<br>');
-      return `<p style="margin-bottom:1em;line-height:1.8">${html}</p>`;
+      return `<p style="margin-bottom:1em;line-height:1.9;color:#374151">${html}</p>`;
     }).join('');
   };
 
@@ -179,6 +200,123 @@ export default function DashboardDetailPage() {
     } finally {
       setIsCapturing(false);
     }
+  };
+
+  const insertMarkdown = (prefix: string, suffix: string = '', placeholder: string = '') => {
+    const ta = textareaRef.current;
+    if (!ta) return;
+    const start = ta.selectionStart;
+    const end = ta.selectionEnd;
+    const selected = editContent.slice(start, end);
+    const insert = selected || placeholder;
+    const newText = editContent.slice(0, start) + prefix + insert + suffix + editContent.slice(end);
+    setEditContent(newText);
+    setTimeout(() => {
+      ta.focus();
+      const cursorPos = selected ? start + prefix.length + selected.length + suffix.length : start + prefix.length;
+      const selectEnd = selected ? cursorPos : cursorPos + placeholder.length;
+      ta.setSelectionRange(cursorPos, selectEnd);
+    }, 0);
+  };
+
+  const insertLinePrefix = (prefix: string) => {
+    const ta = textareaRef.current;
+    if (!ta) return;
+    const start = ta.selectionStart;
+    const lineStart = editContent.lastIndexOf('\n', start - 1) + 1;
+    const newText = editContent.slice(0, lineStart) + prefix + editContent.slice(lineStart);
+    setEditContent(newText);
+    setTimeout(() => {
+      ta.focus();
+      ta.setSelectionRange(start + prefix.length, start + prefix.length);
+    }, 0);
+  };
+
+  const handleFind = (search: string) => {
+    setFindText(search);
+    if (!search) { setFindCount(0); setCurrentFindIndex(0); return; }
+    const matches = editContent.split(search).length - 1;
+    setFindCount(matches);
+    setCurrentFindIndex(matches > 0 ? 1 : 0);
+    // 첫 번째 매치로 이동
+    if (matches > 0) {
+      const ta = textareaRef.current;
+      if (ta) {
+        const idx = editContent.indexOf(search);
+        if (idx >= 0) {
+          ta.focus();
+          ta.setSelectionRange(idx, idx + search.length);
+        }
+      }
+    }
+  };
+
+  const handleFindNext = () => {
+    if (!findText || findCount === 0) return;
+    const ta = textareaRef.current;
+    if (!ta) return;
+    const startFrom = ta.selectionEnd || 0;
+    let idx = editContent.indexOf(findText, startFrom);
+    if (idx < 0) idx = editContent.indexOf(findText); // 처음부터 순환
+    if (idx >= 0) {
+      ta.focus();
+      ta.setSelectionRange(idx, idx + findText.length);
+      setCurrentFindIndex(prev => prev >= findCount ? 1 : prev + 1);
+    }
+  };
+
+  const handleFindPrev = () => {
+    if (!findText || findCount === 0) return;
+    const ta = textareaRef.current;
+    if (!ta) return;
+    const startFrom = ta.selectionStart - 1;
+    let idx = editContent.lastIndexOf(findText, startFrom > 0 ? startFrom : undefined);
+    if (idx < 0) idx = editContent.lastIndexOf(findText); // 끝에서 순환
+    if (idx >= 0) {
+      ta.focus();
+      ta.setSelectionRange(idx, idx + findText.length);
+      setCurrentFindIndex(prev => prev <= 1 ? findCount : prev - 1);
+    }
+  };
+
+  const handleReplaceOne = () => {
+    if (!findText || findCount === 0) return;
+    const ta = textareaRef.current;
+    if (!ta) return;
+    const selStart = ta.selectionStart;
+    const selEnd = ta.selectionEnd;
+    // 현재 선택이 findText와 일치하면 바꾸기
+    if (editContent.slice(selStart, selEnd) === findText) {
+      const newText = editContent.slice(0, selStart) + replaceText + editContent.slice(selEnd);
+      setEditContent(newText);
+      setTimeout(() => {
+        ta.focus();
+        ta.setSelectionRange(selStart + replaceText.length, selStart + replaceText.length);
+        // 갱신
+        const remaining = newText.split(findText).length - 1;
+        setFindCount(remaining);
+        setCurrentFindIndex(remaining > 0 ? Math.min(currentFindIndex, remaining) : 0);
+        // 자동으로 다음 찾기
+        if (remaining > 0) {
+          const nextIdx = newText.indexOf(findText, selStart + replaceText.length);
+          const idx = nextIdx >= 0 ? nextIdx : newText.indexOf(findText);
+          if (idx >= 0) ta.setSelectionRange(idx, idx + findText.length);
+        }
+      }, 0);
+    } else {
+      // 선택이 안 맞으면 다음 매치 찾기
+      handleFindNext();
+    }
+  };
+
+  const handleReplaceAll = () => {
+    if (!findText) return;
+    const newText = editContent.split(findText).join(replaceText);
+    setEditContent(newText);
+    setFindCount(0);
+    setCurrentFindIndex(0);
+    const ta = textareaRef.current;
+    if (ta) setTimeout(() => ta.focus(), 0);
   };
 
   const handleStartEdit = () => {
@@ -428,10 +566,97 @@ export default function DashboardDetailPage() {
                 <span className="text-sm font-semibold text-violet-700">본문 수정 모드</span>
                 <span className="text-xs text-gray-400">마크다운 형식으로 편집하세요</span>
               </div>
+              {/* 편집 도구 바 */}
+              <div className="sticky top-0 z-20 bg-pink-50 border-2 border-violet-200 rounded-t-xl px-3 py-2 shadow-sm">
+                <div className="flex items-center gap-1 flex-wrap">
+                  <button type="button" onClick={() => insertMarkdown('**', '**', '굵은 텍스트')} className="px-2.5 py-1.5 text-xs font-bold text-gray-700 bg-white hover:bg-violet-100 hover:text-violet-700 rounded-lg transition-colors border border-pink-200" title="굵게">B</button>
+                  <button type="button" onClick={() => insertMarkdown('*', '*', '기울임 텍스트')} className="px-2.5 py-1.5 text-xs italic text-gray-700 bg-white hover:bg-violet-100 hover:text-violet-700 rounded-lg transition-colors border border-pink-200" title="기울임">I</button>
+                  <button type="button" onClick={() => insertMarkdown('~~', '~~', '취소선 텍스트')} className="px-2.5 py-1.5 text-xs line-through text-gray-700 bg-white hover:bg-violet-100 hover:text-violet-700 rounded-lg transition-colors border border-pink-200" title="취소선">S</button>
+                  <div className="w-px h-6 bg-pink-300 mx-1" />
+                  <button type="button" onClick={() => insertLinePrefix('# ')} className="px-2.5 py-1.5 text-xs font-bold text-gray-700 bg-white hover:bg-indigo-100 hover:text-indigo-700 rounded-lg transition-colors border border-pink-200" title="제목 1">H1</button>
+                  <button type="button" onClick={() => insertLinePrefix('## ')} className="px-2.5 py-1.5 text-xs font-bold text-gray-700 bg-white hover:bg-indigo-100 hover:text-indigo-700 rounded-lg transition-colors border border-pink-200" title="제목 2">H2</button>
+                  <button type="button" onClick={() => insertLinePrefix('### ')} className="px-2.5 py-1.5 text-xs font-bold text-gray-700 bg-white hover:bg-indigo-100 hover:text-indigo-700 rounded-lg transition-colors border border-pink-200" title="제목 3">H3</button>
+                  <div className="w-px h-6 bg-pink-300 mx-1" />
+                  <button type="button" onClick={() => insertLinePrefix('- ')} className="px-2.5 py-1.5 text-xs text-gray-700 bg-white hover:bg-sky-100 hover:text-sky-700 rounded-lg transition-colors flex items-center gap-1 border border-pink-200" title="목록">
+                    <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" /></svg>
+                    목록
+                  </button>
+                  <button type="button" onClick={() => insertLinePrefix('1. ')} className="px-2.5 py-1.5 text-xs text-gray-700 bg-white hover:bg-sky-100 hover:text-sky-700 rounded-lg transition-colors flex items-center gap-1 border border-pink-200" title="번호 목록">
+                    <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h7" /></svg>
+                    번호
+                  </button>
+                  <div className="w-px h-6 bg-pink-300 mx-1" />
+                  <button type="button" onClick={() => insertLinePrefix('> ')} className="px-2.5 py-1.5 text-xs text-gray-700 bg-white hover:bg-amber-100 hover:text-amber-700 rounded-lg transition-colors border border-pink-200" title="인용문">
+                    <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" /></svg>
+                  </button>
+                  <button type="button" onClick={() => insertMarkdown('\n| 항목 | 내용 |\n| --- | --- |\n| ', ' | 값 |\n')} className="px-2.5 py-1.5 text-xs text-gray-700 bg-white hover:bg-emerald-100 hover:text-emerald-700 rounded-lg transition-colors border border-pink-200" title="표">
+                    <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M3 14h18M10 3v18M14 3v18" /></svg>
+                  </button>
+                  <button type="button" onClick={() => insertMarkdown('\n---\n')} className="px-2.5 py-1.5 text-xs text-gray-700 bg-white hover:bg-gray-200 rounded-lg transition-colors border border-pink-200" title="구분선">―</button>
+                  <button type="button" onClick={() => insertMarkdown('[', '](url)', '링크 텍스트')} className="px-2.5 py-1.5 text-xs text-gray-700 bg-white hover:bg-blue-100 hover:text-blue-700 rounded-lg transition-colors border border-pink-200" title="링크">
+                    <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" /></svg>
+                  </button>
+                  <button type="button" onClick={() => insertMarkdown('`', '`', '코드')} className="px-2.5 py-1.5 text-xs font-mono text-gray-700 bg-white hover:bg-gray-200 rounded-lg transition-colors border border-pink-200" title="인라인 코드">{'{}'}</button>
+                  <button type="button" onClick={() => insertLinePrefix('- [ ] ')} className="px-2.5 py-1.5 text-xs text-gray-700 bg-white hover:bg-teal-100 hover:text-teal-700 rounded-lg transition-colors border border-pink-200 flex items-center gap-1" title="체크박스">
+                    <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                  </button>
+                  <div className="w-px h-6 bg-pink-300 mx-1" />
+                  <button
+                    type="button"
+                    onClick={() => { setShowFindReplace(!showFindReplace); if (!showFindReplace) setFindText(''); setReplaceText(''); setFindCount(0); setCurrentFindIndex(0); }}
+                    className={`px-2.5 py-1.5 text-xs text-gray-700 rounded-lg transition-colors flex items-center gap-1 border ${showFindReplace ? 'bg-rose-100 text-rose-700 border-rose-300' : 'bg-white hover:bg-rose-100 hover:text-rose-700 border-pink-200'}`}
+                    title="찾기/바꾸기"
+                  >
+                    <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+                    찾기/바꾸기
+                  </button>
+                </div>
+                {/* 찾기/바꾸기 패널 */}
+                {showFindReplace && (
+                  <div className="mt-2 pt-2 border-t border-pink-200 space-y-2">
+                    <div className="flex items-center gap-2">
+                      <label className="text-xs font-medium text-gray-600 w-12 shrink-0">찾기</label>
+                      <input
+                        type="text"
+                        value={findText}
+                        onChange={(e) => handleFind(e.target.value)}
+                        placeholder="찾을 텍스트..."
+                        className="flex-1 px-3 py-1.5 text-xs border border-pink-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-rose-300 focus:border-transparent bg-white"
+                      />
+                      <button type="button" onClick={handleFindPrev} disabled={findCount === 0} className="p-1.5 text-gray-500 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-colors disabled:opacity-30" title="이전">
+                        <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" /></svg>
+                      </button>
+                      <button type="button" onClick={handleFindNext} disabled={findCount === 0} className="p-1.5 text-gray-500 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-colors disabled:opacity-30" title="다음">
+                        <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
+                      </button>
+                      <span className="text-[10px] text-gray-400 w-16 text-right shrink-0">
+                        {findText ? `${currentFindIndex}/${findCount}` : ''}
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <label className="text-xs font-medium text-gray-600 w-12 shrink-0">바꾸기</label>
+                      <input
+                        type="text"
+                        value={replaceText}
+                        onChange={(e) => setReplaceText(e.target.value)}
+                        placeholder="바꿀 텍스트..."
+                        className="flex-1 px-3 py-1.5 text-xs border border-pink-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-rose-300 focus:border-transparent bg-white"
+                      />
+                      <button type="button" onClick={handleReplaceOne} disabled={findCount === 0} className="px-3 py-1.5 text-xs font-medium text-rose-700 bg-rose-50 hover:bg-rose-100 border border-rose-200 rounded-lg transition-colors disabled:opacity-30" title="하나 바꾸기">
+                        바꾸기
+                      </button>
+                      <button type="button" onClick={handleReplaceAll} disabled={findCount === 0} className="px-3 py-1.5 text-xs font-medium text-white bg-rose-500 hover:bg-rose-600 border border-rose-400 rounded-lg transition-colors disabled:opacity-30" title="모두 바꾸기">
+                        모두 바꾸기
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
               <textarea
+                ref={textareaRef}
                 value={editContent}
                 onChange={(e) => setEditContent(e.target.value)}
-                className="w-full min-h-[500px] px-4 py-3 border-2 border-violet-200 rounded-xl text-sm font-mono leading-relaxed focus:outline-none focus:ring-2 focus:ring-violet-400 focus:border-transparent resize-y bg-gray-50"
+                className="w-full min-h-[500px] px-4 py-3 border-2 border-t-0 border-violet-200 rounded-b-xl text-sm font-mono leading-relaxed focus:outline-none focus:ring-2 focus:ring-violet-400 focus:border-transparent resize-y bg-gray-50"
               />
             </div>
           ) : (

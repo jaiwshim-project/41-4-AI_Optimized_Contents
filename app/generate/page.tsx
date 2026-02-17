@@ -225,20 +225,96 @@ export default function GeneratePage() {
     { value: '기타', label: '📦 기타' },
   ];
 
-  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files;
-    if (!files) return;
+  const [fileUploading, setFileUploading] = useState(false);
+  const [dragOver, setDragOver] = useState(false);
+  const [fileErrors, setFileErrors] = useState<string[]>([]);
+
+  const MAX_FILE_SIZE = 20 * 1024 * 1024; // 20MB
+  const MAX_FILE_COUNT = 5;
+
+  const processFiles = async (files: File[]) => {
+    setFileUploading(true);
+    setFileErrors([]);
     const newFiles: { name: string; content: string }[] = [];
-    for (const file of Array.from(files)) {
+    const errors: string[] = [];
+    const remainingSlots = MAX_FILE_COUNT - referenceFiles.length;
+    if (remainingSlots <= 0) {
+      setFileErrors([`최대 ${MAX_FILE_COUNT}개까지만 업로드할 수 있습니다.`]);
+      setFileUploading(false);
+      return;
+    }
+    const filesToProcess = files.slice(0, remainingSlots);
+    if (files.length > remainingSlots) {
+      errors.push(`${files.length - remainingSlots}개 파일 건너뜀 (최대 ${MAX_FILE_COUNT}개 제한)`);
+    }
+    for (const file of filesToProcess) {
       try {
-        const text = await file.text();
-        newFiles.push({ name: file.name, content: text.substring(0, 10000) });
+        const ext = file.name.split('.').pop()?.toLowerCase() || '';
+        const supportedExts = ['txt', 'md', 'csv', 'json', 'html', 'xml', 'log', 'pdf', 'docx', 'pptx', 'jpg', 'jpeg', 'png', 'gif', 'webp', 'bmp'];
+        if (!supportedExts.includes(ext)) {
+          errors.push(`${file.name}: 지원하지 않는 파일 형식 (.${ext})`);
+          continue;
+        }
+        if (file.size > MAX_FILE_SIZE) {
+          errors.push(`${file.name}: 파일 크기 초과 (${(file.size / 1024 / 1024).toFixed(1)}MB, 최대 20MB)`);
+          continue;
+        }
+        const textExts = ['txt', 'md', 'csv', 'json', 'html', 'xml', 'log'];
+        if (textExts.includes(ext)) {
+          const text = await file.text();
+          newFiles.push({ name: file.name, content: text.substring(0, 15000) });
+        } else {
+          const formData = new FormData();
+          formData.append('file', file);
+          const res = await fetch('/api/parse-file', { method: 'POST', body: formData });
+          if (res.ok) {
+            const data = await res.json();
+            if (data.text) {
+              newFiles.push({ name: data.fileName || file.name, content: data.text });
+            } else {
+              errors.push(`${file.name}: 텍스트를 추출할 수 없습니다`);
+            }
+          } else {
+            const errData = await res.json().catch(() => ({}));
+            errors.push(`${file.name}: ${errData.error || '파일 처리 실패'}`);
+          }
+        }
       } catch {
-        // 텍스트로 읽을 수 없는 파일 건너뛰기
+        errors.push(`${file.name}: 파일 처리 중 오류 발생`);
       }
     }
     setReferenceFiles(prev => [...prev, ...newFiles]);
+    if (errors.length > 0) setFileErrors(errors);
+    setFileUploading(false);
+  };
+
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (!files) return;
+    await processFiles(Array.from(files));
     e.target.value = '';
+  };
+
+  const handleDrop = async (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setDragOver(false);
+    const files = Array.from(e.dataTransfer.files);
+    if (files.length > 0) {
+      await processFiles(files);
+    }
+  };
+
+  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setDragOver(true);
+  };
+
+  const handleDragLeave = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setDragOver(false);
   };
 
   const removeFile = (index: number) => {
@@ -836,22 +912,46 @@ export default function GeneratePage() {
                       rows={4}
                       className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent placeholder-gray-400 resize-none"
                     />
-                    {/* 파일 업로드 */}
-                    <div className="mt-3">
-                      <label className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl border-2 border-dashed border-indigo-300 bg-indigo-50 text-indigo-600 hover:bg-indigo-100 hover:border-indigo-400 transition-all cursor-pointer">
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
-                        </svg>
-                        참조 파일 업로드
+                    {/* 파일 업로드 (클릭 + 드래그 앤 드롭) */}
+                    <div
+                      onDrop={handleDrop}
+                      onDragOver={handleDragOver}
+                      onDragLeave={handleDragLeave}
+                      className={`mt-3 relative rounded-xl border-2 border-dashed transition-all duration-200 ${
+                        dragOver
+                          ? 'border-indigo-500 bg-indigo-100 scale-[1.01] shadow-lg'
+                          : 'border-indigo-300 bg-indigo-50 hover:border-indigo-400 hover:bg-indigo-100'
+                      }`}
+                    >
+                      <label className="flex flex-col items-center gap-2 px-4 py-5 cursor-pointer">
+                        <div className={`w-10 h-10 rounded-full flex items-center justify-center transition-all ${
+                          dragOver ? 'bg-indigo-500 text-white scale-110' : 'bg-indigo-200 text-indigo-600'
+                        }`}>
+                          {fileUploading ? (
+                            <svg className="w-5 h-5 animate-spin" fill="none" viewBox="0 0 24 24">
+                              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                            </svg>
+                          ) : (
+                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                            </svg>
+                          )}
+                        </div>
+                        <div className="text-center">
+                          <p className="text-sm font-medium text-indigo-700">
+                            {fileUploading ? '파일 처리 중...' : dragOver ? '여기에 놓으세요!' : '클릭하여 파일 선택 또는 드래그 앤 드롭'}
+                          </p>
+                          <p className="text-xs text-indigo-400 mt-1">PDF, DOCX, PPTX, 이미지(JPG/PNG), TXT, CSV 등 | 최대 20MB/파일, {referenceFiles.length}/{MAX_FILE_COUNT}개</p>
+                        </div>
                         <input
                           type="file"
                           multiple
-                          accept=".txt,.md,.csv,.json,.html,.xml,.log"
+                          accept=".txt,.md,.csv,.json,.html,.xml,.log,.pdf,.docx,.pptx,.jpg,.jpeg,.png,.gif,.webp,.bmp"
                           onChange={handleFileUpload}
                           className="hidden"
                         />
                       </label>
-                      <span className="text-xs text-gray-400 ml-2">TXT, MD, CSV, JSON, HTML 등 텍스트 파일</span>
                     </div>
                     {/* 업로드된 파일 목록 */}
                     {referenceFiles.length > 0 && (
@@ -872,6 +972,25 @@ export default function GeneratePage() {
                               </svg>
                             </button>
                           </div>
+                        ))}
+                      </div>
+                    )}
+                    {/* 파일 업로드 에러 메시지 */}
+                    {fileErrors.length > 0 && (
+                      <div className="mt-2 p-3 bg-red-50 border border-red-200 rounded-lg">
+                        <div className="flex items-center gap-1.5 mb-1">
+                          <svg className="w-4 h-4 text-red-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z" />
+                          </svg>
+                          <span className="text-xs font-semibold text-red-700">업로드 실패한 파일</span>
+                          <button onClick={() => setFileErrors([])} className="ml-auto text-red-400 hover:text-red-600 transition-colors">
+                            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                          </button>
+                        </div>
+                        {fileErrors.map((err, i) => (
+                          <p key={i} className="text-xs text-red-600 ml-5.5">{err}</p>
                         ))}
                       </div>
                     )}
