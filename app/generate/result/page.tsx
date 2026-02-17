@@ -187,14 +187,22 @@ export default function GenerateResultPage() {
   };
 
   const markdownToHtml = (text: string) => {
-    return text
-      .replace(/^### (.*$)/gm, '<h3 style="font-size:1.1em;font-weight:bold;color:#1a1a1a;margin:24px 0 8px">$1</h3>')
-      .replace(/^## (.*$)/gm, '<h2 style="font-size:1.25em;font-weight:bold;color:#1a1a1a;margin:32px 0 12px;padding-bottom:8px;border-bottom:1px solid #e5e7eb">$1</h2>')
-      .replace(/^# (.*$)/gm, '<h1 style="font-size:1.5em;font-weight:bold;color:#1a1a1a;margin:32px 0 16px">$1</h1>')
-      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-      .replace(/^\- (.*$)/gm, '<li style="margin-left:16px;list-style:disc">$1</li>')
-      .replace(/^\d+\. (.*$)/gm, '<li style="margin-left:16px;list-style:decimal">$1</li>')
-      .replace(/^> (.*$)/gm, '<blockquote style="border-left:4px solid #818cf8;padding:4px 16px;margin:12px 0;background:#eef2ff;border-radius:0 8px 8px 0;color:#374151">$1</blockquote>');
+    const paragraphs = text.split(/\n\n+/);
+    return paragraphs.map(para => {
+      let html = para
+        .replace(/^### (.*$)/gm, '<h3 style="font-size:1.1em;font-weight:bold;color:#1a1a1a;margin:24px 0 8px">$1</h3>')
+        .replace(/^## (.*$)/gm, '<h2 style="font-size:1.25em;font-weight:bold;color:#1a1a1a;margin:32px 0 12px;padding-bottom:8px;border-bottom:1px solid #e5e7eb">$1</h2>')
+        .replace(/^# (.*$)/gm, '<h1 style="font-size:1.5em;font-weight:bold;color:#1a1a1a;margin:32px 0 16px">$1</h1>')
+        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+        .replace(/^\- (.*$)/gm, '<li style="margin-left:20px;list-style:disc;margin-bottom:4px">$1</li>')
+        .replace(/^\d+\. (.*$)/gm, '<li style="margin-left:20px;list-style:decimal;margin-bottom:4px">$1</li>')
+        .replace(/^> (.*$)/gm, '<blockquote style="border-left:4px solid #818cf8;padding:4px 16px;margin:12px 0;background:#eef2ff;border-radius:0 8px 8px 0;color:#374151">$1</blockquote>');
+      const trimmed = html.trim();
+      const isBlock = /^<(h[1-6]|li|blockquote|ul|ol|figure|div)/.test(trimmed);
+      if (isBlock) return html;
+      html = html.replace(/\n/g, '<br>');
+      return `<p style="margin-bottom:1em;line-height:1.8">${html}</p>`;
+    }).join('');
   };
 
   const handleApplyImages = () => {
@@ -473,16 +481,26 @@ export default function GenerateResultPage() {
           </div>
           <div className="prose prose-sm max-w-none" ref={contentRef}>
             <div
-              className="whitespace-pre-wrap text-sm text-gray-800 leading-relaxed"
+              className="text-sm text-gray-800 leading-relaxed"
               dangerouslySetInnerHTML={{
-                __html: result.content
-                  .replace(/^### (.*$)/gm, '<h3 class="text-base font-bold text-gray-900 mt-6 mb-2">$1</h3>')
-                  .replace(/^## (.*$)/gm, '<h2 class="text-lg font-bold text-gray-900 mt-8 mb-3 pb-2 border-b border-gray-200">$1</h2>')
-                  .replace(/^# (.*$)/gm, '<h1 class="text-xl font-bold text-gray-900 mt-8 mb-4">$1</h1>')
-                  .replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold text-gray-900">$1</strong>')
-                  .replace(/^\- (.*$)/gm, '<li class="ml-4 list-disc">$1</li>')
-                  .replace(/^\d+\. (.*$)/gm, '<li class="ml-4 list-decimal">$1</li>')
-                  .replace(/^> (.*$)/gm, '<blockquote class="border-l-4 border-indigo-300 pl-4 py-1 my-3 bg-indigo-50 rounded-r-lg text-gray-700">$1</blockquote>')
+                __html: (() => {
+                  const paragraphs = result.content.split(/\n\n+/);
+                  return paragraphs.map(para => {
+                    let html = para
+                      .replace(/^### (.*$)/gm, '<h3 style="font-size:1.1em;font-weight:bold;color:#1a1a1a;margin:24px 0 8px">$1</h3>')
+                      .replace(/^## (.*$)/gm, '<h2 style="font-size:1.25em;font-weight:bold;color:#1a1a1a;margin:32px 0 12px;padding-bottom:8px;border-bottom:1px solid #e5e7eb">$1</h2>')
+                      .replace(/^# (.*$)/gm, '<h1 style="font-size:1.5em;font-weight:bold;color:#1a1a1a;margin:32px 0 16px">$1</h1>')
+                      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                      .replace(/^\- (.*$)/gm, '<li style="margin-left:20px;list-style:disc;margin-bottom:4px">$1</li>')
+                      .replace(/^\d+\. (.*$)/gm, '<li style="margin-left:20px;list-style:decimal;margin-bottom:4px">$1</li>')
+                      .replace(/^> (.*$)/gm, '<blockquote style="border-left:4px solid #818cf8;padding:4px 16px;margin:12px 0;background:#eef2ff;border-radius:0 8px 8px 0;color:#374151">$1</blockquote>');
+                    const trimmed = html.trim();
+                    const isBlock = /^<(h[1-6]|li|blockquote|ul|ol|figure|div)/.test(trimmed);
+                    if (isBlock) return html;
+                    html = html.replace(/\n/g, '<br>');
+                    return `<p style="margin-bottom:1em;line-height:1.8">${html}</p>`;
+                  }).join('');
+                })()
               }}
             />
             {/* 해시태그 - 본문 안에 포함하여 복사 시 함께 복사됨 */}
