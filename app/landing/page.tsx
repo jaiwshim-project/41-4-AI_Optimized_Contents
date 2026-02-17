@@ -534,7 +534,7 @@ export default function PromotionLandingPage() {
                 example: '"30대 보험 추천해줘"',
                 pain: '금융 상품 설명이 AI 비교 답변에 빠짐',
                 benefit: '상품 비교, FAQ를 AI가 참조하는 구조로 최적화',
-                color: 'yellow',
+                color: 'amber',
               },
               {
                 emoji: '🏠',
@@ -566,7 +566,7 @@ export default function PromotionLandingPage() {
                 example: '"OO 분야 전문 업체 추천"',
                 pain: '어떤 분야든 AI 검색에 빠지면 고객을 잃음',
                 benefit: '업종 맞춤 콘텐츠를 AI 최적화 구조로 자동 생성',
-                color: 'gray',
+                color: 'slate',
               },
             ].map((industry) => (
               <div
