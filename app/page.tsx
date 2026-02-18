@@ -572,16 +572,16 @@ export default function LandingPage() {
               {/* PNG 다운로드 버튼 */}
               <button
                 onClick={handleDownloadPng}
-                className="absolute top-3 right-14 w-8 h-8 flex items-center justify-center rounded-full bg-white/20 hover:bg-white/30 text-white transition-all"
+                className="absolute top-3 right-14 z-10 w-9 h-9 flex items-center justify-center rounded-full bg-white text-orange-500 hover:bg-orange-100 transition-all shadow-md"
                 title="PNG 다운로드"
               >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                 </svg>
               </button>
               <button
                 onClick={() => setShowTesterModal(false)}
-                className="absolute top-3 right-3 w-8 h-8 flex items-center justify-center rounded-full bg-white/20 hover:bg-white/30 text-white transition-all"
+                className="absolute top-3 right-3 z-10 w-9 h-9 flex items-center justify-center rounded-full bg-white/20 hover:bg-white/30 text-white transition-all"
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -597,7 +597,8 @@ export default function LandingPage() {
                   <h2 className="text-2xl font-extrabold text-white">테스터 모집 안내</h2>
                   <p className="text-sm text-white/80 mt-1">GEO-AIO 베타 테스터를 모집합니다</p>
                 </div>
-                <img src="/qr-tester.jpg" alt="테스터 모집 QR코드" className="w-16 h-16 rounded-lg border-2 border-white/40 shadow-lg" />
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src="/qr-tester.jpg" alt="테스터 모집 QR코드" width={72} height={72} className="w-[72px] h-[72px] rounded-lg border-2 border-white shadow-lg bg-white p-1" />
               </div>
             </div>
 
