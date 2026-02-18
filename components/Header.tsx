@@ -151,10 +151,10 @@ export default function Header({ showApiKeyButton = false, onToggleApiKey, apiKe
                   onClick={() => setUserMenuOpen(!userMenuOpen)}
                   className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg hover:bg-white/15 transition-all"
                 >
+                  <span className="text-xs text-white font-medium max-w-[100px] truncate">{displayName}</span>
                   <span className={`px-1.5 py-0.5 text-[10px] font-bold rounded ${PLAN_LABELS[plan].style}`}>
                     {PLAN_LABELS[plan].name}
                   </span>
-                  <span className="text-xs text-white font-medium max-w-[100px] truncate">{displayName}</span>
                   <svg className={`w-3 h-3 text-white/60 transition-transform ${userMenuOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                   </svg>
