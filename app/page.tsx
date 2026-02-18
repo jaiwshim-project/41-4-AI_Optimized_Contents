@@ -573,8 +573,13 @@ export default function LandingPage() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z" />
                 </svg>
               </div>
-              <h2 className="text-xl font-extrabold text-white">테스터 모집 안내</h2>
-              <p className="text-sm text-white/80 mt-1">GEOAIO 베타 테스터를 모집합니다</p>
+              <div className="flex items-center justify-center gap-3">
+                <div>
+                  <h2 className="text-xl font-extrabold text-white">테스터 모집 안내</h2>
+                  <p className="text-sm text-white/80 mt-1">GEOAIO 베타 테스터를 모집합니다</p>
+                </div>
+                <img src="/qr-tester.jpg" alt="테스터 모집 QR코드" className="w-16 h-16 rounded-lg border-2 border-white/40 shadow-lg" />
+              </div>
             </div>
 
             {/* 모달 본문 */}
