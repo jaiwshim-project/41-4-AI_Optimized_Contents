@@ -77,23 +77,23 @@ export default function Header({ showApiKeyButton = false, onToggleApiKey, apiKe
   const displayName = user?.user_metadata?.full_name || user?.email?.split('@')[0] || '';
 
   return (
-    <header className="bg-gradient-to-r from-indigo-50 via-violet-50 to-purple-50 border-b border-indigo-100 sticky top-0 z-50 backdrop-blur-sm">
+    <header className="bg-gradient-to-r from-indigo-600 via-violet-600 to-purple-600 border-b border-indigo-700 sticky top-0 z-50 shadow-md">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-12">
           {/* 로고 */}
           <Link href="/" className="flex items-center gap-2 shrink-0">
-            <div className="w-7 h-7 bg-gradient-to-br from-indigo-600 to-violet-600 rounded-lg flex items-center justify-center">
+            <div className="w-7 h-7 bg-white/20 rounded-lg flex items-center justify-center">
               <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
               </svg>
             </div>
-            <span className="text-sm font-bold text-gray-900 hidden sm:block">AIO/GEO Optimizer</span>
+            <span className="text-sm font-bold text-white hidden sm:block">AIO/GEO Optimizer</span>
           </Link>
 
           {/* 데스크톱 네비게이션 */}
           <nav className="hidden md:flex items-center">
             {/* 핵심 기능 */}
-            <div className="flex items-center bg-gray-100 rounded-lg p-0.5">
+            <div className="flex items-center bg-white/15 rounded-lg p-0.5">
               {mainNav.map((item) => {
                 const isActive = pathname === item.href || pathname?.startsWith(item.href + '/');
                 return (
@@ -103,7 +103,7 @@ export default function Header({ showApiKeyButton = false, onToggleApiKey, apiKe
                     className={`px-3 py-1.5 text-xs font-semibold rounded-md transition-all ${
                       isActive
                         ? 'bg-white text-indigo-700 shadow-sm'
-                        : 'text-gray-500 hover:text-gray-900'
+                        : 'text-white/80 hover:text-white hover:bg-white/10'
                     }`}
                   >
                     {item.label}
@@ -113,7 +113,7 @@ export default function Header({ showApiKeyButton = false, onToggleApiKey, apiKe
             </div>
 
             {/* 구분선 */}
-            <div className="w-px h-5 bg-gray-200 mx-3" />
+            <div className="w-px h-5 bg-white/25 mx-3" />
 
             {/* 부가 메뉴 */}
             {subNav.map((item) => {
@@ -124,8 +124,8 @@ export default function Header({ showApiKeyButton = false, onToggleApiKey, apiKe
                   href={item.href}
                   className={`px-2.5 py-1.5 text-xs font-medium rounded-md transition-all ${
                     isActive
-                      ? 'text-indigo-700 bg-indigo-50'
-                      : 'text-gray-500 hover:text-gray-900 hover:bg-gray-50'
+                      ? 'text-white bg-white/20'
+                      : 'text-white/70 hover:text-white hover:bg-white/10'
                   }`}
                 >
                   {item.label}
@@ -141,7 +141,7 @@ export default function Header({ showApiKeyButton = false, onToggleApiKey, apiKe
                 {plan === 'admin' && (
                   <Link
                     href="/admin"
-                    className="px-2 py-1 text-[10px] font-bold text-red-600 bg-red-50 rounded hover:bg-red-100 transition-all"
+                    className="px-2 py-1 text-[10px] font-bold text-red-100 bg-red-500/30 rounded hover:bg-red-500/50 transition-all"
                   >
                     관리
                   </Link>
@@ -149,13 +149,13 @@ export default function Header({ showApiKeyButton = false, onToggleApiKey, apiKe
                 {/* 사용자 버튼 (클릭하면 드롭다운) */}
                 <button
                   onClick={() => setUserMenuOpen(!userMenuOpen)}
-                  className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg hover:bg-gray-100 transition-all"
+                  className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg hover:bg-white/15 transition-all"
                 >
                   <span className={`px-1.5 py-0.5 text-[10px] font-bold rounded ${PLAN_LABELS[plan].style}`}>
                     {PLAN_LABELS[plan].name}
                   </span>
-                  <span className="text-xs text-gray-700 font-medium max-w-[100px] truncate">{displayName}</span>
-                  <svg className={`w-3 h-3 text-gray-400 transition-transform ${userMenuOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <span className="text-xs text-white font-medium max-w-[100px] truncate">{displayName}</span>
+                  <svg className={`w-3 h-3 text-white/60 transition-transform ${userMenuOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                   </svg>
                 </button>
@@ -210,13 +210,13 @@ export default function Header({ showApiKeyButton = false, onToggleApiKey, apiKe
               <div className="flex items-center gap-1.5">
                 <Link
                   href="/login"
-                  className="px-3 py-1.5 text-xs font-medium text-gray-600 hover:text-gray-900 transition-all"
+                  className="px-3 py-1.5 text-xs font-medium text-white/80 hover:text-white transition-all"
                 >
                   로그인
                 </Link>
                 <Link
                   href="/signup"
-                  className="px-3 py-1.5 text-xs font-semibold bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-all"
+                  className="px-3 py-1.5 text-xs font-semibold bg-white text-indigo-700 rounded-lg hover:bg-white/90 transition-all"
                 >
                   회원가입
                 </Link>
@@ -230,7 +230,7 @@ export default function Header({ showApiKeyButton = false, onToggleApiKey, apiKe
               <button
                 onClick={onToggleApiKey}
                 className={`p-1.5 rounded-lg transition-all ${
-                  apiKeyOpen ? 'bg-amber-500 text-white' : 'text-gray-500 hover:bg-gray-100'
+                  apiKeyOpen ? 'bg-amber-400 text-white' : 'text-white/70 hover:bg-white/15'
                 }`}
               >
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -240,7 +240,7 @@ export default function Header({ showApiKeyButton = false, onToggleApiKey, apiKe
             )}
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
-              className="p-1.5 rounded-lg text-gray-500 hover:bg-gray-100 transition-all"
+              className="p-1.5 rounded-lg text-white/80 hover:bg-white/15 transition-all"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 {mobileOpen ? (
@@ -256,7 +256,7 @@ export default function Header({ showApiKeyButton = false, onToggleApiKey, apiKe
 
       {/* 모바일 메뉴 */}
       {mobileOpen && (
-        <div className="md:hidden border-t border-gray-100 bg-white">
+        <div className="md:hidden border-t border-indigo-500 bg-indigo-700">
           <div className="px-4 py-3 space-y-1">
             {[...mainNav, ...subNav].map((item) => {
               const isActive = pathname === item.href || pathname?.startsWith(item.href + '/');
@@ -267,8 +267,8 @@ export default function Header({ showApiKeyButton = false, onToggleApiKey, apiKe
                   onClick={() => setMobileOpen(false)}
                   className={`block px-3 py-2 text-sm font-medium rounded-lg transition-all ${
                     isActive
-                      ? 'bg-indigo-50 text-indigo-700'
-                      : 'text-gray-600 hover:bg-gray-50'
+                      ? 'bg-white/20 text-white'
+                      : 'text-white/80 hover:bg-white/10'
                   }`}
                 >
                   {item.label}
@@ -277,19 +277,19 @@ export default function Header({ showApiKeyButton = false, onToggleApiKey, apiKe
             })}
           </div>
 
-          <div className="border-t border-gray-100 px-4 py-3">
+          <div className="border-t border-indigo-500 px-4 py-3">
             {user ? (
               <div className="space-y-2">
                 <div className="flex items-center gap-2 px-3 py-1">
                   <span className={`px-1.5 py-0.5 text-[10px] font-bold rounded ${PLAN_LABELS[plan].style}`}>
                     {PLAN_LABELS[plan].name}
                   </span>
-                  <span className="text-sm text-gray-700 font-medium truncate">{displayName}</span>
+                  <span className="text-sm text-white font-medium truncate">{displayName}</span>
                   {plan === 'admin' && (
                     <Link
                       href="/admin"
                       onClick={() => setMobileOpen(false)}
-                      className="px-1.5 py-0.5 text-[10px] font-bold text-red-600 bg-red-50 rounded"
+                      className="px-1.5 py-0.5 text-[10px] font-bold text-red-100 bg-red-500/30 rounded"
                     >
                       관리
                     </Link>
@@ -298,7 +298,7 @@ export default function Header({ showApiKeyButton = false, onToggleApiKey, apiKe
                 <Link
                   href="/mypage"
                   onClick={() => setMobileOpen(false)}
-                  className="block px-3 py-2 text-sm font-medium text-indigo-700 bg-indigo-50 rounded-lg"
+                  className="block px-3 py-2 text-sm font-medium text-white bg-white/20 rounded-lg"
                 >
                   마이페이지
                 </Link>
@@ -306,13 +306,13 @@ export default function Header({ showApiKeyButton = false, onToggleApiKey, apiKe
                   <Link
                     href="/change-password"
                     onClick={() => setMobileOpen(false)}
-                    className="flex-1 text-center py-2 text-xs font-medium text-gray-600 bg-gray-50 rounded-lg"
+                    className="flex-1 text-center py-2 text-xs font-medium text-white/80 bg-white/10 rounded-lg"
                   >
                     비밀번호 변경
                   </Link>
                   <button
                     onClick={() => { handleLogout(); setMobileOpen(false); }}
-                    className="flex-1 text-center py-2 text-xs font-medium text-red-600 bg-red-50 rounded-lg"
+                    className="flex-1 text-center py-2 text-xs font-medium text-red-200 bg-red-500/20 rounded-lg"
                   >
                     로그아웃
                   </button>
@@ -323,14 +323,14 @@ export default function Header({ showApiKeyButton = false, onToggleApiKey, apiKe
                 <Link
                   href="/login"
                   onClick={() => setMobileOpen(false)}
-                  className="flex-1 text-center py-2 text-sm font-medium text-gray-600 bg-gray-50 rounded-lg"
+                  className="flex-1 text-center py-2 text-sm font-medium text-white/80 bg-white/10 rounded-lg"
                 >
                   로그인
                 </Link>
                 <Link
                   href="/signup"
                   onClick={() => setMobileOpen(false)}
-                  className="flex-1 text-center py-2 text-sm font-semibold text-white bg-indigo-600 rounded-lg"
+                  className="flex-1 text-center py-2 text-sm font-semibold text-indigo-700 bg-white rounded-lg"
                 >
                   회원가입
                 </Link>
