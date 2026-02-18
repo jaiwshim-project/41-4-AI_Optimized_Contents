@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import Link from 'next/link';
+import Image from 'next/image';
 import { createClient } from '@/lib/supabase-client';
 import type { User } from '@supabase/supabase-js';
 import { getUserPlan, type PlanType } from '@/lib/usage';
@@ -85,7 +86,7 @@ export default function Header({ showApiKeyButton = false, onToggleApiKey, apiKe
         <div className="flex items-center justify-between h-12">
           {/* 로고 */}
           <Link href="/" className="flex items-center shrink-0">
-            <img src="/images/logo-geoaio.png" alt="GEOAIO" className="h-8 rounded" />
+            <Image src="/images/logo-geoaio.png" alt="GEOAIO" width={160} height={32} className="h-8 w-auto rounded" quality={100} priority />
           </Link>
 
           {/* 데스크톱 네비게이션 */}
