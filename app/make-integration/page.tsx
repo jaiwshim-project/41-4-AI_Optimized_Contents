@@ -165,19 +165,19 @@ export default function MakeIntegrationPage() {
 
         {/* Make.com이란? */}
         <section className="mb-10">
-          <h2 className="text-lg font-bold text-gray-900 mb-4">Make.com이란?</h2>
+          <h2 className="text-xl font-bold text-gray-900 mb-4">Make.com이란?</h2>
           <div className="rounded-xl border border-gray-200 bg-white shadow-sm p-6">
             <div className="flex flex-col md:flex-row gap-6 items-center">
               <div className="flex-1">
-                <p className="text-sm text-gray-700 leading-relaxed mb-3">
+                <p className="text-[15px] text-gray-700 leading-relaxed mb-3">
                   <strong>Make.com</strong>은 프로그래밍 없이 다양한 앱과 서비스를 연결해주는 <strong>노코드 자동화 도구</strong>입니다.
                   마치 레고 블록을 조립하듯, 원하는 작업을 드래그 앤 드롭으로 연결하면 자동으로 실행됩니다.
                 </p>
-                <p className="text-sm text-gray-700 leading-relaxed mb-3">
+                <p className="text-[15px] text-gray-700 leading-relaxed mb-3">
                   AIO/GEO Optimizer와 Make.com을 연동하면, 콘텐츠 생성부터 분석, 최적화, SNS 배포까지
                   <strong> 모든 과정을 자동화</strong>할 수 있습니다.
                 </p>
-                <p className="text-xs text-gray-500">
+                <p className="text-[13px] text-gray-500">
                   전 세계 50만+ 기업이 사용하는 검증된 자동화 플랫폼입니다.
                 </p>
               </div>
@@ -213,7 +213,7 @@ export default function MakeIntegrationPage() {
 
         {/* 연동하면 무엇이 가능한가요? */}
         <section className="mb-10">
-          <h2 className="text-lg font-bold text-gray-900 mb-4">연동하면 무엇이 가능한가요?</h2>
+          <h2 className="text-xl font-bold text-gray-900 mb-4">연동하면 무엇이 가능한가요?</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {useCases.map((uc) => (
               <div
@@ -225,8 +225,8 @@ export default function MakeIntegrationPage() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={uc.icon} />
                   </svg>
                 </div>
-                <h3 className="text-sm font-bold text-gray-900 mb-2">{uc.title}</h3>
-                <p className="text-xs text-gray-600 leading-relaxed mb-3">{uc.description}</p>
+                <h3 className="text-[15px] font-bold text-gray-900 mb-2">{uc.title}</h3>
+                <p className="text-[13px] text-gray-600 leading-relaxed mb-3">{uc.description}</p>
                 <div className="flex items-center gap-1.5 flex-wrap">
                   {uc.flow.map((f, i) => (
                     <span key={i} className="flex items-center gap-1.5">
@@ -246,7 +246,7 @@ export default function MakeIntegrationPage() {
 
         {/* 연동 방법 (5단계) */}
         <section className="mb-10">
-          <h2 className="text-lg font-bold text-gray-900 mb-4">연동 방법 (5단계)</h2>
+          <h2 className="text-xl font-bold text-gray-900 mb-4">연동 방법 (5단계)</h2>
           <div className="space-y-4">
             {steps.map((s) => (
               <div key={s.step} className="rounded-xl border border-gray-200 bg-white shadow-sm p-5">
@@ -255,15 +255,15 @@ export default function MakeIntegrationPage() {
                     {s.step}
                   </div>
                   <div className="flex-1 min-w-0">
-                    <h3 className="text-sm font-bold text-gray-900 mb-1">{s.title}</h3>
-                    <p className="text-xs text-gray-600 leading-relaxed mb-2">{s.description}</p>
+                    <h3 className="text-[15px] font-bold text-gray-900 mb-1">{s.title}</h3>
+                    <p className="text-[13px] text-gray-600 leading-relaxed mb-2">{s.description}</p>
 
                     {s.link && (
                       <a
                         href={s.link}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1 text-xs text-indigo-600 hover:text-indigo-700 font-medium"
+                        className="inline-flex items-center gap-1 text-[13px] text-indigo-600 hover:text-indigo-700 font-medium"
                       >
                         {s.linkLabel}
                         <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -281,11 +281,11 @@ export default function MakeIntegrationPage() {
                     {s.httpConfig && (
                       <div className="mt-3 rounded-lg border border-gray-200 bg-gray-50 p-4 space-y-2">
                         <div className="flex items-center gap-3">
-                          <span className="text-xs font-semibold text-gray-500 w-20">URL</span>
+                          <span className="text-[13px] font-semibold text-gray-500 w-20">URL</span>
                           <code className="text-xs font-mono bg-white text-indigo-700 rounded px-2 py-1 border border-gray-200 flex-1 break-all">https://aio-geo-optimizer.vercel.app/api/webhook</code>
                         </div>
                         <div className="flex items-center gap-3">
-                          <span className="text-xs font-semibold text-gray-500 w-20">Method</span>
+                          <span className="text-[13px] font-semibold text-gray-500 w-20">Method</span>
                           <code className="text-xs font-mono bg-white text-emerald-700 rounded px-2 py-1 border border-gray-200">POST</code>
                         </div>
                       </div>
@@ -294,38 +294,38 @@ export default function MakeIntegrationPage() {
                     {s.apiKeyConfig && (
                       <div className="mt-3 space-y-3">
                         <div className="rounded-lg border border-amber-200 bg-amber-50 p-4">
-                          <p className="text-xs font-bold text-amber-800 mb-2 flex items-center gap-1.5">
+                          <p className="text-[13px] font-bold text-amber-800 mb-2 flex items-center gap-1.5">
                             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z" />
                             </svg>
                             API 키가 없으면 인증 오류(401)가 발생합니다
                           </p>
-                          <p className="text-xs text-amber-700">HTTP 모듈의 <strong>Headers</strong> 섹션에서 <strong>&quot;Add a header&quot;</strong>를 클릭하고 아래와 같이 입력하세요.</p>
+                          <p className="text-[13px] text-amber-700">HTTP 모듈의 <strong>Headers</strong> 섹션에서 <strong>&quot;Add a header&quot;</strong>를 클릭하고 아래와 같이 입력하세요.</p>
                         </div>
                         <div className="rounded-lg border border-gray-200 bg-gray-50 p-4 space-y-2">
-                          <p className="text-xs font-semibold text-gray-700 mb-2">방법 1: X-API-Key 헤더 (권장)</p>
+                          <p className="text-[13px] font-semibold text-gray-700 mb-2">방법 1: X-API-Key 헤더 (권장)</p>
                           <div className="flex items-center gap-3">
-                            <span className="text-xs font-semibold text-gray-500 w-20">Name</span>
+                            <span className="text-[13px] font-semibold text-gray-500 w-20">Name</span>
                             <code className="text-xs font-mono bg-white text-gray-800 rounded px-2 py-1 border border-gray-200">X-API-Key</code>
                           </div>
                           <div className="flex items-center gap-3">
-                            <span className="text-xs font-semibold text-gray-500 w-20">Value</span>
+                            <span className="text-[13px] font-semibold text-gray-500 w-20">Value</span>
                             <code className="text-xs font-mono bg-white text-indigo-700 rounded px-2 py-1 border border-gray-200 flex-1">여기에 Gemini API 키 붙여넣기</code>
                           </div>
                         </div>
                         <div className="rounded-lg border border-gray-200 bg-gray-50 p-4 space-y-2">
-                          <p className="text-xs font-semibold text-gray-700 mb-2">방법 2: Authorization 헤더</p>
+                          <p className="text-[13px] font-semibold text-gray-700 mb-2">방법 2: Authorization 헤더</p>
                           <div className="flex items-center gap-3">
-                            <span className="text-xs font-semibold text-gray-500 w-20">Name</span>
+                            <span className="text-[13px] font-semibold text-gray-500 w-20">Name</span>
                             <code className="text-xs font-mono bg-white text-gray-800 rounded px-2 py-1 border border-gray-200">Authorization</code>
                           </div>
                           <div className="flex items-center gap-3">
-                            <span className="text-xs font-semibold text-gray-500 w-20">Value</span>
+                            <span className="text-[13px] font-semibold text-gray-500 w-20">Value</span>
                             <code className="text-xs font-mono bg-white text-indigo-700 rounded px-2 py-1 border border-gray-200 flex-1">Bearer 여기에_Gemini_API_키</code>
                           </div>
                         </div>
                         <div className="rounded-lg bg-gray-900 text-gray-100 p-4">
-                          <p className="text-[10px] text-gray-400 mb-2">Headers 설정 예시:</p>
+                          <p className="text-[11px] text-gray-400 mb-2">Headers 설정 예시:</p>
                           <pre className="text-xs font-mono whitespace-pre-wrap">{`X-API-Key: AIzaSy_______________your_key_______________`}</pre>
                         </div>
                       </div>
@@ -346,7 +346,7 @@ export default function MakeIntegrationPage() {
                     {s.bodyExample && (
                       <div className="mt-3 space-y-2">
                         <div className="rounded-lg bg-gray-900 text-gray-100 p-4">
-                          <p className="text-[10px] text-gray-400 mb-2">Body 설정 예시 (콘텐츠 생성):</p>
+                          <p className="text-[11px] text-gray-400 mb-2">Body 설정 예시 (콘텐츠 생성):</p>
                           <pre className="text-xs font-mono whitespace-pre-wrap">{`{
   "action": "generate",
   "topic": "AI 마케팅 전략",
@@ -355,7 +355,7 @@ export default function MakeIntegrationPage() {
 }`}</pre>
                         </div>
                         <div className="rounded-lg bg-gray-900 text-gray-100 p-4">
-                          <p className="text-[10px] text-gray-400 mb-2">Body 설정 예시 (콘텐츠 분석):</p>
+                          <p className="text-[11px] text-gray-400 mb-2">Body 설정 예시 (콘텐츠 분석):</p>
                           <pre className="text-xs font-mono whitespace-pre-wrap">{`{
   "action": "analyze",
   "content": "분석할 콘텐츠 내용...",
@@ -373,8 +373,8 @@ export default function MakeIntegrationPage() {
 
         {/* 블루프린트 다운로드 */}
         <section className="mb-10">
-          <h2 className="text-lg font-bold text-gray-900 mb-2">블루프린트 다운로드</h2>
-          <p className="text-xs text-gray-500 mb-4">
+          <h2 className="text-xl font-bold text-gray-900 mb-2">블루프린트 다운로드</h2>
+          <p className="text-[13px] text-gray-500 mb-4">
             아래 블루프린트 파일을 다운로드하여 Make.com에 가져오기(Import)하면 바로 사용할 수 있습니다.
           </p>
 
@@ -390,43 +390,43 @@ export default function MakeIntegrationPage() {
               <li className="flex items-start gap-3">
                 <span className="w-6 h-6 rounded-full bg-indigo-600 text-white text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">1</span>
                 <div>
-                  <p className="text-xs font-semibold text-gray-900">블루프린트 JSON 파일 다운로드</p>
-                  <p className="text-xs text-gray-600 mt-0.5">아래 3종 블루프린트 중 원하는 파일의 &quot;JSON 다운로드&quot; 버튼을 클릭하여 PC에 저장합니다.</p>
+                  <p className="text-[13px] font-semibold text-gray-900">블루프린트 JSON 파일 다운로드</p>
+                  <p className="text-[13px] text-gray-600 mt-0.5">아래 3종 블루프린트 중 원하는 파일의 &quot;JSON 다운로드&quot; 버튼을 클릭하여 PC에 저장합니다.</p>
                 </div>
               </li>
               <li className="flex items-start gap-3">
                 <span className="w-6 h-6 rounded-full bg-indigo-600 text-white text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">2</span>
                 <div>
-                  <p className="text-xs font-semibold text-gray-900">Make.com에서 새 시나리오 생성</p>
-                  <p className="text-xs text-gray-600 mt-0.5">Make.com에 로그인한 후 좌측 메뉴에서 <strong>&quot;Scenarios&quot;</strong>를 클릭하고, 우측 상단의 <strong>&quot;Create a new scenario&quot;</strong> 버튼을 클릭합니다.</p>
+                  <p className="text-[13px] font-semibold text-gray-900">Make.com에서 새 시나리오 생성</p>
+                  <p className="text-[13px] text-gray-600 mt-0.5">Make.com에 로그인한 후 좌측 메뉴에서 <strong>&quot;Scenarios&quot;</strong>를 클릭하고, 우측 상단의 <strong>&quot;Create a new scenario&quot;</strong> 버튼을 클릭합니다.</p>
                 </div>
               </li>
               <li className="flex items-start gap-3">
                 <span className="w-6 h-6 rounded-full bg-indigo-600 text-white text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">3</span>
                 <div>
-                  <p className="text-xs font-semibold text-gray-900">블루프린트 가져오기 메뉴 열기</p>
-                  <p className="text-xs text-gray-600 mt-0.5">시나리오 편집 화면 하단의 <strong>&quot;...&quot; (More)</strong> 버튼을 클릭한 후, <strong>&quot;Import Blueprint&quot;</strong>를 선택합니다.</p>
+                  <p className="text-[13px] font-semibold text-gray-900">블루프린트 가져오기 메뉴 열기</p>
+                  <p className="text-[13px] text-gray-600 mt-0.5">시나리오 편집 화면 하단의 <strong>&quot;...&quot; (More)</strong> 버튼을 클릭한 후, <strong>&quot;Import Blueprint&quot;</strong>를 선택합니다.</p>
                 </div>
               </li>
               <li className="flex items-start gap-3">
                 <span className="w-6 h-6 rounded-full bg-indigo-600 text-white text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">4</span>
                 <div>
-                  <p className="text-xs font-semibold text-gray-900">JSON 파일 업로드</p>
-                  <p className="text-xs text-gray-600 mt-0.5">팝업 창에서 다운로드한 JSON 파일을 선택하거나, 파일 내용을 복사하여 붙여넣기 한 뒤 <strong>&quot;Save&quot;</strong> 버튼을 클릭합니다.</p>
+                  <p className="text-[13px] font-semibold text-gray-900">JSON 파일 업로드</p>
+                  <p className="text-[13px] text-gray-600 mt-0.5">팝업 창에서 다운로드한 JSON 파일을 선택하거나, 파일 내용을 복사하여 붙여넣기 한 뒤 <strong>&quot;Save&quot;</strong> 버튼을 클릭합니다.</p>
                 </div>
               </li>
               <li className="flex items-start gap-3">
                 <span className="w-6 h-6 rounded-full bg-indigo-600 text-white text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">5</span>
                 <div>
-                  <p className="text-xs font-semibold text-gray-900">API 키 및 웹훅 URL 설정</p>
-                  <p className="text-xs text-gray-600 mt-0.5">가져오기가 완료되면 HTTP 모듈을 클릭하여 설정합니다. <strong>URL</strong>에 <code className="bg-white px-1.5 py-0.5 rounded text-indigo-700 font-mono text-[11px]">https://aio-geo-optimizer.vercel.app/api/webhook</code>을 입력하고, <strong>Headers</strong>에 <code className="bg-white px-1.5 py-0.5 rounded text-indigo-700 font-mono text-[11px]">X-API-Key: 발급받은_Gemini_API_키</code>를 추가합니다.</p>
+                  <p className="text-[13px] font-semibold text-gray-900">API 키 및 웹훅 URL 설정</p>
+                  <p className="text-[13px] text-gray-600 mt-0.5">가져오기가 완료되면 HTTP 모듈을 클릭하여 설정합니다. <strong>URL</strong>에 <code className="bg-white px-1.5 py-0.5 rounded text-indigo-700 font-mono text-[11px]">https://aio-geo-optimizer.vercel.app/api/webhook</code>을 입력하고, <strong>Headers</strong>에 <code className="bg-white px-1.5 py-0.5 rounded text-indigo-700 font-mono text-[11px]">X-API-Key: 발급받은_Gemini_API_키</code>를 추가합니다.</p>
                 </div>
               </li>
               <li className="flex items-start gap-3">
                 <span className="w-6 h-6 rounded-full bg-emerald-600 text-white text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">✓</span>
                 <div>
-                  <p className="text-xs font-semibold text-gray-900">테스트 실행 및 활성화</p>
-                  <p className="text-xs text-gray-600 mt-0.5">하단의 <strong>&quot;Run once&quot;</strong> 버튼으로 테스트한 후, 정상 동작이 확인되면 좌측 하단 토글을 켜서 <strong>스케줄링을 활성화</strong>합니다.</p>
+                  <p className="text-[13px] font-semibold text-gray-900">테스트 실행 및 활성화</p>
+                  <p className="text-[13px] text-gray-600 mt-0.5">하단의 <strong>&quot;Run once&quot;</strong> 버튼으로 테스트한 후, 정상 동작이 확인되면 좌측 하단 토글을 켜서 <strong>스케줄링을 활성화</strong>합니다.</p>
                 </div>
               </li>
             </ol>
@@ -440,8 +440,8 @@ export default function MakeIntegrationPage() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                   </svg>
                 </div>
-                <h3 className="text-sm font-bold text-gray-900 mb-1">{bp.title}</h3>
-                <p className="text-xs text-gray-600 leading-relaxed mb-4 flex-1">{bp.description}</p>
+                <h3 className="text-[15px] font-bold text-gray-900 mb-1">{bp.title}</h3>
+                <p className="text-[13px] text-gray-600 leading-relaxed mb-4 flex-1">{bp.description}</p>
                 <a
                   href={bp.file}
                   download
@@ -459,7 +459,7 @@ export default function MakeIntegrationPage() {
 
         {/* 지원 가능한 기능 목록 */}
         <section className="mb-10">
-          <h2 className="text-lg font-bold text-gray-900 mb-4">지원 가능한 기능 목록</h2>
+          <h2 className="text-xl font-bold text-gray-900 mb-4">지원 가능한 기능 목록</h2>
           <div className="rounded-xl border border-gray-200 bg-white shadow-sm overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full text-left">
@@ -476,8 +476,8 @@ export default function MakeIntegrationPage() {
                       <td className="px-5 py-3">
                         <code className="text-xs font-mono bg-indigo-50 text-indigo-700 rounded-md px-2 py-0.5">{wa.action}</code>
                       </td>
-                      <td className="px-5 py-3 text-xs text-gray-700">{wa.description}</td>
-                      <td className="px-5 py-3 text-xs text-gray-500 font-mono">{wa.params}</td>
+                      <td className="px-5 py-3 text-[13px] text-gray-700">{wa.description}</td>
+                      <td className="px-5 py-3 text-[13px] text-gray-500 font-mono">{wa.params}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -488,7 +488,7 @@ export default function MakeIntegrationPage() {
 
         {/* FAQ */}
         <section className="mb-10">
-          <h2 className="text-lg font-bold text-gray-900 mb-4">자주 묻는 질문</h2>
+          <h2 className="text-xl font-bold text-gray-900 mb-4">자주 묻는 질문</h2>
           <div className="space-y-3">
             {faqs.map((faq, index) => (
               <div key={index} className="rounded-xl border border-gray-200 bg-white shadow-sm overflow-hidden">
@@ -511,7 +511,7 @@ export default function MakeIntegrationPage() {
                 </button>
                 {openFaq === index && (
                   <div className="px-5 pb-4 pt-0">
-                    <div className="pl-7 text-xs text-gray-600 leading-relaxed">{faq.a}</div>
+                    <div className="pl-7 text-[13px] text-gray-600 leading-relaxed">{faq.a}</div>
                   </div>
                 )}
               </div>
