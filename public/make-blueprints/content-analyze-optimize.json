@@ -1,0 +1,105 @@
+{
+  "name": "콘텐츠 분석 + AI 최적화 변환",
+  "description": "기존 콘텐츠를 분석하고 AIO/GEO 점수가 낮으면 자동으로 최적화 변환하는 시나리오",
+  "version": 1,
+  "modules": [
+    {
+      "id": 1,
+      "module": "gateway:CustomWebHook",
+      "name": "트리거: 콘텐츠 분석 요청",
+      "parameters": {
+        "note": "요청 본문에 content(필수), targetKeyword(선택) 필드를 포함합니다."
+      }
+    },
+    {
+      "id": 2,
+      "module": "http:ActionSendData",
+      "name": "AIO/GEO 콘텐츠 분석",
+      "parameters": {
+        "url": "https://aio-geo-optimizer.vercel.app/api/webhook",
+        "method": "POST",
+        "headers": [
+          { "name": "Content-Type", "value": "application/json" },
+          { "name": "X-API-Key", "value": "{{YOUR_ANTHROPIC_API_KEY}}" }
+        ],
+        "body": {
+          "action": "analyze",
+          "content": "{{1.content}}",
+          "targetKeyword": "{{1.targetKeyword}}"
+        }
+      }
+    },
+    {
+      "id": 3,
+      "module": "flow:Router",
+      "name": "점수 기반 분기",
+      "parameters": {
+        "routes": [
+          {
+            "label": "점수 70 미만 → 최적화 필요",
+            "condition": "{{2.result.aioScore}} < 70"
+          },
+          {
+            "label": "점수 70 이상 → 통과",
+            "condition": "{{2.result.aioScore}} >= 70"
+          }
+        ]
+      }
+    },
+    {
+      "id": 4,
+      "module": "http:ActionSendData",
+      "name": "AI 최적화 변환 실행",
+      "parameters": {
+        "url": "https://aio-geo-optimizer.vercel.app/api/webhook",
+        "method": "POST",
+        "headers": [
+          { "name": "Content-Type", "value": "application/json" },
+          { "name": "X-API-Key", "value": "{{YOUR_ANTHROPIC_API_KEY}}" }
+        ],
+        "body": {
+          "action": "optimize",
+          "content": "{{1.content}}",
+          "targetKeyword": "{{1.targetKeyword}}",
+          "analysisResult": "{{2.result}}"
+        }
+      }
+    },
+    {
+      "id": 5,
+      "module": "util:SetVariable",
+      "name": "최적화 결과 저장",
+      "parameters": {
+        "variables": [
+          { "name": "originalScore", "value": "{{2.result.aioScore}}" },
+          { "name": "optimizedContent", "value": "{{4.result.optimizedContent}}" },
+          { "name": "status", "value": "optimized" }
+        ]
+      }
+    },
+    {
+      "id": 6,
+      "module": "util:SetVariable",
+      "name": "통과 결과 저장",
+      "parameters": {
+        "variables": [
+          { "name": "originalScore", "value": "{{2.result.aioScore}}" },
+          { "name": "status", "value": "passed" }
+        ]
+      }
+    }
+  ],
+  "connections": [
+    { "from": 1, "to": 2 },
+    { "from": 2, "to": 3 },
+    { "from": 3, "to": 4, "route": "점수 70 미만" },
+    { "from": 3, "to": 6, "route": "점수 70 이상" },
+    { "from": 4, "to": 5 }
+  ],
+  "setup_guide": {
+    "step1": "블루프린트를 Make.com에 Import합니다.",
+    "step2": "YOUR_ANTHROPIC_API_KEY를 실제 키로 교체합니다.",
+    "step3": "Router의 분기 조건(70점)을 필요에 따라 조정합니다.",
+    "step4": "최적화 결과를 Google Sheets, 이메일 등으로 전달하는 모듈을 추가합니다."
+  }
+}

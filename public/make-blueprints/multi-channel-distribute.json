@@ -1,0 +1,124 @@
+{
+  "name": "멀티채널 SNS 자동 배포",
+  "description": "하나의 콘텐츠를 인스타그램, 링크드인, 네이버 블로그, 카드뉴스, 요약본으로 동시 변환하는 시나리오",
+  "version": 1,
+  "modules": [
+    {
+      "id": 1,
+      "module": "gateway:CustomWebHook",
+      "name": "트리거: 원본 콘텐츠 수신",
+      "parameters": {
+        "note": "요청 본문에 content(필수), title(선택) 필드를 포함합니다."
+      }
+    },
+    {
+      "id": 2,
+      "module": "http:ActionSendData",
+      "name": "인스타그램 변환",
+      "parameters": {
+        "url": "https://aio-geo-optimizer.vercel.app/api/webhook",
+        "method": "POST",
+        "headers": [
+          { "name": "Content-Type", "value": "application/json" },
+          { "name": "X-API-Key", "value": "{{YOUR_ANTHROPIC_API_KEY}}" }
+        ],
+        "body": {
+          "action": "convert",
+          "content": "{{1.content}}",
+          "title": "{{1.title}}",
+          "channel": "instagram"
+        }
+      }
+    },
+    {
+      "id": 3,
+      "module": "http:ActionSendData",
+      "name": "링크드인 변환",
+      "parameters": {
+        "url": "https://aio-geo-optimizer.vercel.app/api/webhook",
+        "method": "POST",
+        "headers": [
+          { "name": "Content-Type", "value": "application/json" },
+          { "name": "X-API-Key", "value": "{{YOUR_ANTHROPIC_API_KEY}}" }
+        ],
+        "body": {
+          "action": "convert",
+          "content": "{{1.content}}",
+          "title": "{{1.title}}",
+          "channel": "linkedin"
+        }
+      }
+    },
+    {
+      "id": 4,
+      "module": "http:ActionSendData",
+      "name": "네이버 블로그 변환",
+      "parameters": {
+        "url": "https://aio-geo-optimizer.vercel.app/api/webhook",
+        "method": "POST",
+        "headers": [
+          { "name": "Content-Type", "value": "application/json" },
+          { "name": "X-API-Key", "value": "{{YOUR_ANTHROPIC_API_KEY}}" }
+        ],
+        "body": {
+          "action": "convert",
+          "content": "{{1.content}}",
+          "title": "{{1.title}}",
+          "channel": "naver_blog"
+        }
+      }
+    },
+    {
+      "id": 5,
+      "module": "http:ActionSendData",
+      "name": "카드뉴스 변환",
+      "parameters": {
+        "url": "https://aio-geo-optimizer.vercel.app/api/webhook",
+        "method": "POST",
+        "headers": [
+          { "name": "Content-Type", "value": "application/json" },
+          { "name": "X-API-Key", "value": "{{YOUR_ANTHROPIC_API_KEY}}" }
+        ],
+        "body": {
+          "action": "convert",
+          "content": "{{1.content}}",
+          "title": "{{1.title}}",
+          "channel": "card_news"
+        }
+      }
+    },
+    {
+      "id": 6,
+      "module": "http:ActionSendData",
+      "name": "핵심 요약",
+      "parameters": {
+        "url": "https://aio-geo-optimizer.vercel.app/api/webhook",
+        "method": "POST",
+        "headers": [
+          { "name": "Content-Type", "value": "application/json" },
+          { "name": "X-API-Key", "value": "{{YOUR_ANTHROPIC_API_KEY}}" }
+        ],
+        "body": {
+          "action": "convert",
+          "content": "{{1.content}}",
+          "title": "{{1.title}}",
+          "channel": "summary"
+        }
+      }
+    }
+  ],
+  "connections": [
+    { "from": 1, "to": 2 },
+    { "from": 1, "to": 3 },
+    { "from": 1, "to": 4 },
+    { "from": 1, "to": 5 },
+    { "from": 1, "to": 6 }
+  ],
+  "setup_guide": {
+    "step1": "블루프린트를 Make.com에 Import합니다.",
+    "step2": "YOUR_ANTHROPIC_API_KEY를 실제 키로 교체합니다.",
+    "step3": "각 채널 변환 결과를 실제 SNS API 또는 Google Sheets로 전달하는 모듈을 연결합니다.",
+    "step4": "병렬 실행으로 5개 채널이 동시에 변환됩니다.",
+    "note": "지원 채널: instagram, linkedin, naver_blog, card_news, summary"
+  }
+}
