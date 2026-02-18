@@ -25,6 +25,22 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+@page {
+  margin: 15mm 10mm 20mm 10mm;
+  @bottom-right {
+    content: counter(page) " / " counter(pages);
+    font-size: 9px;
+    color: #999;
+    font-family: Arial, sans-serif;
+  }
+  @bottom-left {
+    content: "AIO/GEO Optimizer - Make.com 활용 매뉴얼";
+    font-size: 9px;
+    color: #999;
+    font-family: Arial, sans-serif;
+  }
+}
+
 @media print {
   nav, footer, [data-print-hide] {
     display: none !important;
