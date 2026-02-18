@@ -104,7 +104,7 @@ export default function SignupPage() {
         {/* 로고 */}
         <div className="text-center mb-5">
           <Link href="/">
-            <img src="/images/logo-geoaio.jpg" alt="GEOAIO" className="h-14 rounded-lg shadow-lg mx-auto" />
+            <img src="/images/logo-geoaio.png" alt="GEOAIO" className="h-14 rounded-lg shadow-lg mx-auto" />
           </Link>
         </div>
 

@@ -26,7 +26,7 @@ export default function ResourcesPage() {
               <circle cx="350" cy="100" r="120" stroke="white" strokeWidth="0.5" />
             </svg>
           </div>
-          <img src="/images/logo-geoaio.jpg" alt="GEOAIO" className="relative z-10 h-16 rounded-lg shadow-lg hidden sm:block" />
+          <img src="/images/logo-geoaio.png" alt="GEOAIO" className="relative z-10 h-16 rounded-lg shadow-lg hidden sm:block" />
           <div className="relative z-10">
             <h2 className="text-2xl font-bold mb-1">자료실</h2>
             <p className="text-sm text-white/80">GEO/AIO 최적화에 도움이 되는 자료를 확인하세요</p>

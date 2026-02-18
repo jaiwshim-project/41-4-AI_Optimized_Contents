@@ -9,7 +9,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
           <div className="md:col-span-2">
             <div className="mb-3">
-              <img src="/images/logo-geoaio.jpg" alt="GEOAIO" className="h-10 rounded" />
+              <img src="/images/logo-geoaio.png" alt="GEOAIO" className="h-10 rounded" />
             </div>
             <p className="text-xs text-slate-400 leading-relaxed max-w-sm">
               AI 검색엔진(AI Overview, Generative Engine)에 최적화된 콘텐츠를 분석하고 생성하는 올인원 도구입니다.
