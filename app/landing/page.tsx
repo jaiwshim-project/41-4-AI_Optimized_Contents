@@ -252,7 +252,7 @@ export default function PromotionLandingPage() {
                 <h3 className="text-base font-bold">초기 테스터 모집 중</h3>
                 <span className="px-2.5 py-0.5 bg-yellow-400 text-yellow-900 text-xs font-bold rounded-full">FREE</span>
               </div>
-              <p className="text-white/90 text-sm">지금 신청하시면 <strong>모든 기능을 무료</strong>로 체험할 수 있습니다. 선착순 마감!</p>
+              <p className="text-white text-sm">지금 신청하시면 <strong>모든 기능을 무료</strong>로 체험할 수 있습니다. 선착순 마감!</p>
             </div>
             <a
               href="https://forms.gle/RdniybCMpa6V77dw9"
@@ -350,7 +350,7 @@ export default function PromotionLandingPage() {
                 </svg>
               </div>
               <div>
-                <p className="text-white/60 text-xs mb-1">ChatGPT에게 물어보기</p>
+                <p className="text-white text-xs mb-1">ChatGPT에게 물어보기</p>
                 <p className="text-white text-sm font-medium">&ldquo;서울에서 가장 좋은 [당신의 업종] 추천해줘&rdquo;</p>
                 <p className="text-blue-200 text-xs mt-2">
                   → 여기에 당신의 브랜드가 없다면, AIO/GEO 최적화가 필요합니다.

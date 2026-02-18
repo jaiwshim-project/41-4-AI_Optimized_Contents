@@ -96,7 +96,7 @@ export default function PricingPage() {
                 <h3 className="text-base font-bold">Grand Open 프로모션</h3>
                 <span className="px-2.5 py-0.5 bg-yellow-400 text-yellow-900 text-xs font-bold rounded-full">SALE</span>
               </div>
-              <p className="text-white/90 text-sm">그랜드 오픈을 기념하여 <strong>최대 51% 할인</strong>된 특별 가격으로 제공합니다</p>
+              <p className="text-white text-sm">그랜드 오픈을 기념하여 <strong>최대 51% 할인</strong>된 특별 가격으로 제공합니다</p>
             </div>
           </div>
         </div>
@@ -112,7 +112,7 @@ export default function PricingPage() {
               </div>
               <div>
                 <h3 className="text-base font-bold">관리자 계정</h3>
-                <p className="text-white/80 text-sm">모든 기능을 무제한으로 사용할 수 있습니다</p>
+                <p className="text-white text-sm">모든 기능을 무제한으로 사용할 수 있습니다</p>
               </div>
             </div>
           </div>

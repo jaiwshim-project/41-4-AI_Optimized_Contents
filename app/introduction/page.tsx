@@ -139,8 +139,8 @@ export default function IntroductionPage() {
               </svg>
             </div>
             <h1 className="text-lg font-extrabold mb-3">AIO/GEO Optimizer</h1>
-            <p className="text-sm font-medium text-white/90 mb-2">AI 검색엔진 콘텐츠 최적화 플랫폼</p>
-            <p className="text-sm text-white/70 max-w-lg mx-auto">AI가 주도하는 검색의 시대, 콘텐츠가 AI에 의해 발견되고 인용되기 위한 전략적 도구</p>
+            <p className="text-sm font-medium text-white mb-2">AI 검색엔진 콘텐츠 최적화 플랫폼</p>
+            <p className="text-sm text-white max-w-lg mx-auto">AI가 주도하는 검색의 시대, 콘텐츠가 AI에 의해 발견되고 인용되기 위한 전략적 도구</p>
           </section>
 
           {/* 시장 변화: 왜 필요한가? */}
@@ -302,7 +302,7 @@ export default function IntroductionPage() {
           {/* CTA */}
           <section className="bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-600 rounded-xl shadow-lg p-7 text-center text-white">
             <h2 className="text-xl font-extrabold mb-3">AI 검색 시대, 지금 시작하세요</h2>
-            <p className="text-sm text-white/80 max-w-lg mx-auto mb-4">
+            <p className="text-sm text-white max-w-lg mx-auto mb-4">
               경쟁사보다 먼저 AI 검색엔진에 최적화된 콘텐츠를 만들어 보세요.
               AIO/GEO Optimizer가 당신의 콘텐츠를 AI가 선택하는 콘텐츠로 만들어 드립니다.
             </p>

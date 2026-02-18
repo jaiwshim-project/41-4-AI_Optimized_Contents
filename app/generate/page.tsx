@@ -482,10 +482,10 @@ export default function GeneratePage() {
                 <div className={`flex items-center gap-3 px-5 py-3 rounded-xl transition-all duration-300 ${showBusinessInfo ? 'bg-gradient-to-r from-teal-500 to-emerald-500 text-white shadow-lg shadow-teal-200 scale-105' : 'bg-teal-50 text-teal-700 border border-teal-200'}`}>
                   <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold shrink-0 ${showBusinessInfo ? 'bg-white/20 text-white' : 'bg-teal-200 text-teal-700'}`}>1</div>
                   <div className="text-left">
-                    <p className={`text-xs font-bold ${showBusinessInfo ? 'text-white/80' : 'text-teal-500'}`}>STEP 1</p>
+                    <p className={`text-xs font-bold ${showBusinessInfo ? 'text-white' : 'text-teal-500'}`}>STEP 1</p>
                     <p className="text-sm font-semibold whitespace-nowrap">비즈니스 정보 입력</p>
                   </div>
-                  <svg className={`w-4 h-4 shrink-0 ${showBusinessInfo ? 'text-white/60' : 'text-teal-400'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className={`w-4 h-4 shrink-0 ${showBusinessInfo ? 'text-white' : 'text-teal-400'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
                   </svg>
                 </div>
@@ -502,10 +502,10 @@ export default function GeneratePage() {
                 <div className={`flex items-center gap-3 px-5 py-3 rounded-xl transition-all duration-300 ${selectedCategory ? 'bg-gradient-to-r from-indigo-500 to-purple-500 text-white shadow-lg shadow-indigo-200 scale-105' : 'bg-indigo-50 text-indigo-700 border border-indigo-200'}`}>
                   <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold shrink-0 ${selectedCategory ? 'bg-white/20 text-white' : 'bg-indigo-200 text-indigo-700'}`}>2</div>
                   <div className="text-left">
-                    <p className={`text-xs font-bold ${selectedCategory ? 'text-white/80' : 'text-indigo-500'}`}>STEP 2</p>
+                    <p className={`text-xs font-bold ${selectedCategory ? 'text-white' : 'text-indigo-500'}`}>STEP 2</p>
                     <p className="text-sm font-semibold whitespace-nowrap">콘텐츠 유형 선택</p>
                   </div>
-                  <svg className={`w-4 h-4 shrink-0 ${selectedCategory ? 'text-white/60' : 'text-indigo-400'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className={`w-4 h-4 shrink-0 ${selectedCategory ? 'text-white' : 'text-indigo-400'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h7" />
                   </svg>
                 </div>
@@ -522,10 +522,10 @@ export default function GeneratePage() {
                 <div className={`flex items-center gap-3 px-5 py-3 rounded-xl transition-all duration-300 ${isGenerating ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg shadow-purple-200 scale-105 animate-pulse' : 'bg-purple-50 text-purple-700 border border-purple-200'}`}>
                   <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold shrink-0 ${isGenerating ? 'bg-white/20 text-white' : 'bg-purple-200 text-purple-700'}`}>3</div>
                   <div className="text-left">
-                    <p className={`text-xs font-bold ${isGenerating ? 'text-white/80' : 'text-purple-500'}`}>STEP 3</p>
+                    <p className={`text-xs font-bold ${isGenerating ? 'text-white' : 'text-purple-500'}`}>STEP 3</p>
                     <p className="text-sm font-semibold whitespace-nowrap">콘텐츠 생성</p>
                   </div>
-                  <svg className={`w-4 h-4 shrink-0 ${isGenerating ? 'text-white/60' : 'text-purple-400'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className={`w-4 h-4 shrink-0 ${isGenerating ? 'text-white' : 'text-purple-400'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                   </svg>
                 </div>
@@ -876,7 +876,7 @@ export default function GeneratePage() {
                       <p className={`text-sm font-semibold ${isSelected ? 'text-white' : 'text-gray-900'}`}>
                         {cat.label}
                       </p>
-                      <p className={`text-xs mt-0.5 ${isSelected ? 'text-white/80' : 'text-gray-500'}`}>
+                      <p className={`text-xs mt-0.5 ${isSelected ? 'text-white' : 'text-gray-500'}`}>
                         {cat.description}
                       </p>
                       {isSelected && (

@@ -147,7 +147,7 @@ export default function MakeIntegrationPage() {
               No-Code 자동화
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold mb-3">Make.com 연동 가이드</h1>
-            <p className="text-base sm:text-lg text-white/85 max-w-xl mx-auto">
+            <p className="text-base sm:text-lg text-white max-w-xl mx-auto">
               자동화로 콘텐츠 마케팅을 10배 빠르게
             </p>
           </div>
@@ -380,7 +380,7 @@ export default function MakeIntegrationPage() {
         {/* CTA */}
         <section className="rounded-xl bg-gradient-to-br from-indigo-600 to-violet-600 text-white px-6 sm:px-10 py-10 text-center mb-4">
           <h2 className="text-xl sm:text-2xl font-bold mb-3">지금 자동화를 시작하세요</h2>
-          <p className="text-sm text-white/80 max-w-lg mx-auto mb-6">
+          <p className="text-sm text-white max-w-lg mx-auto mb-6">
             Make.com과 AIO/GEO Optimizer를 연동하면 콘텐츠 마케팅의 반복 작업을 모두 자동화할 수 있습니다.
             무료로 시작해보세요.
           </p>

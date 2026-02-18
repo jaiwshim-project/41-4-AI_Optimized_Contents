@@ -186,14 +186,14 @@ export default function LandingPage() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="px-3 py-1.5 text-xs font-medium text-white/70 hover:text-white hover:bg-white/10 rounded-lg transition-all"
+                className="px-3 py-1.5 text-xs font-medium text-white hover:text-white hover:bg-white/10 rounded-lg transition-all"
               >
                 {link.label}
               </Link>
             ))}
             <button
               onClick={() => setShowApiKey(!showApiKey)}
-              className="px-3 py-1.5 text-xs font-medium text-white/70 hover:text-white hover:bg-white/10 rounded-lg transition-all"
+              className="px-3 py-1.5 text-xs font-medium text-white hover:text-white hover:bg-white/10 rounded-lg transition-all"
             >
               API 키
             </button>
@@ -463,7 +463,7 @@ export default function LandingPage() {
                 <h3 className="text-sm font-bold">초기 테스터 모집 중</h3>
                 <span className="px-2 py-0.5 bg-yellow-400 text-yellow-900 text-[10px] font-bold rounded-full">FREE</span>
               </div>
-              <p className="text-white/90 text-xs">지금 신청하시면 <strong>모든 기능을 무료</strong>로 체험할 수 있습니다. 선착순 마감!</p>
+              <p className="text-white text-xs">지금 신청하시면 <strong>모든 기능을 무료</strong>로 체험할 수 있습니다. 선착순 마감!</p>
             </div>
             <a
               href="https://forms.gle/RdniybCMpa6V77dw9"
