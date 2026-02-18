@@ -14,7 +14,10 @@ export default function Footer() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
                 </svg>
               </div>
-              <span className="text-sm font-bold text-white">AIO/GEO Optimizer</span>
+              <span className="text-sm font-bold">
+                <span className="text-amber-300">GEO</span>
+                <span className="text-white">AIO</span>
+              </span>
             </div>
             <p className="text-xs text-slate-400 leading-relaxed max-w-sm">
               AI 검색엔진(AI Overview, Generative Engine)에 최적화된 콘텐츠를 분석하고 생성하는 올인원 도구입니다.
@@ -62,7 +65,7 @@ export default function Footer() {
 
         <div className="border-t border-slate-700 pt-4 flex flex-col sm:flex-row items-center justify-between gap-2">
           <p className="text-xs text-slate-500">
-            &copy; 2026 AIO/GEO Optimizer &mdash; AI 검색엔진 콘텐츠 최적화 도구
+            &copy; 2026 GEOAIO &mdash; AI 검색엔진 콘텐츠 최적화 도구
           </p>
           <p className="text-xs text-slate-500">
             Powered by AI
