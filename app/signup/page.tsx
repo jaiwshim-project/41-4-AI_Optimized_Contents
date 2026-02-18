@@ -110,7 +110,7 @@ export default function SignupPage() {
               </svg>
             </div>
             <div className="text-left">
-              <h1 className="text-xl font-bold text-gray-900">AIO/GEO Optimizer</h1>
+              <h1 className="text-xl font-bold"><span className="text-amber-500">GEO</span><span className="text-gray-900">AIO</span></h1>
               <p className="text-xs text-gray-500">AI 검색엔진 콘텐츠 최적화 플랫폼</p>
             </div>
           </Link>
