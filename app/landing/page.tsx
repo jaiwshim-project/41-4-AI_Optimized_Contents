@@ -255,6 +255,24 @@ export default function PromotionLandingPage() {
         </div>
       </section>
 
+      {/* 소개 영상 섹션 */}
+      <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        <div className="text-center mb-5">
+          <h2 className="text-lg font-extrabold text-gray-900 mb-2">서비스 소개 영상</h2>
+          <p className="text-sm text-gray-500">3분만에 AIO/GEO Optimizer의 핵심 기능을 확인하세요</p>
+        </div>
+        <div className="relative rounded-xl overflow-hidden shadow-lg border-2 border-indigo-200">
+          {/* TODO: YouTube 영상 ID를 실제 값으로 교체하세요 */}
+          <iframe
+            className="w-full aspect-video"
+            src="https://www.youtube.com/embed/YOUR_VIDEO_ID"
+            title="AIO/GEO Optimizer 서비스 소개"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+          />
+        </div>
+      </section>
+
       {/* 자료 이미지 섹션 */}
       <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         <img src="/ai-search-choice.png" alt="AI 검색 엔진의 선택" className="w-full rounded-xl shadow-md border-2 border-indigo-200" />
