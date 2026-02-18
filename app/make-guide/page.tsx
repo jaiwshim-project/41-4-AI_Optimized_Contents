@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import Link from 'next/link';
 import Footer from '@/components/Footer';
 
@@ -443,6 +443,17 @@ export default function MakeGuidePage() {
   const [activeTab, setActiveTab] = useState<'overview' | 'api' | 'scenarios' | 'agency' | 'roadmap' | 'allinone' | 'competitive'>('overview');
   const [expandedApi, setExpandedApi] = useState<number | null>(null);
   const [expandedScenario, setExpandedScenario] = useState<number | null>(null);
+  const [isPrinting, setIsPrinting] = useState(false);
+
+  const handlePrint = useCallback(() => {
+    setIsPrinting(true);
+    setTimeout(() => {
+      window.print();
+      setIsPrinting(false);
+    }, 300);
+  }, []);
+
+  const showTab = (tab: string) => isPrinting || activeTab === tab;
 
   const tabs = [
     { id: 'overview' as const, label: '개요', icon: '📋' },
@@ -474,7 +485,7 @@ export default function MakeGuidePage() {
                 사용자 매뉴얼
               </Link>
               <button
-                onClick={() => window.print()}
+                onClick={handlePrint}
                 className="print:hidden text-xs px-3 py-1.5 rounded-full border border-indigo-200 bg-indigo-50 text-indigo-600 hover:bg-indigo-100 hover:border-indigo-300 transition-colors flex items-center gap-1"
               >
                 <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
@@ -529,7 +540,8 @@ export default function MakeGuidePage() {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
 
         {/* ===== Part 1: 개요 ===== */}
-        {activeTab === 'overview' && (
+        {isPrinting && <div className="mt-8 mb-4 pb-2 border-b-2 border-indigo-600"><h2 className="text-2xl font-bold text-indigo-700">1. 개요</h2></div>}
+        {showTab('overview') && (
           <div className="space-y-8">
             {/* Make.com 소개 */}
             <section className="bg-white rounded-2xl p-6 sm:p-8 border border-gray-100 shadow-sm">
@@ -645,7 +657,8 @@ export default function MakeGuidePage() {
         )}
 
         {/* ===== Part 2: API 레퍼런스 ===== */}
-        {activeTab === 'api' && (
+        {isPrinting && <div className="mt-12 mb-4 pb-2 border-b-2 border-indigo-600" style={{ breakBefore: 'page' }}><h2 className="text-2xl font-bold text-indigo-700">2. API 레퍼런스</h2></div>}
+        {showTab('api') && (
           <div className="space-y-6">
             {/* 인증 방법 */}
             <section className="bg-white rounded-2xl p-6 sm:p-8 border border-gray-100 shadow-sm">
@@ -725,7 +738,7 @@ export default function MakeGuidePage() {
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                       </svg>
                     </button>
-                    {expandedApi === index && (
+                    {(isPrinting || expandedApi === index) && (
                       <div className="border-t border-gray-100 p-4 bg-gray-50 space-y-4">
                         <p className="text-sm text-gray-600">{api.description}</p>
 
@@ -832,7 +845,8 @@ export default function MakeGuidePage() {
         )}
 
         {/* ===== Part 3: Make.com 시나리오 ===== */}
-        {activeTab === 'scenarios' && (
+        {isPrinting && <div className="mt-12 mb-4 pb-2 border-b-2 border-indigo-600" style={{ breakBefore: 'page' }}><h2 className="text-2xl font-bold text-indigo-700">3. Make.com 시나리오</h2></div>}
+        {showTab('scenarios') && (
           <div className="space-y-6">
             {/* Make.com 기본 설정 */}
             <section className="bg-white rounded-2xl p-6 sm:p-8 border border-gray-100 shadow-sm">
@@ -917,7 +931,7 @@ export default function MakeGuidePage() {
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                       </svg>
                     </button>
-                    {expandedScenario === scenario.id && (
+                    {(isPrinting || expandedScenario === scenario.id) && (
                       <div className="border-t border-gray-100 p-5 space-y-5">
                         <p className="text-sm text-gray-600">{scenario.description}</p>
 
@@ -964,7 +978,8 @@ export default function MakeGuidePage() {
         )}
 
         {/* ===== Part 4: 에이전시 활용 ===== */}
-        {activeTab === 'agency' && (
+        {isPrinting && <div className="mt-12 mb-4 pb-2 border-b-2 border-indigo-600" style={{ breakBefore: 'page' }}><h2 className="text-2xl font-bold text-indigo-700">4. 에이전시 활용</h2></div>}
+        {showTab('agency') && (
           <div className="space-y-8">
             {/* 패키지 상품화 */}
             <section className="bg-white rounded-2xl p-6 sm:p-8 border border-gray-100 shadow-sm">
@@ -1088,7 +1103,8 @@ export default function MakeGuidePage() {
         )}
 
         {/* ===== Part 5: 향후 개발 ===== */}
-        {activeTab === 'roadmap' && (
+        {isPrinting && <div className="mt-12 mb-4 pb-2 border-b-2 border-indigo-600" style={{ breakBefore: 'page' }}><h2 className="text-2xl font-bold text-indigo-700">5. 향후 개발</h2></div>}
+        {showTab('roadmap') && (
           <div className="space-y-8">
             <section className="bg-white rounded-2xl p-6 sm:p-8 border border-gray-100 shadow-sm">
               <h2 className="text-xl font-bold text-gray-900 mb-2">향후 개발 가능 기능</h2>
@@ -1235,7 +1251,8 @@ export default function MakeGuidePage() {
           </div>
         )}
         {/* ===== Part 6: 올인원 배포 서비스 ===== */}
-        {activeTab === 'allinone' && (
+        {isPrinting && <div className="mt-12 mb-4 pb-2 border-b-2 border-indigo-600" style={{ breakBefore: 'page' }}><h2 className="text-2xl font-bold text-indigo-700">6. 올인원 배포 서비스</h2></div>}
+        {showTab('allinone') && (
           <div className="space-y-8">
             {/* 핵심 컨셉 */}
             <section className="bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-500 rounded-2xl p-6 sm:p-8 text-white">
@@ -1570,7 +1587,8 @@ Make.com (백그라운드 처리)
           </div>
         )}
         {/* ===== Part 7: 경쟁력 분석 ===== */}
-        {activeTab === 'competitive' && (
+        {isPrinting && <div className="mt-12 mb-4 pb-2 border-b-2 border-indigo-600" style={{ breakBefore: 'page' }}><h2 className="text-2xl font-bold text-indigo-700">7. 경쟁력 분석</h2></div>}
+        {showTab('competitive') && (
           <div className="space-y-8">
             {/* 히어로 */}
             <section className="bg-gradient-to-br from-slate-900 via-indigo-900 to-purple-900 rounded-2xl p-6 sm:p-8 text-white">
