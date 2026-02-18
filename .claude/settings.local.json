@@ -31,7 +31,11 @@
       "Bash(node -e:*)",
       "Bash(npx next build:*)",
       "Bash(git checkout:*)",
-      "Bash(python:*)"
+      "Bash(python:*)",
+      "WebFetch(domain:ai-optimized-contents.vercel.app)",
+      "Bash(python3:*)",
+      "WebFetch(domain:41-4-ai-optimized-contents.vercel.app)",
+      "Bash(\"/c/01 Claude-Code/41-4:*)"
     ]
   }
 }

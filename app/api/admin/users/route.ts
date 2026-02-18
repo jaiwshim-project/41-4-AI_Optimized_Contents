@@ -42,10 +42,16 @@ export async function GET() {
 
     if (usersError) throw usersError;
 
-    // user_plans 목록 조회
+    // user_plans 목록 조회 (previous_plan 포함)
     const { data: plans } = await supabase
       .from('user_plans')
-      .select('user_id, plan, created_at, expires_at');
+      .select('user_id, plan, previous_plan, created_at, expires_at');
+
+    // plan_history 조회
+    const { data: history } = await supabase
+      .from('plan_history')
+      .select('user_id, old_plan, new_plan, changed_at, changed_by')
+      .order('changed_at', { ascending: false });
 
     // usage_counts 이번 달
     const now = new Date();
@@ -62,6 +68,12 @@ export async function GET() {
 
     // 데이터 조합
     const planMap = new Map((plans || []).map(p => [p.user_id, p]));
+
+    const historyMap = new Map<string, Array<{ old_plan: string; new_plan: string; changed_at: string; changed_by: string }>>();
+    (history || []).forEach(h => {
+      if (!historyMap.has(h.user_id)) historyMap.set(h.user_id, []);
+      historyMap.get(h.user_id)!.push(h);
+    });
 
     const monthlyMap = new Map<string, Record<string, number>>();
     (monthlyUsage || []).forEach(u => {
@@ -80,6 +92,15 @@ export async function GET() {
       const planData = planMap.get(user.id);
       const monthly = monthlyMap.get(user.id) || {};
       const total = totalMap.get(user.id) || {};
+
+      // pro/max 사용자 중 expires_at이 없으면 created_at 기준 30일로 계산
+      let expiresAt = planData?.expires_at || null;
+      if (!expiresAt && planData && ['pro', 'max'].includes(planData.plan)) {
+        const base = new Date(planData.created_at);
+        base.setDate(base.getDate() + 30);
+        expiresAt = base.toISOString();
+      }
+
       return {
         id: user.id,
         name: user.user_metadata?.full_name || user.user_metadata?.name || user.user_metadata?.user_name || user.user_metadata?.preferred_username || '',
@@ -87,7 +108,9 @@ export async function GET() {
         created_at: user.created_at,
         last_sign_in_at: user.last_sign_in_at,
         plan: planData?.plan || 'free',
-        plan_expires_at: planData?.expires_at || null,
+        previous_plan: planData?.previous_plan || null,
+        plan_expires_at: expiresAt,
+        plan_history: historyMap.get(user.id) || [],
         usage: {
           analyze: monthly['analyze'] || 0,
           generate: monthly['generate'] || 0,
@@ -143,6 +166,15 @@ export async function POST(request: NextRequest) {
         return NextResponse.json({ error: '유효하지 않은 플랜입니다.' }, { status: 400 });
       }
 
+      // 기존 등급 조회 (히스토리 기록용)
+      const { data: currentPlan } = await supabase
+        .from('user_plans')
+        .select('plan')
+        .eq('user_id', userId)
+        .maybeSingle();
+
+      const oldPlan = currentPlan?.plan || 'free';
+
       // 유료 플랜은 만료일 자동 설정 (30일)
       let expiresAt: string | null = null;
       if (plan === 'pro' || plan === 'max') {
@@ -154,11 +186,22 @@ export async function POST(request: NextRequest) {
       const { error } = await supabase
         .from('user_plans')
         .upsert(
-          { user_id: userId, plan, created_at: new Date().toISOString(), expires_at: expiresAt },
+          { user_id: userId, plan, previous_plan: oldPlan, created_at: new Date().toISOString(), expires_at: expiresAt },
           { onConflict: 'user_id' }
         );
 
       if (error) throw error;
+
+      // 등급 변경 히스토리 기록
+      if (oldPlan !== plan) {
+        await supabase.from('plan_history').insert({
+          user_id: userId,
+          old_plan: oldPlan,
+          new_plan: plan,
+          changed_at: new Date().toISOString(),
+          changed_by: 'admin',
+        });
+      }
     }
 
     return NextResponse.json({ success: true });

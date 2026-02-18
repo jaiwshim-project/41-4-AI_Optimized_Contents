@@ -6,6 +6,13 @@ import Footer from '@/components/Footer';
 import Link from 'next/link';
 import { getUserPlan } from '@/lib/usage';
 
+interface PlanHistoryEntry {
+  old_plan: string;
+  new_plan: string;
+  changed_at: string;
+  changed_by: string;
+}
+
 interface UserData {
   id: string;
   name: string;
@@ -13,7 +20,9 @@ interface UserData {
   created_at: string;
   last_sign_in_at: string | null;
   plan: string;
+  previous_plan: string | null;
   plan_expires_at: string | null;
+  plan_history: PlanHistoryEntry[];
   usage: {
     analyze: number;
     generate: number;
@@ -54,9 +63,10 @@ function getExpiryStatus(expiresAt: string | null) {
   const diffDays = Math.ceil((exp.getTime() - now.getTime()) / (1000 * 60 * 60 * 24));
 
   if (diffDays < 0) return { label: '만료됨', color: 'text-red-600', dot: 'bg-red-500', dday: `D+${Math.abs(diffDays)}` };
-  if (diffDays <= 3) return { label: '3일 이내', color: 'text-orange-600', dot: 'bg-orange-500', dday: `D-${diffDays}` };
-  if (diffDays <= 7) return { label: '7일 이내', color: 'text-yellow-600', dot: 'bg-yellow-500', dday: `D-${diffDays}` };
-  return { label: '정상', color: 'text-green-600', dot: 'bg-green-500', dday: `D-${diffDays}` };
+  if (diffDays <= 2) return { label: '2일 이내', color: 'text-red-600', dot: 'bg-red-500', dday: `D-${diffDays}` };
+  if (diffDays <= 5) return { label: '5일 이내', color: 'text-green-600', dot: 'bg-green-500', dday: `D-${diffDays}` };
+  if (diffDays <= 7) return { label: '7일 이내', color: 'text-blue-600', dot: 'bg-blue-500', dday: `D-${diffDays}` };
+  return { label: '정상', color: 'text-gray-500', dot: 'bg-gray-400', dday: `D-${diffDays}` };
 }
 
 export default function AdminPage() {
@@ -155,6 +165,46 @@ export default function AdminPage() {
     }
   };
 
+  const [sendingEmail, setSendingEmail] = useState<string | null>(null);
+
+  const handleSendExpiryNotice = async (user: UserData) => {
+    if (!user.plan_expires_at) {
+      alert('만료일 정보가 없습니다.');
+      return;
+    }
+    const now = new Date();
+    const exp = new Date(user.plan_expires_at);
+    const daysLeft = Math.ceil((exp.getTime() - now.getTime()) / (1000 * 60 * 60 * 24));
+
+    if (!confirm(`${user.name || user.email}님에게 만료 안내 이메일을 발송하시겠습니까?\n\n등급: ${user.plan === 'pro' ? '프로' : '맥스'}\n만료일: ${formatDate(user.plan_expires_at).split(' ')[0]}\nD-day: ${daysLeft < 0 ? `D+${Math.abs(daysLeft)}` : `D-${daysLeft}`}`)) {
+      return;
+    }
+
+    setSendingEmail(user.id);
+    try {
+      const res = await fetch('/api/admin/send-expiry-notice', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: user.email,
+          name: user.name,
+          plan: user.plan,
+          expiresAt: user.plan_expires_at,
+          daysLeft,
+        }),
+      });
+      if (!res.ok) {
+        const data = await res.json();
+        throw new Error(data.error || '발송 실패');
+      }
+      alert(`✅ ${user.email}로 만료 안내 이메일을 발송했습니다.`);
+    } catch (err) {
+      alert(`❌ 발송 실패: ${err instanceof Error ? err.message : '오류 발생'}`);
+    } finally {
+      setSendingEmail(null);
+    }
+  };
+
   const filteredUsers = users.filter(u =>
     u.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
     u.name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -200,6 +250,11 @@ export default function AdminPage() {
 
   const alertCount = subscriptionAlerts.expired.length + subscriptionAlerts.within3Days.length;
 
+  // 다운그레이드된 사용자 (이전에 유료였던 free 사용자)
+  const downgradedUsers = useMemo(() => {
+    return users.filter(u => u.plan === 'free' && u.previous_plan && ['pro', 'max'].includes(u.previous_plan));
+  }, [users]);
+
   const subscriptionUsers = useMemo(() => {
     return users
       .filter(u => ['pro', 'max'].includes(u.plan))
@@ -209,6 +264,8 @@ export default function AdminPage() {
         return aExp - bExp;
       });
   }, [users]);
+
+  const [expandedHistory, setExpandedHistory] = useState<string | null>(null);
 
   const planStats = {
     total: users.length,
@@ -355,13 +412,15 @@ export default function AdminPage() {
 
             {/* 구독 사용자 테이블 */}
             <div className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden mb-5">
+              <h3 className="px-4 py-3 text-sm font-bold text-gray-700 border-b border-gray-200 bg-gray-50">현재 유료 구독자</h3>
               <div className="overflow-x-auto">
                 <table className="w-full text-sm">
                   <thead>
                     <tr className="bg-gray-50 border-b-2 border-gray-200">
                       <th className="text-left px-4 py-3 font-semibold text-gray-700">이름</th>
                       <th className="text-left px-4 py-3 font-semibold text-gray-700">이메일</th>
-                      <th className="text-center px-4 py-3 font-semibold text-gray-700">등급</th>
+                      <th className="text-center px-4 py-3 font-semibold text-gray-700">이전 등급</th>
+                      <th className="text-center px-4 py-3 font-semibold text-gray-700">현재 등급</th>
                       <th className="text-center px-4 py-3 font-semibold text-gray-700">만료일</th>
                       <th className="text-center px-4 py-3 font-semibold text-gray-700">상태</th>
                       <th className="text-center px-4 py-3 font-semibold text-gray-700">D-day</th>
@@ -371,16 +430,23 @@ export default function AdminPage() {
                   <tbody>
                     {subscriptionUsers.length === 0 ? (
                       <tr>
-                        <td colSpan={7} className="text-center py-12 text-gray-400">유료 구독 사용자가 없습니다.</td>
+                        <td colSpan={8} className="text-center py-12 text-gray-400">유료 구독 사용자가 없습니다.</td>
                       </tr>
                     ) : (
                       subscriptionUsers.map((user) => {
                         const badge = getPlanBadge(user.plan);
+                        const prevBadge = user.previous_plan ? getPlanBadge(user.previous_plan) : null;
                         const status = getExpiryStatus(user.plan_expires_at);
                         return (
+                          <>
                           <tr key={user.id} className="border-b border-gray-100 hover:bg-gray-50/50 transition-colors">
                             <td className="px-4 py-3 font-medium text-gray-800">{user.name || <span className="text-gray-400 italic">이름 없음</span>}</td>
                             <td className="px-4 py-3 text-gray-600 text-xs">{user.email}</td>
+                            <td className="text-center px-4 py-3">
+                              {prevBadge ? (
+                                <span className={`inline-block px-2.5 py-1 text-xs font-bold rounded-full border ${prevBadge.color}`}>{prevBadge.label}</span>
+                              ) : <span className="text-gray-300 text-xs">-</span>}
+                            </td>
                             <td className="text-center px-4 py-3">
                               <span className={`inline-block px-2.5 py-1 text-xs font-bold rounded-full border ${badge.color}`}>{badge.label}</span>
                             </td>
@@ -397,15 +463,57 @@ export default function AdminPage() {
                               <span className={`text-xs font-bold ${status.color}`}>{status.dday}</span>
                             </td>
                             <td className="text-center px-4 py-3">
-                              <button
-                                onClick={() => handleRenew(user.id)}
-                                disabled={updatingUser === user.id}
-                                className="px-3 py-1.5 text-xs font-semibold text-indigo-600 bg-indigo-50 border border-indigo-200 rounded-lg hover:bg-indigo-100 transition-all disabled:opacity-50"
-                              >
-                                {updatingUser === user.id ? '처리중...' : '30일 연장'}
-                              </button>
+                              <div className="flex items-center gap-1 justify-center flex-wrap">
+                                <button
+                                  onClick={() => handleRenew(user.id)}
+                                  disabled={updatingUser === user.id}
+                                  className="px-3 py-1.5 text-xs font-semibold text-indigo-600 bg-indigo-50 border border-indigo-200 rounded-lg hover:bg-indigo-100 transition-all disabled:opacity-50"
+                                >
+                                  {updatingUser === user.id ? '...' : '30일 연장'}
+                                </button>
+                                <button
+                                  onClick={() => handleSendExpiryNotice(user)}
+                                  disabled={sendingEmail === user.id}
+                                  className="px-3 py-1.5 text-xs font-semibold text-amber-600 bg-amber-50 border border-amber-200 rounded-lg hover:bg-amber-100 transition-all disabled:opacity-50"
+                                  title="등급 만료일 안내 및 유지 방법 이메일 발송"
+                                >
+                                  {sendingEmail === user.id ? '발송중...' : '만료 안내'}
+                                </button>
+                                <button
+                                  onClick={() => setExpandedHistory(expandedHistory === user.id ? null : user.id)}
+                                  className="px-2 py-1.5 text-xs font-semibold text-gray-500 bg-gray-50 border border-gray-200 rounded-lg hover:bg-gray-100 transition-all"
+                                  title="등급 변경 히스토리"
+                                >
+                                  {expandedHistory === user.id ? '접기' : '이력'}
+                                </button>
+                              </div>
                             </td>
                           </tr>
+                          {expandedHistory === user.id && (
+                            <tr key={`${user.id}-history`}>
+                              <td colSpan={8} className="px-4 py-3 bg-gray-50">
+                                <div className="text-xs">
+                                  <p className="font-semibold text-gray-700 mb-2">등급 변경 히스토리</p>
+                                  {user.plan_history.length === 0 ? (
+                                    <p className="text-gray-400">변경 이력이 없습니다.</p>
+                                  ) : (
+                                    <div className="space-y-1.5">
+                                      {user.plan_history.map((h, i) => (
+                                        <div key={i} className="flex items-center gap-2 text-gray-600">
+                                          <span className="text-gray-400 w-32">{formatDate(h.changed_at)}</span>
+                                          <span className={`px-2 py-0.5 rounded-full border text-[10px] font-bold ${getPlanBadge(h.old_plan).color}`}>{getPlanBadge(h.old_plan).label}</span>
+                                          <span className="text-gray-400">→</span>
+                                          <span className={`px-2 py-0.5 rounded-full border text-[10px] font-bold ${getPlanBadge(h.new_plan).color}`}>{getPlanBadge(h.new_plan).label}</span>
+                                          <span className="text-gray-400">({h.changed_by === 'system' ? '자동' : '관리자'})</span>
+                                        </div>
+                                      ))}
+                                    </div>
+                                  )}
+                                </div>
+                              </td>
+                            </tr>
+                          )}
+                          </>
                         );
                       })
                     )}
@@ -413,6 +521,86 @@ export default function AdminPage() {
                 </table>
               </div>
             </div>
+
+            {/* 다운그레이드된 사용자 (이전 유료 → 현재 무료) */}
+            {downgradedUsers.length > 0 && (
+              <div className="bg-white rounded-2xl shadow-sm border border-orange-200 overflow-hidden mb-5">
+                <h3 className="px-4 py-3 text-sm font-bold text-orange-700 border-b border-orange-200 bg-orange-50">만료 후 다운그레이드된 사용자</h3>
+                <div className="overflow-x-auto">
+                  <table className="w-full text-sm">
+                    <thead>
+                      <tr className="bg-orange-50/50 border-b-2 border-orange-200">
+                        <th className="text-left px-4 py-3 font-semibold text-gray-700">이름</th>
+                        <th className="text-left px-4 py-3 font-semibold text-gray-700">이메일</th>
+                        <th className="text-center px-4 py-3 font-semibold text-gray-700">이전 등급</th>
+                        <th className="text-center px-4 py-3 font-semibold text-gray-700">현재 등급</th>
+                        <th className="text-center px-4 py-3 font-semibold text-gray-700">액션</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {downgradedUsers.map(user => {
+                        const prevBadge = getPlanBadge(user.previous_plan!);
+                        return (
+                          <>
+                          <tr key={user.id} className="border-b border-gray-100 hover:bg-gray-50/50 transition-colors">
+                            <td className="px-4 py-3 font-medium text-gray-800">{user.name || <span className="text-gray-400 italic">이름 없음</span>}</td>
+                            <td className="px-4 py-3 text-gray-600 text-xs">{user.email}</td>
+                            <td className="text-center px-4 py-3">
+                              <span className={`inline-block px-2.5 py-1 text-xs font-bold rounded-full border ${prevBadge.color}`}>{prevBadge.label}</span>
+                            </td>
+                            <td className="text-center px-4 py-3">
+                              <span className="inline-block px-2.5 py-1 text-xs font-bold rounded-full border bg-gray-100 text-gray-700 border-gray-300">무료</span>
+                            </td>
+                            <td className="text-center px-4 py-3">
+                              <div className="flex items-center gap-1 justify-center">
+                                <button
+                                  onClick={() => handlePlanChange(user.id, user.previous_plan!)}
+                                  disabled={updatingUser === user.id}
+                                  className="px-3 py-1.5 text-xs font-semibold text-emerald-600 bg-emerald-50 border border-emerald-200 rounded-lg hover:bg-emerald-100 transition-all disabled:opacity-50"
+                                >
+                                  {updatingUser === user.id ? '...' : `${prevBadge.label}로 복원`}
+                                </button>
+                                <button
+                                  onClick={() => setExpandedHistory(expandedHistory === user.id ? null : user.id)}
+                                  className="px-2 py-1.5 text-xs font-semibold text-gray-500 bg-gray-50 border border-gray-200 rounded-lg hover:bg-gray-100 transition-all"
+                                >
+                                  {expandedHistory === user.id ? '접기' : '이력'}
+                                </button>
+                              </div>
+                            </td>
+                          </tr>
+                          {expandedHistory === user.id && (
+                            <tr key={`${user.id}-history`}>
+                              <td colSpan={5} className="px-4 py-3 bg-gray-50">
+                                <div className="text-xs">
+                                  <p className="font-semibold text-gray-700 mb-2">등급 변경 히스토리</p>
+                                  {user.plan_history.length === 0 ? (
+                                    <p className="text-gray-400">변경 이력이 없습니다.</p>
+                                  ) : (
+                                    <div className="space-y-1.5">
+                                      {user.plan_history.map((h, i) => (
+                                        <div key={i} className="flex items-center gap-2 text-gray-600">
+                                          <span className="text-gray-400 w-32">{formatDate(h.changed_at)}</span>
+                                          <span className={`px-2 py-0.5 rounded-full border text-[10px] font-bold ${getPlanBadge(h.old_plan).color}`}>{getPlanBadge(h.old_plan).label}</span>
+                                          <span className="text-gray-400">→</span>
+                                          <span className={`px-2 py-0.5 rounded-full border text-[10px] font-bold ${getPlanBadge(h.new_plan).color}`}>{getPlanBadge(h.new_plan).label}</span>
+                                          <span className="text-gray-400">({h.changed_by === 'system' ? '자동' : '관리자'})</span>
+                                        </div>
+                                      ))}
+                                    </div>
+                                  )}
+                                </div>
+                              </td>
+                            </tr>
+                          )}
+                          </>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            )}
           </>
         )}
 

@@ -31,15 +31,28 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ message: '만료된 사용자 없음', downgraded: 0 });
     }
 
-    // 일괄 다운그레이드 (free로 변경)
+    // 일괄 다운그레이드 (free로 변경, 이전 등급 보존)
     const userIds = expiredUsers.map(u => u.user_id);
-    const { error: updateError } = await supabase
-      .from('user_plans')
-      .update({ plan: 'free', expires_at: null })
-      .in('user_id', userIds);
 
-    if (updateError) {
-      return NextResponse.json({ error: updateError.message }, { status: 500 });
+    // 각 사용자별로 previous_plan 설정 후 다운그레이드
+    for (const user of expiredUsers) {
+      const { error: updateError } = await supabase
+        .from('user_plans')
+        .update({ plan: 'free', previous_plan: user.plan, expires_at: null })
+        .eq('user_id', user.user_id);
+
+      if (updateError) {
+        return NextResponse.json({ error: updateError.message }, { status: 500 });
+      }
+
+      // 히스토리 기록
+      await supabase.from('plan_history').insert({
+        user_id: user.user_id,
+        old_plan: user.plan,
+        new_plan: 'free',
+        changed_at: new Date().toISOString(),
+        changed_by: 'system',
+      });
     }
 
     return NextResponse.json({
