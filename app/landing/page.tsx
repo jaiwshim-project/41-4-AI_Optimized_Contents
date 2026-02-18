@@ -1,8 +1,10 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import { createClient } from '@/lib/supabase-client';
 
 const painPoints = [
   {
@@ -137,6 +139,18 @@ const faqs = [
 ];
 
 export default function PromotionLandingPage() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const supabase = createClient();
+    supabase.auth.getUser().then(({ data: { user } }) => {
+      setIsLoggedIn(!!user);
+    });
+  }, []);
+
+  const analyzeHref = isLoggedIn ? '/analyze' : '/signup';
+  const generateHref = isLoggedIn ? '/generate' : '/signup';
+
   return (
     <div className="min-h-screen bg-gray-50">
       <Header />
@@ -173,7 +187,7 @@ export default function PromotionLandingPage() {
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-5">
             <Link
-              href="/analyze"
+              href={analyzeHref}
               className="inline-flex items-center gap-2 px-8 py-4 bg-white text-indigo-700 text-base font-bold rounded-xl hover:bg-gray-100 transition-all shadow-xl shadow-indigo-900/30 w-full sm:w-auto justify-center"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -182,7 +196,7 @@ export default function PromotionLandingPage() {
               내 콘텐츠 무료 분석하기
             </Link>
             <Link
-              href="/generate"
+              href={generateHref}
               className="inline-flex items-center gap-2 px-8 py-4 bg-white/10 backdrop-blur-sm text-white text-base font-bold rounded-xl hover:bg-white/20 transition-all border border-white/20 w-full sm:w-auto justify-center"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -632,7 +646,7 @@ export default function PromotionLandingPage() {
               어떤 산업이든 AI에게 물어보는 시대가 왔습니다. 지금 당신의 업종을 테스트해 보세요.
             </p>
             <Link
-              href="/analyze"
+              href={analyzeHref}
               className="inline-flex items-center gap-2 px-7 py-3.5 bg-gradient-to-r from-indigo-600 to-violet-600 text-white text-sm font-bold rounded-xl hover:from-indigo-700 hover:to-violet-700 transition-all shadow-lg"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -821,7 +835,7 @@ export default function PromotionLandingPage() {
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
-              href="/analyze"
+              href={analyzeHref}
               className="inline-flex items-center gap-2 px-8 py-4 bg-white text-indigo-700 text-base font-bold rounded-xl hover:bg-gray-100 transition-all shadow-xl w-full sm:w-auto justify-center"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -830,7 +844,7 @@ export default function PromotionLandingPage() {
               내 콘텐츠 분석하기
             </Link>
             <Link
-              href="/generate"
+              href={generateHref}
               className="inline-flex items-center gap-2 px-8 py-4 bg-white/15 text-white text-base font-bold rounded-xl hover:bg-white/25 transition-all border border-white/30 w-full sm:w-auto justify-center"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
