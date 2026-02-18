@@ -440,7 +440,7 @@ const scenarios = [
 ];
 
 export default function MakeGuidePage() {
-  const [activeTab, setActiveTab] = useState<'overview' | 'api' | 'scenarios' | 'agency' | 'roadmap' | 'allinone'>('overview');
+  const [activeTab, setActiveTab] = useState<'overview' | 'api' | 'scenarios' | 'agency' | 'roadmap' | 'allinone' | 'competitive'>('overview');
   const [expandedApi, setExpandedApi] = useState<number | null>(null);
   const [expandedScenario, setExpandedScenario] = useState<number | null>(null);
 
@@ -451,6 +451,7 @@ export default function MakeGuidePage() {
     { id: 'agency' as const, label: '에이전시 활용', icon: '🏢' },
     { id: 'roadmap' as const, label: '향후 개발', icon: '🗺️' },
     { id: 'allinone' as const, label: '올인원 배포 서비스', icon: '🚀' },
+    { id: 'competitive' as const, label: '경쟁력 분석', icon: '🏆' },
   ];
 
   return (
@@ -1557,6 +1558,394 @@ Make.com (백그라운드 처리)
                     </div>
                   </div>
                 ))}
+              </div>
+            </section>
+          </div>
+        )}
+        {/* ===== Part 7: 경쟁력 분석 ===== */}
+        {activeTab === 'competitive' && (
+          <div className="space-y-8">
+            {/* 히어로 */}
+            <section className="bg-gradient-to-br from-slate-900 via-indigo-900 to-purple-900 rounded-2xl p-6 sm:p-8 text-white">
+              <div className="text-center">
+                <span className="inline-block px-3 py-1 bg-white/10 rounded-full text-sm mb-3">Competitive Analysis</span>
+                <h2 className="text-2xl sm:text-3xl font-bold mb-3">경쟁력 분석 및 시장 영향 예측</h2>
+                <p className="text-indigo-200 max-w-2xl mx-auto text-sm">
+                  AIO/GEO Optimizer의 경쟁 환경, 차별적 가치, 시장 영향력, 고객 세그먼트별 반응을 분석합니다.
+                </p>
+              </div>
+            </section>
+
+            {/* 직접 경쟁자 비교 */}
+            <section className="bg-white rounded-2xl p-6 sm:p-8 border border-gray-100 shadow-sm">
+              <h2 className="text-xl font-bold text-gray-900 mb-4">직접 경쟁자 비교</h2>
+              <div className="overflow-x-auto">
+                <table className="w-full text-xs">
+                  <thead className="bg-gray-50">
+                    <tr>
+                      <th className="text-left px-3 py-2.5 font-semibold text-gray-600">경쟁사</th>
+                      <th className="text-left px-3 py-2.5 font-semibold text-gray-600">핵심 기능</th>
+                      <th className="text-left px-3 py-2.5 font-semibold text-gray-600">한계점</th>
+                      <th className="text-left px-3 py-2.5 font-semibold text-indigo-600 bg-indigo-50">우리의 차별점</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {[
+                      { name: 'ChatGPT / Claude', feature: '범용 AI 콘텐츠 생성', limit: 'AIO/GEO 최적화 전무, 매번 프롬프트 작성', diff: 'AIO/GEO 전용 엔진 내장, 원클릭 생성' },
+                      { name: 'Jasper AI', feature: '마케팅 콘텐츠 생성', limit: 'SEO 중심, AI 검색 최적화 없음, 영어 중심', diff: '한국어 AIO/GEO 최적화, E-E-A-T 자동 적용' },
+                      { name: 'SurferSEO', feature: 'SEO 콘텐츠 분석/최적화', limit: '구글 SEO만 대응, AI 검색엔진 미대응', diff: 'AI 검색엔진 인용 최적화 (ChatGPT, Gemini, Perplexity)' },
+                      { name: 'Frase.io', feature: 'SEO 리서치 + 콘텐츠', limit: 'SERP 기반 분석만, AIO 점수 없음', diff: 'AIO/GEO 점수 측정 + 개선 가이드 제공' },
+                      { name: '뤼튼 (Wrtn)', feature: '한국어 AI 콘텐츠', limit: '범용 생성, 마케팅 최적화 약함', diff: 'AIO/GEO 특화, 산업별 맞춤, 멀티채널 변환' },
+                      { name: 'Buffer / Hootsuite', feature: 'SNS 예약 발행', limit: '콘텐츠 생성 불가, 배포만', diff: '생성 + 최적화 + 변환 + 배포 올인원' },
+                      { name: '블로그 마케팅 업체', feature: '수작업 블로그 대행', limit: '월 수백만원, AIO 개념 없음', diff: '자동화로 90% 비용 절감, AI 검색 최적화' },
+                    ].map((row, i) => (
+                      <tr key={i} className="border-t border-gray-100">
+                        <td className="px-3 py-2.5 font-semibold text-gray-800 whitespace-nowrap">{row.name}</td>
+                        <td className="px-3 py-2.5 text-gray-600">{row.feature}</td>
+                        <td className="px-3 py-2.5 text-red-500">{row.limit}</td>
+                        <td className="px-3 py-2.5 text-indigo-700 bg-indigo-50/50 font-medium">{row.diff}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </section>
+
+            {/* 간접 경쟁자 */}
+            <section className="bg-white rounded-2xl p-6 sm:p-8 border border-gray-100 shadow-sm">
+              <h2 className="text-xl font-bold text-gray-900 mb-4">간접 경쟁자</h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+                {[
+                  { category: '마케팅 에이전시', name: '블로그 마케팅 대행사', relation: '잠재 고객이자 경쟁자', color: 'bg-amber-50 border-amber-100' },
+                  { category: 'SEO 도구', name: 'Ahrefs, SEMrush', relation: '전통 SEO 분석, AI 대응 부족', color: 'bg-blue-50 border-blue-100' },
+                  { category: '자동화 도구', name: 'Make.com, Zapier', relation: '경쟁 아닌 통합 파트너', color: 'bg-green-50 border-green-100' },
+                  { category: 'CMS 플러그인', name: 'Yoast SEO, RankMath', relation: 'WordPress SEO만, AIO 없음', color: 'bg-purple-50 border-purple-100' },
+                ].map((item, i) => (
+                  <div key={i} className={`${item.color} rounded-xl p-4 border`}>
+                    <span className="text-xs font-bold text-gray-500 uppercase">{item.category}</span>
+                    <p className="text-sm font-semibold text-gray-800 mt-1">{item.name}</p>
+                    <p className="text-xs text-gray-500 mt-1">{item.relation}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            {/* 5대 차별성 */}
+            <section className="bg-white rounded-2xl p-6 sm:p-8 border border-gray-100 shadow-sm">
+              <h2 className="text-xl font-bold text-gray-900 mb-6">5대 핵심 차별성</h2>
+              <div className="space-y-4">
+                {[
+                  {
+                    num: 1,
+                    title: '유일한 AIO/GEO 전용 플랫폼',
+                    desc: '현재 시장에 AIO/GEO 전용 최적화 플랫폼은 존재하지 않습니다. SEO 도구는 많지만, ChatGPT/Gemini/Perplexity 등 AI 검색엔진이 콘텐츠를 인용하도록 최적화하는 전용 도구는 우리가 최초입니다.',
+                    badge: '카테고리 최초',
+                    badgeColor: 'bg-red-100 text-red-700',
+                  },
+                  {
+                    num: 2,
+                    title: '분석 → 생성 → 최적화 → 배포 올인원',
+                    desc: '기존에는 분석(SurferSEO) + 생성(Jasper) + 배포(Buffer) = 3개 도구에 월 $200+ 비용이 필요했습니다. 우리는 하나의 플랫폼에서 전 과정을 처리합니다.',
+                    badge: '비용 80% 절감',
+                    badgeColor: 'bg-green-100 text-green-700',
+                  },
+                  {
+                    num: 3,
+                    title: '한국 시장 특화',
+                    desc: '네이버 블로그 SEO, 한국어 E-E-A-T 구조, 한국 산업별 맞춤 최적화 (의료, 법률, 교육, 부동산 등), 카드뉴스 형식 변환 등 한국 시장 고유 기능을 지원합니다.',
+                    badge: '로컬 최적화',
+                    badgeColor: 'bg-blue-100 text-blue-700',
+                  },
+                  {
+                    num: 4,
+                    title: '특허 기술 보호',
+                    desc: '특허 및 저작권 등록으로 법적 보호를 받고 있습니다. 경쟁사의 단순 모방을 차단하고 기술적 해자(moat)를 확보했습니다.',
+                    badge: '법적 보호',
+                    badgeColor: 'bg-amber-100 text-amber-700',
+                  },
+                  {
+                    num: 5,
+                    title: '자동화 연동 설계',
+                    desc: 'Make.com/Zapier/n8n 연동을 처음부터 고려한 API 설계로, 에이전시가 구독형 서비스로 재판매 가능한 구조를 갖추고 있습니다.',
+                    badge: '생태계 구축',
+                    badgeColor: 'bg-purple-100 text-purple-700',
+                  },
+                ].map((item) => (
+                  <div key={item.num} className="flex items-start gap-4 p-5 rounded-xl bg-gray-50 hover:bg-indigo-50 transition-colors">
+                    <span className="w-9 h-9 bg-indigo-600 text-white rounded-full flex items-center justify-center text-sm font-bold shrink-0">{item.num}</span>
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2 mb-1">
+                        <h3 className="text-sm font-bold text-gray-900">{item.title}</h3>
+                        <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${item.badgeColor}`}>{item.badge}</span>
+                      </div>
+                      <p className="text-xs text-gray-600 leading-relaxed">{item.desc}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            {/* 패러다임 전환 */}
+            <section className="bg-gradient-to-r from-slate-800 to-indigo-900 rounded-2xl p-6 sm:p-8 text-white">
+              <h2 className="text-xl font-bold mb-4">시장 패러다임 전환</h2>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="bg-white/10 rounded-xl p-5 text-center">
+                  <span className="text-xs text-indigo-300 uppercase font-semibold">현재</span>
+                  <p className="text-lg font-bold mt-2">&ldquo;SEO 잘 되는 글&rdquo;</p>
+                  <p className="text-xs text-indigo-200 mt-1">= 좋은 콘텐츠의 기준</p>
+                </div>
+                <div className="flex items-center justify-center">
+                  <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
+                    <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg>
+                  </div>
+                </div>
+                <div className="bg-white/10 rounded-xl p-5 text-center border-2 border-purple-400/50">
+                  <span className="text-xs text-purple-300 uppercase font-semibold">미래 (우리가 선도)</span>
+                  <p className="text-lg font-bold mt-2">&ldquo;AI가 인용하는 글&rdquo;</p>
+                  <p className="text-xs text-purple-200 mt-1">= 좋은 콘텐츠의 새 기준</p>
+                </div>
+              </div>
+            </section>
+
+            {/* 시장 영향 */}
+            <section className="bg-white rounded-2xl p-6 sm:p-8 border border-gray-100 shadow-sm">
+              <h2 className="text-xl font-bold text-gray-900 mb-4">시장 영향 예측</h2>
+              <div className="space-y-4">
+                {/* 비용 구조 변화 */}
+                <div className="bg-emerald-50 rounded-xl p-5 border border-emerald-100">
+                  <h3 className="text-sm font-bold text-gray-800 mb-3 flex items-center gap-2">
+                    <span className="text-lg">💰</span> 콘텐츠 마케팅 비용 구조 변화
+                  </h3>
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-xs">
+                      <thead>
+                        <tr className="border-b border-emerald-200">
+                          <th className="text-left px-3 py-2 font-medium text-gray-600">항목</th>
+                          <th className="text-center px-3 py-2 font-medium text-gray-400">현재</th>
+                          <th className="text-center px-3 py-2 font-medium text-emerald-600">도입 후</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr className="border-b border-emerald-100"><td className="px-3 py-2 text-gray-700">콘텐츠 1편 비용</td><td className="px-3 py-2 text-center text-gray-500">5~20만원</td><td className="px-3 py-2 text-center text-emerald-700 font-medium">500~1,000원</td></tr>
+                        <tr className="border-b border-emerald-100"><td className="px-3 py-2 text-gray-700">월 20편 운영비</td><td className="px-3 py-2 text-center text-gray-500">100~400만원</td><td className="px-3 py-2 text-center text-emerald-700 font-medium">1~2만원</td></tr>
+                        <tr className="border-b border-emerald-100"><td className="px-3 py-2 text-gray-700">멀티채널 추가 비용</td><td className="px-3 py-2 text-center text-gray-500">채널당 추가</td><td className="px-3 py-2 text-center text-emerald-700 font-medium">무료 (자동 변환)</td></tr>
+                        <tr><td className="px-3 py-2 text-gray-700">진입 장벽</td><td className="px-3 py-2 text-center text-gray-500">전문 인력 필요</td><td className="px-3 py-2 text-center text-emerald-700 font-medium">키워드만 입력</td></tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <p className="text-xs text-emerald-700 font-medium mt-3 text-center">
+                    → 소상공인, 1인 기업도 대기업 수준의 콘텐츠 마케팅이 가능해집니다
+                  </p>
+                </div>
+
+                {/* 에이전시 산업 재편 */}
+                <div className="bg-purple-50 rounded-xl p-5 border border-purple-100">
+                  <h3 className="text-sm font-bold text-gray-800 mb-3 flex items-center gap-2">
+                    <span className="text-lg">🏢</span> 마케팅 에이전시 산업 재편
+                  </h3>
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                    <div className="bg-white rounded-lg p-3">
+                      <span className="text-xs font-bold text-red-500">단순 대행 에이전시</span>
+                      <p className="text-xs text-gray-600 mt-1">가격 경쟁력 상실 → 서비스 고도화 필요</p>
+                    </div>
+                    <div className="bg-white rounded-lg p-3">
+                      <span className="text-xs font-bold text-blue-600">전략형 에이전시</span>
+                      <p className="text-xs text-gray-600 mt-1">우리 플랫폼을 도구로 활용 → 생산성 극대화</p>
+                    </div>
+                    <div className="bg-white rounded-lg p-3">
+                      <span className="text-xs font-bold text-emerald-600">신규 유형 등장</span>
+                      <p className="text-xs text-gray-600 mt-1">&ldquo;AIO 마케팅 전문 에이전시&rdquo; 새 카테고리</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            {/* 고객 세그먼트별 반응 */}
+            <section className="bg-white rounded-2xl p-6 sm:p-8 border border-gray-100 shadow-sm">
+              <h2 className="text-xl font-bold text-gray-900 mb-6">고객 세그먼트별 예상 반응</h2>
+              <div className="space-y-4">
+                {[
+                  {
+                    segment: '소상공인 / 자영업자',
+                    reaction: '"드디어 나도 블로그 마케팅을 할 수 있겠다"',
+                    positive: ['비용 부담 제거', '전문 지식 불필요', '즉시 사용 가능'],
+                    concern: '"AI가 만든 글이 진짜 효과가 있나?"',
+                    persuasion: '무료 체험 → AIO 점수 비교 → AI 검색 인용 사례',
+                    conversion: '15~25%',
+                    emoji: '🏪',
+                    bgColor: 'bg-orange-50 border-orange-100',
+                  },
+                  {
+                    segment: '마케팅 담당자 (중소기업)',
+                    reaction: '"SEO도 아직 어려운데 AIO가 뭐지? ... 이거 필요하겠다"',
+                    positive: ['분석 리포트 자동 생성', '멀티채널 한 번에 해결', '상사 보고에 활용'],
+                    concern: '"기존 SEO 전략과 충돌하지 않나?"',
+                    persuasion: 'AIO가 SEO를 보완한다는 점 + 톤 커스터마이징',
+                    conversion: '20~35%',
+                    emoji: '👔',
+                    bgColor: 'bg-blue-50 border-blue-100',
+                  },
+                  {
+                    segment: '마케팅 에이전시',
+                    reaction: '"인건비 80% 절감 vs 고객이 직접 하겠다고 하면?"',
+                    positive: ['인건비 절감', '고객당 수익률 증가', '새 서비스 상품화'],
+                    concern: '"고객 이탈 가능성, 블로그 대행 가치 하락"',
+                    persuasion: 'Agency 화이트라벨 + 전략 컨설팅은 여전히 사람 필요',
+                    conversion: '얼리어답터 빠른 도입 → 나머지 추종',
+                    emoji: '🏢',
+                    bgColor: 'bg-purple-50 border-purple-100',
+                  },
+                  {
+                    segment: '대기업 마케팅팀',
+                    reaction: '"검증이 필요하다. 보안은? 커스터마이징은?"',
+                    positive: ['AI 검색 대응 필요성 인식', '대규모 콘텐츠 자동화'],
+                    concern: '"데이터 보안, 브랜드 가이드라인 준수"',
+                    persuasion: 'API 기반 통합 + 온프레미스 옵션 (향후) + 커스텀 프롬프트',
+                    conversion: '검토 3~6개월 → 파일럿 → 전사 도입',
+                    emoji: '🏛️',
+                    bgColor: 'bg-slate-50 border-slate-100',
+                  },
+                  {
+                    segment: '콘텐츠 크리에이터 / 블로거',
+                    reaction: '"AI 글이 내 글보다 AIO 점수가 높다고? 같이 쓰자"',
+                    positive: ['초안 생성 → 자기 스타일로 수정', '생산성 극대화'],
+                    concern: '"AI 글 감지, 고유한 목소리 상실"',
+                    persuasion: 'AI 초안 + 사람의 경험/관점 = 최적 조합',
+                    conversion: '자연스러운 채택',
+                    emoji: '✍️',
+                    bgColor: 'bg-emerald-50 border-emerald-100',
+                  },
+                ].map((seg, i) => (
+                  <div key={i} className={`${seg.bgColor} rounded-xl p-5 border`}>
+                    <div className="flex items-center gap-2 mb-3">
+                      <span className="text-2xl">{seg.emoji}</span>
+                      <h3 className="text-sm font-bold text-gray-900">{seg.segment}</h3>
+                    </div>
+                    <div className="bg-white rounded-lg p-3 mb-3">
+                      <p className="text-sm text-indigo-700 font-medium italic">{seg.reaction}</p>
+                    </div>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-xs">
+                      <div>
+                        <span className="font-semibold text-green-700 block mb-1">긍정 요인</span>
+                        <ul className="space-y-0.5 text-gray-600">
+                          {seg.positive.map((p, pi) => <li key={pi} className="flex items-start gap-1"><span className="text-green-500">+</span>{p}</li>)}
+                        </ul>
+                      </div>
+                      <div>
+                        <span className="font-semibold text-red-600 block mb-1">우려 사항</span>
+                        <p className="text-gray-600">{seg.concern}</p>
+                      </div>
+                      <div>
+                        <span className="font-semibold text-blue-600 block mb-1">설득 포인트</span>
+                        <p className="text-gray-600">{seg.persuasion}</p>
+                      </div>
+                      <div>
+                        <span className="font-semibold text-purple-600 block mb-1">예상 전환</span>
+                        <p className="text-gray-700 font-medium">{seg.conversion}</p>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            {/* 경쟁사 예상 대응 */}
+            <section className="bg-white rounded-2xl p-6 sm:p-8 border border-gray-100 shadow-sm">
+              <h2 className="text-xl font-bold text-gray-900 mb-4">경쟁사 예상 대응 및 방어 전략</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-6">
+                {/* 단기 */}
+                <div className="border border-amber-200 rounded-xl p-5 bg-amber-50">
+                  <h3 className="text-sm font-bold text-amber-800 mb-3">단기 (6개월 이내)</h3>
+                  <ul className="space-y-2 text-xs text-gray-700">
+                    <li className="flex items-start gap-2"><span className="text-amber-500 font-bold shrink-0">SEO 도구</span><span>&ldquo;AI 검색 최적화&rdquo; 기능 추가 시도, 기존 SEO 프레임에 얹는 수준</span></li>
+                    <li className="flex items-start gap-2"><span className="text-amber-500 font-bold shrink-0">AI 글쓰기</span><span>&ldquo;AIO 최적화&rdquo; 마케팅 문구 추가, 실질 기능 제한적</span></li>
+                    <li className="flex items-start gap-2"><span className="text-amber-500 font-bold shrink-0">대행사</span><span>가격 인하, &ldquo;사람이 쓴 글이 더 좋다&rdquo; 포지셔닝</span></li>
+                  </ul>
+                </div>
+                {/* 중기 */}
+                <div className="border border-red-200 rounded-xl p-5 bg-red-50">
+                  <h3 className="text-sm font-bold text-red-800 mb-3">중기 (6~18개월)</h3>
+                  <ul className="space-y-2 text-xs text-gray-700">
+                    <li className="flex items-start gap-2"><span className="text-red-500 font-bold shrink-0">대형 플랫폼</span><span>AIO 기능 부분 도입, 범용 도구의 한계로 깊이 부족</span></li>
+                    <li className="flex items-start gap-2"><span className="text-red-500 font-bold shrink-0">SEO 도구</span><span>AIO 전용 모듈 개발, 직접 경쟁 시작</span></li>
+                    <li className="flex items-start gap-2"><span className="text-red-500 font-bold shrink-0">신규 진입자</span><span>AIO/GEO 카테고리 보고 유사 서비스 출시 시도</span></li>
+                  </ul>
+                </div>
+              </div>
+
+              {/* 방어 전략 */}
+              <h3 className="text-sm font-bold text-gray-800 mb-3">우리의 5대 방어 전략</h3>
+              <div className="grid grid-cols-1 sm:grid-cols-5 gap-3">
+                {[
+                  { icon: '🛡️', title: '특허 보호', desc: '핵심 알고리즘 법적 보호' },
+                  { icon: '🥇', title: '선점 효과', desc: '카테고리 최초 브랜드 인지' },
+                  { icon: '📊', title: '데이터 해자', desc: '분석 데이터 축적 → 품질 향상' },
+                  { icon: '🔗', title: '생태계 구축', desc: 'API + 파트너 → 전환 비용' },
+                  { icon: '🇰🇷', title: '로컬 최적화', desc: '글로벌 경쟁사 추격 어려움' },
+                ].map((s, i) => (
+                  <div key={i} className="bg-indigo-50 rounded-xl p-4 text-center border border-indigo-100">
+                    <span className="text-2xl">{s.icon}</span>
+                    <h4 className="text-xs font-bold text-gray-800 mt-2">{s.title}</h4>
+                    <p className="text-xs text-gray-500 mt-0.5">{s.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            {/* 시장 기회 규모 */}
+            <section className="bg-white rounded-2xl p-6 sm:p-8 border border-gray-100 shadow-sm">
+              <h2 className="text-xl font-bold text-gray-900 mb-4">시장 기회 규모</h2>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+                <div className="bg-blue-50 rounded-xl p-5 border border-blue-100">
+                  <h3 className="text-xs font-bold text-blue-600 uppercase mb-2">한국 콘텐츠 마케팅 시장</h3>
+                  <p className="text-2xl font-bold text-gray-900">약 2조원</p>
+                  <ul className="mt-3 space-y-1 text-xs text-gray-600">
+                    <li>블로그 마케팅: ~5,000억원</li>
+                    <li>SNS 마케팅: ~8,000억원</li>
+                    <li>SEO/SEM: ~3,000억원</li>
+                  </ul>
+                </div>
+                <div className="bg-purple-50 rounded-xl p-5 border border-purple-100">
+                  <h3 className="text-xs font-bold text-purple-600 uppercase mb-2">AIO/GEO 신규 시장</h3>
+                  <p className="text-2xl font-bold text-gray-900">1,000~3,000억원</p>
+                  <p className="text-xs text-gray-500 mt-2">AI 검색 전환에 따른 신규 카테고리</p>
+                  <p className="text-xs text-purple-600 font-medium mt-1">우리가 최초로 정의하는 시장</p>
+                </div>
+                <div className="bg-emerald-50 rounded-xl p-5 border border-emerald-100">
+                  <h3 className="text-xs font-bold text-emerald-600 uppercase mb-2">초기 타겟</h3>
+                  <p className="text-2xl font-bold text-gray-900">500만+ 사업체</p>
+                  <ul className="mt-3 space-y-1 text-xs text-gray-600">
+                    <li>소상공인 + 중소기업: ~500만개</li>
+                    <li>마케팅 에이전시: ~5,000개</li>
+                  </ul>
+                  <p className="text-xs text-emerald-700 font-medium mt-2">3년 목표 1~3% 점유 → 100~300억원</p>
+                </div>
+              </div>
+            </section>
+
+            {/* 핵심 요약 */}
+            <section className="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-2xl p-6 sm:p-8 text-white">
+              <h2 className="text-xl font-bold mb-5 text-center">핵심 요약</h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                {[
+                  { label: '최대 강점', value: 'AIO/GEO 전용 "최초" 플랫폼' },
+                  { label: '차별적 가치', value: '분석→생성→최적화→변환→배포 올인원' },
+                  { label: '시장 타이밍', value: 'AI 검색 전환기, 카테고리 선점 기회' },
+                  { label: '기대 반응', value: '소상공인 환영, 에이전시 양면적, 대기업 관망' },
+                  { label: '경쟁 방어', value: '특허 + 선점 + 데이터 + 생태계' },
+                  { label: '최대 리스크', value: '시장 교육 비용 (AIO/GEO 인지도)' },
+                ].map((item, i) => (
+                  <div key={i} className="bg-white/10 rounded-xl p-4">
+                    <span className="text-xs text-indigo-200 uppercase font-semibold">{item.label}</span>
+                    <p className="text-sm font-bold mt-1">{item.value}</p>
+                  </div>
+                ))}
+              </div>
+              <div className="mt-5 text-center">
+                <p className="text-sm text-indigo-200">
+                  <strong className="text-white">핵심 전략:</strong> 무료 체험으로 진입 장벽을 낮추고, 에이전시 파트너십으로 확산
+                </p>
               </div>
             </section>
           </div>
