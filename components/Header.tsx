@@ -77,7 +77,7 @@ export default function Header({ showApiKeyButton = false, onToggleApiKey, apiKe
   const displayName = user?.user_metadata?.full_name || user?.email?.split('@')[0] || '';
 
   return (
-    <header className="bg-white border-b border-gray-200 sticky top-0 z-50">
+    <header className="bg-gradient-to-r from-indigo-50 via-violet-50 to-purple-50 border-b border-indigo-100 sticky top-0 z-50 backdrop-blur-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-12">
           {/* 로고 */}
