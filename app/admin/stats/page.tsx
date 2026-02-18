@@ -6,6 +6,15 @@ import Footer from '@/components/Footer';
 import Link from 'next/link';
 import { getUserPlan } from '@/lib/usage';
 
+interface PlanChangeEntry {
+  name: string;
+  email: string;
+  old_plan: string;
+  new_plan: string;
+  changed_at: string;
+  changed_by: string;
+}
+
 interface StatsData {
   totalUsers: number;
   planCounts: { admin: number; free: number; tester: number; pro: number; max: number };
@@ -17,6 +26,12 @@ interface StatsData {
   activeWeek: number;
   topUsers: { name: string; email: string; plan: string; total: number }[];
   currentMonth: string;
+  planChangeTrend: { month: string; upgrades: number; downgrades: number; total: number }[];
+  planTransitions: { from: string; to: string; count: number }[];
+  changeBySource: { admin: number; system: number };
+  recentChanges: PlanChangeEntry[];
+  subscriptionSummary: { totalPaid: number; pro: number; max: number; expiringSoon: number; expired: number };
+  totalPlanChanges: number;
 }
 
 const FEATURE_LABELS: Record<string, string> = {
@@ -36,13 +51,28 @@ const FEATURE_COLORS: Record<string, { bg: string; text: string; bar: string }> 
 const PLAN_STYLES: Record<string, string> = {
   admin: 'bg-red-100 text-red-700',
   free: 'bg-gray-100 text-gray-700',
+  tester: 'bg-emerald-100 text-emerald-700',
   pro: 'bg-blue-100 text-blue-700',
   max: 'bg-violet-100 text-violet-700',
+};
+
+const PLAN_LABELS: Record<string, string> = {
+  admin: '관리자',
+  free: '무료',
+  tester: '테스터',
+  pro: '프로',
+  max: '맥스',
 };
 
 function formatMonth(month: string) {
   const [y, m] = month.split('-');
   return `${y}.${m}`;
+}
+
+function formatDate(dateStr: string | null) {
+  if (!dateStr) return '-';
+  const d = new Date(dateStr);
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')} ${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
 }
 
 export default function AdminStatsPage() {
@@ -324,7 +354,174 @@ export default function AdminStatsPage() {
               </div>
             </div>
 
-            {/* 4행: 상위 사용자 */}
+            {/* 4행: 구독 현황 + 등급 변경 요약 */}
+            <div className="grid grid-cols-2 md:grid-cols-5 gap-3 mb-5">
+              <div className="bg-gradient-to-br from-indigo-50 to-white rounded-xl p-4 border border-indigo-200 shadow-sm">
+                <p className="text-[11px] font-semibold text-indigo-400 uppercase tracking-wider mb-1">유료 구독자</p>
+                <p className="text-2xl font-extrabold text-indigo-600 tabular-nums">{stats.subscriptionSummary.totalPaid}<span className="text-sm font-bold ml-0.5">명</span></p>
+                <div className="flex gap-2 mt-1.5">
+                  <span className="text-[10px] font-bold text-blue-600 bg-blue-50 px-1.5 py-0.5 rounded">PRO {stats.subscriptionSummary.pro}</span>
+                  <span className="text-[10px] font-bold text-violet-600 bg-violet-50 px-1.5 py-0.5 rounded">MAX {stats.subscriptionSummary.max}</span>
+                </div>
+              </div>
+              <div className="bg-gradient-to-br from-orange-50 to-white rounded-xl p-4 border border-orange-200 shadow-sm">
+                <p className="text-[11px] font-semibold text-orange-400 uppercase tracking-wider mb-1">만료 임박</p>
+                <p className="text-2xl font-extrabold text-orange-600 tabular-nums">{stats.subscriptionSummary.expiringSoon}<span className="text-sm font-bold ml-0.5">명</span></p>
+                <p className="text-[10px] text-gray-400 mt-1">7일 이내</p>
+              </div>
+              <div className="bg-gradient-to-br from-red-50 to-white rounded-xl p-4 border border-red-200 shadow-sm">
+                <p className="text-[11px] font-semibold text-red-400 uppercase tracking-wider mb-1">만료됨</p>
+                <p className="text-2xl font-extrabold text-red-600 tabular-nums">{stats.subscriptionSummary.expired}<span className="text-sm font-bold ml-0.5">명</span></p>
+              </div>
+              <div className="bg-gradient-to-br from-emerald-50 to-white rounded-xl p-4 border border-emerald-200 shadow-sm">
+                <p className="text-[11px] font-semibold text-emerald-400 uppercase tracking-wider mb-1">총 등급 변경</p>
+                <p className="text-2xl font-extrabold text-emerald-600 tabular-nums">{stats.totalPlanChanges}<span className="text-sm font-bold ml-0.5">건</span></p>
+                <div className="flex gap-2 mt-1.5">
+                  <span className="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded">관리자 {stats.changeBySource.admin}</span>
+                  <span className="text-[10px] font-bold text-gray-500 bg-gray-100 px-1.5 py-0.5 rounded">자동 {stats.changeBySource.system}</span>
+                </div>
+              </div>
+              <div className="bg-gradient-to-br from-cyan-50 to-white rounded-xl p-4 border border-cyan-200 shadow-sm">
+                <p className="text-[11px] font-semibold text-cyan-400 uppercase tracking-wider mb-1">이번 달 변경</p>
+                {(() => {
+                  const thisMonth = stats.planChangeTrend[stats.planChangeTrend.length - 1];
+                  return (
+                    <>
+                      <p className="text-2xl font-extrabold text-cyan-600 tabular-nums">{thisMonth?.total || 0}<span className="text-sm font-bold ml-0.5">건</span></p>
+                      <div className="flex gap-2 mt-1.5">
+                        <span className="text-[10px] font-bold text-green-600 bg-green-50 px-1.5 py-0.5 rounded">↑ {thisMonth?.upgrades || 0}</span>
+                        <span className="text-[10px] font-bold text-red-600 bg-red-50 px-1.5 py-0.5 rounded">↓ {thisMonth?.downgrades || 0}</span>
+                      </div>
+                    </>
+                  );
+                })()}
+              </div>
+            </div>
+
+            {/* 5행: 월별 등급 변경 추이 + 등급 전환 흐름 */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-5">
+              {/* 월별 업그레이드/다운그레이드 추이 */}
+              <div className="bg-white rounded-xl p-5 border border-gray-200 shadow-sm">
+                <h3 className="text-sm font-bold text-gray-800 mb-4">월별 등급 변경 추이 <span className="text-gray-400 font-normal">(최근 6개월)</span></h3>
+                <div className="flex items-end gap-3 h-44">
+                  {stats.planChangeTrend.map((m) => {
+                    const maxVal = Math.max(...stats.planChangeTrend.map(t => Math.max(t.upgrades, t.downgrades)), 1);
+                    const upH = (m.upgrades / maxVal) * 120;
+                    const downH = (m.downgrades / maxVal) * 120;
+                    return (
+                      <div key={m.month} className="flex-1 flex flex-col items-center gap-1">
+                        <div className="flex items-center gap-0.5 text-[10px] font-bold">
+                          <span className="text-green-600">↑{m.upgrades}</span>
+                          <span className="text-gray-300">/</span>
+                          <span className="text-red-600">↓{m.downgrades}</span>
+                        </div>
+                        <div className="w-full flex gap-0.5 items-end" style={{ height: '120px' }}>
+                          <div className="flex-1 bg-green-400 rounded-t-md transition-all" style={{ height: `${upH}px` }} />
+                          <div className="flex-1 bg-red-400 rounded-t-md transition-all" style={{ height: `${downH}px` }} />
+                        </div>
+                        <span className="text-[11px] font-medium text-gray-500">{formatMonth(m.month)}</span>
+                      </div>
+                    );
+                  })}
+                </div>
+                <div className="flex items-center gap-6 mt-4 justify-center border-t border-gray-100 pt-3">
+                  <div className="flex items-center gap-1.5">
+                    <div className="w-2.5 h-2.5 rounded-full bg-green-400" />
+                    <span className="text-[11px] font-medium text-gray-500">업그레이드</span>
+                  </div>
+                  <div className="flex items-center gap-1.5">
+                    <div className="w-2.5 h-2.5 rounded-full bg-red-400" />
+                    <span className="text-[11px] font-medium text-gray-500">다운그레이드</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* 등급 전환 흐름 */}
+              <div className="bg-white rounded-xl p-5 border border-gray-200 shadow-sm">
+                <h3 className="text-sm font-bold text-gray-800 mb-4">등급 전환 흐름 <span className="text-gray-400 font-normal">(전체 기간)</span></h3>
+                {stats.planTransitions.length === 0 ? (
+                  <div className="flex items-center justify-center h-44 text-gray-400 text-sm">변경 이력이 없습니다</div>
+                ) : (
+                  <div className="space-y-2.5 max-h-52 overflow-y-auto">
+                    {stats.planTransitions.map((t, i) => {
+                      const maxCount = stats.planTransitions[0]?.count || 1;
+                      const pct = (t.count / maxCount) * 100;
+                      const isUpgrade = (() => {
+                        const rank: Record<string, number> = { free: 0, tester: 1, pro: 2, max: 3, admin: 4 };
+                        return (rank[t.to] || 0) > (rank[t.from] || 0);
+                      })();
+                      return (
+                        <div key={i}>
+                          <div className="flex items-center justify-between mb-1">
+                            <div className="flex items-center gap-1.5">
+                              <span className={`px-2 py-0.5 text-[10px] font-bold rounded-md ${PLAN_STYLES[t.from] || PLAN_STYLES.free}`}>{PLAN_LABELS[t.from] || t.from}</span>
+                              <span className="text-gray-400 text-xs">→</span>
+                              <span className={`px-2 py-0.5 text-[10px] font-bold rounded-md ${PLAN_STYLES[t.to] || PLAN_STYLES.free}`}>{PLAN_LABELS[t.to] || t.to}</span>
+                              <span className={`text-[10px] font-bold ${isUpgrade ? 'text-green-500' : 'text-red-500'}`}>{isUpgrade ? '↑' : '↓'}</span>
+                            </div>
+                            <span className="text-xs font-extrabold text-gray-700 tabular-nums">{t.count}건</span>
+                          </div>
+                          <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
+                            <div className={`h-full rounded-full transition-all ${isUpgrade ? 'bg-green-400' : 'bg-red-400'}`} style={{ width: `${pct}%` }} />
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* 6행: 최근 등급 변경 내역 */}
+            <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden mb-5">
+              <div className="px-5 py-4 border-b border-gray-100">
+                <h3 className="text-sm font-bold text-gray-800">최근 등급 변경 내역 <span className="text-gray-400 font-normal">(최근 20건)</span></h3>
+              </div>
+              <div className="overflow-x-auto">
+                <table className="w-full text-sm">
+                  <thead>
+                    <tr className="bg-gray-50 border-b border-gray-200">
+                      <th className="text-left px-4 py-2.5 font-semibold text-gray-500">일시</th>
+                      <th className="text-left px-4 py-2.5 font-semibold text-gray-500">이름</th>
+                      <th className="text-left px-4 py-2.5 font-semibold text-gray-500">이메일</th>
+                      <th className="text-center px-4 py-2.5 font-semibold text-gray-500">이전 등급</th>
+                      <th className="text-center px-4 py-2.5 font-semibold text-gray-500"></th>
+                      <th className="text-center px-4 py-2.5 font-semibold text-gray-500">변경 등급</th>
+                      <th className="text-center px-4 py-2.5 font-semibold text-gray-500">변경 주체</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {stats.recentChanges.length === 0 ? (
+                      <tr>
+                        <td colSpan={7} className="text-center py-8 text-gray-400">등급 변경 이력이 없습니다.</td>
+                      </tr>
+                    ) : (
+                      stats.recentChanges.map((c, i) => (
+                        <tr key={i} className="border-b border-gray-50 hover:bg-gray-50/50">
+                          <td className="px-4 py-3 text-xs text-gray-500">{formatDate(c.changed_at)}</td>
+                          <td className="px-4 py-3 font-semibold text-gray-800 text-xs">{c.name}</td>
+                          <td className="px-4 py-3 text-gray-500 text-xs">{c.email}</td>
+                          <td className="text-center px-4 py-3">
+                            <span className={`px-2 py-0.5 text-[10px] font-bold rounded-md ${PLAN_STYLES[c.old_plan] || PLAN_STYLES.free}`}>{PLAN_LABELS[c.old_plan] || c.old_plan}</span>
+                          </td>
+                          <td className="text-center px-2 py-3 text-gray-400">→</td>
+                          <td className="text-center px-4 py-3">
+                            <span className={`px-2 py-0.5 text-[10px] font-bold rounded-md ${PLAN_STYLES[c.new_plan] || PLAN_STYLES.free}`}>{PLAN_LABELS[c.new_plan] || c.new_plan}</span>
+                          </td>
+                          <td className="text-center px-4 py-3">
+                            <span className={`px-2 py-0.5 text-[10px] font-bold rounded-md ${c.changed_by === 'system' ? 'bg-gray-100 text-gray-500' : 'bg-indigo-100 text-indigo-600'}`}>
+                              {c.changed_by === 'system' ? '자동' : '관리자'}
+                            </span>
+                          </td>
+                        </tr>
+                      ))
+                    )}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            {/* 7행: 상위 사용자 */}
             <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
               <div className="px-5 py-4 border-b border-gray-100 flex items-center justify-between">
                 <h3 className="text-sm font-bold text-gray-800">상위 사용자 TOP 10 <span className="text-gray-400 font-normal">(누적 사용량 기준)</span></h3>

@@ -110,6 +110,79 @@ export async function GET() {
         };
       });
 
+    // 8. 등급 변경 히스토리 통계
+    const { data: planHistory } = await supabase
+      .from('plan_history')
+      .select('user_id, old_plan, new_plan, changed_at, changed_by')
+      .order('changed_at', { ascending: false });
+
+    // 월별 등급 변경 추이 (최근 6개월)
+    const planChangeTrend = months.map(m => {
+      const monthChanges = (planHistory || []).filter(h => h.changed_at?.startsWith(m));
+      const upgrades = monthChanges.filter(h => {
+        const rank: Record<string, number> = { free: 0, tester: 1, pro: 2, max: 3, admin: 4 };
+        return (rank[h.new_plan] || 0) > (rank[h.old_plan] || 0);
+      }).length;
+      const downgrades = monthChanges.filter(h => {
+        const rank: Record<string, number> = { free: 0, tester: 1, pro: 2, max: 3, admin: 4 };
+        return (rank[h.new_plan] || 0) < (rank[h.old_plan] || 0);
+      }).length;
+      return { month: m, upgrades, downgrades, total: monthChanges.length };
+    });
+
+    // 등급 전환 흐름 (어디서 어디로)
+    const transitionMap: Record<string, number> = {};
+    (planHistory || []).forEach(h => {
+      const key = `${h.old_plan}→${h.new_plan}`;
+      transitionMap[key] = (transitionMap[key] || 0) + 1;
+    });
+    const planTransitions = Object.entries(transitionMap)
+      .map(([key, count]) => {
+        const [from, to] = key.split('→');
+        return { from, to, count };
+      })
+      .sort((a, b) => b.count - a.count);
+
+    // 변경 주체별 통계 (관리자 vs 시스템 자동)
+    const changeBySource = {
+      admin: (planHistory || []).filter(h => h.changed_by === 'admin').length,
+      system: (planHistory || []).filter(h => h.changed_by === 'system').length,
+    };
+
+    // 최근 등급 변경 내역 (최근 20건)
+    const recentChanges = (planHistory || []).slice(0, 20).map(h => {
+      const user = users.find(u => u.id === h.user_id);
+      return {
+        name: user?.user_metadata?.full_name || user?.user_metadata?.name || user?.email?.split('@')[0] || '알 수 없음',
+        email: user?.email || '',
+        old_plan: h.old_plan,
+        new_plan: h.new_plan,
+        changed_at: h.changed_at,
+        changed_by: h.changed_by,
+      };
+    });
+
+    // 구독 현황 요약
+    const { data: plansWithExpiry } = await supabase
+      .from('user_plans')
+      .select('plan, expires_at')
+      .in('plan', ['pro', 'max']);
+
+    const subscriptionSummary = {
+      totalPaid: (plansWithExpiry || []).length,
+      pro: (plansWithExpiry || []).filter(p => p.plan === 'pro').length,
+      max: (plansWithExpiry || []).filter(p => p.plan === 'max').length,
+      expiringSoon: (plansWithExpiry || []).filter(p => {
+        if (!p.expires_at) return false;
+        const diff = Math.ceil((new Date(p.expires_at).getTime() - now.getTime()) / (1000 * 60 * 60 * 24));
+        return diff >= 0 && diff <= 7;
+      }).length,
+      expired: (plansWithExpiry || []).filter(p => {
+        if (!p.expires_at) return false;
+        return new Date(p.expires_at) < now;
+      }).length,
+    };
+
     return NextResponse.json({
       totalUsers: users.length,
       planCounts,
@@ -121,6 +194,12 @@ export async function GET() {
       activeWeek,
       topUsers,
       currentMonth,
+      planChangeTrend,
+      planTransitions,
+      changeBySource,
+      recentChanges,
+      subscriptionSummary,
+      totalPlanChanges: (planHistory || []).length,
     });
   } catch (err) {
     return NextResponse.json(
