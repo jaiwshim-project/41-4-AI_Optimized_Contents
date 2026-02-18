@@ -211,14 +211,15 @@ export default function AdminPage() {
             </span>
             관리자 대시보드
           </h1>
-          <p className="text-gray-500 mt-1">회원 정보 조회 및 등급 관리</p>
+          <div className="flex items-center gap-3">
+            <p className="text-gray-500 text-sm">회원 정보 조회 및 등급 관리</p>
+            <Link
+              href="/admin/stats"
+              className="px-4 py-2 text-xs font-semibold text-indigo-600 bg-indigo-50 border-2 border-indigo-200 rounded-lg hover:bg-indigo-100 transition-all"
+            >
+              전체 통계
+            </Link>
           </div>
-          <Link
-            href="/admin/stats"
-            className="px-4 py-2 text-xs font-semibold text-indigo-600 bg-indigo-50 border-2 border-indigo-200 rounded-lg hover:bg-indigo-100 transition-all"
-          >
-            전체 통계
-          </Link>
         </div>
 
         {/* 통계 카드 */}
@@ -391,12 +392,18 @@ export default function AdminPage() {
                             ))}
                           </select>
                         </td>
-                        {(['analyze', 'generate', 'keyword', 'series'] as const).map(feature => (
-                          <td key={feature} className="text-center px-2 py-3">
-                            <div className="text-gray-800 font-medium text-xs">{user.totalUsage?.[feature] || 0}</div>
-                            <div className="text-[10px] text-indigo-500">{user.usage[feature] || 0}</div>
-                          </td>
-                        ))}
+                        {(['analyze', 'generate', 'keyword', 'series'] as const).map(feature => {
+                          const total = user.totalUsage?.[feature] || 0;
+                          const monthly = user.usage[feature] || 0;
+                          return (
+                            <td key={feature} className="text-center px-2 py-2.5">
+                              <div className="inline-flex flex-col items-center gap-0.5 min-w-[40px]">
+                                <span className={`text-sm font-bold tabular-nums ${total > 0 ? 'text-gray-900' : 'text-gray-300'}`}>{total}</span>
+                                <span className={`text-[10px] font-semibold tabular-nums px-1.5 py-0.5 rounded-full ${monthly > 0 ? 'bg-indigo-50 text-indigo-600' : 'text-gray-300'}`}>{monthly}</span>
+                              </div>
+                            </td>
+                          );
+                        })}
                         <td className="text-center px-4 py-3 text-gray-500 text-xs">{formatDate(user.created_at)}</td>
                         <td className="text-center px-4 py-3 text-gray-500 text-xs">{formatDate(user.last_sign_in_at)}</td>
                       </tr>

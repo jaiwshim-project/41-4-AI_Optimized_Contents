@@ -440,7 +440,7 @@ const scenarios = [
 ];
 
 export default function MakeGuidePage() {
-  const [activeTab, setActiveTab] = useState<'overview' | 'api' | 'scenarios' | 'agency' | 'roadmap'>('overview');
+  const [activeTab, setActiveTab] = useState<'overview' | 'api' | 'scenarios' | 'agency' | 'roadmap' | 'allinone'>('overview');
   const [expandedApi, setExpandedApi] = useState<number | null>(null);
   const [expandedScenario, setExpandedScenario] = useState<number | null>(null);
 
@@ -450,6 +450,7 @@ export default function MakeGuidePage() {
     { id: 'scenarios' as const, label: 'Make.com 시나리오', icon: '⚡' },
     { id: 'agency' as const, label: '에이전시 활용', icon: '🏢' },
     { id: 'roadmap' as const, label: '향후 개발', icon: '🗺️' },
+    { id: 'allinone' as const, label: '올인원 배포 서비스', icon: '🚀' },
   ];
 
   return (
@@ -1218,6 +1219,341 @@ export default function MakeGuidePage() {
                         }`}>영향도: {item.impact}</span>
                       </div>
                       <p className="text-xs text-gray-500 mt-0.5">{item.reason}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </section>
+          </div>
+        )}
+        {/* ===== Part 6: 올인원 배포 서비스 ===== */}
+        {activeTab === 'allinone' && (
+          <div className="space-y-8">
+            {/* 핵심 컨셉 */}
+            <section className="bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-500 rounded-2xl p-6 sm:p-8 text-white">
+              <div className="text-center">
+                <span className="inline-block px-3 py-1 bg-white/20 rounded-full text-sm mb-3">핵심 컨셉</span>
+                <h2 className="text-2xl sm:text-3xl font-bold mb-3">콘텐츠 한 번 생성 → 원클릭 멀티채널 배포</h2>
+                <p className="text-purple-100 max-w-2xl mx-auto">
+                  사용자가 콘텐츠를 생성하면 결과 화면에서 바로 원하는 채널에 배포할 수 있습니다.
+                  Make.com이 백그라운드에서 처리하므로 사용자는 버튼 하나만 누르면 됩니다.
+                </p>
+              </div>
+            </section>
+
+            {/* 배포 UI 미리보기 */}
+            <section className="bg-white rounded-2xl p-6 sm:p-8 border border-gray-100 shadow-sm">
+              <h2 className="text-xl font-bold text-gray-900 mb-4">플랫폼 내 배포 화면 (구현 예시)</h2>
+              <div className="bg-gray-50 rounded-xl p-6 border-2 border-dashed border-gray-200">
+                <div className="max-w-md mx-auto">
+                  <div className="text-center mb-4">
+                    <span className="text-2xl">📤</span>
+                    <h3 className="text-lg font-bold text-gray-800 mt-1">자동 배포 채널 선택</h3>
+                  </div>
+                  <div className="space-y-2 mb-4">
+                    {[
+                      { name: '워드프레스 블로그', checked: true, icon: '🌐' },
+                      { name: '네이버 블로그', checked: true, icon: '📗' },
+                      { name: '인스타그램', checked: true, icon: '📷' },
+                      { name: '링크드인', checked: false, icon: '💼' },
+                      { name: '카드뉴스 (이미지)', checked: false, icon: '🖼️' },
+                      { name: '이메일 뉴스레터', checked: false, icon: '📧' },
+                      { name: '노션 페이지', checked: false, icon: '📝' },
+                      { name: '티스토리', checked: false, icon: '📘' },
+                    ].map((ch, i) => (
+                      <label key={i} className="flex items-center gap-3 p-2 rounded-lg hover:bg-white cursor-pointer transition-colors">
+                        <input type="checkbox" defaultChecked={ch.checked} className="w-4 h-4 text-indigo-600 rounded" readOnly />
+                        <span className="text-lg">{ch.icon}</span>
+                        <span className="text-sm text-gray-700">{ch.name}</span>
+                      </label>
+                    ))}
+                  </div>
+                  <div className="flex items-center gap-3 mb-4 p-3 bg-white rounded-lg border border-gray-200">
+                    <span className="text-sm text-gray-600">⏰</span>
+                    <select className="text-sm text-gray-700 bg-transparent flex-1" defaultValue="now">
+                      <option value="now">즉시 발행</option>
+                      <option value="schedule">예약 발행</option>
+                    </select>
+                  </div>
+                  <button className="w-full py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-xl font-semibold text-sm hover:shadow-lg transition-shadow cursor-default">
+                    🚀 선택 채널에 배포하기
+                  </button>
+                </div>
+              </div>
+              <p className="text-xs text-gray-400 text-center mt-3">
+                * 실제 구현 시 콘텐츠 생성 결과 화면 하단에 이 배포 패널이 표시됩니다
+              </p>
+            </section>
+
+            {/* 작동 방식 */}
+            <section className="bg-white rounded-2xl p-6 sm:p-8 border border-gray-100 shadow-sm">
+              <h2 className="text-xl font-bold text-gray-900 mb-4">작동 방식</h2>
+              <p className="text-sm text-gray-600 mb-4">
+                사용자는 Make.com의 존재를 알 필요 없습니다. 플랫폼 내에서 버튼 하나로 배포됩니다.
+              </p>
+              <div className="bg-gray-900 rounded-xl p-5 text-sm font-mono text-gray-300 overflow-x-auto">
+                <pre className="whitespace-pre leading-relaxed">{`플랫폼 UI (배포 버튼 클릭)
+    │
+    ▼
+우리 API (/api/distribute)
+    │  채널별 콘텐츠 자동 변환
+    │  Make.com 웹훅 호출
+    ▼
+Make.com (백그라운드 처리)
+    │
+    ├──► 워드프레스 API → 블로그 게시
+    ├──► Instagram API → 인스타 게시
+    ├──► LinkedIn API  → 링크드인 게시
+    ├──► 네이버 API    → 네이버 블로그 게시
+    ├──► Notion API    → 노션 페이지 생성
+    └──► Gmail API     → 뉴스레터 발송
+
+    ▼
+플랫폼 대시보드 (결과 확인)
+    • 배포 상태: 성공/실패
+    • 각 채널 게시물 링크
+    • 발행 이력 로그`}</pre>
+              </div>
+            </section>
+
+            {/* 3가지 서비스 패키지 */}
+            <section className="bg-white rounded-2xl p-6 sm:p-8 border border-gray-100 shadow-sm">
+              <h2 className="text-xl font-bold text-gray-900 mb-2">제공 가능한 서비스</h2>
+              <p className="text-sm text-gray-500 mb-6">플랫폼 × Make.com 연동으로 3가지 핵심 서비스를 제공할 수 있습니다.</p>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+                {/* 서비스 A */}
+                <div className="border-2 border-blue-100 rounded-2xl p-5 hover:border-blue-300 hover:shadow-lg transition-all">
+                  <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center text-2xl mb-3">📤</div>
+                  <h3 className="text-base font-bold text-gray-900 mb-1">원클릭 멀티채널 배포</h3>
+                  <p className="text-xs text-gray-500 mb-4">콘텐츠 생성 → 채널 체크 → 배포 버튼 1번</p>
+                  <ul className="space-y-1.5 text-xs text-gray-600">
+                    <li className="flex items-start gap-1.5"><span className="text-blue-500">&#10003;</span>채널별 포맷 자동 변환</li>
+                    <li className="flex items-start gap-1.5"><span className="text-blue-500">&#10003;</span>해시태그 자동 생성</li>
+                    <li className="flex items-start gap-1.5"><span className="text-blue-500">&#10003;</span>이미지 리사이징</li>
+                    <li className="flex items-start gap-1.5"><span className="text-blue-500">&#10003;</span>즉시/예약 발행</li>
+                    <li className="flex items-start gap-1.5"><span className="text-blue-500">&#10003;</span>발행 이력 관리</li>
+                  </ul>
+                </div>
+                {/* 서비스 B */}
+                <div className="border-2 border-purple-100 rounded-2xl p-5 hover:border-purple-300 hover:shadow-lg transition-all">
+                  <div className="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center text-2xl mb-3">🔄</div>
+                  <h3 className="text-base font-bold text-gray-900 mb-1">정기 콘텐츠 구독 자동화</h3>
+                  <p className="text-xs text-gray-500 mb-4">주제/키워드 + 발행 주기만 설정</p>
+                  <ul className="space-y-1.5 text-xs text-gray-600">
+                    <li className="flex items-start gap-1.5"><span className="text-purple-500">&#10003;</span>매주/매일 자동 생성 + 배포</li>
+                    <li className="flex items-start gap-1.5"><span className="text-purple-500">&#10003;</span>시리즈 기획 자동화</li>
+                    <li className="flex items-start gap-1.5"><span className="text-purple-500">&#10003;</span>키워드 자동 로테이션</li>
+                    <li className="flex items-start gap-1.5"><span className="text-purple-500">&#10003;</span>성과 리포트 자동 발송</li>
+                    <li className="flex items-start gap-1.5"><span className="text-purple-500">&#10003;</span>발행 알림 (이메일/슬랙)</li>
+                  </ul>
+                </div>
+                {/* 서비스 C */}
+                <div className="border-2 border-emerald-100 rounded-2xl p-5 hover:border-emerald-300 hover:shadow-lg transition-all">
+                  <div className="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center text-2xl mb-3">♻️</div>
+                  <h3 className="text-base font-bold text-gray-900 mb-1">콘텐츠 리사이클링</h3>
+                  <p className="text-xs text-gray-500 mb-4">기존 콘텐츠 업로드 → 5개 채널 변환 배포</p>
+                  <ul className="space-y-1.5 text-xs text-gray-600">
+                    <li className="flex items-start gap-1.5"><span className="text-emerald-500">&#10003;</span>PDF, DOCX, URL 파싱</li>
+                    <li className="flex items-start gap-1.5"><span className="text-emerald-500">&#10003;</span>AIO 점수 분석 + 최적화</li>
+                    <li className="flex items-start gap-1.5"><span className="text-emerald-500">&#10003;</span>5개 채널 자동 변환</li>
+                    <li className="flex items-start gap-1.5"><span className="text-emerald-500">&#10003;</span>보도자료 → 멀티콘텐츠</li>
+                    <li className="flex items-start gap-1.5"><span className="text-emerald-500">&#10003;</span>기존 콘텐츠 개선 제안</li>
+                  </ul>
+                </div>
+              </div>
+            </section>
+
+            {/* 사용자 여정 */}
+            <section className="bg-white rounded-2xl p-6 sm:p-8 border border-gray-100 shadow-sm">
+              <h2 className="text-xl font-bold text-gray-900 mb-6">사용자 여정 (User Journey)</h2>
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                {[
+                  {
+                    step: 1,
+                    title: '콘텐츠 생성',
+                    desc: '주제 입력 → AIO/GEO 최적화 콘텐츠 자동 생성',
+                    icon: '✍️',
+                    bgClass: 'bg-blue-50 border-blue-100',
+                    details: undefined as string[] | undefined,
+                  },
+                  {
+                    step: 2,
+                    title: '채널 연결 (최초 1회)',
+                    desc: '설정 페이지에서 배포할 채널 계정 연결',
+                    icon: '🔗',
+                    bgClass: 'bg-indigo-50 border-indigo-100',
+                    details: ['워드프레스: URL + 앱 비밀번호', '인스타그램: Facebook Business 연동', '네이버: 블로그 API 키', '링크드인: OAuth 로그인'],
+                  },
+                  {
+                    step: 3,
+                    title: '배포',
+                    desc: '결과 화면에서 채널 선택 → 배포 버튼 클릭',
+                    icon: '🚀',
+                    bgClass: 'bg-purple-50 border-purple-100',
+                    details: undefined as string[] | undefined,
+                  },
+                  {
+                    step: 4,
+                    title: '결과 확인',
+                    desc: '대시보드에서 배포 이력, 상태, 채널별 링크 확인',
+                    icon: '📊',
+                    bgClass: 'bg-emerald-50 border-emerald-100',
+                    details: undefined as string[] | undefined,
+                  },
+                ].map((item) => (
+                  <div key={item.step} className="relative">
+                    <div className={`${item.bgClass} rounded-xl p-5 h-full border`}>
+                      <div className="flex items-center gap-2 mb-3">
+                        <span className="w-7 h-7 bg-indigo-600 text-white rounded-full flex items-center justify-center text-xs font-bold">{item.step}</span>
+                        <span className="text-xl">{item.icon}</span>
+                      </div>
+                      <h3 className="text-sm font-bold text-gray-800 mb-1">{item.title}</h3>
+                      <p className="text-xs text-gray-600">{item.desc}</p>
+                      {item.details && (
+                        <ul className="mt-2 space-y-1">
+                          {item.details.map((d, i) => (
+                            <li key={i} className="text-xs text-gray-500 flex items-start gap-1">
+                              <span className="text-indigo-400">-</span>{d}
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            {/* 기술 구현 방안 */}
+            <section className="bg-white rounded-2xl p-6 sm:p-8 border border-gray-100 shadow-sm">
+              <h2 className="text-xl font-bold text-gray-900 mb-4">기술 구현 방안 비교</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <div className="border-2 border-green-200 rounded-2xl p-5 bg-green-50 relative">
+                  <div className="absolute -top-3 left-4 bg-green-600 text-white text-xs font-bold px-3 py-1 rounded-full">추천</div>
+                  <h3 className="text-base font-bold text-gray-900 mb-2 mt-1">방법 A: Make.com을 백엔드로 활용</h3>
+                  <div className="bg-white rounded-lg p-3 mb-3 text-xs font-mono text-gray-700">
+                    플랫폼 UI → 우리 API → Make.com 웹훅 → 각 채널 API
+                  </div>
+                  <ul className="space-y-1.5 text-xs text-gray-600">
+                    <li className="flex items-start gap-1.5"><span className="text-green-500">&#10003;</span>채널 연동 로직을 Make.com이 처리</li>
+                    <li className="flex items-start gap-1.5"><span className="text-green-500">&#10003;</span>개발 부담 최소 (배포 버튼 + API 1개)</li>
+                    <li className="flex items-start gap-1.5"><span className="text-green-500">&#10003;</span>Make.com Pro 월 $9 (10,000 오퍼레이션)</li>
+                    <li className="flex items-start gap-1.5"><span className="text-green-500">&#10003;</span>새 채널 추가 시 Make.com에서만 설정</li>
+                  </ul>
+                </div>
+                <div className="border-2 border-gray-200 rounded-2xl p-5">
+                  <h3 className="text-base font-bold text-gray-900 mb-2">방법 B: 자체 배포 엔진 개발</h3>
+                  <div className="bg-gray-50 rounded-lg p-3 mb-3 text-xs font-mono text-gray-700">
+                    플랫폼 UI → 우리 API → 직접 각 채널 API 호출
+                  </div>
+                  <ul className="space-y-1.5 text-xs text-gray-600">
+                    <li className="flex items-start gap-1.5"><span className="text-gray-400">&#10003;</span>Make.com 의존 없음, 완전 제어</li>
+                    <li className="flex items-start gap-1.5"><span className="text-red-400">✕</span>각 채널 API 직접 구현 필요</li>
+                    <li className="flex items-start gap-1.5"><span className="text-red-400">✕</span>OAuth 관리, 토큰 갱신 등 복잡</li>
+                    <li className="flex items-start gap-1.5"><span className="text-red-400">✕</span>개발 기간 3~5배 증가</li>
+                  </ul>
+                </div>
+              </div>
+            </section>
+
+            {/* 차별화 포인트 */}
+            <section className="bg-white rounded-2xl p-6 sm:p-8 border border-gray-100 shadow-sm">
+              <h2 className="text-xl font-bold text-gray-900 mb-4">기존 서비스 대비 차별화</h2>
+              <div className="overflow-x-auto">
+                <table className="w-full text-sm">
+                  <thead className="bg-gray-50">
+                    <tr>
+                      <th className="text-left px-4 py-3 font-medium text-gray-600">비교 항목</th>
+                      <th className="text-left px-4 py-3 font-medium text-gray-400">기존 서비스</th>
+                      <th className="text-left px-4 py-3 font-medium text-indigo-600 bg-indigo-50">우리 서비스</th>
+                    </tr>
+                  </thead>
+                  <tbody className="text-xs">
+                    <tr className="border-t">
+                      <td className="px-4 py-3 font-medium text-gray-700">콘텐츠 생성</td>
+                      <td className="px-4 py-3 text-gray-500">ChatGPT, Jasper — 생성만 제공</td>
+                      <td className="px-4 py-3 text-indigo-700 bg-indigo-50/50 font-medium">생성 + AIO 최적화 + 멀티채널 배포</td>
+                    </tr>
+                    <tr className="border-t">
+                      <td className="px-4 py-3 font-medium text-gray-700">배포 도구</td>
+                      <td className="px-4 py-3 text-gray-500">Buffer, Hootsuite — 배포만 제공</td>
+                      <td className="px-4 py-3 text-indigo-700 bg-indigo-50/50 font-medium">콘텐츠 생성 + AI 검색 최적화 + 배포</td>
+                    </tr>
+                    <tr className="border-t">
+                      <td className="px-4 py-3 font-medium text-gray-700">작업 방식</td>
+                      <td className="px-4 py-3 text-gray-500">채널별 따로 작성, 수동 반복</td>
+                      <td className="px-4 py-3 text-indigo-700 bg-indigo-50/50 font-medium">원본 1개 → 자동 변환 → 동시 배포</td>
+                    </tr>
+                    <tr className="border-t">
+                      <td className="px-4 py-3 font-medium text-gray-700">AI 검색 최적화</td>
+                      <td className="px-4 py-3 text-gray-500">지원 안 함</td>
+                      <td className="px-4 py-3 text-indigo-700 bg-indigo-50/50 font-medium">AIO/GEO 전용 최적화 엔진 탑재</td>
+                    </tr>
+                    <tr className="border-t">
+                      <td className="px-4 py-3 font-medium text-gray-700">사용자 경험</td>
+                      <td className="px-4 py-3 text-gray-500">여러 도구 오가며 작업</td>
+                      <td className="px-4 py-3 text-indigo-700 bg-indigo-50/50 font-medium">키워드 입력 → 버튼 1번 → 끝</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </section>
+
+            {/* 수익 모델 */}
+            <section className="bg-white rounded-2xl p-6 sm:p-8 border border-gray-100 shadow-sm">
+              <h2 className="text-xl font-bold text-gray-900 mb-4">수익 모델 (구독형)</h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                {[
+                  { name: 'Free', price: '0원', desc: '체험용', features: ['월 5편 생성', '1채널 배포', 'AIO 점수 분석'], color: 'gray' },
+                  { name: 'Basic', price: '29,000원', desc: '개인 사업자', features: ['월 30편 생성', '3채널 배포', '키워드 분석', '예약 발행'], color: 'blue' },
+                  { name: 'Pro', price: '99,000원', desc: '전문 마케터', features: ['무제한 생성', '전 채널 배포', '시리즈 기획', '성과 리포트', '경쟁사 모니터링'], color: 'purple', popular: true },
+                  { name: 'Agency', price: '290,000원', desc: '에이전시', features: ['고객 10명 관리', '화이트라벨', '팀 계정', '전용 대시보드', 'API 접근'], color: 'indigo' },
+                ].map((plan) => (
+                  <div key={plan.name} className={`border-2 rounded-2xl p-5 relative ${
+                    plan.popular ? 'border-purple-300 bg-purple-50' : 'border-gray-100'
+                  }`}>
+                    {plan.popular && (
+                      <div className="absolute -top-3 right-4 bg-purple-600 text-white text-xs font-bold px-3 py-1 rounded-full">BEST</div>
+                    )}
+                    <h3 className="text-lg font-bold text-gray-900">{plan.name}</h3>
+                    <p className="text-xs text-gray-400 mb-2">{plan.desc}</p>
+                    <div className="text-xl font-bold text-gray-900 mb-3">
+                      {plan.price}<span className="text-xs text-gray-400 font-normal">/월</span>
+                    </div>
+                    <ul className="space-y-1.5">
+                      {plan.features.map((f, i) => (
+                        <li key={i} className="text-xs text-gray-600 flex items-start gap-1.5">
+                          <span className={`${plan.popular ? 'text-purple-500' : 'text-indigo-500'}`}>&#10003;</span>
+                          {f}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            {/* 구현 우선순위 */}
+            <section className="bg-gradient-to-r from-indigo-50 to-purple-50 rounded-2xl p-6 sm:p-8 border border-indigo-100">
+              <h2 className="text-xl font-bold text-gray-900 mb-4">구현 우선순위</h2>
+              <div className="space-y-3">
+                {[
+                  { priority: 1, item: '채널 연결 설정 페이지', desc: '사용자가 배포 채널 계정 정보를 입력/관리하는 페이지', effort: '2~3일' },
+                  { priority: 2, item: '콘텐츠 결과 화면에 배포 버튼 추가', desc: '생성 결과 하단에 채널 선택 + 즉시/예약 발행 UI', effort: '1~2일' },
+                  { priority: 3, item: '배포 API 엔드포인트 (/api/distribute)', desc: 'Make.com 웹훅을 호출하는 서버 API', effort: '1일' },
+                  { priority: 4, item: 'Make.com 시나리오 구성', desc: '채널별 배포 로직 (워드프레스, 인스타, 네이버 등)', effort: '2~3일' },
+                  { priority: 5, item: '배포 이력 대시보드', desc: '발행 상태, 채널별 링크, 에러 로그 조회', effort: '2~3일' },
+                ].map((item) => (
+                  <div key={item.priority} className="flex items-start gap-3 bg-white rounded-xl p-4 border border-gray-100">
+                    <span className="w-7 h-7 bg-indigo-600 text-white rounded-full flex items-center justify-center text-sm font-bold shrink-0">
+                      {item.priority}
+                    </span>
+                    <div className="flex-1">
+                      <div className="flex items-center justify-between">
+                        <h4 className="text-sm font-semibold text-gray-800">{item.item}</h4>
+                        <span className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded">예상 {item.effort}</span>
+                      </div>
+                      <p className="text-xs text-gray-500 mt-0.5">{item.desc}</p>
                     </div>
                   </div>
                 ))}
