@@ -569,6 +569,9 @@ export default function LandingPage() {
             <div ref={testerModalRef}>
             {/* 모달 헤더 */}
             <div className="bg-gradient-to-r from-amber-400 via-orange-500 to-red-500 rounded-t-2xl px-6 py-5 text-center relative">
+              {/* 로고 */}
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/images/logo-geoaio.png" alt="GEO-AIO 로고" className="absolute top-3 left-3 h-8 object-contain drop-shadow-md" />
               {/* PNG 다운로드 버튼 */}
               <button
                 onClick={handleDownloadPng}
