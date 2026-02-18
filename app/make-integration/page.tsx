@@ -142,26 +142,27 @@ export default function MakeIntegrationPage() {
       <main className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
 
         {/* Hero Banner */}
-        <section className="relative overflow-hidden rounded-xl bg-gradient-to-br from-violet-600 via-indigo-600 to-blue-600 text-white px-6 sm:px-10 py-12 mb-10">
+        <section className="relative overflow-hidden rounded-xl bg-gradient-to-br from-violet-600 via-indigo-600 to-blue-600 text-white px-6 sm:px-10 py-8 mb-10">
           <div className="absolute inset-0 opacity-10">
             <svg className="w-full h-full" viewBox="0 0 400 400" fill="none">
               <circle cx="50" cy="50" r="80" stroke="white" strokeWidth="0.5" />
               <circle cx="350" cy="100" r="120" stroke="white" strokeWidth="0.5" />
-              <circle cx="200" cy="350" r="100" stroke="white" strokeWidth="0.5" />
             </svg>
           </div>
-          <div className="relative z-10 text-center">
-            <img src="/images/logo-geoaio.png" alt="GEOAIO" className="h-14 sm:h-16 rounded-lg mx-auto mb-4" />
-            <div className="inline-flex items-center gap-2 bg-white/15 backdrop-blur-sm rounded-full px-4 py-1.5 text-xs font-medium mb-4">
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-              </svg>
-              No-Code 자동화
+          <div className="relative z-10 flex items-center gap-6">
+            <img src="/images/logo-geoaio.png" alt="GEOAIO" className="h-16 rounded-lg shadow-lg hidden sm:block" />
+            <div>
+              <div className="inline-flex items-center gap-2 bg-white/15 backdrop-blur-sm rounded-full px-4 py-1.5 text-xs font-medium mb-2">
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
+                No-Code 자동화
+              </div>
+              <h1 className="text-2xl sm:text-3xl font-bold mb-1">Make.com 연동 가이드</h1>
+              <p className="text-sm sm:text-base text-white/80">
+                자동화로 콘텐츠 마케팅을 10배 빠르게
+              </p>
             </div>
-            <h1 className="text-2xl sm:text-3xl font-bold mb-3">Make.com 연동 가이드</h1>
-            <p className="text-base sm:text-lg text-white max-w-xl mx-auto">
-              자동화로 콘텐츠 마케팅을 10배 빠르게
-            </p>
           </div>
         </section>
 
