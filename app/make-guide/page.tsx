@@ -448,6 +448,16 @@ export default function MakeGuidePage() {
   const [pinInput, setPinInput] = useState('');
   const [pinError, setPinError] = useState(false);
 
+  const handlePrint = useCallback(() => {
+    setIsPrinting(true);
+    setTimeout(() => {
+      window.print();
+      setIsPrinting(false);
+    }, 300);
+  }, []);
+
+  const showTab = (tab: string) => isPrinting || activeTab === tab;
+
   const handlePinSubmit = () => {
     if (pinInput === '9633') {
       setIsUnlocked(true);
@@ -499,16 +509,6 @@ export default function MakeGuidePage() {
       </div>
     );
   }
-
-  const handlePrint = useCallback(() => {
-    setIsPrinting(true);
-    setTimeout(() => {
-      window.print();
-      setIsPrinting(false);
-    }, 300);
-  }, []);
-
-  const showTab = (tab: string) => isPrinting || activeTab === tab;
 
   const tabs = [
     { id: 'overview' as const, label: '개요', icon: '📋' },
