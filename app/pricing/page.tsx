@@ -23,7 +23,7 @@ const plans = [
   {
     id: 'pro' as PlanType,
     name: '프로',
-    price: '₩29,000',
+    price: '₩29,700',
     originalPrice: '₩59,000',
     period: '/월',
     description: '전문적인 콘텐츠 최적화',
@@ -37,7 +37,7 @@ const plans = [
   {
     id: 'max' as PlanType,
     name: '맥스',
-    price: '₩79,000',
+    price: '₩79,200',
     originalPrice: '₩149,000',
     period: '/월',
     description: '대량 콘텐츠 최적화에 최적',
@@ -61,6 +61,8 @@ export default function PricingPage() {
   const [currentPlan, setCurrentPlan] = useState<PlanType>('free');
   const [usage, setUsage] = useState<{ feature: FeatureType; label: string; current: number; limit: number }[]>([]);
   const [loading, setLoading] = useState(true);
+  const [paymentModal, setPaymentModal] = useState<'pro' | 'max' | null>(null);
+  const [showTesterModal, setShowTesterModal] = useState(false);
 
   useEffect(() => {
     Promise.all([getUserPlan(), getUsageSummary()])
@@ -149,11 +151,11 @@ export default function PricingPage() {
                 <p className="text-sm text-gray-500 mb-3">{plan.description}</p>
 
                 <div className="mb-4">
-                  {plan.originalPrice && (
-                    <div className="mb-1">
+                  <div className="mb-1 h-5">
+                    {plan.originalPrice && (
                       <span className="text-sm text-gray-400 line-through">{plan.originalPrice}</span>
-                    </div>
-                  )}
+                    )}
+                  </div>
                   <span className="text-xl font-bold text-gray-900">{plan.price}</span>
                   <span className="text-sm text-gray-500">{plan.period}</span>
                   {plan.originalPrice && (
@@ -172,6 +174,14 @@ export default function PricingPage() {
                       </span>
                     </div>
                   ))}
+                  <div className="border-t border-gray-200 pt-3 space-y-2">
+                    {['대시보드', 'API 키 관리 (이미지 생성용 옵션)'].map((item) => (
+                      <div key={item} className="flex items-center justify-between text-sm">
+                        <span className="text-gray-700">{item}</span>
+                        <span className="text-emerald-500 font-bold">&#10003;</span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
 
                 {plan.id === 'free' ? (
@@ -183,9 +193,10 @@ export default function PricingPage() {
                   </button>
                 ) : (
                   <button
+                    onClick={() => setPaymentModal(plan.id as 'pro' | 'max')}
                     className={`w-full py-2.5 bg-gradient-to-r ${plan.color} text-white font-semibold rounded-xl hover:opacity-90 transition-all shadow-md border ${plan.border} text-sm`}
                   >
-                    준비 중
+                    결제
                   </button>
                 )}
               </div>
@@ -239,55 +250,242 @@ export default function PricingPage() {
           </div>
         )}
 
-        {/* 비교표 */}
-        <div className="mt-8 bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-          <table className="w-full text-sm">
-            <thead>
-              <tr className="bg-gray-50 border-b border-gray-200">
-                <th className="text-left px-6 py-4 font-semibold text-gray-700">기능</th>
-                <th className="text-center px-4 py-4 font-semibold text-gray-700">무료</th>
-                <th className="text-center px-4 py-4 font-semibold text-blue-700">프로</th>
-                <th className="text-center px-4 py-4 font-semibold text-violet-700">맥스</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr className="bg-orange-50/50 border-b border-orange-100">
-                <td className="px-6 py-3 text-gray-700 font-medium">월 요금</td>
-                <td className="text-center px-4 py-3 text-gray-600">₩0</td>
-                <td className="text-center px-4 py-3">
-                  <span className="text-xs text-gray-400 line-through block">₩59,000</span>
-                  <span className="text-blue-600 font-bold">₩29,000</span>
-                </td>
-                <td className="text-center px-4 py-3">
-                  <span className="text-xs text-gray-400 line-through block">₩149,000</span>
-                  <span className="text-violet-600 font-bold">₩79,000</span>
-                </td>
-              </tr>
-              {features.map((f, i) => (
-                <tr key={f.key} className={i % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
-                  <td className="px-6 py-3 text-gray-700">{f.label}</td>
-                  <td className="text-center px-4 py-3 text-gray-600">3회/월</td>
-                  <td className="text-center px-4 py-3 text-blue-600 font-medium">15회/월</td>
-                  <td className="text-center px-4 py-3 text-violet-600 font-medium">50회/월</td>
-                </tr>
-              ))}
-              <tr className="bg-white border-t border-gray-200">
-                <td className="px-6 py-3 text-gray-700">대시보드</td>
-                <td className="text-center px-4 py-3 text-emerald-600">&#10003;</td>
-                <td className="text-center px-4 py-3 text-emerald-600">&#10003;</td>
-                <td className="text-center px-4 py-3 text-emerald-600">&#10003;</td>
-              </tr>
-              <tr className="bg-gray-50">
-                <td className="px-6 py-3 text-gray-700">API 키 관리</td>
-                <td className="text-center px-4 py-3 text-emerald-600">&#10003;</td>
-                <td className="text-center px-4 py-3 text-emerald-600">&#10003;</td>
-                <td className="text-center px-4 py-3 text-emerald-600">&#10003;</td>
-              </tr>
-            </tbody>
-          </table>
+        {/* 사용량 리셋 안내 */}
+        <div className="mt-4 bg-indigo-50 rounded-xl p-4 border border-indigo-200 flex items-start gap-3">
+          <svg className="w-5 h-5 text-indigo-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <div className="text-[13px] text-indigo-800">
+            <p className="font-bold mb-1">사용량 초기화 안내</p>
+            <p className="text-indigo-700">모든 요금제(무료/프로/맥스)의 사용 횟수는 <strong>가입일 기준 30일 주기로 자동 초기화</strong>됩니다. 미사용 횟수는 이월되지 않으며, 해당 요금제의 제공 횟수로 새롭게 시작됩니다.</p>
+          </div>
         </div>
       </main>
       <Footer />
+
+      {/* 테스터 모집 버튼 */}
+      <button onClick={() => setShowTesterModal(true)} className="fixed bottom-6 left-6 z-40 w-20 h-20 bg-gradient-to-br from-amber-400 via-orange-500 to-red-500 text-white rounded-2xl shadow-xl shadow-orange-500/40 hover:shadow-orange-500/60 hover:scale-110 transition-all flex flex-col items-center justify-center gap-1 group">
+        <div className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full animate-ping" />
+        <div className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full" />
+        <svg className="w-7 h-7 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z" /></svg>
+        <span className="text-[10px] font-bold leading-tight text-center">테스터{'\n'}모집중</span>
+      </button>
+
+      {showTesterModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4" onClick={() => setShowTesterModal(false)}>
+          <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
+          <div className="relative bg-white rounded-2xl shadow-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
+            <div className="bg-gradient-to-r from-amber-400 via-orange-500 to-red-500 rounded-t-2xl px-6 py-5 text-center relative">
+              <button onClick={() => setShowTesterModal(false)} className="absolute top-3 right-3 w-8 h-8 flex items-center justify-center rounded-full bg-white/20 hover:bg-white/30 text-white transition-all">
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
+              </button>
+              <div className="w-14 h-14 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-3">
+                <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z" /></svg>
+              </div>
+              <h2 className="text-xl font-extrabold text-white">테스터 모집 안내</h2>
+              <p className="text-sm text-white/80 mt-1">GEOAIO 베타 테스터를 모집합니다</p>
+            </div>
+            <div className="px-6 py-5 space-y-4">
+              <div className="bg-amber-50 rounded-xl p-4 border border-amber-200">
+                <h3 className="text-sm font-bold text-amber-800 mb-2 flex items-center gap-2">
+                  <span className="w-6 h-6 bg-amber-500 text-white rounded-full flex items-center justify-center text-xs font-bold">1</span>
+                  모집 개요
+                </h3>
+                <div className="space-y-1.5 text-[13px] text-gray-700">
+                  <p><strong>모집 기간:</strong> 상시 모집</p>
+                  <p><strong>모집 인원:</strong> 선착순 제한 없음</p>
+                  <p><strong>테스트 기간:</strong> 가입일로부터 30일</p>
+                  <p><strong>대상:</strong> 블로거, 마케터, 콘텐츠 크리에이터, SEO 담당자 등</p>
+                </div>
+              </div>
+              <div className="bg-emerald-50 rounded-xl p-4 border border-emerald-200">
+                <h3 className="text-sm font-bold text-emerald-800 mb-2 flex items-center gap-2">
+                  <span className="w-6 h-6 bg-emerald-500 text-white rounded-full flex items-center justify-center text-xs font-bold">2</span>
+                  테스터 혜택
+                </h3>
+                <ul className="space-y-1.5 text-[13px] text-gray-700">
+                  <li className="flex items-start gap-2"><span className="text-emerald-500 mt-0.5 font-bold">&#10003;</span><span>30일간 <strong>Max 등급</strong> 기능 무료 사용</span></li>
+                  <li className="flex items-start gap-2"><span className="text-emerald-500 mt-0.5 font-bold">&#10003;</span><span>콘텐츠 분석 <strong>월 50회</strong> 이용</span></li>
+                  <li className="flex items-start gap-2"><span className="text-emerald-500 mt-0.5 font-bold">&#10003;</span><span>콘텐츠 생성 <strong>월 50회</strong> 이용</span></li>
+                  <li className="flex items-start gap-2"><span className="text-emerald-500 mt-0.5 font-bold">&#10003;</span><span>키워드 분석 <strong>월 50회</strong> 이용</span></li>
+                  <li className="flex items-start gap-2"><span className="text-emerald-500 mt-0.5 font-bold">&#10003;</span><span>시리즈 기획 <strong>월 50회</strong> 이용</span></li>
+                  <li className="flex items-start gap-2"><span className="text-emerald-500 mt-0.5 font-bold">&#10003;</span><span>A/B 버전 생성, SNS 채널별 변환 등 모든 기능</span></li>
+                </ul>
+              </div>
+              <div className="bg-blue-50 rounded-xl p-4 border border-blue-200">
+                <h3 className="text-sm font-bold text-blue-800 mb-2 flex items-center gap-2">
+                  <span className="w-6 h-6 bg-blue-500 text-white rounded-full flex items-center justify-center text-xs font-bold">3</span>
+                  참여 방법
+                </h3>
+                <ol className="space-y-1.5 text-[13px] text-gray-700 list-decimal list-inside">
+                  <li>무료 회원가입 후 로그인합니다</li>
+                  <li>아래 &quot;테스터 신청하기&quot; 버튼을 클릭하여 설문지를 작성합니다</li>
+                  <li>관리자 확인 후 테스터 등급이 부여됩니다</li>
+                  <li>30일간 맥스(Max) 등급 기능을 자유롭게 사용합니다</li>
+                </ol>
+              </div>
+              <div className="bg-violet-50 rounded-xl p-4 border border-violet-200">
+                <h3 className="text-sm font-bold text-violet-800 mb-2 flex items-center gap-2">
+                  <span className="w-6 h-6 bg-violet-500 text-white rounded-full flex items-center justify-center text-xs font-bold">4</span>
+                  테스터 의무사항
+                </h3>
+                <ul className="space-y-1.5 text-[13px] text-gray-700">
+                  <li className="flex items-start gap-2"><span className="text-violet-500 mt-0.5 font-bold">&#8226;</span><span>테스트 기간 동안 주요 기능을 최소 1회 이상 사용</span></li>
+                  <li className="flex items-start gap-2"><span className="text-violet-500 mt-0.5 font-bold">&#8226;</span><span>버그 발견 시 제보 (커뮤니티 게시판 또는 이메일)</span></li>
+                  <li className="flex items-start gap-2"><span className="text-violet-500 mt-0.5 font-bold">&#8226;</span><span>테스트 종료 후 간단한 사용 후기 작성 (선택)</span></li>
+                </ul>
+              </div>
+              <div className="bg-gray-50 rounded-xl p-4 border border-gray-200">
+                <p className="text-[12px] text-gray-500 leading-relaxed">
+                  ※ 테스트 기간 종료 후 유료 전환 의무는 없습니다. 자동 결제되지 않으며, 무료 계정으로 전환됩니다. 기존에 생성/저장한 콘텐츠는 그대로 유지됩니다.
+                </p>
+              </div>
+            </div>
+            <div className="px-6 py-4 border-t border-gray-100 flex gap-3">
+              <a href="https://forms.gle/QVtdqRD6N73q4EvZ9" target="_blank" rel="noopener noreferrer" className="flex-1 text-center px-4 py-2.5 bg-gradient-to-r from-amber-500 to-orange-500 text-white text-sm font-bold rounded-xl hover:from-amber-600 hover:to-orange-600 transition-all shadow-sm">테스터 신청하기</a>
+              <button onClick={() => setShowTesterModal(false)} className="px-4 py-2.5 text-gray-500 text-sm font-medium rounded-xl hover:bg-gray-100 transition-all border border-gray-200">닫기</button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* 결제 안내 모달 */}
+      {paymentModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4" onClick={() => setPaymentModal(null)}>
+          <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
+          <div
+            className="relative bg-white rounded-2xl shadow-2xl max-w-md w-full max-h-[90vh] overflow-y-auto"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* 헤더 */}
+            <div className={`rounded-t-2xl px-6 py-5 text-center relative ${
+              paymentModal === 'pro'
+                ? 'bg-gradient-to-r from-blue-500 to-indigo-600'
+                : 'bg-gradient-to-r from-violet-500 to-purple-600'
+            }`}>
+              <button
+                onClick={() => setPaymentModal(null)}
+                className="absolute top-3 right-3 w-8 h-8 flex items-center justify-center rounded-full bg-white/20 hover:bg-white/30 text-white transition-all"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+              <div className="w-14 h-14 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-3">
+                <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+                </svg>
+              </div>
+              <h2 className="text-xl font-extrabold text-white">
+                {paymentModal === 'pro' ? '프로(Pro)' : '맥스(Max)'} 플랜 결제
+              </h2>
+              <p className="text-sm text-white/80 mt-1">계좌이체로 간편하게 결제하세요</p>
+            </div>
+
+            {/* 본문 */}
+            <div className="px-6 py-5 space-y-4">
+              {/* 결제 금액 */}
+              <div className={`rounded-xl p-4 border text-center ${
+                paymentModal === 'pro'
+                  ? 'bg-blue-50 border-blue-200'
+                  : 'bg-violet-50 border-violet-200'
+              }`}>
+                <p className="text-sm text-gray-500 mb-1">월 이용료</p>
+                <p className={`text-3xl font-extrabold ${
+                  paymentModal === 'pro' ? 'text-blue-600' : 'text-violet-600'
+                }`}>
+                  {paymentModal === 'pro' ? '29,700' : '79,200'}
+                  <span className="text-base font-medium text-gray-500">원/월</span>
+                </p>
+              </div>
+
+              {/* 결제 방법 */}
+              <div className="bg-emerald-50 rounded-xl p-4 border border-emerald-200">
+                <h3 className="text-sm font-bold text-emerald-800 mb-3 flex items-center gap-2">
+                  <span className="w-6 h-6 bg-emerald-500 text-white rounded-full flex items-center justify-center text-xs font-bold">1</span>
+                  계좌이체
+                </h3>
+                <div className="bg-white rounded-lg p-4 border border-emerald-200 space-y-2">
+                  <div className="flex justify-between text-sm">
+                    <span className="text-gray-500">입금 은행</span>
+                    <span className="font-bold text-gray-800">농협</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span className="text-gray-500">계좌번호</span>
+                    <span className="font-bold text-gray-800">352-0699-6074-53</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span className="text-gray-500">예금주</span>
+                    <span className="font-bold text-gray-800">심재우</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span className="text-gray-500">입금액</span>
+                    <span className={`font-bold ${paymentModal === 'pro' ? 'text-blue-600' : 'text-violet-600'}`}>
+                      {paymentModal === 'pro' ? '29,700원' : '79,200원'}
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* 결제 확인 */}
+              <div className="bg-blue-50 rounded-xl p-4 border border-blue-200">
+                <h3 className="text-sm font-bold text-blue-800 mb-3 flex items-center gap-2">
+                  <span className="w-6 h-6 bg-blue-500 text-white rounded-full flex items-center justify-center text-xs font-bold">2</span>
+                  결제 확인 요청
+                </h3>
+                <p className="text-[13px] text-gray-700 mb-3">
+                  입금 후 아래 번호로 <strong>문자 메시지</strong>를 보내주세요.
+                </p>
+                <div className="bg-white rounded-lg p-4 border border-blue-200 space-y-2">
+                  <div className="flex justify-between text-sm">
+                    <span className="text-gray-500">연락처</span>
+                    <span className="font-bold text-gray-800">010-9344-6505</span>
+                  </div>
+                  <div className="text-sm text-gray-500 mt-2">
+                    <p className="font-medium text-blue-700 mb-1">문자 내용 예시:</p>
+                    <div className="bg-blue-50 rounded-lg p-3 text-[13px] text-gray-700 border border-blue-100">
+                      AIO {paymentModal === 'pro' ? '프로' : '맥스'} 결제 완료<br/>
+                      입금자명: 홍길동<br/>
+                      가입 이메일: example@email.com
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* 등급 적용 */}
+              <div className="bg-amber-50 rounded-xl p-4 border border-amber-200">
+                <h3 className="text-sm font-bold text-amber-800 mb-3 flex items-center gap-2">
+                  <span className="w-6 h-6 bg-amber-500 text-white rounded-full flex items-center justify-center text-xs font-bold">3</span>
+                  등급 즉시 적용
+                </h3>
+                <p className="text-[13px] text-gray-700">
+                  문자 확인 후 <strong>즉시 {paymentModal === 'pro' ? '프로(Pro)' : '맥스(Max)'} 등급으로 업그레이드</strong>되며,
+                  바로 모든 기능을 사용하실 수 있습니다. 결제일로부터 <strong>30일간</strong> 이용 가능합니다.
+                </p>
+              </div>
+
+              {/* 안내 */}
+              <div className="bg-gray-50 rounded-xl p-4 border border-gray-200">
+                <p className="text-[12px] text-gray-500 leading-relaxed">
+                  ※ 영업일 기준 입금 확인 후 최대 1시간 이내 등급이 적용됩니다.<br/>
+                  ※ 입금자명과 가입 시 이름이 다를 경우, 문자에 가입 이메일을 반드시 기재해주세요.<br/>
+                  ※ 자동 결제가 아니며, 매월 수동 이체 방식입니다.
+                </p>
+              </div>
+            </div>
+
+            {/* 푸터 */}
+            <div className="px-6 py-4 border-t border-gray-100">
+              <button
+                onClick={() => setPaymentModal(null)}
+                className="w-full py-2.5 text-gray-500 text-sm font-medium rounded-xl hover:bg-gray-100 transition-all border border-gray-200"
+              >
+                닫기
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

@@ -176,14 +176,14 @@ export async function downloadManualDocx() {
         children: [
           // 타이틀
           spacer(),
-          title('AIO/GEO Optimizer'),
+          title('GEOAIO'),
           subtitle('사용자 매뉴얼'),
           spacer(),
 
           // 소개
-          h2('AIO/GEO Optimizer란?'),
+          h2('GEOAIO란?'),
           body(
-            'AIO/GEO Optimizer는 AI 검색엔진(AI Overview, Generative Engine)에 최적화된 콘텐츠를 작성할 수 있도록 도와주는 분석 도구입니다. Claude API를 활용하여 콘텐츠를 다각도로 분석하고, AI 검색 결과에 노출될 가능성을 높이기 위한 구체적인 개선 방안을 제시합니다.'
+            'GEOAIO는 AI 검색엔진(AI Overview, Generative Engine)에 최적화된 콘텐츠를 작성할 수 있도록 도와주는 분석 도구입니다. Claude API를 활용하여 콘텐츠를 다각도로 분석하고, AI 검색 결과에 노출될 가능성을 높이기 위한 구체적인 개선 방안을 제시합니다.'
           ),
           spacer(),
 
@@ -463,7 +463,7 @@ export async function downloadManualDocx() {
             border: { top: { style: BorderStyle.SINGLE, size: 4, color: 'e5e7eb' } },
             children: [
               new TextRun({
-                text: 'AIO/GEO Optimizer - AI 검색엔진 콘텐츠 최적화 도구 | Powered by AI',
+                text: 'GEOAIO - AI 검색엔진 콘텐츠 최적화 도구 | Powered by AI',
                 size: 18,
                 color: '9ca3af',
               }),

@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "AIO/GEO Optimizer - AI 콘텐츠 최적화 대시보드",
+  title: "GEOAIO - AI 콘텐츠 최적화 대시보드",
   description: "AI Overview 및 Generative Engine 최적화를 위한 콘텐츠 분석 도구",
 };
 

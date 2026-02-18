@@ -23,7 +23,7 @@ export default function FloatingQR() {
           </div>
           <Image
             src="/qr-code.png"
-            alt="AIO/GEO Optimizer QR Code"
+            alt="GEOAIO QR Code"
             width={160}
             height={160}
             className="rounded-lg"

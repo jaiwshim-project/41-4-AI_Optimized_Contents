@@ -555,7 +555,7 @@ export default function MakeGuidePage() {
       <section className="bg-gradient-to-br from-purple-900 via-indigo-900 to-blue-900 text-white py-12">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-white/10 rounded-full text-sm mb-4">
-            <span>AIO/GEO Optimizer</span>
+            <span>GEOAIO</span>
             <span className="text-purple-300">×</span>
             <span>Make.com</span>
           </div>
@@ -687,7 +687,7 @@ export default function MakeGuidePage() {
                      │
                      ▼
     ┌────────────────────────────────┐
-    │   AIO/GEO Optimizer API       │
+    │   GEOAIO API       │
     │                                │
     │   /api/webhook (통합)          │
     │   ├─ action: generate          │
@@ -1040,7 +1040,7 @@ export default function MakeGuidePage() {
             <section className="bg-white rounded-2xl p-6 sm:p-8 border border-gray-100 shadow-sm">
               <h2 className="text-xl font-bold text-gray-900 mb-4">에이전시 패키지 상품화</h2>
               <p className="text-sm text-gray-600 mb-6">
-                Make.com + AIO/GEO Optimizer를 조합하여 구독형 서비스 패키지로 판매할 수 있습니다.
+                Make.com + GEOAIO를 조합하여 구독형 서비스 패키지로 판매할 수 있습니다.
               </p>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {/* 기본 패키지 */}
@@ -1211,7 +1211,7 @@ export default function MakeGuidePage() {
                   <div className="space-y-3">
                     <div className="bg-blue-50 rounded-xl p-4">
                       <h4 className="text-sm font-semibold text-gray-800 mb-1">Make.com 커스텀 앱 개발</h4>
-                      <p className="text-xs text-gray-600 mb-2">Make.com 마켓플레이스에 등록 가능한 커스텀 앱/모듈 개발. 사용자가 HTTP 모듈 대신 &quot;AIO/GEO Optimizer&quot; 모듈을 직접 검색하여 사용 가능.</p>
+                      <p className="text-xs text-gray-600 mb-2">Make.com 마켓플레이스에 등록 가능한 커스텀 앱/모듈 개발. 사용자가 HTTP 모듈 대신 &quot;GEOAIO&quot; 모듈을 직접 검색하여 사용 가능.</p>
                       <div className="flex gap-2">
                         <span className="text-xs bg-purple-100 text-purple-700 px-2 py-0.5 rounded">Make.com SDK</span>
                         <span className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded">예상 1~2주</span>
@@ -1651,7 +1651,7 @@ Make.com (백그라운드 처리)
                 <span className="inline-block px-3 py-1 bg-white/10 rounded-full text-sm mb-3">Competitive Analysis</span>
                 <h2 className="text-2xl sm:text-3xl font-bold mb-3">경쟁력 분석 및 시장 영향 예측</h2>
                 <p className="text-indigo-200 max-w-2xl mx-auto text-sm">
-                  AIO/GEO Optimizer의 경쟁 환경, 차별적 가치, 시장 영향력, 고객 세그먼트별 반응을 분석합니다.
+                  GEOAIO의 경쟁 환경, 차별적 가치, 시장 영향력, 고객 세그먼트별 반응을 분석합니다.
                 </p>
               </div>
             </section>

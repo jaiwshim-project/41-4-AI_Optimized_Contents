@@ -44,7 +44,7 @@ export async function POST(request: NextRequest) {
     });
 
     const planName = plan === 'pro' ? '프로(Pro)' : '맥스(Max)';
-    const planPrice = plan === 'pro' ? '29,000원' : '79,000원';
+    const planPrice = plan === 'pro' ? '29,700원' : '79,200원';
     const userName = name || '고객';
     const expDate = new Date(expiresAt);
     const expDateStr = `${expDate.getFullYear()}년 ${expDate.getMonth() + 1}월 ${expDate.getDate()}일`;
@@ -71,7 +71,7 @@ export async function POST(request: NextRequest) {
 
     <!-- 헤더 -->
     <div style="background:linear-gradient(135deg,#4f46e5,#7c3aed);border-radius:16px 16px 0 0;padding:32px;text-align:center;">
-      <h1 style="color:#fff;margin:0;font-size:22px;">AIO GEO Optimizer</h1>
+      <h1 style="color:#fff;margin:0;font-size:22px;">GEOAIO</h1>
       <p style="color:rgba(255,255,255,0.85);margin:8px 0 0;font-size:14px;">구독 만료 안내</p>
     </div>
 
@@ -145,7 +145,7 @@ export async function POST(request: NextRequest) {
 
     <!-- 푸터 -->
     <div style="text-align:center;padding:20px;font-size:11px;color:#9ca3af;">
-      <p style="margin:0;">AIO GEO Optimizer | AI 최적화 콘텐츠 플랫폼</p>
+      <p style="margin:0;">GEOAIO | AI 최적화 콘텐츠 플랫폼</p>
       <p style="margin:4px 0 0;">${siteUrl}</p>
     </div>
   </div>
@@ -153,7 +153,7 @@ export async function POST(request: NextRequest) {
 </html>`;
 
     await transporter.sendMail({
-      from: `AIO GEO Optimizer <${smtpUser}>`,
+      from: `GEOAIO <${smtpUser}>`,
       to: email,
       subject: `[AIO] ${planName} 구독 만료 안내 (${daysLeft < 0 ? '만료됨' : `D-${daysLeft}`})`,
       html: htmlContent,

@@ -184,7 +184,7 @@ export default function MakeIntegrationPage() {
                   마치 레고 블록을 조립하듯, 원하는 작업을 드래그 앤 드롭으로 연결하면 자동으로 실행됩니다.
                 </p>
                 <p className="text-[15px] text-gray-700 leading-relaxed mb-3">
-                  AIO/GEO Optimizer와 Make.com을 연동하면, 콘텐츠 생성부터 분석, 최적화, SNS 배포까지
+                  GEOAIO와 Make.com을 연동하면, 콘텐츠 생성부터 분석, 최적화, SNS 배포까지
                   <strong> 모든 과정을 자동화</strong>할 수 있습니다.
                 </p>
                 <p className="text-[13px] text-gray-500">
@@ -214,7 +214,7 @@ export default function MakeIntegrationPage() {
                       </svg>
                     </div>
                   </div>
-                  <p className="text-xs text-center text-indigo-600 font-medium">AIO/GEO Optimizer + Make.com = 자동화</p>
+                  <p className="text-xs text-center text-indigo-600 font-medium">GEOAIO + Make.com = 자동화</p>
                 </div>
               </div>
             </div>
@@ -533,7 +533,7 @@ export default function MakeIntegrationPage() {
         <section className="rounded-xl bg-gradient-to-br from-indigo-600 to-violet-600 text-white px-6 sm:px-10 py-10 text-center mb-4">
           <h2 className="text-xl sm:text-2xl font-bold mb-3">지금 자동화를 시작하세요</h2>
           <p className="text-sm text-white max-w-lg mx-auto mb-6">
-            Make.com과 AIO/GEO Optimizer를 연동하면 콘텐츠 마케팅의 반복 작업을 모두 자동화할 수 있습니다.
+            Make.com과 GEOAIO를 연동하면 콘텐츠 마케팅의 반복 작업을 모두 자동화할 수 있습니다.
             무료로 시작해보세요.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
@@ -584,7 +584,7 @@ export default function MakeIntegrationPage() {
                 <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z" /></svg>
               </div>
               <h2 className="text-xl font-extrabold text-white">테스터 모집 안내</h2>
-              <p className="text-sm text-white/80 mt-1">AIO GEO Optimizer 베타 테스터를 모집합니다</p>
+              <p className="text-sm text-white/80 mt-1">GEOAIO 베타 테스터를 모집합니다</p>
             </div>
             <div className="px-6 py-5 space-y-4">
               <div className="bg-amber-50 rounded-xl p-4 border border-amber-200">

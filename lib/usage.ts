@@ -3,12 +3,12 @@ import { createClient } from './supabase-client';
 export type PlanType = 'admin' | 'free' | 'tester' | 'pro' | 'max';
 export type FeatureType = 'analyze' | 'generate' | 'keyword' | 'series';
 
-const PLAN_LIMITS: Record<PlanType, number> = {
-  admin: Infinity,
-  free: 3,
-  tester: 15,
-  pro: 15,
-  max: 50,
+const PLAN_FEATURE_LIMITS: Record<PlanType, Record<FeatureType, number>> = {
+  admin:  { analyze: Infinity, generate: Infinity, keyword: Infinity, series: Infinity },
+  free:   { analyze: 3, generate: 3, keyword: 3, series: 3 },
+  tester: { analyze: 50, generate: 50, keyword: 50, series: 50 },
+  pro:    { analyze: 15, generate: 15, keyword: 15, series: 15 },
+  max:    { analyze: 50, generate: 50, keyword: 50, series: 50 },
 };
 
 export const FEATURE_LABELS: Record<FeatureType, string> = {
@@ -71,7 +71,7 @@ export async function getUsageCount(feature: FeatureType): Promise<number> {
 export async function canUseFeature(feature: FeatureType): Promise<{ allowed: boolean; current: number; limit: number; plan: PlanType }> {
   const plan = await getUserPlan();
   const current = await getUsageCount(feature);
-  const limit = PLAN_LIMITS[plan];
+  const limit = PLAN_FEATURE_LIMITS[plan][feature];
 
   return {
     allowed: current < limit,
@@ -108,21 +108,23 @@ export async function incrementUsage(feature: FeatureType): Promise<void> {
 
 export async function getUsageSummary(): Promise<{ feature: FeatureType; label: string; current: number; limit: number }[]> {
   const plan = await getUserPlan();
-  const limit = plan === 'admin' ? 999999 : PLAN_LIMITS[plan];
   const features: FeatureType[] = ['analyze', 'generate', 'keyword', 'series'];
 
   const results = await Promise.all(
-    features.map(async (feature) => ({
-      feature,
-      label: FEATURE_LABELS[feature],
-      current: await getUsageCount(feature),
-      limit,
-    }))
+    features.map(async (feature) => {
+      const limit = PLAN_FEATURE_LIMITS[plan][feature];
+      return {
+        feature,
+        label: FEATURE_LABELS[feature],
+        current: await getUsageCount(feature),
+        limit: limit === Infinity ? 999999 : limit,
+      };
+    })
   );
 
   return results;
 }
 
-export function getPlanLimit(plan: PlanType): number {
-  return PLAN_LIMITS[plan];
+export function getPlanLimit(plan: PlanType, feature: FeatureType = 'analyze'): number {
+  return PLAN_FEATURE_LIMITS[plan][feature];
 }

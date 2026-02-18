@@ -32,7 +32,7 @@ export default function IntroductionPage() {
         try { return Array.from(sheet.cssRules).map(r => r.cssText).join('\n'); }
         catch { return ''; }
       }).join('\n');
-    return `<!DOCTYPE html><html><head><meta charset="utf-8"><title>AIO/GEO Optimizer 소개서</title><style>${styles}</style></head><body style="background:#f9fafb;padding:32px">${contentRef.current.innerHTML}</body></html>`;
+    return `<!DOCTYPE html><html><head><meta charset="utf-8"><title>GEOAIO 소개서</title><style>${styles}</style></head><body style="background:#f9fafb;padding:32px">${contentRef.current.innerHTML}</body></html>`;
   };
 
   const handleDownloadDocx = () => {
@@ -57,7 +57,7 @@ export default function IntroductionPage() {
         catch { return ''; }
       }).join('\n');
     printWindow.document.write(`
-      <!DOCTYPE html><html><head><meta charset="utf-8"><title>AIO/GEO Optimizer 소개서</title>
+      <!DOCTYPE html><html><head><meta charset="utf-8"><title>GEOAIO 소개서</title>
       <style>${styles} @media print{body{padding:20px}}</style>
       </head><body style="background:white;padding:32px">${contentRef.current.innerHTML}</body></html>
     `);
@@ -79,7 +79,7 @@ export default function IntroductionPage() {
               </div>
               <div>
                 <h1 className="text-sm font-bold text-gray-900">소개 자료</h1>
-                <p className="text-[10px] text-gray-700">AIO/GEO Optimizer 제품 소개서</p>
+                <p className="text-[10px] text-gray-700">GEOAIO 제품 소개서</p>
               </div>
             </div>
             <div className="flex items-center gap-2">
@@ -138,7 +138,7 @@ export default function IntroductionPage() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
               </svg>
             </div>
-            <h1 className="text-lg font-extrabold mb-3">AIO/GEO Optimizer</h1>
+            <h1 className="text-lg font-extrabold mb-3">GEOAIO</h1>
             <p className="text-sm font-medium text-white mb-2">AI 검색엔진 콘텐츠 최적화 플랫폼</p>
             <p className="text-sm text-white max-w-lg mx-auto">AI가 주도하는 검색의 시대, 콘텐츠가 AI에 의해 발견되고 인용되기 위한 전략적 도구</p>
           </section>
@@ -251,7 +251,7 @@ export default function IntroductionPage() {
                   <tr className="bg-gradient-to-r from-amber-500 to-orange-500 text-white">
                     <th className="px-4 py-3 text-left font-semibold">비교 항목</th>
                     <th className="px-4 py-3 text-left font-semibold">기존 SEO 도구</th>
-                    <th className="px-4 py-3 text-left font-semibold">AIO/GEO Optimizer</th>
+                    <th className="px-4 py-3 text-left font-semibold">GEOAIO</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -304,7 +304,7 @@ export default function IntroductionPage() {
             <h2 className="text-xl font-extrabold mb-3">AI 검색 시대, 지금 시작하세요</h2>
             <p className="text-sm text-white max-w-lg mx-auto mb-4">
               경쟁사보다 먼저 AI 검색엔진에 최적화된 콘텐츠를 만들어 보세요.
-              AIO/GEO Optimizer가 당신의 콘텐츠를 AI가 선택하는 콘텐츠로 만들어 드립니다.
+              GEOAIO가 당신의 콘텐츠를 AI가 선택하는 콘텐츠로 만들어 드립니다.
             </p>
             <div className="flex items-center justify-center gap-3">
               <Link href="/generate" className="inline-flex items-center gap-2 px-6 py-3 bg-white text-indigo-700 font-bold rounded-xl hover:bg-gray-100 transition-all shadow-lg">
@@ -347,7 +347,7 @@ export default function IntroductionPage() {
 
           {/* 푸터 라인 */}
           <div className="text-center text-[8pt] text-gray-400 pt-4 border-t border-gray-200">
-            AIO/GEO Optimizer &mdash; AI 검색엔진 콘텐츠 최적화 플랫폼 &copy; 2026
+            GEOAIO &mdash; AI 검색엔진 콘텐츠 최적화 플랫폼 &copy; 2026
           </div>
         </div>
       </main>
