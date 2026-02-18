@@ -290,6 +290,61 @@ export default function MakeIntegrationPage() {
           <p className="text-xs text-gray-500 mb-4">
             아래 블루프린트 파일을 다운로드하여 Make.com에 가져오기(Import)하면 바로 사용할 수 있습니다.
           </p>
+
+          {/* Import 절차 안내 */}
+          <div className="rounded-xl border border-indigo-200 bg-indigo-50 p-5 mb-6">
+            <h3 className="text-sm font-bold text-indigo-900 mb-3 flex items-center gap-2">
+              <svg className="w-4 h-4 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              블루프린트 가져오기(Import) 방법
+            </h3>
+            <ol className="space-y-3">
+              <li className="flex items-start gap-3">
+                <span className="w-6 h-6 rounded-full bg-indigo-600 text-white text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">1</span>
+                <div>
+                  <p className="text-xs font-semibold text-gray-900">블루프린트 JSON 파일 다운로드</p>
+                  <p className="text-xs text-gray-600 mt-0.5">아래 3종 블루프린트 중 원하는 파일의 &quot;JSON 다운로드&quot; 버튼을 클릭하여 PC에 저장합니다.</p>
+                </div>
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="w-6 h-6 rounded-full bg-indigo-600 text-white text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">2</span>
+                <div>
+                  <p className="text-xs font-semibold text-gray-900">Make.com에서 새 시나리오 생성</p>
+                  <p className="text-xs text-gray-600 mt-0.5">Make.com에 로그인한 후 좌측 메뉴에서 <strong>&quot;Scenarios&quot;</strong>를 클릭하고, 우측 상단의 <strong>&quot;Create a new scenario&quot;</strong> 버튼을 클릭합니다.</p>
+                </div>
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="w-6 h-6 rounded-full bg-indigo-600 text-white text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">3</span>
+                <div>
+                  <p className="text-xs font-semibold text-gray-900">블루프린트 가져오기 메뉴 열기</p>
+                  <p className="text-xs text-gray-600 mt-0.5">시나리오 편집 화면 하단의 <strong>&quot;...&quot; (More)</strong> 버튼을 클릭한 후, <strong>&quot;Import Blueprint&quot;</strong>를 선택합니다.</p>
+                </div>
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="w-6 h-6 rounded-full bg-indigo-600 text-white text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">4</span>
+                <div>
+                  <p className="text-xs font-semibold text-gray-900">JSON 파일 업로드</p>
+                  <p className="text-xs text-gray-600 mt-0.5">팝업 창에서 다운로드한 JSON 파일을 선택하거나, 파일 내용을 복사하여 붙여넣기 한 뒤 <strong>&quot;Save&quot;</strong> 버튼을 클릭합니다.</p>
+                </div>
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="w-6 h-6 rounded-full bg-indigo-600 text-white text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">5</span>
+                <div>
+                  <p className="text-xs font-semibold text-gray-900">API 키 및 웹훅 URL 설정</p>
+                  <p className="text-xs text-gray-600 mt-0.5">가져오기가 완료되면 각 모듈을 클릭하여 <strong>API 키</strong>와 <strong>웹훅 URL</strong>을 입력합니다. 웹훅 URL은 <code className="bg-white px-1.5 py-0.5 rounded text-indigo-700 font-mono text-[11px]">https://your-domain.com/api/webhook</code> 형식입니다.</p>
+                </div>
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="w-6 h-6 rounded-full bg-emerald-600 text-white text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">✓</span>
+                <div>
+                  <p className="text-xs font-semibold text-gray-900">테스트 실행 및 활성화</p>
+                  <p className="text-xs text-gray-600 mt-0.5">하단의 <strong>&quot;Run once&quot;</strong> 버튼으로 테스트한 후, 정상 동작이 확인되면 좌측 하단 토글을 켜서 <strong>스케줄링을 활성화</strong>합니다.</p>
+                </div>
+              </li>
+            </ol>
+          </div>
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {blueprints.map((bp) => (
               <div key={bp.title} className="rounded-xl border border-gray-200 bg-white shadow-sm p-5 flex flex-col">
