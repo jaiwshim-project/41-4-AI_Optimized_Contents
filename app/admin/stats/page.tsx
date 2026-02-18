@@ -132,34 +132,37 @@ export default function AdminStatsPage() {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         {/* 헤더 */}
         <div className="flex items-center justify-between mb-5">
-          <div>
-            <h1 className="text-2xl font-bold text-gray-900 flex items-center gap-3">
-              <span className="w-10 h-10 bg-gradient-to-br from-indigo-500 to-violet-500 rounded-xl flex items-center justify-center">
-                <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                </svg>
-              </span>
-              전체 통계 대시보드
-            </h1>
-            <p className="text-gray-500 mt-1">서비스 전체 사용량 및 회원 통계</p>
-          </div>
-          <div className="flex items-center gap-2">
-            <Link
-              href="/admin"
-              className="px-3 py-2 text-xs font-medium text-gray-600 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-all"
-            >
-              회원 관리
-            </Link>
-            <button
-              onClick={() => loadStats()}
-              disabled={loading}
-              className="px-3 py-2 bg-white border border-gray-200 rounded-lg text-sm text-gray-600 hover:bg-gray-50 transition-all disabled:opacity-50"
-            >
-              <svg className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+          <h1 className="text-2xl font-bold text-gray-900 flex items-center gap-3">
+            <span className="w-10 h-10 bg-gradient-to-br from-red-500 to-rose-500 rounded-xl flex items-center justify-center">
+              <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
               </svg>
-            </button>
-          </div>
+            </span>
+            관리자 대시보드
+          </h1>
+          <p className="text-gray-500 text-sm">구독 관리 · 등급 관리 · 통계 관리</p>
+        </div>
+
+        {/* 탭 전환 */}
+        <div className="flex items-center gap-2 mb-5">
+          <Link href="/admin" className="px-4 py-2 text-sm font-semibold rounded-lg transition-all bg-gray-100 text-gray-600 hover:bg-gray-200">
+            구독 관리
+          </Link>
+          <Link href="/admin" className="px-4 py-2 text-sm font-semibold rounded-lg transition-all bg-gray-100 text-gray-600 hover:bg-gray-200">
+            등급 관리
+          </Link>
+          <span className="px-4 py-2 text-sm font-semibold rounded-lg bg-gray-900 text-white">
+            통계 관리
+          </span>
+          <button
+            onClick={() => loadStats()}
+            disabled={loading}
+            className="ml-auto px-3 py-2 bg-white border border-gray-200 rounded-lg text-sm text-gray-600 hover:bg-gray-50 transition-all disabled:opacity-50"
+          >
+            <svg className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+            </svg>
+          </button>
         </div>
 
         {error && (

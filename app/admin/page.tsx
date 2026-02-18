@@ -272,15 +272,7 @@ export default function AdminPage() {
             </span>
             관리자 대시보드
           </h1>
-          <div className="flex items-center gap-3">
-            <p className="text-gray-500 text-sm">회원 정보 조회 및 등급 관리</p>
-            <Link
-              href="/admin/stats"
-              className="px-4 py-2 text-xs font-semibold text-indigo-600 bg-indigo-50 border border-indigo-200 rounded-lg hover:bg-indigo-100 transition-all"
-            >
-              전체 통계
-            </Link>
-          </div>
+          <p className="text-gray-500 text-sm">구독 관리 · 등급 관리 · 통계 관리</p>
         </div>
 
         {/* 통계 카드 */}
@@ -310,12 +302,6 @@ export default function AdminPage() {
         {/* 탭 전환 */}
         <div className="flex items-center gap-2 mb-5">
           <button
-            onClick={() => setActiveTab('users')}
-            className={`px-4 py-2 text-sm font-semibold rounded-lg transition-all ${activeTab === 'users' ? 'bg-gray-900 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`}
-          >
-            회원 관리
-          </button>
-          <button
             onClick={() => setActiveTab('subscriptions')}
             className={`px-4 py-2 text-sm font-semibold rounded-lg transition-all relative ${activeTab === 'subscriptions' ? 'bg-gray-900 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`}
           >
@@ -326,6 +312,18 @@ export default function AdminPage() {
               </span>
             )}
           </button>
+          <button
+            onClick={() => setActiveTab('users')}
+            className={`px-4 py-2 text-sm font-semibold rounded-lg transition-all ${activeTab === 'users' ? 'bg-gray-900 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`}
+          >
+            등급 관리
+          </button>
+          <Link
+            href="/admin/stats"
+            className="px-4 py-2 text-sm font-semibold rounded-lg transition-all bg-gray-100 text-gray-600 hover:bg-gray-200"
+          >
+            통계 관리
+          </Link>
         </div>
 
         {activeTab === 'subscriptions' && (
