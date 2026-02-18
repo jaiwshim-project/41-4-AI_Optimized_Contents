@@ -178,6 +178,8 @@ export default function PromotionLandingPage() {
             </button>
           </div>
 
+          <img src="/images/logo-geoaio.png" alt="GEOAIO" className="h-14 sm:h-16 rounded-lg mx-auto mb-5" />
+
           <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-white/10 backdrop-blur-sm rounded-full border border-white/20 text-sm text-indigo-200 font-medium mb-5">
             <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
             AI 검색 시대, 새로운 콘텐츠 전략이 필요합니다

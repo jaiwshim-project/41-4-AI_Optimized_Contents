@@ -129,15 +129,18 @@ export default function KeywordAnalysisPage() {
       <Header />
 
       <main className="flex-grow container mx-auto px-4 py-6">
-        {/* Page Header */}
-        <div className="mb-5 text-center">
-          <div className="py-5 px-4 rounded-xl border border-green-200">
-            <h1 className="text-xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent mb-1">
-              키워드 경쟁 분석
-            </h1>
-            <p className="text-gray-600 text-sm">
-              AI 시대의 키워드 난이도와 최적화 전략을 분석합니다
-            </p>
+        {/* 히어로 */}
+        <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-violet-600 via-indigo-600 to-blue-600 text-white px-6 sm:px-10 py-8 mb-5 flex items-center gap-6">
+          <div className="absolute inset-0 opacity-10">
+            <svg className="w-full h-full" viewBox="0 0 400 400" fill="none">
+              <circle cx="50" cy="50" r="80" stroke="white" strokeWidth="0.5" />
+              <circle cx="350" cy="100" r="120" stroke="white" strokeWidth="0.5" />
+            </svg>
+          </div>
+          <img src="/images/logo-geoaio.png" alt="GEOAIO" className="relative z-10 h-16 rounded-lg shadow-lg hidden sm:block" />
+          <div className="relative z-10">
+            <h2 className="text-2xl font-bold mb-1">키워드 경쟁 분석</h2>
+            <p className="text-sm text-white/80">AI 시대의 키워드 난이도와 최적화 전략을 분석합니다</p>
           </div>
         </div>
 

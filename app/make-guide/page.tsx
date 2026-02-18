@@ -554,6 +554,7 @@ export default function MakeGuidePage() {
       {/* Hero */}
       <section className="bg-gradient-to-br from-purple-900 via-indigo-900 to-blue-900 text-white py-12">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <img src="/images/logo-geoaio.png" alt="GEOAIO" className="h-14 sm:h-16 rounded-lg mx-auto mb-4" />
           <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-white/10 rounded-full text-sm mb-4">
             <span>GEOAIO</span>
             <span className="text-purple-300">×</span>

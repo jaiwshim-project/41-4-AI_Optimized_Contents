@@ -122,13 +122,19 @@ export default function SeriesPage() {
       <Header />
 
       <main className="container mx-auto px-4 py-6 max-w-6xl">
-        <div className="text-center mb-5">
-          <h1 className="text-xl font-bold mb-2 bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 bg-clip-text text-transparent">
-            콘텐츠 시리즈 기획
-          </h1>
-          <p className="text-sm text-gray-600">
-            연속성 있는 콘텐츠 시리즈를 AI가 자동으로 기획합니다
-          </p>
+        {/* 히어로 */}
+        <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-violet-600 via-indigo-600 to-blue-600 text-white px-6 sm:px-10 py-8 mb-5 flex items-center gap-6">
+          <div className="absolute inset-0 opacity-10">
+            <svg className="w-full h-full" viewBox="0 0 400 400" fill="none">
+              <circle cx="50" cy="50" r="80" stroke="white" strokeWidth="0.5" />
+              <circle cx="350" cy="100" r="120" stroke="white" strokeWidth="0.5" />
+            </svg>
+          </div>
+          <img src="/images/logo-geoaio.png" alt="GEOAIO" className="relative z-10 h-16 rounded-lg shadow-lg hidden sm:block" />
+          <div className="relative z-10">
+            <h2 className="text-2xl font-bold mb-1">콘텐츠 시리즈 기획</h2>
+            <p className="text-sm text-white/80">연속성 있는 콘텐츠 시리즈를 AI가 자동으로 기획합니다</p>
+          </div>
         </div>
 
         <div className="bg-white rounded-xl shadow-sm p-4 border border-purple-200 mb-5">

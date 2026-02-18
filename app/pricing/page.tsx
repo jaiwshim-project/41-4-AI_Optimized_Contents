@@ -78,9 +78,19 @@ export default function PricingPage() {
     <div className="min-h-screen bg-gray-50">
       <Header />
       <main className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="text-center mb-4">
-          <h2 className="text-lg font-bold text-gray-900 mb-3">요금제</h2>
-          <p className="text-gray-500">필요에 맞는 플랜을 선택하세요</p>
+        {/* 히어로 */}
+        <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-violet-600 via-indigo-600 to-blue-600 text-white px-6 sm:px-10 py-8 mb-6 flex items-center gap-6">
+          <div className="absolute inset-0 opacity-10">
+            <svg className="w-full h-full" viewBox="0 0 400 400" fill="none">
+              <circle cx="50" cy="50" r="80" stroke="white" strokeWidth="0.5" />
+              <circle cx="350" cy="100" r="120" stroke="white" strokeWidth="0.5" />
+            </svg>
+          </div>
+          <img src="/images/logo-geoaio.png" alt="GEOAIO" className="relative z-10 h-16 rounded-lg shadow-lg hidden sm:block" />
+          <div className="relative z-10">
+            <h2 className="text-2xl font-bold mb-1">요금제</h2>
+            <p className="text-sm text-white/80">필요에 맞는 플랜을 선택하세요</p>
+          </div>
         </div>
 
         {/* 프로모션 배너 */}

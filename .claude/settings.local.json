@@ -37,7 +37,9 @@
       "WebFetch(domain:41-4-ai-optimized-contents.vercel.app)",
       "Bash(\"/c/01 Claude-Code/41-4:*)",
       "WebFetch(domain:resend.com)",
-      "Bash(vercel:*)"
+      "Bash(vercel:*)",
+      "Bash(npx --yes sharp-cli:*)",
+      "Bash(npx sharp-cli:*)"
     ]
   }
 }
