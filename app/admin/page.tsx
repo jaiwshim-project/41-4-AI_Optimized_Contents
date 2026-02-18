@@ -18,6 +18,12 @@ interface UserData {
     keyword: number;
     series: number;
   };
+  totalUsage: {
+    analyze: number;
+    generate: number;
+    keyword: number;
+    series: number;
+  };
 }
 
 const PLAN_OPTIONS = [
@@ -272,10 +278,22 @@ export default function AdminPage() {
                   <th className="text-left px-4 py-3 font-semibold text-gray-700">이메일</th>
                   <th className="text-center px-4 py-3 font-semibold text-gray-700">등급</th>
                   <th className="text-center px-4 py-3 font-semibold text-gray-700">등급 변경</th>
-                  <th className="text-center px-2 py-3 font-semibold text-gray-700">분석</th>
-                  <th className="text-center px-2 py-3 font-semibold text-gray-700">생성</th>
-                  <th className="text-center px-2 py-3 font-semibold text-gray-700">키워드</th>
-                  <th className="text-center px-2 py-3 font-semibold text-gray-700">시리즈</th>
+                  <th className="text-center px-2 py-3 font-semibold text-gray-700">
+                    <div>분석</div>
+                    <div className="text-[10px] font-normal text-gray-400">누적/이번달</div>
+                  </th>
+                  <th className="text-center px-2 py-3 font-semibold text-gray-700">
+                    <div>생성</div>
+                    <div className="text-[10px] font-normal text-gray-400">누적/이번달</div>
+                  </th>
+                  <th className="text-center px-2 py-3 font-semibold text-gray-700">
+                    <div>키워드</div>
+                    <div className="text-[10px] font-normal text-gray-400">누적/이번달</div>
+                  </th>
+                  <th className="text-center px-2 py-3 font-semibold text-gray-700">
+                    <div>시리즈</div>
+                    <div className="text-[10px] font-normal text-gray-400">누적/이번달</div>
+                  </th>
                   <th className="text-center px-4 py-3 font-semibold text-gray-700">가입일</th>
                   <th className="text-center px-4 py-3 font-semibold text-gray-700">최근 로그인</th>
                 </tr>
@@ -365,10 +383,12 @@ export default function AdminPage() {
                             ))}
                           </select>
                         </td>
-                        <td className="text-center px-2 py-3 text-gray-600">{user.usage.analyze}</td>
-                        <td className="text-center px-2 py-3 text-gray-600">{user.usage.generate}</td>
-                        <td className="text-center px-2 py-3 text-gray-600">{user.usage.keyword}</td>
-                        <td className="text-center px-2 py-3 text-gray-600">{user.usage.series}</td>
+                        {(['analyze', 'generate', 'keyword', 'series'] as const).map(feature => (
+                          <td key={feature} className="text-center px-2 py-3">
+                            <div className="text-gray-800 font-medium text-xs">{user.totalUsage?.[feature] || 0}</div>
+                            <div className="text-[10px] text-indigo-500">{user.usage[feature] || 0}</div>
+                          </td>
+                        ))}
                         <td className="text-center px-4 py-3 text-gray-500 text-xs">{formatDate(user.created_at)}</td>
                         <td className="text-center px-4 py-3 text-gray-500 text-xs">{formatDate(user.last_sign_in_at)}</td>
                       </tr>

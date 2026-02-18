@@ -37,22 +37,36 @@ export async function GET(request: NextRequest) {
     // usage_counts 이번 달
     const now = new Date();
     const month = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
-    const { data: usageCounts } = await supabase
+    const { data: monthlyUsage } = await supabase
       .from('usage_counts')
       .select('user_id, feature, count')
       .eq('month', month);
 
+    // usage_counts 전체 (누적)
+    const { data: allUsage } = await supabase
+      .from('usage_counts')
+      .select('user_id, feature, count');
+
     // 데이터 조합
     const planMap = new Map((plans || []).map(p => [p.user_id, p]));
-    const usageMap = new Map<string, Record<string, number>>();
-    (usageCounts || []).forEach(u => {
-      if (!usageMap.has(u.user_id)) usageMap.set(u.user_id, {});
-      usageMap.get(u.user_id)![u.feature] = u.count;
+
+    const monthlyMap = new Map<string, Record<string, number>>();
+    (monthlyUsage || []).forEach(u => {
+      if (!monthlyMap.has(u.user_id)) monthlyMap.set(u.user_id, {});
+      monthlyMap.get(u.user_id)![u.feature] = u.count;
+    });
+
+    const totalMap = new Map<string, Record<string, number>>();
+    (allUsage || []).forEach(u => {
+      if (!totalMap.has(u.user_id)) totalMap.set(u.user_id, {});
+      const prev = totalMap.get(u.user_id)![u.feature] || 0;
+      totalMap.get(u.user_id)![u.feature] = prev + u.count;
     });
 
     const result = users.map(user => {
       const planData = planMap.get(user.id);
-      const usage = usageMap.get(user.id) || {};
+      const monthly = monthlyMap.get(user.id) || {};
+      const total = totalMap.get(user.id) || {};
       return {
         id: user.id,
         name: user.user_metadata?.full_name || user.user_metadata?.name || user.user_metadata?.user_name || user.user_metadata?.preferred_username || '',
@@ -62,10 +76,16 @@ export async function GET(request: NextRequest) {
         plan: planData?.plan || 'free',
         plan_expires_at: planData?.expires_at || null,
         usage: {
-          analyze: usage['analyze'] || 0,
-          generate: usage['generate'] || 0,
-          keyword: usage['keyword'] || 0,
-          series: usage['series'] || 0,
+          analyze: monthly['analyze'] || 0,
+          generate: monthly['generate'] || 0,
+          keyword: monthly['keyword'] || 0,
+          series: monthly['series'] || 0,
+        },
+        totalUsage: {
+          analyze: total['analyze'] || 0,
+          generate: total['generate'] || 0,
+          keyword: total['keyword'] || 0,
+          series: total['series'] || 0,
         },
       };
     });
