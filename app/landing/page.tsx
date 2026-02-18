@@ -255,6 +255,39 @@ export default function PromotionLandingPage() {
         </div>
       </section>
 
+      {/* 초기 테스터 모집 배너 */}
+      <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-10">
+        <div className="relative bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 rounded-xl p-5 text-white shadow-lg border-2 border-emerald-300 overflow-hidden">
+          <div className="absolute -right-6 -top-6 w-28 h-28 bg-white/10 rounded-full" />
+          <div className="absolute -left-4 -bottom-4 w-20 h-20 bg-white/5 rounded-full" />
+          <div className="relative flex flex-col sm:flex-row items-center gap-4">
+            <div className="w-14 h-14 bg-white/20 rounded-xl flex items-center justify-center shrink-0">
+              <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
+              </svg>
+            </div>
+            <div className="flex-1 text-center sm:text-left">
+              <div className="flex items-center justify-center sm:justify-start gap-2 mb-1">
+                <h3 className="text-base font-bold">초기 테스터 모집 중</h3>
+                <span className="px-2.5 py-0.5 bg-yellow-400 text-yellow-900 text-xs font-bold rounded-full">FREE</span>
+              </div>
+              <p className="text-white/90 text-sm">지금 신청하시면 <strong>모든 기능을 무료</strong>로 체험할 수 있습니다. 선착순 마감!</p>
+            </div>
+            <a
+              href="https://forms.gle/RdniybCMpa6V77dw9"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-white text-teal-700 text-sm font-bold rounded-xl hover:bg-gray-100 transition-all shadow-md shrink-0"
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+              </svg>
+              테스터 신청하기
+            </a>
+          </div>
+        </div>
+      </section>
+
       {/* 소개 영상 섹션 */}
       <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         <div className="text-center mb-5">
