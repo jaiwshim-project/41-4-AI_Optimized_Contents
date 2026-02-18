@@ -60,7 +60,7 @@ export async function POST(request: NextRequest) {
       urgencyMessage = `<p style="color:#059669;font-size:16px;">구독 만료까지 <strong>${daysLeft}일</strong> 남았습니다</p>`;
     }
 
-    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://ai-optimized-contents.vercel.app';
+    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://aio-geo-optimizer.vercel.app';
 
     const htmlContent = `
 <!DOCTYPE html>
