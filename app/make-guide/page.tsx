@@ -444,6 +444,61 @@ export default function MakeGuidePage() {
   const [expandedApi, setExpandedApi] = useState<number | null>(null);
   const [expandedScenario, setExpandedScenario] = useState<number | null>(null);
   const [isPrinting, setIsPrinting] = useState(false);
+  const [isUnlocked, setIsUnlocked] = useState(false);
+  const [pinInput, setPinInput] = useState('');
+  const [pinError, setPinError] = useState(false);
+
+  const handlePinSubmit = () => {
+    if (pinInput === '9633') {
+      setIsUnlocked(true);
+      setPinError(false);
+    } else {
+      setPinError(true);
+      setPinInput('');
+    }
+  };
+
+  if (!isUnlocked) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
+        <div className="bg-white rounded-xl shadow-lg border border-gray-200 p-8 max-w-sm w-full text-center">
+          <div className="w-14 h-14 bg-gradient-to-br from-indigo-500 to-violet-600 rounded-xl flex items-center justify-center mx-auto mb-4">
+            <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+            </svg>
+          </div>
+          <h2 className="text-lg font-bold text-gray-900 mb-1">Make 활용 매뉴얼</h2>
+          <p className="text-xs text-gray-500 mb-5">접근 비밀번호를 입력해주세요.</p>
+          <div className="space-y-3">
+            <input
+              type="password"
+              maxLength={4}
+              placeholder="숫자 4자리"
+              value={pinInput}
+              onChange={(e) => { setPinInput(e.target.value.replace(/\D/g, '')); setPinError(false); }}
+              onKeyDown={(e) => e.key === 'Enter' && handlePinSubmit()}
+              className={`w-full px-4 py-3 text-center text-lg font-bold tracking-[0.5em] border rounded-lg focus:outline-none transition-all ${
+                pinError ? 'border-red-400 bg-red-50 focus:border-red-500' : 'border-gray-200 focus:border-indigo-400'
+              }`}
+            />
+            {pinError && (
+              <p className="text-xs text-red-500 font-medium">비밀번호가 올바르지 않습니다.</p>
+            )}
+            <button
+              onClick={handlePinSubmit}
+              disabled={pinInput.length < 4}
+              className="w-full py-2.5 bg-gradient-to-r from-indigo-600 to-violet-600 text-white text-sm font-semibold rounded-lg hover:from-indigo-700 hover:to-violet-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              확인
+            </button>
+          </div>
+          <Link href="/" className="inline-block mt-4 text-xs text-gray-400 hover:text-gray-600 transition-all">
+            홈으로 돌아가기
+          </Link>
+        </div>
+      </div>
+    );
+  }
 
   const handlePrint = useCallback(() => {
     setIsPrinting(true);

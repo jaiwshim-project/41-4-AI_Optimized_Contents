@@ -831,7 +831,7 @@ export default function PromotionLandingPage() {
             기존 블로그 글을 붙여넣기만 하면 3분 안에 결과를 확인할 수 있습니다.
           </p>
           <p className="text-base text-blue-200 mb-3">
-            설치 없음 &middot; 회원가입 없음 &middot; 즉시 시작
+            설치 없음 &middot; 간편 회원가입 &middot; 즉시 시작
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
