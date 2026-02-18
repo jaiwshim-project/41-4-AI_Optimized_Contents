@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import Link from 'next/link';
 
 interface UserData {
   id: string;
@@ -201,7 +202,7 @@ export default function AdminPage() {
       <Header />
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         {/* 헤더 */}
-        <div className="mb-5">
+        <div className="flex items-center justify-between mb-5">
           <h1 className="text-2xl font-bold text-gray-900 flex items-center gap-3">
             <span className="w-10 h-10 bg-gradient-to-br from-red-500 to-rose-500 rounded-xl flex items-center justify-center">
               <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -211,6 +212,13 @@ export default function AdminPage() {
             관리자 대시보드
           </h1>
           <p className="text-gray-500 mt-1">회원 정보 조회 및 등급 관리</p>
+          </div>
+          <Link
+            href="/admin/stats"
+            className="px-4 py-2 text-xs font-semibold text-indigo-600 bg-indigo-50 border-2 border-indigo-200 rounded-lg hover:bg-indigo-100 transition-all"
+          >
+            전체 통계
+          </Link>
         </div>
 
         {/* 통계 카드 */}
