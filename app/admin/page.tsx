@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Link from 'next/link';
@@ -47,6 +47,18 @@ function formatDate(dateStr: string | null) {
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')} ${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
 }
 
+function getExpiryStatus(expiresAt: string | null) {
+  if (!expiresAt) return { label: '-', color: 'text-gray-400', dot: 'bg-gray-300', dday: '' };
+  const now = new Date();
+  const exp = new Date(expiresAt);
+  const diffDays = Math.ceil((exp.getTime() - now.getTime()) / (1000 * 60 * 60 * 24));
+
+  if (diffDays < 0) return { label: '만료됨', color: 'text-red-600', dot: 'bg-red-500', dday: `D+${Math.abs(diffDays)}` };
+  if (diffDays <= 3) return { label: '3일 이내', color: 'text-orange-600', dot: 'bg-orange-500', dday: `D-${diffDays}` };
+  if (diffDays <= 7) return { label: '7일 이내', color: 'text-yellow-600', dot: 'bg-yellow-500', dday: `D-${diffDays}` };
+  return { label: '정상', color: 'text-green-600', dot: 'bg-green-500', dday: `D-${diffDays}` };
+}
+
 export default function AdminPage() {
   const [authenticated, setAuthenticated] = useState(false);
   const [authChecking, setAuthChecking] = useState(true);
@@ -57,6 +69,7 @@ export default function AdminPage() {
   const [searchTerm, setSearchTerm] = useState('');
   const [editingName, setEditingName] = useState<string | null>(null);
   const [editNameValue, setEditNameValue] = useState('');
+  const [activeTab, setActiveTab] = useState<'users' | 'subscriptions'>('users');
 
   useEffect(() => {
     const checkAdmin = async () => {
@@ -105,8 +118,12 @@ export default function AdminPage() {
         const data = await res.json();
         throw new Error(data.error || '변경 실패');
       }
+      // 유료 플랜이면 만료일도 반영
+      const newExpiresAt = (newPlan === 'pro' || newPlan === 'max')
+        ? new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString()
+        : null;
       setUsers(prev =>
-        prev.map(u => (u.id === userId ? { ...u, plan: newPlan } : u))
+        prev.map(u => (u.id === userId ? { ...u, plan: newPlan, plan_expires_at: newExpiresAt } : u))
       );
     } catch (err) {
       alert(err instanceof Error ? err.message : '오류 발생');
@@ -142,6 +159,56 @@ export default function AdminPage() {
     u.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
     u.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  const handleRenew = async (userId: string) => {
+    setUpdatingUser(userId);
+    try {
+      const res = await fetch('/api/admin/users', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userId }),
+      });
+      if (!res.ok) {
+        const data = await res.json();
+        throw new Error(data.error || '갱신 실패');
+      }
+      const data = await res.json();
+      setUsers(prev =>
+        prev.map(u => u.id === userId ? { ...u, plan_expires_at: data.newExpiresAt } : u)
+      );
+    } catch (err) {
+      alert(err instanceof Error ? err.message : '오류 발생');
+    } finally {
+      setUpdatingUser(null);
+    }
+  };
+
+  const subscriptionAlerts = useMemo(() => {
+    const now = new Date();
+    const paidUsers = users.filter(u => ['pro', 'max'].includes(u.plan) && u.plan_expires_at);
+    const expired = paidUsers.filter(u => new Date(u.plan_expires_at!) < now);
+    const within3Days = paidUsers.filter(u => {
+      const diff = Math.ceil((new Date(u.plan_expires_at!).getTime() - now.getTime()) / (1000 * 60 * 60 * 24));
+      return diff >= 0 && diff <= 3;
+    });
+    const within7Days = paidUsers.filter(u => {
+      const diff = Math.ceil((new Date(u.plan_expires_at!).getTime() - now.getTime()) / (1000 * 60 * 60 * 24));
+      return diff > 3 && diff <= 7;
+    });
+    return { expired, within3Days, within7Days };
+  }, [users]);
+
+  const alertCount = subscriptionAlerts.expired.length + subscriptionAlerts.within3Days.length;
+
+  const subscriptionUsers = useMemo(() => {
+    return users
+      .filter(u => ['pro', 'max'].includes(u.plan))
+      .sort((a, b) => {
+        const aExp = a.plan_expires_at ? new Date(a.plan_expires_at).getTime() : Infinity;
+        const bExp = b.plan_expires_at ? new Date(b.plan_expires_at).getTime() : Infinity;
+        return aExp - bExp;
+      });
+  }, [users]);
 
   const planStats = {
     total: users.length,
@@ -240,6 +307,118 @@ export default function AdminPage() {
           </div>
         </div>
 
+        {/* 탭 전환 */}
+        <div className="flex items-center gap-2 mb-5">
+          <button
+            onClick={() => setActiveTab('users')}
+            className={`px-4 py-2 text-sm font-semibold rounded-lg transition-all ${activeTab === 'users' ? 'bg-gray-900 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`}
+          >
+            회원 관리
+          </button>
+          <button
+            onClick={() => setActiveTab('subscriptions')}
+            className={`px-4 py-2 text-sm font-semibold rounded-lg transition-all relative ${activeTab === 'subscriptions' ? 'bg-gray-900 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`}
+          >
+            구독 관리
+            {alertCount > 0 && (
+              <span className="absolute -top-1.5 -right-1.5 w-5 h-5 bg-red-500 text-white text-[10px] font-bold rounded-full flex items-center justify-center">
+                {alertCount}
+              </span>
+            )}
+          </button>
+        </div>
+
+        {activeTab === 'subscriptions' && (
+          <>
+            {/* 구독 알림 카드 */}
+            <div className="grid grid-cols-3 gap-3 mb-5">
+              <div className="bg-white rounded-xl p-4 border border-red-200 shadow-sm">
+                <div className="flex items-center gap-2 mb-1">
+                  <span className="w-2.5 h-2.5 rounded-full bg-red-500" />
+                  <p className="text-xs font-medium text-red-600">만료됨</p>
+                </div>
+                <p className="text-2xl font-bold text-red-700">{subscriptionAlerts.expired.length}명</p>
+              </div>
+              <div className="bg-white rounded-xl p-4 border border-orange-200 shadow-sm">
+                <div className="flex items-center gap-2 mb-1">
+                  <span className="w-2.5 h-2.5 rounded-full bg-orange-500" />
+                  <p className="text-xs font-medium text-orange-600">3일 이내</p>
+                </div>
+                <p className="text-2xl font-bold text-orange-700">{subscriptionAlerts.within3Days.length}명</p>
+              </div>
+              <div className="bg-white rounded-xl p-4 border border-yellow-200 shadow-sm">
+                <div className="flex items-center gap-2 mb-1">
+                  <span className="w-2.5 h-2.5 rounded-full bg-yellow-500" />
+                  <p className="text-xs font-medium text-yellow-600">7일 이내</p>
+                </div>
+                <p className="text-2xl font-bold text-yellow-700">{subscriptionAlerts.within7Days.length}명</p>
+              </div>
+            </div>
+
+            {/* 구독 사용자 테이블 */}
+            <div className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden mb-5">
+              <div className="overflow-x-auto">
+                <table className="w-full text-sm">
+                  <thead>
+                    <tr className="bg-gray-50 border-b-2 border-gray-200">
+                      <th className="text-left px-4 py-3 font-semibold text-gray-700">이름</th>
+                      <th className="text-left px-4 py-3 font-semibold text-gray-700">이메일</th>
+                      <th className="text-center px-4 py-3 font-semibold text-gray-700">등급</th>
+                      <th className="text-center px-4 py-3 font-semibold text-gray-700">만료일</th>
+                      <th className="text-center px-4 py-3 font-semibold text-gray-700">상태</th>
+                      <th className="text-center px-4 py-3 font-semibold text-gray-700">D-day</th>
+                      <th className="text-center px-4 py-3 font-semibold text-gray-700">액션</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {subscriptionUsers.length === 0 ? (
+                      <tr>
+                        <td colSpan={7} className="text-center py-12 text-gray-400">유료 구독 사용자가 없습니다.</td>
+                      </tr>
+                    ) : (
+                      subscriptionUsers.map((user) => {
+                        const badge = getPlanBadge(user.plan);
+                        const status = getExpiryStatus(user.plan_expires_at);
+                        return (
+                          <tr key={user.id} className="border-b border-gray-100 hover:bg-gray-50/50 transition-colors">
+                            <td className="px-4 py-3 font-medium text-gray-800">{user.name || <span className="text-gray-400 italic">이름 없음</span>}</td>
+                            <td className="px-4 py-3 text-gray-600 text-xs">{user.email}</td>
+                            <td className="text-center px-4 py-3">
+                              <span className={`inline-block px-2.5 py-1 text-xs font-bold rounded-full border ${badge.color}`}>{badge.label}</span>
+                            </td>
+                            <td className="text-center px-4 py-3 text-xs text-gray-600">
+                              {user.plan_expires_at ? formatDate(user.plan_expires_at).split(' ')[0] : '-'}
+                            </td>
+                            <td className="text-center px-4 py-3">
+                              <span className={`inline-flex items-center gap-1.5 text-xs font-semibold ${status.color}`}>
+                                <span className={`w-2 h-2 rounded-full ${status.dot}`} />
+                                {status.label}
+                              </span>
+                            </td>
+                            <td className="text-center px-4 py-3">
+                              <span className={`text-xs font-bold ${status.color}`}>{status.dday}</span>
+                            </td>
+                            <td className="text-center px-4 py-3">
+                              <button
+                                onClick={() => handleRenew(user.id)}
+                                disabled={updatingUser === user.id}
+                                className="px-3 py-1.5 text-xs font-semibold text-indigo-600 bg-indigo-50 border border-indigo-200 rounded-lg hover:bg-indigo-100 transition-all disabled:opacity-50"
+                              >
+                                {updatingUser === user.id ? '처리중...' : '30일 연장'}
+                              </button>
+                            </td>
+                          </tr>
+                        );
+                      })
+                    )}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </>
+        )}
+
+        {activeTab === 'users' && (<>
         {/* 검색 + 새로고침 */}
         <div className="flex items-center gap-3 mb-3">
           <div className="flex-1 relative">
@@ -408,6 +587,7 @@ export default function AdminPage() {
             </table>
           </div>
         </div>
+        </>)}
       </main>
       <Footer />
     </div>

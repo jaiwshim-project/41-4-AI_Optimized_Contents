@@ -139,14 +139,22 @@ export async function POST(request: NextRequest) {
 
     // 등급 변경
     if (plan) {
-      if (!['admin', 'free', 'pro', 'max'].includes(plan)) {
+      if (!['admin', 'free', 'tester', 'pro', 'max'].includes(plan)) {
         return NextResponse.json({ error: '유효하지 않은 플랜입니다.' }, { status: 400 });
+      }
+
+      // 유료 플랜은 만료일 자동 설정 (30일)
+      let expiresAt: string | null = null;
+      if (plan === 'pro' || plan === 'max') {
+        const expiry = new Date();
+        expiry.setDate(expiry.getDate() + 30);
+        expiresAt = expiry.toISOString();
       }
 
       const { error } = await supabase
         .from('user_plans')
         .upsert(
-          { user_id: userId, plan, created_at: new Date().toISOString() },
+          { user_id: userId, plan, created_at: new Date().toISOString(), expires_at: expiresAt },
           { onConflict: 'user_id' }
         );
 
@@ -154,6 +162,55 @@ export async function POST(request: NextRequest) {
     }
 
     return NextResponse.json({ success: true });
+  } catch (err) {
+    return NextResponse.json(
+      { error: err instanceof Error ? err.message : '서버 오류' },
+      { status: 500 }
+    );
+  }
+}
+
+// PATCH: 구독 갱신 (30일 연장)
+export async function PATCH(request: NextRequest) {
+  const isAdmin = await verifyAdmin();
+  if (!isAdmin) {
+    return NextResponse.json({ error: '관리자 권한이 필요합니다.' }, { status: 403 });
+  }
+
+  try {
+    const body = await request.json();
+    const { userId } = body;
+
+    if (!userId) {
+      return NextResponse.json({ error: 'userId가 필요합니다.' }, { status: 400 });
+    }
+
+    const supabase = getAdminClient();
+
+    const { data: current } = await supabase
+      .from('user_plans')
+      .select('plan, expires_at')
+      .eq('user_id', userId)
+      .maybeSingle();
+
+    if (!current || !['pro', 'max'].includes(current.plan)) {
+      return NextResponse.json({ error: '유료 플랜 사용자만 갱신할 수 있습니다.' }, { status: 400 });
+    }
+
+    // 잔여일이 있으면 기존 만료일 기준, 이미 만료면 현재 기준
+    const baseDate = current.expires_at && new Date(current.expires_at) > new Date()
+      ? new Date(current.expires_at)
+      : new Date();
+    baseDate.setDate(baseDate.getDate() + 30);
+
+    const { error } = await supabase
+      .from('user_plans')
+      .update({ expires_at: baseDate.toISOString() })
+      .eq('user_id', userId);
+
+    if (error) throw error;
+
+    return NextResponse.json({ success: true, newExpiresAt: baseDate.toISOString() });
   } catch (err) {
     return NextResponse.json(
       { error: err instanceof Error ? err.message : '서버 오류' },
