@@ -200,11 +200,12 @@ export default function PricingPage() {
               이번 달 사용량
               <span className={`px-2.5 py-0.5 text-xs font-bold rounded-full border ${
                 currentPlan === 'admin' ? 'bg-red-100 text-red-700 border-red-300'
+                : currentPlan === 'tester' ? 'bg-emerald-100 text-emerald-700 border-emerald-300'
                 : currentPlan === 'pro' ? 'bg-blue-100 text-blue-700 border-blue-300'
                 : currentPlan === 'max' ? 'bg-violet-100 text-violet-700 border-violet-300'
                 : 'bg-gray-100 text-gray-700 border-gray-300'
               }`}>
-                {currentPlan === 'admin' ? '관리자' : currentPlan === 'pro' ? '프로' : currentPlan === 'max' ? '맥스' : '무료'}
+                {currentPlan === 'admin' ? '관리자' : currentPlan === 'tester' ? '테스터' : currentPlan === 'pro' ? '프로' : currentPlan === 'max' ? '맥스' : '무료'}
               </span>
             </h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">

@@ -1,11 +1,12 @@
 import { createClient } from './supabase-client';
 
-export type PlanType = 'admin' | 'free' | 'pro' | 'max';
+export type PlanType = 'admin' | 'free' | 'tester' | 'pro' | 'max';
 export type FeatureType = 'analyze' | 'generate' | 'keyword' | 'series';
 
 const PLAN_LIMITS: Record<PlanType, number> = {
   admin: Infinity,
   free: 3,
+  tester: 15,
   pro: 15,
   max: 50,
 };

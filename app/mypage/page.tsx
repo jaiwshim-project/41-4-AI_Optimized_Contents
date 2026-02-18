@@ -11,6 +11,7 @@ import type { User } from '@supabase/supabase-js';
 const PLAN_LABELS: Record<PlanType, { name: string; color: string; bg: string; border: string }> = {
   admin: { name: '관리자', color: 'text-red-700', bg: 'bg-red-50', border: 'border-red-200' },
   free: { name: '무료', color: 'text-gray-700', bg: 'bg-gray-50', border: 'border-gray-200' },
+  tester: { name: '테스터', color: 'text-emerald-700', bg: 'bg-emerald-50', border: 'border-emerald-200' },
   pro: { name: 'PRO', color: 'text-indigo-700', bg: 'bg-indigo-50', border: 'border-indigo-200' },
   max: { name: 'MAX', color: 'text-violet-700', bg: 'bg-violet-50', border: 'border-violet-200' },
 };

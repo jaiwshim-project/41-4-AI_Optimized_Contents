@@ -10,6 +10,7 @@ import { getUserPlan, type PlanType } from '@/lib/usage';
 const PLAN_LABELS: Record<PlanType, { name: string; style: string }> = {
   admin: { name: '관리자', style: 'bg-red-500 text-white' },
   free: { name: '무료', style: 'bg-gray-200 text-gray-600' },
+  tester: { name: '테스터', style: 'bg-emerald-500 text-white' },
   pro: { name: 'PRO', style: 'bg-indigo-500 text-white' },
   max: { name: 'MAX', style: 'bg-violet-500 text-white' },
 };

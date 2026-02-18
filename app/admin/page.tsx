@@ -30,6 +30,7 @@ interface UserData {
 const PLAN_OPTIONS = [
   { value: 'admin', label: '관리자', color: 'bg-red-100 text-red-700 border-red-300' },
   { value: 'free', label: '무료', color: 'bg-gray-100 text-gray-700 border-gray-300' },
+  { value: 'tester', label: '테스터', color: 'bg-emerald-100 text-emerald-700 border-emerald-300' },
   { value: 'pro', label: '프로', color: 'bg-blue-100 text-blue-700 border-blue-300' },
   { value: 'max', label: '맥스', color: 'bg-violet-100 text-violet-700 border-violet-300' },
 ];
@@ -149,6 +150,7 @@ export default function AdminPage() {
     total: users.length,
     admin: users.filter(u => u.plan === 'admin').length,
     free: users.filter(u => u.plan === 'free').length,
+    tester: users.filter(u => u.plan === 'tester').length,
     pro: users.filter(u => u.plan === 'pro').length,
     max: users.filter(u => u.plan === 'max').length,
   };

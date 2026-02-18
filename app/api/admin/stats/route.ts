@@ -28,7 +28,7 @@ export async function GET(request: NextRequest) {
     const { data: plans } = await supabase.from('user_plans').select('user_id, plan');
     const planMap = new Map((plans || []).map(p => [p.user_id, p.plan]));
 
-    const planCounts = { admin: 0, free: 0, pro: 0, max: 0 };
+    const planCounts = { admin: 0, free: 0, tester: 0, pro: 0, max: 0 };
     users.forEach(u => {
       const plan = (planMap.get(u.id) || 'free') as keyof typeof planCounts;
       if (plan in planCounts) planCounts[plan]++;

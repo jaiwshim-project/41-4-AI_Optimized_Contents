@@ -7,7 +7,7 @@ import Link from 'next/link';
 
 interface StatsData {
   totalUsers: number;
-  planCounts: { admin: number; free: number; pro: number; max: number };
+  planCounts: { admin: number; free: number; tester: number; pro: number; max: number };
   totalByFeature: { analyze: number; generate: number; keyword: number; series: number };
   thisMonthUsage: { analyze: number; generate: number; keyword: number; series: number };
   monthlyTrend: { month: string; analyze: number; generate: number; keyword: number; series: number; total: number }[];
