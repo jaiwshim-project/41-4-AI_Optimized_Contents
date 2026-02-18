@@ -145,6 +145,12 @@ export default function Header({ showApiKeyButton = false, onToggleApiKey, apiKe
                     관리 대시보드
                   </Link>
                 )}
+                <Link
+                  href="/dashboard"
+                  className="px-2.5 py-1.5 text-xs font-semibold text-white bg-white/15 rounded-lg hover:bg-white/25 transition-all"
+                >
+                  대시보드
+                </Link>
                 {/* 사용자 버튼 (클릭하면 드롭다운) */}
                 <button
                   onClick={() => setUserMenuOpen(!userMenuOpen)}
@@ -295,9 +301,16 @@ export default function Header({ showApiKeyButton = false, onToggleApiKey, apiKe
                   )}
                 </div>
                 <Link
-                  href="/mypage"
+                  href="/dashboard"
                   onClick={() => setMobileOpen(false)}
                   className="block px-3 py-2 text-sm font-medium text-white bg-white/20 rounded-lg"
+                >
+                  대시보드
+                </Link>
+                <Link
+                  href="/mypage"
+                  onClick={() => setMobileOpen(false)}
+                  className="block px-3 py-2 text-sm font-medium text-white bg-white/10 rounded-lg"
                 >
                   마이페이지
                 </Link>
