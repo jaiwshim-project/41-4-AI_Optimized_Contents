@@ -595,7 +595,7 @@ export default function LandingPage() {
               <div className="flex items-center justify-center gap-3">
                 <div>
                   <h2 className="text-2xl font-extrabold text-white">테스터 모집 안내</h2>
-                  <p className="text-sm text-white/80 mt-1">GEOAIO 베타 테스터를 모집합니다</p>
+                  <p className="text-sm text-white/80 mt-1">GEO-AIO 베타 테스터를 모집합니다</p>
                 </div>
                 <img src="/qr-tester.jpg" alt="테스터 모집 QR코드" className="w-16 h-16 rounded-lg border-2 border-white/40 shadow-lg" />
               </div>
