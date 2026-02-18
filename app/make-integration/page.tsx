@@ -43,32 +43,42 @@ const steps = [
   {
     step: 2,
     title: 'Gemini API 키 준비',
-    description: 'AI 콘텐츠 생성 및 분석에 필요한 API 키를 Google AI Studio에서 발급받으세요.',
+    description: 'AI 콘텐츠 생성 및 분석에 필요한 API 키를 Google AI Studio에서 발급받으세요. 이 키를 Make.com의 HTTP 모듈 헤더에 입력해야 합니다.',
     link: 'https://aistudio.google.com/apikey',
     linkLabel: 'Google AI Studio 바로가기',
   },
   {
     step: 3,
     title: '새 시나리오 생성 + HTTP 모듈 추가',
-    description: 'Make.com에서 "Create a new scenario"를 클릭한 후, 모듈 목록에서 HTTP 모듈을 추가하세요.',
+    description: 'Make.com에서 "Create a new scenario"를 클릭한 후, 모듈 목록에서 "HTTP > Make a request" 모듈을 추가하세요.',
     link: null,
     linkLabel: null,
   },
   {
     step: 4,
-    title: '웹훅 URL 설정',
-    description: 'HTTP 모듈의 URL에 아래 웹훅 주소를 입력하세요. Method는 POST로 설정합니다.',
+    title: '웹훅 URL 및 Method 설정',
+    description: 'HTTP 모듈 설정에서 아래와 같이 입력하세요.',
     link: null,
     linkLabel: null,
     code: 'https://aio-geo-optimizer.vercel.app/api/webhook',
+    httpConfig: true,
   },
   {
     step: 5,
-    title: 'action 파라미터로 기능 선택',
-    description: 'Body에 JSON으로 action 파라미터를 설정하여 원하는 기능을 선택하세요.',
+    title: 'API 키 설정 (필수)',
+    description: 'HTTP 모듈의 Headers 항목에 API 키를 추가해야 합니다. 이 설정이 없으면 401 인증 오류가 발생합니다.',
+    link: null,
+    linkLabel: null,
+    apiKeyConfig: true,
+  },
+  {
+    step: 6,
+    title: 'Body에 action과 파라미터 설정',
+    description: 'Body type을 "Raw"로 선택하고, Content type을 "JSON (application/json)"으로 설정한 후, 아래처럼 JSON을 입력하세요.',
     link: null,
     linkLabel: null,
     actions: ['generate', 'analyze', 'optimize', 'convert', 'keyword-analysis', 'generate-series'],
+    bodyExample: true,
   },
 ];
 
@@ -108,8 +118,8 @@ const faqs = [
     a: '네, 무료 플랜이 있습니다. 무료 플랜에서는 월 1,000개의 작업(Operation)을 사용할 수 있어 충분히 자동화를 시작할 수 있습니다. 더 많은 작업이 필요하면 유료 플랜으로 업그레이드할 수 있습니다.',
   },
   {
-    q: 'API 키는 어디서 발급받나요?',
-    a: 'Google AI Studio(aistudio.google.com/apikey)에서 발급받을 수 있습니다. Google 계정으로 로그인 후 API 키를 생성하면 됩니다. API 키는 안전한 곳에 보관하세요.',
+    q: 'API 키는 어디서 발급받고, 어디에 넣나요?',
+    a: 'Google AI Studio(aistudio.google.com/apikey)에서 발급받습니다. 발급받은 API 키를 Make.com HTTP 모듈의 Headers에 "X-API-Key"라는 이름으로 추가하세요. API 키 없이 호출하면 401 인증 오류가 발생합니다.',
   },
   {
     q: '프로그래밍 지식이 필요한가요?',
@@ -268,13 +278,90 @@ export default function MakeIntegrationPage() {
                       </div>
                     )}
 
+                    {s.httpConfig && (
+                      <div className="mt-3 rounded-lg border border-gray-200 bg-gray-50 p-4 space-y-2">
+                        <div className="flex items-center gap-3">
+                          <span className="text-xs font-semibold text-gray-500 w-20">URL</span>
+                          <code className="text-xs font-mono bg-white text-indigo-700 rounded px-2 py-1 border border-gray-200 flex-1 break-all">https://aio-geo-optimizer.vercel.app/api/webhook</code>
+                        </div>
+                        <div className="flex items-center gap-3">
+                          <span className="text-xs font-semibold text-gray-500 w-20">Method</span>
+                          <code className="text-xs font-mono bg-white text-emerald-700 rounded px-2 py-1 border border-gray-200">POST</code>
+                        </div>
+                      </div>
+                    )}
+
+                    {s.apiKeyConfig && (
+                      <div className="mt-3 space-y-3">
+                        <div className="rounded-lg border border-amber-200 bg-amber-50 p-4">
+                          <p className="text-xs font-bold text-amber-800 mb-2 flex items-center gap-1.5">
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z" />
+                            </svg>
+                            API 키가 없으면 인증 오류(401)가 발생합니다
+                          </p>
+                          <p className="text-xs text-amber-700">HTTP 모듈의 <strong>Headers</strong> 섹션에서 <strong>&quot;Add a header&quot;</strong>를 클릭하고 아래와 같이 입력하세요.</p>
+                        </div>
+                        <div className="rounded-lg border border-gray-200 bg-gray-50 p-4 space-y-2">
+                          <p className="text-xs font-semibold text-gray-700 mb-2">방법 1: X-API-Key 헤더 (권장)</p>
+                          <div className="flex items-center gap-3">
+                            <span className="text-xs font-semibold text-gray-500 w-20">Name</span>
+                            <code className="text-xs font-mono bg-white text-gray-800 rounded px-2 py-1 border border-gray-200">X-API-Key</code>
+                          </div>
+                          <div className="flex items-center gap-3">
+                            <span className="text-xs font-semibold text-gray-500 w-20">Value</span>
+                            <code className="text-xs font-mono bg-white text-indigo-700 rounded px-2 py-1 border border-gray-200 flex-1">여기에 Gemini API 키 붙여넣기</code>
+                          </div>
+                        </div>
+                        <div className="rounded-lg border border-gray-200 bg-gray-50 p-4 space-y-2">
+                          <p className="text-xs font-semibold text-gray-700 mb-2">방법 2: Authorization 헤더</p>
+                          <div className="flex items-center gap-3">
+                            <span className="text-xs font-semibold text-gray-500 w-20">Name</span>
+                            <code className="text-xs font-mono bg-white text-gray-800 rounded px-2 py-1 border border-gray-200">Authorization</code>
+                          </div>
+                          <div className="flex items-center gap-3">
+                            <span className="text-xs font-semibold text-gray-500 w-20">Value</span>
+                            <code className="text-xs font-mono bg-white text-indigo-700 rounded px-2 py-1 border border-gray-200 flex-1">Bearer 여기에_Gemini_API_키</code>
+                          </div>
+                        </div>
+                        <div className="rounded-lg bg-gray-900 text-gray-100 p-4">
+                          <p className="text-[10px] text-gray-400 mb-2">Headers 설정 예시:</p>
+                          <pre className="text-xs font-mono whitespace-pre-wrap">{`X-API-Key: AIzaSy_______________your_key_______________`}</pre>
+                        </div>
+                      </div>
+                    )}
+
                     {s.actions && (
-                      <div className="mt-2 flex flex-wrap gap-1.5">
-                        {s.actions.map((a) => (
-                          <code key={a} className="text-xs bg-indigo-50 text-indigo-700 rounded-md px-2 py-0.5 font-mono">
-                            {a}
-                          </code>
-                        ))}
+                      <div className="mt-3 space-y-3">
+                        <div className="flex flex-wrap gap-1.5">
+                          {s.actions.map((a) => (
+                            <code key={a} className="text-xs bg-indigo-50 text-indigo-700 rounded-md px-2 py-0.5 font-mono">
+                              {a}
+                            </code>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {s.bodyExample && (
+                      <div className="mt-3 space-y-2">
+                        <div className="rounded-lg bg-gray-900 text-gray-100 p-4">
+                          <p className="text-[10px] text-gray-400 mb-2">Body 설정 예시 (콘텐츠 생성):</p>
+                          <pre className="text-xs font-mono whitespace-pre-wrap">{`{
+  "action": "generate",
+  "topic": "AI 마케팅 전략",
+  "keyword": "AI 마케팅",
+  "contentType": "blog"
+}`}</pre>
+                        </div>
+                        <div className="rounded-lg bg-gray-900 text-gray-100 p-4">
+                          <p className="text-[10px] text-gray-400 mb-2">Body 설정 예시 (콘텐츠 분석):</p>
+                          <pre className="text-xs font-mono whitespace-pre-wrap">{`{
+  "action": "analyze",
+  "content": "분석할 콘텐츠 내용...",
+  "keyword": "타겟 키워드"
+}`}</pre>
+                        </div>
                       </div>
                     )}
                   </div>
@@ -332,7 +419,7 @@ export default function MakeIntegrationPage() {
                 <span className="w-6 h-6 rounded-full bg-indigo-600 text-white text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">5</span>
                 <div>
                   <p className="text-xs font-semibold text-gray-900">API 키 및 웹훅 URL 설정</p>
-                  <p className="text-xs text-gray-600 mt-0.5">가져오기가 완료되면 각 모듈을 클릭하여 <strong>API 키</strong>와 <strong>웹훅 URL</strong>을 입력합니다. 웹훅 URL은 <code className="bg-white px-1.5 py-0.5 rounded text-indigo-700 font-mono text-[11px]">https://your-domain.com/api/webhook</code> 형식입니다.</p>
+                  <p className="text-xs text-gray-600 mt-0.5">가져오기가 완료되면 HTTP 모듈을 클릭하여 설정합니다. <strong>URL</strong>에 <code className="bg-white px-1.5 py-0.5 rounded text-indigo-700 font-mono text-[11px]">https://aio-geo-optimizer.vercel.app/api/webhook</code>을 입력하고, <strong>Headers</strong>에 <code className="bg-white px-1.5 py-0.5 rounded text-indigo-700 font-mono text-[11px]">X-API-Key: 발급받은_Gemini_API_키</code>를 추가합니다.</p>
                 </div>
               </li>
               <li className="flex items-start gap-3">
