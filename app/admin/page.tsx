@@ -1,9 +1,10 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Link from 'next/link';
+import { getUserPlan } from '@/lib/usage';
 
 interface UserData {
   id: string;
@@ -48,9 +49,7 @@ function formatDate(dateStr: string | null) {
 
 export default function AdminPage() {
   const [authenticated, setAuthenticated] = useState(false);
-  const [password, setPassword] = useState('');
-  const [passwordError, setPasswordError] = useState('');
-  const [adminPassword, setAdminPassword] = useState('');
+  const [authChecking, setAuthChecking] = useState(true);
   const [users, setUsers] = useState<UserData[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -59,24 +58,28 @@ export default function AdminPage() {
   const [editingName, setEditingName] = useState<string | null>(null);
   const [editNameValue, setEditNameValue] = useState('');
 
-  const handleLogin = () => {
-    if (password === '96331425') {
-      setAuthenticated(true);
-      setAdminPassword(password);
-      setPasswordError('');
-      loadUsers(password);
-    } else {
-      setPasswordError('비밀번호가 올바르지 않습니다.');
-    }
-  };
+  useEffect(() => {
+    const checkAdmin = async () => {
+      try {
+        const plan = await getUserPlan();
+        if (plan === 'admin') {
+          setAuthenticated(true);
+          loadUsers();
+        }
+      } catch {
+        // not logged in
+      } finally {
+        setAuthChecking(false);
+      }
+    };
+    checkAdmin();
+  }, []);
 
-  const loadUsers = async (pw: string) => {
+  const loadUsers = async () => {
     setLoading(true);
     setError('');
     try {
-      const res = await fetch('/api/admin/users', {
-        headers: { 'x-admin-password': pw },
-      });
+      const res = await fetch('/api/admin/users');
       if (!res.ok) {
         const data = await res.json();
         throw new Error(data.error || '조회 실패');
@@ -95,10 +98,7 @@ export default function AdminPage() {
     try {
       const res = await fetch('/api/admin/users', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-admin-password': adminPassword,
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ userId, plan: newPlan }),
       });
       if (!res.ok) {
@@ -120,10 +120,7 @@ export default function AdminPage() {
     try {
       const res = await fetch('/api/admin/users', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-admin-password': adminPassword,
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ userId, name: newName }),
       });
       if (!res.ok) {
@@ -155,42 +152,37 @@ export default function AdminPage() {
     max: users.filter(u => u.plan === 'max').length,
   };
 
-  // 비밀번호 입력 화면
+  // 인증 확인 중
+  if (authChecking) {
+    return (
+      <div className="min-h-screen bg-gray-50">
+        <Header />
+        <main className="max-w-md mx-auto px-4 py-16 text-center">
+          <div className="animate-spin w-8 h-8 border-2 border-indigo-500 border-t-transparent rounded-full mx-auto mb-4" />
+          <p className="text-sm text-gray-500">관리자 권한 확인 중...</p>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  // 권한 없음
   if (!authenticated) {
     return (
       <div className="min-h-screen bg-gray-50">
         <Header />
         <main className="max-w-md mx-auto px-4 py-16">
-          <div className="bg-white rounded-2xl shadow-lg border border-red-200 p-6">
-            <div className="text-center mb-4">
-              <div className="w-16 h-16 bg-gradient-to-br from-red-500 to-rose-500 rounded-xl flex items-center justify-center mx-auto mb-3">
-                <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                </svg>
-              </div>
-              <h2 className="text-xl font-bold text-gray-900">관리자 인증</h2>
-              <p className="text-sm text-gray-500 mt-1">관리자 비밀번호를 입력하세요</p>
+          <div className="bg-white rounded-2xl shadow-lg border border-red-200 p-6 text-center">
+            <div className="w-16 h-16 bg-gradient-to-br from-red-500 to-rose-500 rounded-xl flex items-center justify-center mx-auto mb-3">
+              <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+              </svg>
             </div>
-            <div className="space-y-4">
-              <input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                onKeyDown={(e) => e.key === 'Enter' && handleLogin()}
-                placeholder="비밀번호 입력"
-                className="w-full px-4 py-3 border border-gray-300 rounded-xl text-center text-lg tracking-widest focus:outline-none focus:ring-2 focus:ring-red-400 focus:border-transparent"
-                autoFocus
-              />
-              {passwordError && (
-                <p className="text-sm text-red-600 text-center font-medium">{passwordError}</p>
-              )}
-              <button
-                onClick={handleLogin}
-                className="w-full py-3 bg-gradient-to-r from-red-500 to-rose-500 text-white font-bold rounded-xl hover:from-red-600 hover:to-rose-600 transition-all shadow-md"
-              >
-                인증
-              </button>
-            </div>
+            <h2 className="text-xl font-bold text-gray-900">접근 권한 없음</h2>
+            <p className="text-sm text-gray-500 mt-2">관리자 계정으로 로그인해야 접근할 수 있습니다.</p>
+            <Link href="/" className="inline-block mt-4 px-6 py-2 bg-gray-100 text-gray-700 text-sm font-medium rounded-lg hover:bg-gray-200 transition-all">
+              홈으로 돌아가기
+            </Link>
           </div>
         </main>
         <Footer />
@@ -263,7 +255,7 @@ export default function AdminPage() {
             />
           </div>
           <button
-            onClick={() => loadUsers(adminPassword)}
+            onClick={() => loadUsers()}
             disabled={loading}
             className="px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-sm font-medium text-gray-600 hover:bg-gray-50 transition-all disabled:opacity-50"
           >

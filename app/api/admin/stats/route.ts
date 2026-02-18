@@ -1,7 +1,6 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
-
-const ADMIN_PASSWORD = '96331425';
+import { createClient as createServerClient } from '@/lib/supabase-server';
 
 function getAdminClient() {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL!;
@@ -12,10 +11,24 @@ function getAdminClient() {
   return createClient(url, serviceKey);
 }
 
-export async function GET(request: NextRequest) {
-  const password = request.headers.get('x-admin-password');
-  if (password !== ADMIN_PASSWORD) {
-    return NextResponse.json({ error: '관리자 인증 실패' }, { status: 403 });
+async function verifyAdmin(): Promise<boolean> {
+  const supabase = await createServerClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return false;
+
+  const { data } = await supabase
+    .from('user_plans')
+    .select('plan')
+    .eq('user_id', user.id)
+    .maybeSingle();
+
+  return data?.plan === 'admin';
+}
+
+export async function GET() {
+  const isAdmin = await verifyAdmin();
+  if (!isAdmin) {
+    return NextResponse.json({ error: '관리자 권한이 필요합니다.' }, { status: 403 });
   }
 
   try {
