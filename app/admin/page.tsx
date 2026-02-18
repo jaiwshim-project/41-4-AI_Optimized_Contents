@@ -356,32 +356,42 @@ export default function AdminPage() {
           </div>
         </div>
 
-        {/* 탭 전환 */}
-        <div className="flex items-center gap-2 mb-5">
+        {/* 폴더 탭 */}
+        <div className="flex items-end gap-0 mb-0">
           <button
             onClick={() => setActiveTab('subscriptions')}
-            className={`px-4 py-2 text-sm font-semibold rounded-lg transition-all relative ${activeTab === 'subscriptions' ? 'bg-gray-900 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`}
+            className={`relative px-5 py-2.5 text-sm font-semibold rounded-t-lg border-t-2 border-l border-r transition-all ${
+              activeTab === 'subscriptions'
+                ? 'bg-white text-indigo-700 border-t-indigo-500 border-l-gray-300 border-r-gray-300 border-b-0 z-10 -mb-px'
+                : 'bg-gray-100 text-gray-500 border-t-transparent border-l-gray-200 border-r-gray-200 hover:bg-gray-50 hover:text-gray-700'
+            }`}
           >
             구독 관리
             {alertCount > 0 && (
-              <span className="absolute -top-1.5 -right-1.5 w-5 h-5 bg-red-500 text-white text-[10px] font-bold rounded-full flex items-center justify-center">
+              <span className="absolute -top-2 -right-1.5 w-5 h-5 bg-red-500 text-white text-[10px] font-bold rounded-full flex items-center justify-center">
                 {alertCount}
               </span>
             )}
           </button>
           <button
             onClick={() => setActiveTab('users')}
-            className={`px-4 py-2 text-sm font-semibold rounded-lg transition-all ${activeTab === 'users' ? 'bg-gray-900 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`}
+            className={`px-5 py-2.5 text-sm font-semibold rounded-t-lg border-t-2 border-l border-r transition-all ${
+              activeTab === 'users'
+                ? 'bg-white text-emerald-700 border-t-emerald-500 border-l-gray-300 border-r-gray-300 border-b-0 z-10 -mb-px'
+                : 'bg-gray-100 text-gray-500 border-t-transparent border-l-gray-200 border-r-gray-200 hover:bg-gray-50 hover:text-gray-700'
+            }`}
           >
             등급 관리
           </button>
           <Link
             href="/admin/stats"
-            className="px-4 py-2 text-sm font-semibold rounded-lg transition-all bg-gray-100 text-gray-600 hover:bg-gray-200"
+            className="px-5 py-2.5 text-sm font-semibold rounded-t-lg border-t-2 border-l border-r transition-all bg-gray-100 text-gray-500 border-t-transparent border-l-gray-200 border-r-gray-200 hover:bg-gray-50 hover:text-gray-700"
           >
             통계 관리
           </Link>
+          <div className="flex-1 border-b border-gray-300" />
         </div>
+        <div className="border-l border-r border-b border-gray-300 rounded-b-lg bg-white p-5 mb-5">
 
         {activeTab === 'subscriptions' && (
           <>
@@ -774,6 +784,7 @@ export default function AdminPage() {
           </div>
         </div>
         </>)}
+        </div>
       </main>
       <Footer />
     </div>
