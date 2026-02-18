@@ -265,7 +265,7 @@ export default function PromotionLandingPage() {
           {/* TODO: YouTube 영상 ID를 실제 값으로 교체하세요 */}
           <iframe
             className="w-full aspect-video"
-            src="https://www.youtube.com/embed/YOUR_VIDEO_ID"
+            src="https://www.youtube.com/embed/t_AyFBhxzII"
             title="AIO/GEO Optimizer 서비스 소개"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
