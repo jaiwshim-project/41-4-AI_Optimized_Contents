@@ -281,10 +281,10 @@ export default function Header({ showApiKeyButton = false, onToggleApiKey, apiKe
             {user ? (
               <div className="space-y-2">
                 <div className="flex items-center gap-2 px-3 py-1">
+                  <span className="text-sm text-white font-medium truncate">{displayName}</span>
                   <span className={`px-1.5 py-0.5 text-[10px] font-bold rounded ${PLAN_LABELS[plan].style}`}>
                     {PLAN_LABELS[plan].name}
                   </span>
-                  <span className="text-sm text-white font-medium truncate">{displayName}</span>
                   {plan === 'admin' && (
                     <Link
                       href="/admin"
