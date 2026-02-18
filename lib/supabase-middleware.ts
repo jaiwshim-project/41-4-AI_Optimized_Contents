@@ -41,7 +41,7 @@ export async function updateSession(request: NextRequest) {
   } = await supabase.auth.getUser();
 
   // 보호 대상 경로
-  const protectedPaths = ['/analyze', '/generate', '/dashboard', '/keyword-analysis', '/series'];
+  const protectedPaths = ['/analyze', '/generate', '/dashboard', '/keyword-analysis', '/series', '/mypage'];
   const isProtected = protectedPaths.some(
     (path) => request.nextUrl.pathname === path || request.nextUrl.pathname.startsWith(path + '/')
   );

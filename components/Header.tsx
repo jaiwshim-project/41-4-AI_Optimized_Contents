@@ -164,6 +164,16 @@ export default function Header({ showApiKeyButton = false, onToggleApiKey, apiKe
                 {userMenuOpen && (
                   <div className="absolute top-11 right-4 w-44 bg-white rounded-lg shadow-lg border border-gray-200 py-1 z-50">
                     <Link
+                      href="/mypage"
+                      onClick={() => setUserMenuOpen(false)}
+                      className="flex items-center gap-2 px-3 py-2 text-xs text-gray-700 hover:bg-gray-50 transition-all"
+                    >
+                      <svg className="w-3.5 h-3.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                      </svg>
+                      마이페이지
+                    </Link>
+                    <Link
                       href="/pricing"
                       onClick={() => setUserMenuOpen(false)}
                       className="flex items-center gap-2 px-3 py-2 text-xs text-gray-700 hover:bg-gray-50 transition-all"
@@ -285,6 +295,13 @@ export default function Header({ showApiKeyButton = false, onToggleApiKey, apiKe
                     </Link>
                   )}
                 </div>
+                <Link
+                  href="/mypage"
+                  onClick={() => setMobileOpen(false)}
+                  className="block px-3 py-2 text-sm font-medium text-indigo-700 bg-indigo-50 rounded-lg"
+                >
+                  마이페이지
+                </Link>
                 <div className="flex gap-2">
                   <Link
                     href="/change-password"
