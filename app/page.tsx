@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -72,8 +72,59 @@ const features = [
   },
 ];
 
+const targetAudiences = [
+  {
+    who: '블로그 마케터',
+    problem: '글은 열심히 쓰는데 유입이 계속 줄어요',
+    solution: '기존 글을 AI 인용 구조로 자동 변환',
+    icon: 'M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z',
+    gradient: 'from-blue-500 to-indigo-600',
+  },
+  {
+    who: '마케팅 에이전시',
+    problem: '경쟁사 에이전시와 차별화가 안 돼요',
+    solution: 'AIO/GEO 분석 리포트로 프리미엄 서비스',
+    icon: 'M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4',
+    gradient: 'from-violet-500 to-purple-600',
+  },
+  {
+    who: '이커머스 셀러',
+    problem: 'AI가 경쟁 제품만 추천해요',
+    solution: '제품 설명을 AI 추천 대상 형태로 최적화',
+    icon: 'M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z',
+    gradient: 'from-emerald-500 to-teal-600',
+  },
+  {
+    who: '중소기업 대표',
+    problem: '마케팅 팀이 없어서 콘텐츠를 못 만들어요',
+    solution: '주제만 입력하면 전문 콘텐츠 자동 생성',
+    icon: 'M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z',
+    gradient: 'from-amber-500 to-orange-600',
+  },
+];
+
+interface Review {
+  user_name: string;
+  rating: number;
+  content: string;
+}
+
 export default function LandingPage() {
   const [showApiKey, setShowApiKey] = useState(false);
+  const [reviews, setReviews] = useState<Review[]>([]);
+
+  useEffect(() => {
+    fetch('/api/community/list')
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.reviews) setReviews(data.reviews.slice(0, 3));
+      })
+      .catch(() => {});
+  }, []);
+
+  const avgRating = reviews.length > 0
+    ? (reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length).toFixed(1)
+    : null;
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -83,32 +134,31 @@ export default function LandingPage() {
         apiKeyOpen={showApiKey}
       />
 
-      {/* 히어로 섹션 */}
+      {/* ========== 다크 히어로 섹션 ========== */}
       <section className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-slate-50 via-indigo-50/50 to-violet-50/50" />
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-white rounded-full border border-indigo-200 text-sm text-indigo-600 font-medium mb-6 shadow-sm">
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-            </svg>
-            Powered by AI
+        <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-indigo-950 to-violet-950" />
+        <div className="absolute inset-0 opacity-20" style={{ backgroundImage: 'radial-gradient(circle at 25% 25%, rgba(99,102,241,0.3) 0%, transparent 50%), radial-gradient(circle at 75% 75%, rgba(168,85,247,0.3) 0%, transparent 50%)' }} />
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-20 text-center">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-white/10 backdrop-blur-sm rounded-full border border-white/20 text-sm text-indigo-200 font-medium mb-6">
+            <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
+            AI 검색 시대, 새로운 콘텐츠 전략
           </div>
 
-          <h2 className="text-3xl font-bold text-gray-900 mb-4 leading-tight">
+          <h1 className="text-3xl md:text-4xl font-extrabold text-white mb-4 leading-tight tracking-tight">
             AI 검색엔진에 최적화된<br />
-            <span className="bg-gradient-to-r from-indigo-600 to-violet-600 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-blue-400 via-indigo-400 to-violet-400 bg-clip-text text-transparent">
               콘텐츠를 분석하고 생성하세요
             </span>
-          </h2>
-          <p className="text-sm text-gray-500 max-w-2xl mx-auto mb-8">
+          </h1>
+          <p className="text-sm md:text-base text-gray-300 max-w-2xl mx-auto mb-8 leading-relaxed">
             AIO(AI Overview)와 GEO(Generative Engine Optimization) 관점에서
             콘텐츠를 종합 분석하고, AI 검색에 최적화된 고품질 콘텐츠를 자동으로 생성합니다.
           </p>
 
-          <div className="flex flex-wrap items-center justify-center gap-3">
+          <div className="flex flex-wrap items-center justify-center gap-3 mb-4">
             <Link
               href="/analyze"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-indigo-600 to-violet-600 text-white text-sm font-semibold rounded-xl hover:from-indigo-700 hover:to-violet-700 transition-all shadow-lg shadow-indigo-200/50"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-white text-indigo-700 text-sm font-bold rounded-xl hover:bg-gray-100 transition-all shadow-xl shadow-indigo-900/30"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
@@ -117,7 +167,7 @@ export default function LandingPage() {
             </Link>
             <Link
               href="/generate"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-white text-gray-700 text-sm font-semibold rounded-xl hover:bg-gray-50 transition-all shadow-md border border-gray-200"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-white/10 backdrop-blur-sm text-white text-sm font-bold rounded-xl hover:bg-white/20 transition-all border border-white/20"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
@@ -125,50 +175,109 @@ export default function LandingPage() {
               콘텐츠 생성하기
             </Link>
           </div>
-          <div className="flex flex-wrap items-center justify-center gap-2 mt-4">
-            <Link
-              href="/landing"
-              className="inline-flex items-center gap-1.5 px-4 py-2 bg-white text-gray-700 text-xs font-medium rounded-lg hover:bg-gray-50 transition-all border border-gray-200"
-            >
-              홍보페이지
-            </Link>
-            <Link
-              href="/introduction"
-              className="inline-flex items-center gap-1.5 px-4 py-2 bg-white text-gray-700 text-xs font-medium rounded-lg hover:bg-gray-50 transition-all border border-gray-200"
-            >
-              소개자료
-            </Link>
-            <Link
-              href="/manual"
-              className="inline-flex items-center gap-1.5 px-4 py-2 bg-white text-gray-700 text-xs font-medium rounded-lg hover:bg-gray-50 transition-all border border-gray-200"
-            >
-              매뉴얼
-            </Link>
-            <Link
-              href="/dashboard"
-              className="inline-flex items-center gap-1.5 px-4 py-2 bg-white text-gray-700 text-xs font-medium rounded-lg hover:bg-gray-50 transition-all border border-gray-200"
-            >
-              대시보드
-            </Link>
+
+          <div className="flex flex-wrap items-center justify-center gap-2 mb-8">
+            {[
+              { href: '/landing', label: '홍보페이지' },
+              { href: '/introduction', label: '소개자료' },
+              { href: '/manual', label: '매뉴얼' },
+              { href: '/dashboard', label: '대시보드' },
+            ].map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="px-3 py-1.5 text-xs font-medium text-white/70 hover:text-white hover:bg-white/10 rounded-lg transition-all"
+              >
+                {link.label}
+              </Link>
+            ))}
             <button
               onClick={() => setShowApiKey(!showApiKey)}
-              className="inline-flex items-center gap-1.5 px-4 py-2 bg-white text-gray-700 text-xs font-medium rounded-lg hover:bg-gray-50 transition-all border border-gray-200"
+              className="px-3 py-1.5 text-xs font-medium text-white/70 hover:text-white hover:bg-white/10 rounded-lg transition-all"
             >
               API 키
             </button>
           </div>
+
+          {/* 신뢰 지표 */}
+          <div className="flex flex-wrap items-center justify-center gap-6 md:gap-10 text-sm text-gray-400">
+            <div className="flex items-center gap-2">
+              <svg className="w-4 h-4 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+              </svg>
+              <span>Claude AI 기반</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <svg className="w-4 h-4 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+              </svg>
+              <span>특허 &middot; 저작권 등록</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <svg className="w-4 h-4 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+              </svg>
+              <span>8가지 콘텐츠 유형</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <svg className="w-4 h-4 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+              <span>PDF/DOCX 내보내기</span>
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* 자료 이미지 섹션 */}
-      <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+      {/* ========== 핵심 숫자 통계 ========== */}
+      <section className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 -mt-8 relative z-10">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+          {[
+            { number: '40%+', label: 'Google 검색에 AI Overview 표시', color: 'text-blue-600' },
+            { number: '8가지', label: '콘텐츠 유형 자동 생성', color: 'text-violet-600' },
+            { number: '3분', label: '분석부터 최적화까지', color: 'text-emerald-600' },
+            { number: '100점', label: 'AIO/GEO 점수 분석 제공', color: 'text-amber-600' },
+          ].map((stat) => (
+            <div key={stat.label} className="bg-white rounded-xl p-4 shadow-md border border-gray-100 text-center">
+              <div className={`text-2xl font-extrabold ${stat.color} mb-1`}>{stat.number}</div>
+              <p className="text-[11px] text-gray-500 leading-snug">{stat.label}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ========== 지원 AI 검색엔진 ========== */}
+      <section className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        <div className="text-center mb-6">
+          <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">지원 AI 검색 플랫폼</p>
+        </div>
+        <div className="flex flex-wrap items-center justify-center gap-4 md:gap-8">
+          {[
+            { name: 'Google AI Overview', icon: 'G', bg: 'bg-blue-50 text-blue-600 border-blue-200' },
+            { name: 'ChatGPT / SearchGPT', icon: 'C', bg: 'bg-emerald-50 text-emerald-600 border-emerald-200' },
+            { name: 'Gemini', icon: 'G', bg: 'bg-violet-50 text-violet-600 border-violet-200' },
+            { name: 'Perplexity AI', icon: 'P', bg: 'bg-amber-50 text-amber-600 border-amber-200' },
+            { name: 'Microsoft Copilot', icon: 'M', bg: 'bg-sky-50 text-sky-600 border-sky-200' },
+          ].map((platform) => (
+            <div key={platform.name} className="flex items-center gap-2.5">
+              <div className={`w-9 h-9 rounded-lg flex items-center justify-center text-sm font-bold border ${platform.bg}`}>
+                {platform.icon}
+              </div>
+              <span className="text-xs font-medium text-gray-600">{platform.name}</span>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ========== 자료 이미지 ========== */}
+      <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-10">
         <img src="/ai-search-victory.png" alt="AI 검색 시대의 승리" className="w-full rounded-xl shadow-lg border border-gray-200" />
       </section>
 
-      {/* 주요 기능 소개 */}
+      {/* ========== 주요 기능 소개 ========== */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="text-center mb-10">
-          <h3 className="text-xl font-bold text-gray-900 mb-2">주요 기능</h3>
+          <h2 className="text-xl font-bold text-gray-900 mb-2">주요 기능</h2>
           <p className="text-sm text-gray-500">AI 검색엔진 최적화를 위한 올인원 솔루션</p>
         </div>
 
@@ -190,15 +299,14 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* 콘텐츠 분석 프로세스 */}
+      {/* ========== 콘텐츠 분석 프로세스 ========== */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="text-center mb-10">
-          <h3 className="text-xl font-bold text-gray-900 mb-2">콘텐츠 분석 &rarr; AI 최적화 변환</h3>
+          <h2 className="text-xl font-bold text-gray-900 mb-2">콘텐츠 분석 &rarr; AI 최적화 변환</h2>
           <p className="text-sm text-gray-500">내 콘텐츠를 입력하면, AI가 분석하고 최적화된 버전까지 자동으로 제공합니다</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-          {/* Step 1 */}
           <div className="relative bg-white rounded-xl p-5 border border-gray-200 shadow-sm">
             <div className="w-9 h-9 bg-gradient-to-br from-indigo-500 to-indigo-600 text-white rounded-lg flex items-center justify-center text-sm font-bold mb-3">1</div>
             <h4 className="text-sm font-bold text-gray-900 mb-1.5">콘텐츠 입력</h4>
@@ -207,8 +315,6 @@ export default function LandingPage() {
               <svg className="w-5 h-5 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
             </div>
           </div>
-
-          {/* Step 2 */}
           <div className="relative bg-white rounded-xl p-5 border border-gray-200 shadow-sm">
             <div className="w-9 h-9 bg-gradient-to-br from-violet-500 to-violet-600 text-white rounded-lg flex items-center justify-center text-sm font-bold mb-3">2</div>
             <h4 className="text-sm font-bold text-gray-900 mb-1.5">종합 분석</h4>
@@ -222,8 +328,6 @@ export default function LandingPage() {
               <svg className="w-5 h-5 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
             </div>
           </div>
-
-          {/* Step 3 */}
           <div className="relative bg-white rounded-xl p-5 border border-gray-200 shadow-sm">
             <div className="w-9 h-9 bg-gradient-to-br from-amber-500 to-orange-600 text-white rounded-lg flex items-center justify-center text-sm font-bold mb-3">3</div>
             <h4 className="text-sm font-bold text-gray-900 mb-1.5">개선 제안</h4>
@@ -232,8 +336,6 @@ export default function LandingPage() {
               <svg className="w-5 h-5 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
             </div>
           </div>
-
-          {/* Step 4 */}
           <div className="bg-gradient-to-br from-indigo-50 to-violet-50 rounded-xl p-5 border border-indigo-200 shadow-sm">
             <div className="w-9 h-9 bg-gradient-to-br from-indigo-600 to-violet-600 text-white rounded-lg flex items-center justify-center text-sm font-bold mb-3">4</div>
             <h4 className="text-sm font-bold text-gray-900 mb-1.5">AI 최적화 변환</h4>
@@ -264,10 +366,121 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* ========== 누가 사용하나요? (타겟 고객) ========== */}
+      <section className="bg-gradient-to-br from-slate-50 to-gray-100 py-12 border-y border-gray-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-10">
+            <h2 className="text-xl font-bold text-gray-900 mb-2">누가 사용하나요?</h2>
+            <p className="text-sm text-gray-500">당신의 상황에 맞는 활용법을 확인하세요</p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {targetAudiences.map((ta) => (
+              <div key={ta.who} className="bg-white rounded-xl p-5 border border-gray-200 shadow-sm hover:shadow-md transition-all">
+                <div className={`w-10 h-10 bg-gradient-to-br ${ta.gradient} rounded-lg flex items-center justify-center mb-3`}>
+                  <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={ta.icon} />
+                  </svg>
+                </div>
+                <h4 className="text-sm font-bold text-gray-900 mb-2">{ta.who}</h4>
+                <p className="text-xs text-red-500 mb-1.5 italic">&ldquo;{ta.problem}&rdquo;</p>
+                <p className="text-xs text-gray-600">{ta.solution}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ========== 사용자 후기 ========== */}
+      {reviews.length > 0 && (
+        <section className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <div className="text-center mb-8">
+            <h2 className="text-xl font-bold text-gray-900 mb-2">사용자 후기</h2>
+            {avgRating && (
+              <div className="flex items-center justify-center gap-2 mt-2">
+                <div className="flex items-center gap-0.5">
+                  {[1, 2, 3, 4, 5].map((star) => (
+                    <svg
+                      key={star}
+                      className={`w-4 h-4 ${star <= Math.round(Number(avgRating)) ? 'text-amber-400' : 'text-gray-200'}`}
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                    >
+                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                    </svg>
+                  ))}
+                </div>
+                <span className="text-lg font-bold text-amber-600">{avgRating}</span>
+              </div>
+            )}
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {reviews.map((r, i) => (
+              <div key={i} className="bg-white rounded-xl p-5 border border-gray-200 shadow-sm">
+                <div className="flex items-center gap-1 mb-3">
+                  {[1, 2, 3, 4, 5].map((star) => (
+                    <svg
+                      key={star}
+                      className={`w-3.5 h-3.5 ${star <= r.rating ? 'text-amber-400' : 'text-gray-200'}`}
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                    >
+                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                    </svg>
+                  ))}
+                </div>
+                <p className="text-sm text-gray-700 leading-relaxed mb-3 line-clamp-3">{r.content}</p>
+                <p className="text-xs text-gray-400 font-medium">{r.user_name}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="text-center mt-6">
+            <Link
+              href="/community"
+              className="text-xs font-medium text-indigo-600 hover:text-indigo-700 transition-all"
+            >
+              후기 더보기 &rarr;
+            </Link>
+          </div>
+        </section>
+      )}
+
+      {/* ========== 초기 테스터 모집 배너 ========== */}
+      <section className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        <div className="relative bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 rounded-xl p-5 text-white shadow-lg overflow-hidden">
+          <div className="absolute -right-6 -top-6 w-28 h-28 bg-white/10 rounded-full" />
+          <div className="absolute -left-4 -bottom-4 w-20 h-20 bg-white/5 rounded-full" />
+          <div className="relative flex flex-col sm:flex-row items-center gap-4">
+            <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center shrink-0">
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
+              </svg>
+            </div>
+            <div className="flex-1 text-center sm:text-left">
+              <div className="flex items-center justify-center sm:justify-start gap-2 mb-1">
+                <h3 className="text-sm font-bold">초기 테스터 모집 중</h3>
+                <span className="px-2 py-0.5 bg-yellow-400 text-yellow-900 text-[10px] font-bold rounded-full">FREE</span>
+              </div>
+              <p className="text-white/90 text-xs">지금 신청하시면 <strong>모든 기능을 무료</strong>로 체험할 수 있습니다. 선착순 마감!</p>
+            </div>
+            <a
+              href="https://forms.gle/RdniybCMpa6V77dw9"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-5 py-2.5 bg-white text-teal-700 text-sm font-bold rounded-xl hover:bg-gray-100 transition-all shadow-md shrink-0"
+            >
+              테스터 신청하기
+            </a>
+          </div>
+        </div>
+      </section>
+
       {/* API Key 입력 패널 */}
       <ApiKeyPanel visible={showApiKey} />
 
-      {/* CTA 섹션 */}
+      {/* ========== CTA 섹션 ========== */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
         <div className="bg-gradient-to-r from-indigo-600 to-violet-600 rounded-xl p-6 text-center shadow-lg">
           <h3 className="text-lg font-bold text-white mb-2">지금 바로 시작하세요</h3>
