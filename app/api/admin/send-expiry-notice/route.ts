@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { Resend } from 'resend';
+import nodemailer from 'nodemailer';
 import { createClient as createServerClient } from '@/lib/supabase-server';
 
 async function verifyAdmin(): Promise<boolean> {
@@ -29,12 +29,19 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: '필수 정보가 누락되었습니다.' }, { status: 400 });
     }
 
-    const resendKey = process.env.RESEND_API_KEY;
-    if (!resendKey) {
-      return NextResponse.json({ error: 'RESEND_API_KEY가 설정되지 않았습니다.' }, { status: 500 });
+    const smtpUser = process.env.SMTP_USER;
+    const smtpPass = process.env.SMTP_APP_PASSWORD;
+    if (!smtpUser || !smtpPass) {
+      return NextResponse.json({ error: 'SMTP_USER 또는 SMTP_APP_PASSWORD가 설정되지 않았습니다.' }, { status: 500 });
     }
 
-    const resend = new Resend(resendKey);
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: smtpUser,
+        pass: smtpPass,
+      },
+    });
 
     const planName = plan === 'pro' ? '프로(Pro)' : '맥스(Max)';
     const planPrice = plan === 'pro' ? '29,000원' : '79,000원';
@@ -145,20 +152,14 @@ export async function POST(request: NextRequest) {
 </body>
 </html>`;
 
-    const fromEmail = process.env.RESEND_FROM_EMAIL || 'noreply@resend.dev';
-
-    const { data, error } = await resend.emails.send({
-      from: `AIO GEO Optimizer <${fromEmail}>`,
+    await transporter.sendMail({
+      from: `AIO GEO Optimizer <${smtpUser}>`,
       to: email,
       subject: `[AIO] ${planName} 구독 만료 안내 (${daysLeft < 0 ? '만료됨' : `D-${daysLeft}`})`,
       html: htmlContent,
     });
 
-    if (error) {
-      return NextResponse.json({ error: error.message }, { status: 500 });
-    }
-
-    return NextResponse.json({ success: true, emailId: data?.id });
+    return NextResponse.json({ success: true });
   } catch (err) {
     return NextResponse.json(
       { error: err instanceof Error ? err.message : '서버 오류' },
