@@ -194,33 +194,37 @@ export default function AdminStatsPage() {
           <>
             {/* 1행: 핵심 지표 카드 */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-5">
-              <div className="bg-white rounded-xl p-4 border-2 border-gray-200 shadow-sm">
-                <p className="text-xs font-medium text-gray-500 mb-1">전체 회원</p>
-                <p className="text-2xl font-bold text-gray-900">{stats.totalUsers}</p>
-                <div className="flex gap-1 mt-2 flex-wrap">
+              <div className="bg-white rounded-xl p-5 border-2 border-gray-200 shadow-sm">
+                <p className="text-[11px] font-semibold text-gray-400 uppercase tracking-wider mb-2">전체 회원</p>
+                <p className="text-3xl font-extrabold text-gray-900 tabular-nums">{stats.totalUsers}</p>
+                <div className="flex gap-1.5 mt-3 flex-wrap">
                   {Object.entries(stats.planCounts).map(([plan, count]) => (
                     count > 0 && (
-                      <span key={plan} className={`px-1.5 py-0.5 text-[10px] font-bold rounded ${PLAN_STYLES[plan]}`}>
+                      <span key={plan} className={`px-2 py-0.5 text-[10px] font-bold rounded-md ${PLAN_STYLES[plan]}`}>
                         {plan === 'admin' ? '관리' : plan === 'free' ? '무료' : plan.toUpperCase()} {count}
                       </span>
                     )
                   ))}
                 </div>
               </div>
-              <div className="bg-white rounded-xl p-4 border-2 border-indigo-200 shadow-sm">
-                <p className="text-xs font-medium text-indigo-500 mb-1">누적 사용량</p>
-                <p className="text-2xl font-bold text-indigo-600">{totalUsageAll.toLocaleString()}</p>
-                <p className="text-[10px] text-gray-400 mt-1">전체 기간 합계</p>
+              <div className="bg-gradient-to-br from-indigo-50 to-white rounded-xl p-5 border-2 border-indigo-200 shadow-sm">
+                <p className="text-[11px] font-semibold text-indigo-400 uppercase tracking-wider mb-2">누적 사용량</p>
+                <p className="text-3xl font-extrabold text-indigo-600 tabular-nums">{totalUsageAll.toLocaleString()}<span className="text-base font-bold ml-0.5">회</span></p>
+                <p className="text-[11px] text-gray-400 mt-1">전체 기간 합계</p>
               </div>
-              <div className="bg-white rounded-xl p-4 border-2 border-emerald-200 shadow-sm">
-                <p className="text-xs font-medium text-emerald-500 mb-1">이번 달 사용량</p>
-                <p className="text-2xl font-bold text-emerald-600">{thisMonthTotal.toLocaleString()}</p>
-                <p className="text-[10px] text-gray-400 mt-1">{stats.currentMonth}</p>
+              <div className="bg-gradient-to-br from-emerald-50 to-white rounded-xl p-5 border-2 border-emerald-200 shadow-sm">
+                <p className="text-[11px] font-semibold text-emerald-400 uppercase tracking-wider mb-2">이번 달 사용량</p>
+                <p className="text-3xl font-extrabold text-emerald-600 tabular-nums">{thisMonthTotal.toLocaleString()}<span className="text-base font-bold ml-0.5">회</span></p>
+                <p className="text-[11px] text-gray-400 mt-1">{stats.currentMonth}</p>
               </div>
-              <div className="bg-white rounded-xl p-4 border-2 border-amber-200 shadow-sm">
-                <p className="text-xs font-medium text-amber-500 mb-1">활성 사용자</p>
-                <p className="text-2xl font-bold text-amber-600">{stats.activeWeek}</p>
-                <p className="text-[10px] text-gray-400 mt-1">오늘 {stats.activeToday}명 / 이번 주 {stats.activeWeek}명</p>
+              <div className="bg-gradient-to-br from-amber-50 to-white rounded-xl p-5 border-2 border-amber-200 shadow-sm">
+                <p className="text-[11px] font-semibold text-amber-400 uppercase tracking-wider mb-2">활성 사용자</p>
+                <p className="text-3xl font-extrabold text-amber-600 tabular-nums">{stats.activeWeek}<span className="text-base font-bold ml-0.5">명</span></p>
+                <div className="flex items-center gap-3 mt-1">
+                  <span className="text-[11px] text-gray-500">오늘 <span className="font-bold text-amber-600">{stats.activeToday}</span>명</span>
+                  <span className="text-gray-300">|</span>
+                  <span className="text-[11px] text-gray-500">7일 <span className="font-bold text-amber-600">{stats.activeWeek}</span>명</span>
+                </div>
               </div>
             </div>
 
@@ -228,19 +232,22 @@ export default function AdminStatsPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-5">
               {/* 누적 사용량 */}
               <div className="bg-white rounded-xl p-5 border-2 border-gray-200 shadow-sm">
-                <h3 className="text-sm font-bold text-gray-800 mb-3">기능별 누적 사용량</h3>
-                <div className="space-y-3">
+                <h3 className="text-sm font-bold text-gray-800 mb-4">기능별 누적 사용량</h3>
+                <div className="space-y-4">
                   {Object.entries(stats.totalByFeature).map(([feature, count]) => {
                     const maxCount = Math.max(...Object.values(stats.totalByFeature), 1);
                     const pct = (count / maxCount) * 100;
                     const colors = FEATURE_COLORS[feature];
                     return (
                       <div key={feature}>
-                        <div className="flex items-center justify-between mb-1">
-                          <span className="text-xs font-medium text-gray-600">{FEATURE_LABELS[feature]}</span>
-                          <span className={`text-xs font-bold ${colors.text}`}>{count.toLocaleString()}회</span>
+                        <div className="flex items-center justify-between mb-1.5">
+                          <div className="flex items-center gap-2">
+                            <div className={`w-2.5 h-2.5 rounded-full ${colors.bar}`} />
+                            <span className="text-xs font-semibold text-gray-700">{FEATURE_LABELS[feature]}</span>
+                          </div>
+                          <span className={`text-sm font-extrabold tabular-nums ${colors.text}`}>{count.toLocaleString()}<span className="text-[10px] font-semibold ml-0.5">회</span></span>
                         </div>
-                        <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
+                        <div className="h-2.5 bg-gray-100 rounded-full overflow-hidden">
                           <div className={`h-full rounded-full ${colors.bar} transition-all`} style={{ width: `${pct}%` }} />
                         </div>
                       </div>
@@ -251,19 +258,22 @@ export default function AdminStatsPage() {
 
               {/* 이번 달 사용량 */}
               <div className="bg-white rounded-xl p-5 border-2 border-gray-200 shadow-sm">
-                <h3 className="text-sm font-bold text-gray-800 mb-3">이번 달 사용량 ({stats.currentMonth})</h3>
-                <div className="space-y-3">
+                <h3 className="text-sm font-bold text-gray-800 mb-4">이번 달 사용량 <span className="text-gray-400 font-normal">({stats.currentMonth})</span></h3>
+                <div className="space-y-4">
                   {Object.entries(stats.thisMonthUsage).map(([feature, count]) => {
                     const maxCount = Math.max(...Object.values(stats.thisMonthUsage), 1);
                     const pct = (count / maxCount) * 100;
                     const colors = FEATURE_COLORS[feature];
                     return (
                       <div key={feature}>
-                        <div className="flex items-center justify-between mb-1">
-                          <span className="text-xs font-medium text-gray-600">{FEATURE_LABELS[feature]}</span>
-                          <span className={`text-xs font-bold ${colors.text}`}>{count.toLocaleString()}회</span>
+                        <div className="flex items-center justify-between mb-1.5">
+                          <div className="flex items-center gap-2">
+                            <div className={`w-2.5 h-2.5 rounded-full ${colors.bar}`} />
+                            <span className="text-xs font-semibold text-gray-700">{FEATURE_LABELS[feature]}</span>
+                          </div>
+                          <span className={`text-sm font-extrabold tabular-nums ${colors.text}`}>{count.toLocaleString()}<span className="text-[10px] font-semibold ml-0.5">회</span></span>
                         </div>
-                        <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
+                        <div className="h-2.5 bg-gray-100 rounded-full overflow-hidden">
                           <div className={`h-full rounded-full ${colors.bar} transition-all`} style={{ width: `${pct}%` }} />
                         </div>
                       </div>
@@ -276,49 +286,48 @@ export default function AdminStatsPage() {
             {/* 3행: 월별 추이 차트 */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-5">
               <div className="bg-white rounded-xl p-5 border-2 border-gray-200 shadow-sm">
-                <h3 className="text-sm font-bold text-gray-800 mb-4">월별 사용량 추이 (최근 6개월)</h3>
-                <div className="flex items-end gap-2 h-40">
+                <h3 className="text-sm font-bold text-gray-800 mb-4">월별 사용량 추이 <span className="text-gray-400 font-normal">(최근 6개월)</span></h3>
+                <div className="flex items-end gap-3 h-44">
                   {stats.monthlyTrend.map((m) => (
-                    <div key={m.month} className="flex-1 flex flex-col items-center gap-1">
-                      <span className="text-[10px] font-bold text-gray-700">{m.total}</span>
-                      <div className="w-full bg-gray-100 rounded-t-md overflow-hidden relative" style={{ height: '120px' }}>
+                    <div key={m.month} className="flex-1 flex flex-col items-center gap-1.5">
+                      <span className="text-xs font-extrabold text-gray-800 tabular-nums">{m.total}</span>
+                      <div className="w-full bg-gray-50 rounded-lg overflow-hidden relative" style={{ height: '130px' }}>
                         <div className="absolute bottom-0 w-full flex flex-col">
                           {(['series', 'keyword', 'generate', 'analyze'] as const).map(f => {
-                            const h = maxMonthlyTotal > 0 ? (m[f] / maxMonthlyTotal) * 120 : 0;
-                            return <div key={f} className={`w-full ${FEATURE_COLORS[f].bar}`} style={{ height: `${h}px` }} />;
+                            const h = maxMonthlyTotal > 0 ? (m[f] / maxMonthlyTotal) * 130 : 0;
+                            return <div key={f} className={`w-full ${FEATURE_COLORS[f].bar} first:rounded-t-md`} style={{ height: `${h}px` }} />;
                           })}
                         </div>
                       </div>
-                      <span className="text-[10px] text-gray-500">{formatMonth(m.month)}</span>
+                      <span className="text-[11px] font-medium text-gray-500">{formatMonth(m.month)}</span>
                     </div>
                   ))}
                 </div>
-                <div className="flex items-center gap-3 mt-3 justify-center">
+                <div className="flex items-center gap-4 mt-4 justify-center border-t border-gray-100 pt-3">
                   {Object.entries(FEATURE_LABELS).map(([key, label]) => (
-                    <div key={key} className="flex items-center gap-1">
-                      <div className={`w-2 h-2 rounded-full ${FEATURE_COLORS[key].bar}`} />
-                      <span className="text-[10px] text-gray-500">{label}</span>
+                    <div key={key} className="flex items-center gap-1.5">
+                      <div className={`w-2.5 h-2.5 rounded-full ${FEATURE_COLORS[key].bar}`} />
+                      <span className="text-[11px] font-medium text-gray-500">{label}</span>
                     </div>
                   ))}
                 </div>
               </div>
 
               <div className="bg-white rounded-xl p-5 border-2 border-gray-200 shadow-sm">
-                <h3 className="text-sm font-bold text-gray-800 mb-4">월별 가입자 추이 (최근 6개월)</h3>
-                <div className="flex items-end gap-2 h-40">
+                <h3 className="text-sm font-bold text-gray-800 mb-4">월별 가입자 추이 <span className="text-gray-400 font-normal">(최근 6개월)</span></h3>
+                <div className="flex items-end gap-3 h-44">
                   {stats.signupTrend.map((m) => {
                     const maxSignup = Math.max(...stats.signupTrend.map(s => s.count), 1);
-                    const h = (m.count / maxSignup) * 120;
+                    const h = (m.count / maxSignup) * 130;
                     return (
-                      <div key={m.month} className="flex-1 flex flex-col items-center gap-1">
-                        <span className="text-[10px] font-bold text-gray-700">{m.count}</span>
-                        <div className="w-full bg-gray-100 rounded-t-md overflow-hidden" style={{ height: '120px' }}>
-                          <div className="w-full bg-indigo-400 rounded-t-md absolute bottom-0" style={{ height: `${h}px` }} />
+                      <div key={m.month} className="flex-1 flex flex-col items-center gap-1.5">
+                        <span className="text-xs font-extrabold text-gray-800 tabular-nums">{m.count}</span>
+                        <div className="w-full bg-gray-50 rounded-lg overflow-hidden" style={{ height: '130px' }}>
                           <div className="relative w-full h-full flex items-end">
-                            <div className="w-full bg-indigo-400 rounded-t-md" style={{ height: `${h}px` }} />
+                            <div className="w-full bg-gradient-to-t from-indigo-500 to-indigo-400 rounded-t-md" style={{ height: `${h}px` }} />
                           </div>
                         </div>
-                        <span className="text-[10px] text-gray-500">{formatMonth(m.month)}</span>
+                        <span className="text-[11px] font-medium text-gray-500">{formatMonth(m.month)}</span>
                       </div>
                     );
                   })}
@@ -328,19 +337,19 @@ export default function AdminStatsPage() {
 
             {/* 4행: 상위 사용자 */}
             <div className="bg-white rounded-xl border-2 border-gray-200 shadow-sm overflow-hidden">
-              <div className="px-5 py-3 border-b border-gray-100">
-                <h3 className="text-sm font-bold text-gray-800">상위 사용자 TOP 10 (누적 사용량 기준)</h3>
+              <div className="px-5 py-4 border-b border-gray-100 flex items-center justify-between">
+                <h3 className="text-sm font-bold text-gray-800">상위 사용자 TOP 10 <span className="text-gray-400 font-normal">(누적 사용량 기준)</span></h3>
               </div>
               <div className="overflow-x-auto">
                 <table className="w-full text-sm">
                   <thead>
                     <tr className="bg-gray-50 border-b border-gray-200">
-                      <th className="text-center px-4 py-2 font-semibold text-gray-600 w-10">#</th>
-                      <th className="text-left px-4 py-2 font-semibold text-gray-600">이름</th>
-                      <th className="text-left px-4 py-2 font-semibold text-gray-600">이메일</th>
-                      <th className="text-center px-4 py-2 font-semibold text-gray-600">등급</th>
-                      <th className="text-center px-4 py-2 font-semibold text-gray-600">누적 사용량</th>
-                      <th className="text-left px-4 py-2 font-semibold text-gray-600 w-48"></th>
+                      <th className="text-center px-4 py-2.5 font-semibold text-gray-500 w-10">#</th>
+                      <th className="text-left px-4 py-2.5 font-semibold text-gray-500">이름</th>
+                      <th className="text-left px-4 py-2.5 font-semibold text-gray-500">이메일</th>
+                      <th className="text-center px-4 py-2.5 font-semibold text-gray-500">등급</th>
+                      <th className="text-right px-4 py-2.5 font-semibold text-gray-500">사용량</th>
+                      <th className="text-left px-4 py-2.5 font-semibold text-gray-500 w-48"></th>
                     </tr>
                   </thead>
                   <tbody>
@@ -351,20 +360,24 @@ export default function AdminStatsPage() {
                     ) : (
                       stats.topUsers.map((user, i) => {
                         const maxTotal = stats.topUsers[0]?.total || 1;
+                        const rankColor = i === 0 ? 'text-amber-500' : i === 1 ? 'text-gray-400' : i === 2 ? 'text-amber-700' : 'text-gray-300';
                         return (
                           <tr key={i} className="border-b border-gray-50 hover:bg-gray-50/50">
-                            <td className="text-center px-4 py-2.5 font-bold text-gray-400">{i + 1}</td>
-                            <td className="px-4 py-2.5 font-medium text-gray-800">{user.name}</td>
-                            <td className="px-4 py-2.5 text-gray-500 text-xs">{user.email}</td>
-                            <td className="text-center px-4 py-2.5">
-                              <span className={`px-2 py-0.5 text-[10px] font-bold rounded-full ${PLAN_STYLES[user.plan] || PLAN_STYLES.free}`}>
+                            <td className={`text-center px-4 py-3 font-extrabold text-base tabular-nums ${rankColor}`}>{i + 1}</td>
+                            <td className="px-4 py-3 font-semibold text-gray-800">{user.name}</td>
+                            <td className="px-4 py-3 text-gray-500 text-xs">{user.email}</td>
+                            <td className="text-center px-4 py-3">
+                              <span className={`px-2.5 py-1 text-[10px] font-bold rounded-md ${PLAN_STYLES[user.plan] || PLAN_STYLES.free}`}>
                                 {user.plan === 'admin' ? '관리자' : user.plan === 'free' ? '무료' : user.plan.toUpperCase()}
                               </span>
                             </td>
-                            <td className="text-center px-4 py-2.5 font-bold text-indigo-600">{user.total.toLocaleString()}회</td>
-                            <td className="px-4 py-2.5">
-                              <div className="h-1.5 bg-gray-100 rounded-full overflow-hidden">
-                                <div className="h-full bg-indigo-400 rounded-full" style={{ width: `${(user.total / maxTotal) * 100}%` }} />
+                            <td className="text-right px-4 py-3">
+                              <span className="text-sm font-extrabold text-indigo-600 tabular-nums">{user.total.toLocaleString()}</span>
+                              <span className="text-[10px] text-indigo-400 font-semibold ml-0.5">회</span>
+                            </td>
+                            <td className="px-4 py-3">
+                              <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
+                                <div className="h-full bg-gradient-to-r from-indigo-400 to-indigo-500 rounded-full transition-all" style={{ width: `${(user.total / maxTotal) * 100}%` }} />
                               </div>
                             </td>
                           </tr>
