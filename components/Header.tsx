@@ -31,6 +31,7 @@ const mainNav = [
 const subNav = [
   { href: '/pricing', label: '요금' },
   { href: '/resources', label: '자료실' },
+  { href: '/community', label: '질문/후기' },
 ];
 
 export default function Header({ showApiKeyButton = false, onToggleApiKey, apiKeyOpen }: HeaderProps) {
