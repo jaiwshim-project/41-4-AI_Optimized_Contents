@@ -21,7 +21,7 @@ export default function ResourcesPage() {
         {/* 헤더 */}
         <div className="mb-5">
           <h2 className="text-2xl font-bold text-gray-900 mb-1">자료실</h2>
-          <p className="text-sm text-gray-500">AIO/GEO 최적화에 도움이 되는 자료를 확인하세요</p>
+          <p className="text-sm text-gray-500">GEO/AIO 최적화에 도움이 되는 자료를 확인하세요</p>
         </div>
 
         {/* 탭 */}

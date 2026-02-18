@@ -30,7 +30,7 @@ const features = [
   },
   {
     title: 'AI 콘텐츠 생성',
-    description: '블로그, 제품 설명, FAQ, How-to 등 8가지 유형의 AIO/GEO 최적화 콘텐츠를 자동 생성합니다.',
+    description: '블로그, 제품 설명, FAQ, How-to 등 8가지 유형의 GEO/AIO 최적화 콘텐츠를 자동 생성합니다.',
     icon: 'M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z',
     color: 'from-emerald-500 to-teal-600',
     card: 'bg-white border-gray-200 hover:border-emerald-300 hover:shadow-md',
@@ -83,7 +83,7 @@ const targetAudiences = [
   {
     who: '마케팅 에이전시',
     problem: '경쟁사 에이전시와 차별화가 안 돼요',
-    solution: 'AIO/GEO 분석 리포트로 프리미엄 서비스',
+    solution: 'GEO/AIO 분석 리포트로 프리미엄 서비스',
     icon: 'M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4',
     gradient: 'from-violet-500 to-purple-600',
   },
@@ -252,7 +252,7 @@ export default function LandingPage() {
             { number: '40%+', label: 'Google 검색에 AI Overview 표시', color: 'text-blue-600' },
             { number: '8가지', label: '콘텐츠 유형 자동 생성', color: 'text-violet-600' },
             { number: '3분', label: '분석부터 최적화까지', color: 'text-emerald-600' },
-            { number: '100점', label: 'AIO/GEO 점수 분석 제공', color: 'text-amber-600' },
+            { number: '100점', label: 'GEO/AIO 점수 분석 제공', color: 'text-amber-600' },
           ].map((stat) => (
             <div key={stat.label} className="bg-white rounded-xl p-4 shadow-md border border-gray-100 text-center">
               <div className={`text-2xl font-extrabold ${stat.color} mb-1`}>{stat.number}</div>
@@ -334,7 +334,7 @@ export default function LandingPage() {
           <div className="relative bg-white rounded-xl p-5 border border-gray-200 shadow-sm">
             <div className="w-9 h-9 bg-gradient-to-br from-violet-500 to-violet-600 text-white rounded-lg flex items-center justify-center text-sm font-bold mb-3">2</div>
             <h4 className="text-sm font-bold text-gray-900 mb-1.5">종합 분석</h4>
-            <p className="text-xs text-gray-500">AIO/GEO 점수, E-E-A-T 평가, 키워드 밀도, 구조화 수준을 종합 분석합니다.</p>
+            <p className="text-xs text-gray-500">GEO/AIO 점수, E-E-A-T 평가, 키워드 밀도, 구조화 수준을 종합 분석합니다.</p>
             <div className="mt-2 flex flex-wrap gap-1">
               <span className="px-1.5 py-0.5 text-[10px] font-medium bg-indigo-50 text-indigo-600 rounded">AIO 점수</span>
               <span className="px-1.5 py-0.5 text-[10px] font-medium bg-violet-50 text-violet-600 rounded">GEO 점수</span>
@@ -368,7 +368,7 @@ export default function LandingPage() {
             <div className="flex-1">
               <h4 className="text-sm font-bold text-gray-900 mb-1.5">콘텐츠 생성도 한 번에</h4>
               <p className="text-xs text-gray-500 leading-relaxed">
-                기존 콘텐츠가 없어도 괜찮습니다. 주제와 키워드만 입력하면 처음부터 AIO/GEO 최적화된 콘텐츠를 자동 생성하고,
+                기존 콘텐츠가 없어도 괜찮습니다. 주제와 키워드만 입력하면 처음부터 GEO/AIO 최적화된 콘텐츠를 자동 생성하고,
                 A/B 버전 비교, SNS 채널별 변환, 인포그래픽 이미지 생성까지 한 번에 제공합니다.
               </p>
             </div>
@@ -501,7 +501,7 @@ export default function LandingPage() {
         <div className="bg-gradient-to-r from-indigo-600 to-violet-600 rounded-xl p-6 text-center shadow-lg">
           <h3 className="text-lg font-bold text-white mb-2">지금 바로 시작하세요</h3>
           <p className="text-indigo-100 text-sm mb-5 max-w-lg mx-auto">
-            콘텐츠를 입력하면 즉시 AIO/GEO 분석 결과와 구체적인 개선 방안을 확인할 수 있습니다.
+            콘텐츠를 입력하면 즉시 GEO/AIO 분석 결과와 구체적인 개선 방안을 확인할 수 있습니다.
           </p>
           <div className="flex items-center justify-center gap-3">
             <Link

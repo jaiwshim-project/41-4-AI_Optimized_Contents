@@ -10,7 +10,7 @@ const apiEndpoints = [
     method: 'POST',
     url: '/api/generate',
     webhookAction: 'generate',
-    description: 'AIO/GEO 최적화된 블로그, 제품 설명, FAQ, 가이드 등 콘텐츠 자동 생성',
+    description: 'GEO/AIO 최적화된 블로그, 제품 설명, FAQ, 가이드 등 콘텐츠 자동 생성',
     params: [
       { name: 'topic', type: 'string', required: true, desc: '콘텐츠 주제' },
       { name: 'category', type: 'string', required: true, desc: '콘텐츠 유형 (blog, product, faq, how-to, comparison, case-study)' },
@@ -29,7 +29,7 @@ const apiEndpoints = [
     method: 'POST',
     url: '/api/analyze',
     webhookAction: 'analyze',
-    description: '기존 콘텐츠의 AIO/GEO 점수, E-E-A-T 평가, 키워드 밀도 분석',
+    description: '기존 콘텐츠의 GEO/AIO 점수, E-E-A-T 평가, 키워드 밀도 분석',
     params: [
       { name: 'content', type: 'string', required: true, desc: '분석할 콘텐츠 텍스트' },
       { name: 'targetKeyword', type: 'string', required: false, desc: '타겟 키워드' },
@@ -45,7 +45,7 @@ const apiEndpoints = [
     method: 'POST',
     url: '/api/optimize',
     webhookAction: 'optimize',
-    description: '기존 콘텐츠를 AIO/GEO에 최적화된 형태로 자동 변환',
+    description: '기존 콘텐츠를 GEO/AIO에 최적화된 형태로 자동 변환',
     params: [
       { name: 'originalContent', type: 'string', required: true, desc: '원본 콘텐츠' },
       { name: 'targetKeyword', type: 'string', required: false, desc: '타겟 키워드' },
@@ -1141,7 +1141,7 @@ export default function MakeGuidePage() {
                 {[
                   { title: '속도', point: '"블로그 1편을 3분 만에 생성합니다"', desc: '기획→생성→최적화→배포 전 과정 자동화로 기존 대비 97% 시간 절감' },
                   { title: '일관성', point: '"매일 빠짐없이 콘텐츠를 발행합니다"', desc: '사람에 의존하지 않는 정기 발행 시스템. 휴가, 퇴사에도 중단 없음' },
-                  { title: '품질', point: '"AI 검색엔진이 인용하는 구조로 작성합니다"', desc: 'AIO/GEO 최적화로 ChatGPT, Gemini 등에서 인용 확률 극대화' },
+                  { title: '품질', point: '"AI 검색엔진이 인용하는 구조로 작성합니다"', desc: 'GEO/AIO 최적화로 ChatGPT, Gemini 등에서 인용 확률 극대화' },
                   { title: '확장성', point: '"고객 10명이든 100명이든 같은 비용입니다"', desc: '자동화 시나리오 복제로 고객 수 증가 시에도 추가 인력 불필요' },
                   { title: '데이터', point: '"모든 성과를 자동 추적하고 리포트합니다"', desc: 'Google Sheets/Notion에 자동 기록, 월간 리포트 자동 발송' },
                   { title: '멀티채널', point: '"하나의 콘텐츠로 5개 채널을 커버합니다"', desc: '블로그 → 인스타, 링크드인, 네이버, 카드뉴스, 요약본 자동 변환' },
@@ -1261,7 +1261,7 @@ export default function MakeGuidePage() {
                     </div>
                     <div className="bg-purple-50 rounded-xl p-4">
                       <h4 className="text-sm font-semibold text-gray-800 mb-1">WordPress 플러그인</h4>
-                      <p className="text-xs text-gray-600 mb-2">WordPress에서 직접 AIO/GEO 최적화 콘텐츠를 생성하고 발행하는 플러그인. Make.com 없이도 자동화 가능.</p>
+                      <p className="text-xs text-gray-600 mb-2">WordPress에서 직접 GEO/AIO 최적화 콘텐츠를 생성하고 발행하는 플러그인. Make.com 없이도 자동화 가능.</p>
                       <div className="flex gap-2">
                         <span className="text-xs bg-purple-100 text-purple-700 px-2 py-0.5 rounded">PHP</span>
                         <span className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded">예상 2~3주</span>
@@ -1451,7 +1451,7 @@ Make.com (백그라운드 처리)
                   {
                     step: 1,
                     title: '콘텐츠 생성',
-                    desc: '주제 입력 → AIO/GEO 최적화 콘텐츠 자동 생성',
+                    desc: '주제 입력 → GEO/AIO 최적화 콘텐츠 자동 생성',
                     icon: '✍️',
                     bgClass: 'bg-blue-50 border-blue-100',
                     details: undefined as string[] | undefined,
@@ -1567,7 +1567,7 @@ Make.com (백그라운드 처리)
                     <tr className="border-t">
                       <td className="px-4 py-3 font-medium text-gray-700">AI 검색 최적화</td>
                       <td className="px-4 py-3 text-gray-500">지원 안 함</td>
-                      <td className="px-4 py-3 text-indigo-700 bg-indigo-50/50 font-medium">AIO/GEO 전용 최적화 엔진 탑재</td>
+                      <td className="px-4 py-3 text-indigo-700 bg-indigo-50/50 font-medium">GEO/AIO 전용 최적화 엔진 탑재</td>
                     </tr>
                     <tr className="border-t">
                       <td className="px-4 py-3 font-medium text-gray-700">사용자 경험</td>
@@ -1671,11 +1671,11 @@ Make.com (백그라운드 처리)
                   </thead>
                   <tbody>
                     {[
-                      { name: 'ChatGPT / Claude', feature: '범용 AI 콘텐츠 생성', limit: 'AIO/GEO 최적화 전무, 매번 프롬프트 작성', diff: 'AIO/GEO 전용 엔진 내장, 원클릭 생성' },
-                      { name: 'Jasper AI', feature: '마케팅 콘텐츠 생성', limit: 'SEO 중심, AI 검색 최적화 없음, 영어 중심', diff: '한국어 AIO/GEO 최적화, E-E-A-T 자동 적용' },
+                      { name: 'ChatGPT / Claude', feature: '범용 AI 콘텐츠 생성', limit: 'GEO/AIO 최적화 전무, 매번 프롬프트 작성', diff: 'GEO/AIO 전용 엔진 내장, 원클릭 생성' },
+                      { name: 'Jasper AI', feature: '마케팅 콘텐츠 생성', limit: 'SEO 중심, AI 검색 최적화 없음, 영어 중심', diff: '한국어 GEO/AIO 최적화, E-E-A-T 자동 적용' },
                       { name: 'SurferSEO', feature: 'SEO 콘텐츠 분석/최적화', limit: '구글 SEO만 대응, AI 검색엔진 미대응', diff: 'AI 검색엔진 인용 최적화 (ChatGPT, Gemini, Perplexity)' },
-                      { name: 'Frase.io', feature: 'SEO 리서치 + 콘텐츠', limit: 'SERP 기반 분석만, AIO 점수 없음', diff: 'AIO/GEO 점수 측정 + 개선 가이드 제공' },
-                      { name: '뤼튼 (Wrtn)', feature: '한국어 AI 콘텐츠', limit: '범용 생성, 마케팅 최적화 약함', diff: 'AIO/GEO 특화, 산업별 맞춤, 멀티채널 변환' },
+                      { name: 'Frase.io', feature: 'SEO 리서치 + 콘텐츠', limit: 'SERP 기반 분석만, AIO 점수 없음', diff: 'GEO/AIO 점수 측정 + 개선 가이드 제공' },
+                      { name: '뤼튼 (Wrtn)', feature: '한국어 AI 콘텐츠', limit: '범용 생성, 마케팅 최적화 약함', diff: 'GEO/AIO 특화, 산업별 맞춤, 멀티채널 변환' },
                       { name: 'Buffer / Hootsuite', feature: 'SNS 예약 발행', limit: '콘텐츠 생성 불가, 배포만', diff: '생성 + 최적화 + 변환 + 배포 올인원' },
                       { name: '블로그 마케팅 업체', feature: '수작업 블로그 대행', limit: '월 수백만원, AIO 개념 없음', diff: '자동화로 90% 비용 절감, AI 검색 최적화' },
                     ].map((row, i) => (
@@ -1717,8 +1717,8 @@ Make.com (백그라운드 처리)
                 {[
                   {
                     num: 1,
-                    title: '유일한 AIO/GEO 전용 플랫폼',
-                    desc: '현재 시장에 AIO/GEO 전용 최적화 플랫폼은 존재하지 않습니다. SEO 도구는 많지만, ChatGPT/Gemini/Perplexity 등 AI 검색엔진이 콘텐츠를 인용하도록 최적화하는 전용 도구는 우리가 최초입니다.',
+                    title: '유일한 GEO/AIO 전용 플랫폼',
+                    desc: '현재 시장에 GEO/AIO 전용 최적화 플랫폼은 존재하지 않습니다. SEO 도구는 많지만, ChatGPT/Gemini/Perplexity 등 AI 검색엔진이 콘텐츠를 인용하도록 최적화하는 전용 도구는 우리가 최초입니다.',
                     badge: '카테고리 최초',
                     badgeColor: 'bg-red-100 text-red-700',
                   },
@@ -1949,7 +1949,7 @@ Make.com (백그라운드 처리)
                   <ul className="space-y-2 text-xs text-gray-700">
                     <li className="flex items-start gap-2"><span className="text-red-500 font-bold shrink-0">대형 플랫폼</span><span>AIO 기능 부분 도입, 범용 도구의 한계로 깊이 부족</span></li>
                     <li className="flex items-start gap-2"><span className="text-red-500 font-bold shrink-0">SEO 도구</span><span>AIO 전용 모듈 개발, 직접 경쟁 시작</span></li>
-                    <li className="flex items-start gap-2"><span className="text-red-500 font-bold shrink-0">신규 진입자</span><span>AIO/GEO 카테고리 보고 유사 서비스 출시 시도</span></li>
+                    <li className="flex items-start gap-2"><span className="text-red-500 font-bold shrink-0">신규 진입자</span><span>GEO/AIO 카테고리 보고 유사 서비스 출시 시도</span></li>
                   </ul>
                 </div>
               </div>
@@ -1987,7 +1987,7 @@ Make.com (백그라운드 처리)
                   </ul>
                 </div>
                 <div className="bg-purple-50 rounded-xl p-5 border border-purple-100">
-                  <h3 className="text-xs font-bold text-purple-600 uppercase mb-2">AIO/GEO 신규 시장</h3>
+                  <h3 className="text-xs font-bold text-purple-600 uppercase mb-2">GEO/AIO 신규 시장</h3>
                   <p className="text-2xl font-bold text-gray-900">1,000~3,000억원</p>
                   <p className="text-xs text-gray-500 mt-2">AI 검색 전환에 따른 신규 카테고리</p>
                   <p className="text-xs text-purple-600 font-medium mt-1">우리가 최초로 정의하는 시장</p>
@@ -2009,12 +2009,12 @@ Make.com (백그라운드 처리)
               <h2 className="text-xl font-bold mb-5 text-center">핵심 요약</h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 {[
-                  { label: '최대 강점', value: 'AIO/GEO 전용 "최초" 플랫폼' },
+                  { label: '최대 강점', value: 'GEO/AIO 전용 "최초" 플랫폼' },
                   { label: '차별적 가치', value: '분석→생성→최적화→변환→배포 올인원' },
                   { label: '시장 타이밍', value: 'AI 검색 전환기, 카테고리 선점 기회' },
                   { label: '기대 반응', value: '소상공인 환영, 에이전시 양면적, 대기업 관망' },
                   { label: '경쟁 방어', value: '특허 + 선점 + 데이터 + 생태계' },
-                  { label: '최대 리스크', value: '시장 교육 비용 (AIO/GEO 인지도)' },
+                  { label: '최대 리스크', value: '시장 교육 비용 (GEO/AIO 인지도)' },
                 ].map((item, i) => (
                   <div key={i} className="bg-white/10 rounded-xl p-4">
                     <span className="text-xs text-indigo-200 uppercase font-semibold">{item.label}</span>

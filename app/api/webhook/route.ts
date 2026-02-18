@@ -94,7 +94,7 @@ export async function POST(request: NextRequest) {
         const kwResponse = await kwClient.messages.create({
           model: 'claude-sonnet-4-20250514',
           max_tokens: 3000,
-          messages: [{ role: 'user', content: `AIO/GEO 전문가로서 키워드 "${keyword}"${industry ? ` (산업: ${industry})` : ''} 경쟁 분석을 JSON으로 응답: { keyword, difficulty, difficultyScore, searchIntent, aiCitationFactors, mustCoverTopics, differentiationStrategies, contentRecommendations, relatedKeywords, competitorInsights }` }],
+          messages: [{ role: 'user', content: `GEO/AIO 전문가로서 키워드 "${keyword}"${industry ? ` (산업: ${industry})` : ''} 경쟁 분석을 JSON으로 응답: { keyword, difficulty, difficultyScore, searchIntent, aiCitationFactors, mustCoverTopics, differentiationStrategies, contentRecommendations, relatedKeywords, competitorInsights }` }],
         });
         const kwText = kwResponse.content[0].type === 'text' ? kwResponse.content[0].text : '';
         const kwMatch = kwText.match(/\{[\s\S]*\}/);
@@ -114,7 +114,7 @@ export async function POST(request: NextRequest) {
         const seriesResponse = await seriesClient.messages.create({
           model: 'claude-sonnet-4-20250514',
           max_tokens: 4000,
-          messages: [{ role: 'user', content: `AIO/GEO 콘텐츠 전략가로서 "${topic}"${seriesIndustry ? ` (산업: ${seriesIndustry})` : ''}${notes ? ` 추가: ${notes}` : ''} 주제로 ${episodeCount}편 시리즈 기획안을 JSON으로 응답: { seriesTitle, seriesDescription, targetAudience, episodes[{number,title,subtitle,summary,targetKeywords,keyPoints,internalLinks,estimatedLength}], linkingStrategy, publishingSchedule, expectedOutcome }` }],
+          messages: [{ role: 'user', content: `GEO/AIO 콘텐츠 전략가로서 "${topic}"${seriesIndustry ? ` (산업: ${seriesIndustry})` : ''}${notes ? ` 추가: ${notes}` : ''} 주제로 ${episodeCount}편 시리즈 기획안을 JSON으로 응답: { seriesTitle, seriesDescription, targetAudience, episodes[{number,title,subtitle,summary,targetKeywords,keyPoints,internalLinks,estimatedLength}], linkingStrategy, publishingSchedule, expectedOutcome }` }],
         });
         const seriesText = seriesResponse.content[0].type === 'text' ? seriesResponse.content[0].text : '';
         const seriesMatch = seriesText.match(/\{[\s\S]*\}/);

@@ -147,7 +147,7 @@ export default function IntroductionPage() {
           <section className="bg-white rounded-xl shadow-sm border border-indigo-200 p-6">
             <h2 className="text-sm font-bold mb-3 flex items-center gap-2">
               <span className="w-8 h-8 bg-gradient-to-br from-indigo-500 to-blue-600 text-white rounded-lg flex items-center justify-center text-sm font-bold shadow-sm">1</span>
-              <span className="bg-gradient-to-r from-indigo-700 to-blue-600 bg-clip-text text-transparent">왜 AIO/GEO 최적화가 필요한가?</span>
+              <span className="bg-gradient-to-r from-indigo-700 to-blue-600 bg-clip-text text-transparent">왜 GEO/AIO 최적화가 필요한가?</span>
             </h2>
             <p className="text-[10px] text-gray-800 mb-3">검색의 패러다임이 바뀌고 있습니다. 이제 사용자는 링크 목록이 아닌 AI가 생성한 답변을 먼저 봅니다.</p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -166,7 +166,7 @@ export default function IntroductionPage() {
               <div className="bg-gradient-to-br from-emerald-50 to-green-50 rounded-xl p-4 border border-emerald-200">
                 <div className="flex items-center gap-2 mb-3">
                   <span className="w-8 h-8 bg-emerald-100 text-emerald-600 rounded-lg flex items-center justify-center text-lg">&#10004;</span>
-                  <h3 className="text-xs font-semibold text-emerald-800">AIO/GEO 최적화 후</h3>
+                  <h3 className="text-xs font-semibold text-emerald-800">GEO/AIO 최적화 후</h3>
                 </div>
                 <ul className="space-y-2 text-[10px] text-gray-700">
                   <li className="flex items-start gap-2"><span className="text-emerald-500">&#10003;</span> AI Overview 상단에 콘텐츠가 인용되어 노출</li>
@@ -190,8 +190,8 @@ export default function IntroductionPage() {
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
               {[
-                { title: 'AI 콘텐츠 분석', desc: 'AIO/GEO 점수, E-E-A-T 평가, 키워드 밀도, 구조화 수준을 종합 분석하여 개선 포인트를 제시합니다.', color: 'blue', icon: 'M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4' },
-                { title: 'AI 콘텐츠 생성', desc: '블로그, FAQ, How-to 등 8가지 카테고리의 AIO/GEO 최적화 콘텐츠를 자동으로 생성합니다.', color: 'purple', icon: 'M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z' },
+                { title: 'AI 콘텐츠 분석', desc: 'GEO/AIO 점수, E-E-A-T 평가, 키워드 밀도, 구조화 수준을 종합 분석하여 개선 포인트를 제시합니다.', color: 'blue', icon: 'M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4' },
+                { title: 'AI 콘텐츠 생성', desc: '블로그, FAQ, How-to 등 8가지 카테고리의 GEO/AIO 최적화 콘텐츠를 자동으로 생성합니다.', color: 'purple', icon: 'M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z' },
                 { title: '참조 자료 기반 생성', desc: '텍스트 또는 PDF, PPTX, DOCX, 이미지 파일을 업로드하면 해당 데이터를 반영한 정밀 콘텐츠를 생성합니다. 드래그&드롭 지원.', color: 'emerald', icon: 'M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12' },
                 { title: 'AI 인포그래픽 이미지', desc: 'Gemini AI로 콘텐츠에 맞는 인포그래픽 이미지 3장을 자동 생성하여 본문에 삽입합니다.', color: 'amber', icon: 'M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z' },
                 { title: '키워드 경쟁 분석', desc: '타겟 키워드의 경쟁 난이도, 검색 의도, AI 인용 핵심 요소, 차별화 전략을 분석합니다.', color: 'cyan', icon: 'M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z' },
@@ -256,7 +256,7 @@ export default function IntroductionPage() {
                 </thead>
                 <tbody>
                   {[
-                    ['AI 검색 최적화', '미지원', 'AIO/GEO 전문 최적화'],
+                    ['AI 검색 최적화', '미지원', 'GEO/AIO 전문 최적화'],
                     ['콘텐츠 생성', '키워드 기반 제안', 'AI 기반 자동 생성 + RAG'],
                     ['A/B 테스트', '미지원', '3가지 톤 동시 생성 비교'],
                     ['키워드 분석', '검색량 정도', 'AI 인용 요소 + 차별화 전략'],

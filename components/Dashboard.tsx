@@ -167,7 +167,7 @@ export default function Dashboard() {
             </div>
             <h3 className="text-lg font-semibold text-gray-900 mb-2">콘텐츠를 분석해보세요</h3>
             <p className="text-sm text-gray-500 max-w-md mx-auto">
-              위에 콘텐츠를 입력하면 AIO/GEO 관점에서 종합적인 분석 결과와
+              위에 콘텐츠를 입력하면 GEO/AIO 관점에서 종합적인 분석 결과와
               구체적인 개선 방안을 제공합니다.
             </p>
             <div className="mt-4 grid grid-cols-2 md:grid-cols-4 gap-3 max-w-lg mx-auto">

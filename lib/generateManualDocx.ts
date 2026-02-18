@@ -207,7 +207,7 @@ export async function downloadManualDocx() {
           h2('2. 분석 결과 이해하기'),
           h3('종합 개요'),
           body(
-            '전체 AIO/GEO 점수와 주요 지표를 한눈에 확인할 수 있는 대시보드입니다. 콘텐츠의 전반적인 AI 최적화 수준을 빠르게 파악할 수 있습니다.'
+            '전체 GEO/AIO 점수와 주요 지표를 한눈에 확인할 수 있는 대시보드입니다. 콘텐츠의 전반적인 AI 최적화 수준을 빠르게 파악할 수 있습니다.'
           ),
           h3('AIO 분석 (AI Overview)'),
           body(
@@ -257,7 +257,7 @@ export async function downloadManualDocx() {
           }),
           spacer(),
 
-          // ===== AIO/GEO 최적화 실전 가이드 =====
+          // ===== GEO/AIO 최적화 실전 가이드 =====
 
           new Paragraph({
             alignment: AlignmentType.CENTER,
@@ -266,12 +266,12 @@ export async function downloadManualDocx() {
               top: { style: BorderStyle.SINGLE, size: 8, color: '6366f1' },
               bottom: { style: BorderStyle.SINGLE, size: 8, color: '6366f1' },
             },
-            children: [new TextRun({ text: 'AIO/GEO 최적화 실전 가이드', bold: true, size: 36, color: '4f46e5' })],
+            children: [new TextRun({ text: 'GEO/AIO 최적화 실전 가이드', bold: true, size: 36, color: '4f46e5' })],
           }),
 
           // 5. 콘텐츠 구조 재구성법
           colorH2('5. 콘텐츠 구조 재구성법', 'e11d48'),
-          body('AI 검색엔진은 잘 구조화된 콘텐츠를 선호합니다. 다음 원칙에 따라 콘텐츠를 재구성하면 AIO/GEO 점수가 크게 향상됩니다.'),
+          body('AI 검색엔진은 잘 구조화된 콘텐츠를 선호합니다. 다음 원칙에 따라 콘텐츠를 재구성하면 GEO/AIO 점수가 크게 향상됩니다.'),
           spacer(),
 
           h3('① 역피라미드 구조 적용'),
@@ -422,7 +422,7 @@ export async function downloadManualDocx() {
 
           // 9. AI 인용 최적화
           colorH2('9. AI 인용 최적화 (Citability)', 'db2777'),
-          body('AI가 콘텐츠를 인용하기 쉽게 만드는 것이 AIO/GEO의 최종 목표입니다.'),
+          body('AI가 콘텐츠를 인용하기 쉽게 만드는 것이 GEO/AIO의 최종 목표입니다.'),
           spacer(),
 
           h3('인용되기 쉬운 문장 작성법'),

@@ -49,7 +49,7 @@ const beforeAfter = [
   {
     category: '에이전시 보고서',
     before: '순위 변동만 보고 → 차별화 어려움',
-    after: 'AIO/GEO 점수 + 개선 제안 → 프리미엄 서비스로 단가 상승',
+    after: 'GEO/AIO 점수 + 개선 제안 → 프리미엄 서비스로 단가 상승',
   },
 ];
 
@@ -92,7 +92,7 @@ const targetAudiences = [
   {
     who: '마케팅 에이전시',
     problem: '"경쟁사 에이전시와 차별화가 안 돼요"',
-    solution: 'AIO/GEO 분석 리포트를 프리미엄 서비스로 추가, 클라이언트당 부가가치 상승',
+    solution: 'GEO/AIO 분석 리포트를 프리미엄 서비스로 추가, 클라이언트당 부가가치 상승',
     result: '새로운 서비스 라인 = 새로운 수익원',
     color: 'purple',
     icon: 'M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4',
@@ -122,11 +122,11 @@ const faqs = [
   },
   {
     q: 'SEO를 이미 하고 있는데, 추가로 필요한가요?',
-    a: 'SEO는 여전히 중요합니다. 하지만 Google 검색의 40% 이상에서 AI Overview가 표시되고 있어, SEO만으로는 놓치는 트래픽이 생깁니다. AIO/GEO 최적화는 기존 SEO에 더해 AI 검색까지 커버합니다.',
+    a: 'SEO는 여전히 중요합니다. 하지만 Google 검색의 40% 이상에서 AI Overview가 표시되고 있어, SEO만으로는 놓치는 트래픽이 생깁니다. GEO/AIO 최적화는 기존 SEO에 더해 AI 검색까지 커버합니다.',
   },
   {
     q: '에이전시에서 클라이언트 보고서로 활용할 수 있나요?',
-    a: '네, AIO/GEO 분석 점수와 개선 제안을 DOCX/PDF로 내보낼 수 있어 클라이언트 보고서에 바로 활용 가능합니다. 대시보드에서 히스토리 추적도 됩니다.',
+    a: '네, GEO/AIO 분석 점수와 개선 제안을 DOCX/PDF로 내보낼 수 있어 클라이언트 보고서에 바로 활용 가능합니다. 대시보드에서 히스토리 추적도 됩니다.',
   },
   {
     q: '어떤 AI 검색엔진에 최적화되나요?',
@@ -369,7 +369,7 @@ export default function PromotionLandingPage() {
                 <p className="text-white text-xs mb-1">ChatGPT에게 물어보기</p>
                 <p className="text-white text-sm font-medium">&ldquo;서울에서 가장 좋은 [당신의 업종] 추천해줘&rdquo;</p>
                 <p className="text-blue-200 text-xs mt-2">
-                  → 여기에 당신의 브랜드가 없다면, AIO/GEO 최적화가 필요합니다.
+                  → 여기에 당신의 브랜드가 없다면, GEO/AIO 최적화가 필요합니다.
                 </p>
               </div>
             </div>
@@ -383,7 +383,7 @@ export default function PromotionLandingPage() {
       <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
         <div className="text-center mb-3">
           <h2 className="text-lg font-extrabold text-gray-900 mb-3">
-            기존 방식 vs AIO/GEO 최적화
+            기존 방식 vs GEO/AIO 최적화
           </h2>
           <p className="text-sm text-gray-500">
             같은 콘텐츠도 AI가 선택하는 구조로 바꾸면 결과가 달라집니다.
@@ -697,7 +697,7 @@ export default function PromotionLandingPage() {
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
               {[
                 { step: '01', title: '콘텐츠 입력', desc: '기존 콘텐츠를 붙여넣거나 PDF/DOCX/PPTX 파일을 업로드', color: 'blue', tags: [] },
-                { step: '02', title: '종합 분석', desc: 'AIO/GEO 점수, E-E-A-T 평가, 키워드 밀도를 종합 분석', color: 'purple', tags: ['AIO 점수', 'GEO 점수', 'E-E-A-T', '키워드'] },
+                { step: '02', title: '종합 분석', desc: 'GEO/AIO 점수, E-E-A-T 평가, 키워드 밀도를 종합 분석', color: 'purple', tags: ['AIO 점수', 'GEO 점수', 'E-E-A-T', '키워드'] },
                 { step: '03', title: '개선 제안', desc: '우선순위별 구체적인 최적화 액션 아이템 제시', color: 'amber', tags: [] },
                 { step: '04', title: 'AI 최적화 변환', desc: '분석 결과 바탕으로 AI가 최적화 콘텐츠를 자동 생성', color: 'rose', tags: ['최적화 콘텐츠', '변경사항 요약', '예상 점수'] },
               ].map((s) => (
@@ -727,7 +727,7 @@ export default function PromotionLandingPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
             {[
-              { title: 'AI 콘텐츠 생성', desc: '블로그, 제품 설명, FAQ, How-to 등 8가지 유형의 AIO/GEO 최적화 콘텐츠를 자동 생성', color: 'emerald', icon: 'M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z' },
+              { title: 'AI 콘텐츠 생성', desc: '블로그, 제품 설명, FAQ, How-to 등 8가지 유형의 GEO/AIO 최적화 콘텐츠를 자동 생성', color: 'emerald', icon: 'M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z' },
               { title: 'A/B 버전 생성', desc: '전문적·친근한·설득적 3가지 톤으로 동시 생성하여 최적의 콘텐츠를 비교 선택', color: 'amber', icon: 'M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z' },
               { title: 'SNS 채널별 변환', desc: '인스타그램, 링크드인, 네이버 블로그, 카드뉴스, 요약본으로 자동 변환', color: 'pink', icon: 'M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z' },
               { title: '키워드 경쟁 분석', desc: '타겟 키워드의 경쟁 난이도, 검색 의도, AI 인용 핵심 요소, 차별화 전략 분석', color: 'teal', icon: 'M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z' },
@@ -763,12 +763,12 @@ export default function PromotionLandingPage() {
                 <span className="text-violet-600">새로운 수익 모델</span>
               </h2>
               <p className="text-gray-600 mb-3 leading-relaxed">
-                기존 블로그 마케팅 서비스에 AIO/GEO 최적화를 추가하면,
+                기존 블로그 마케팅 서비스에 GEO/AIO 최적화를 추가하면,
                 경쟁 에이전시와 차별화되는 프리미엄 서비스를 제공할 수 있습니다.
               </p>
               <ul className="space-y-3">
                 {[
-                  'AIO/GEO 분석 리포트를 클라이언트 보고서에 포함',
+                  'GEO/AIO 분석 리포트를 클라이언트 보고서에 포함',
                   '기존 서비스 + AI 최적화 = 패키지 단가 상승',
                   '대시보드로 클라이언트별 성과 추적 & 리포트',
                   '"AI 검색 대응" 신규 서비스 라인으로 영업 확장',
@@ -790,7 +790,7 @@ export default function PromotionLandingPage() {
                   <span className="text-sm font-bold text-gray-900">월 100만원</span>
                 </div>
                 <div className="flex items-center justify-between py-3 border-b border-gray-100">
-                  <span className="text-sm text-gray-600">+ AIO/GEO 최적화 추가</span>
+                  <span className="text-sm text-gray-600">+ GEO/AIO 최적화 추가</span>
                   <span className="text-sm font-bold text-violet-600">+30~50만원</span>
                 </div>
                 <div className="flex items-center justify-between py-3 border-b border-gray-100">

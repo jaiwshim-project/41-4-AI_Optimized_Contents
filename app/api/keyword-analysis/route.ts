@@ -30,7 +30,7 @@ export async function POST(request: NextRequest) {
       max_tokens: 3000,
       messages: [{
         role: 'user',
-        content: `당신은 AIO/GEO(AI 검색엔진 최적화) 전문가입니다.
+        content: `당신은 GEO/AIO(AI 검색엔진 최적화) 전문가입니다.
 
 키워드: "${keyword}"
 ${industry ? `산업 분야: ${industry}` : ''}

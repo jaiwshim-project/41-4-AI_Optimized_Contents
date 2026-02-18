@@ -8,16 +8,16 @@ import Footer from '@/components/Footer';
 const useCases = [
   {
     title: '블로그 자동 생성',
-    description: '주제만 입력하면 AIO/GEO 최적화된 블로그 글이 자동 생성되고, Google Sheets에 저장됩니다.',
-    flow: ['주제 입력', 'AIO/GEO 최적화 블로그 글 자동 생성', 'Google Sheets 저장'],
+    description: '주제만 입력하면 GEO/AIO 최적화된 블로그 글이 자동 생성되고, Google Sheets에 저장됩니다.',
+    flow: ['주제 입력', 'GEO/AIO 최적화 블로그 글 자동 생성', 'Google Sheets 저장'],
     icon: 'M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z',
     color: 'from-emerald-500 to-teal-600',
     borderHover: 'hover:border-emerald-300',
   },
   {
     title: '콘텐츠 자동 분석',
-    description: '새 글을 작성하면 자동으로 AIO/GEO 점수를 분석하고, 70점 미만이면 자동으로 최적화합니다.',
-    flow: ['새 글 작성', '자동 AIO/GEO 점수 분석', '70점 미만 시 자동 최적화'],
+    description: '새 글을 작성하면 자동으로 GEO/AIO 점수를 분석하고, 70점 미만이면 자동으로 최적화합니다.',
+    flow: ['새 글 작성', '자동 GEO/AIO 점수 분석', '70점 미만 시 자동 최적화'],
     icon: 'M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z',
     color: 'from-blue-500 to-indigo-600',
     borderHover: 'hover:border-blue-300',
@@ -104,8 +104,8 @@ const blueprints = [
 ];
 
 const webhookActions = [
-  { action: 'generate', description: 'AIO/GEO 최적화 콘텐츠 생성', params: 'topic, keyword, contentType' },
-  { action: 'analyze', description: '기존 콘텐츠의 AIO/GEO 점수 분석', params: 'content, keyword' },
+  { action: 'generate', description: 'GEO/AIO 최적화 콘텐츠 생성', params: 'topic, keyword, contentType' },
+  { action: 'analyze', description: '기존 콘텐츠의 GEO/AIO 점수 분석', params: 'content, keyword' },
   { action: 'optimize', description: '분석 결과 기반 콘텐츠 자동 최적화', params: 'content, keyword' },
   { action: 'convert', description: 'SNS 채널별 콘텐츠 변환', params: 'content, channels' },
   { action: 'keyword-analysis', description: '키워드 경쟁 분석 및 전략 제안', params: 'keyword' },

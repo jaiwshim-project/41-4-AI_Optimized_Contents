@@ -116,7 +116,7 @@ export default function ManualPage() {
             <span className="w-8 h-8 bg-gradient-to-br from-emerald-500 to-green-600 text-white rounded-lg flex items-center justify-center text-sm font-bold shadow-sm">3</span>
             <span className="bg-gradient-to-r from-emerald-700 to-green-600 bg-clip-text text-transparent">콘텐츠 생성</span>
           </h2>
-          <p className="text-[11px] text-gray-800 mb-3">AI가 AIO/GEO에 최적화된 콘텐츠를 자동으로 생성합니다. 주제, 카테고리, 톤을 설정하면 맞춤형 콘텐츠가 만들어집니다.</p>
+          <p className="text-[11px] text-gray-800 mb-3">AI가 GEO/AIO에 최적화된 콘텐츠를 자동으로 생성합니다. 주제, 카테고리, 톤을 설정하면 맞춤형 콘텐츠가 만들어집니다.</p>
           <div className="space-y-3">
             <div className="bg-emerald-50 rounded-xl p-4 border border-emerald-100">
               <h3 className="text-[13pt] font-semibold text-emerald-800 mb-2">기본 설정</h3>
@@ -156,7 +156,7 @@ export default function ManualPage() {
           <div className="space-y-3">
             <div className="bg-sky-50 rounded-xl p-4 border border-sky-100">
               <h3 className="text-[13pt] font-semibold text-sky-800 mb-2">종합 개요</h3>
-              <p className="text-[11px] text-gray-800">전체 AIO/GEO 점수와 주요 지표를 한눈에 확인할 수 있는 대시보드입니다. 콘텐츠의 전반적인 AI 최적화 수준을 빠르게 파악할 수 있습니다.</p>
+              <p className="text-[11px] text-gray-800">전체 GEO/AIO 점수와 주요 지표를 한눈에 확인할 수 있는 대시보드입니다. 콘텐츠의 전반적인 AI 최적화 수준을 빠르게 파악할 수 있습니다.</p>
             </div>
             <div className="bg-sky-50 rounded-xl p-4 border border-sky-100">
               <h3 className="text-[13pt] font-semibold text-sky-800 mb-2">AIO 분석 (AI Overview)</h3>
@@ -325,11 +325,11 @@ export default function ManualPage() {
           </div>
         </section>
 
-        {/* ===== AIO/GEO 최적화 실전 가이드 ===== */}
+        {/* ===== GEO/AIO 최적화 실전 가이드 ===== */}
         <div className="relative py-4">
           <div className="absolute inset-0 flex items-center"><div className="w-full border-t-2 border-indigo-200" /></div>
           <div className="relative flex justify-center">
-            <span className="bg-gray-50 px-6 text-sm font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">AIO/GEO 최적화 실전 가이드</span>
+            <span className="bg-gray-50 px-6 text-sm font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">GEO/AIO 최적화 실전 가이드</span>
           </div>
         </div>
 
@@ -339,7 +339,7 @@ export default function ManualPage() {
             <span className="w-8 h-8 bg-gradient-to-br from-rose-500 to-pink-600 text-white rounded-lg flex items-center justify-center text-sm font-bold shadow-sm">8</span>
             <span className="bg-gradient-to-r from-rose-700 to-pink-600 bg-clip-text text-transparent">콘텐츠 구조 재구성법</span>
           </h2>
-          <p className="text-[11px] text-gray-800 mb-3">AI 검색엔진은 잘 구조화된 콘텐츠를 선호합니다. 다음 원칙에 따라 콘텐츠를 재구성하면 AIO/GEO 점수가 크게 향상됩니다.</p>
+          <p className="text-[11px] text-gray-800 mb-3">AI 검색엔진은 잘 구조화된 콘텐츠를 선호합니다. 다음 원칙에 따라 콘텐츠를 재구성하면 GEO/AIO 점수가 크게 향상됩니다.</p>
 
           <div className="space-y-3">
             <div className="bg-rose-50 rounded-xl p-4 border border-rose-100">
@@ -688,7 +688,7 @@ export default function ManualPage() {
             <span className="w-8 h-8 bg-gradient-to-br from-pink-500 to-rose-600 text-white rounded-lg flex items-center justify-center text-sm font-bold shadow-sm">12</span>
             <span className="bg-gradient-to-r from-pink-700 to-rose-600 bg-clip-text text-transparent">AI 인용 최적화 (Citability)</span>
           </h2>
-          <p className="text-[11px] text-gray-800 mb-3">AI가 콘텐츠를 인용하기 쉽게 만드는 것이 AIO/GEO의 최종 목표입니다.</p>
+          <p className="text-[11px] text-gray-800 mb-3">AI가 콘텐츠를 인용하기 쉽게 만드는 것이 GEO/AIO의 최종 목표입니다.</p>
 
           <div className="space-y-3">
             <div className="bg-pink-50 rounded-xl p-4 border border-pink-100">
@@ -930,7 +930,7 @@ export default function ManualPage() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 {[
                   { action: 'generate', desc: 'AI 콘텐츠 생성 - 주제, 카테고리, 톤 지정' },
-                  { action: 'analyze', desc: '콘텐츠 AIO/GEO 분석 - 텍스트와 키워드 전달' },
+                  { action: 'analyze', desc: '콘텐츠 GEO/AIO 분석 - 텍스트와 키워드 전달' },
                 ].map(item => (
                   <div key={item.action} className="bg-indigo-50 rounded-lg p-3 border border-indigo-100">
                     <p className="text-[11pt] font-medium text-indigo-700">{item.action}</p>

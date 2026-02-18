@@ -1078,7 +1078,7 @@ export default function GeneratePage() {
                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                         </svg>
-                        AIO/GEO 최적화 콘텐츠 생성
+                        GEO/AIO 최적화 콘텐츠 생성
                       </>
                     )}
                   </button>
@@ -1111,7 +1111,7 @@ export default function GeneratePage() {
                   <div className="absolute inset-0 rounded-full border-4 border-blue-500 border-t-transparent animate-spin" />
                 </div>
                 <h3 className="text-lg font-semibold text-gray-900 mb-2">AI가 콘텐츠를 생성하고 있습니다</h3>
-                <p className="text-sm text-gray-500">AIO/GEO에 최적화된 고품질 콘텐츠를 작성 중입니다...</p>
+                <p className="text-sm text-gray-500">GEO/AIO에 최적화된 고품질 콘텐츠를 작성 중입니다...</p>
               </div>
             )}
 
@@ -1125,7 +1125,7 @@ export default function GeneratePage() {
                 </div>
                 <h3 className="text-lg font-semibold text-gray-900 mb-2">콘텐츠 유형을 선택하세요</h3>
                 <p className="text-sm text-gray-500 max-w-md mx-auto">
-                  위에서 원하는 콘텐츠 유형을 선택하면 AIO/GEO에 최적화된
+                  위에서 원하는 콘텐츠 유형을 선택하면 GEO/AIO에 최적화된
                   고품질 콘텐츠를 AI가 자동으로 생성합니다.
                 </p>
                 <div className="mt-4 grid grid-cols-2 md:grid-cols-4 gap-2 max-w-lg mx-auto">

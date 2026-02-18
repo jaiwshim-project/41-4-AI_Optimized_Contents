@@ -31,14 +31,14 @@ export async function POST(request: NextRequest) {
       max_tokens: 4000,
       messages: [{
         role: 'user',
-        content: `당신은 AIO/GEO 최적화 콘텐츠 전략가입니다.
+        content: `당신은 GEO/AIO 최적화 콘텐츠 전략가입니다.
 
 주제: "${topic}"
 ${industry ? `산업 분야: ${industry}` : ''}
 ${additionalNotes ? `추가 요구사항: ${additionalNotes}` : ''}
 시리즈 편수: ${episodeCount}편
 
-이 주제로 AIO/GEO 최적화 콘텐츠 시리즈 기획안을 만들어주세요.
+이 주제로 GEO/AIO 최적화 콘텐츠 시리즈 기획안을 만들어주세요.
 
 반드시 아래 JSON 형식으로만 응답하세요:
 {

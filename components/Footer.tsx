@@ -13,7 +13,7 @@ export default function Footer() {
             </div>
             <p className="text-xs text-slate-400 leading-relaxed max-w-sm">
               AI 검색엔진(AI Overview, Generative Engine)에 최적화된 콘텐츠를 분석하고 생성하는 올인원 도구입니다.
-              Claude AI를 활용하여 콘텐츠의 AIO/GEO 점수를 분석하고, 최적화된 콘텐츠를 자동으로 생성합니다.
+              Claude AI를 활용하여 콘텐츠의 GEO/AIO 점수를 분석하고, 최적화된 콘텐츠를 자동으로 생성합니다.
             </p>
           </div>
           <div>
