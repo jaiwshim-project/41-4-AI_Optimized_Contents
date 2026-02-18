@@ -130,12 +130,12 @@ export default function KeywordAnalysisPage() {
 
       <main className="flex-grow container mx-auto px-4 py-6">
         {/* Page Header */}
-        <div className="mb-5 text-center" style={{ backgroundColor: '#F0FFF4' }}>
-          <div className="py-8 px-4 rounded-xl border-2 border-green-200">
-            <h1 className="text-3xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent mb-3">
+        <div className="mb-5 text-center">
+          <div className="py-5 px-4 rounded-xl border-2 border-green-200">
+            <h1 className="text-xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent mb-1">
               키워드 경쟁 분석
             </h1>
-            <p className="text-gray-600 text-lg">
+            <p className="text-gray-600 text-sm">
               AI 시대의 키워드 난이도와 최적화 전략을 분석합니다
             </p>
           </div>
@@ -143,7 +143,7 @@ export default function KeywordAnalysisPage() {
 
         {/* Analysis Form */}
         <div className="max-w-3xl mx-auto mb-5">
-          <form onSubmit={handleAnalyze} className="bg-white rounded-xl shadow-lg p-5 border-2 border-green-200">
+          <form onSubmit={handleAnalyze} className="bg-white rounded-xl shadow-sm p-4 border-2 border-green-200">
             <div className="space-y-3">
               <div>
                 <label htmlFor="keyword" className="block text-sm font-semibold text-gray-700 mb-2">
@@ -183,7 +183,7 @@ export default function KeywordAnalysisPage() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full py-4 bg-gradient-to-r from-green-500 to-emerald-500 text-white font-bold rounded-lg hover:from-green-600 hover:to-emerald-600 transition-all shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full py-3 bg-gradient-to-r from-green-500 to-emerald-500 text-white rounded-lg hover:from-green-600 hover:to-emerald-600 transition-all shadow-sm hover:shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {loading ? (
                   <span className="flex items-center justify-center">
@@ -214,22 +214,22 @@ export default function KeywordAnalysisPage() {
 
         {/* Analysis Results */}
         {result && (
-          <div className="max-w-6xl mx-auto space-y-4">
+          <div className="max-w-5xl mx-auto space-y-3">
             {/* Overview Card */}
-            <div className="bg-white rounded-xl shadow-lg p-5 border-2 border-blue-200">
-              <h2 className="text-xl font-bold text-gray-800 mb-3">분석 개요</h2>
+            <div className="bg-white rounded-xl shadow-sm p-4 border-2 border-blue-200">
+              <h2 className="text-base font-bold text-gray-800 mb-3">분석 개요</h2>
               <div className="grid md:grid-cols-3 gap-3">
                 <div className="p-4 bg-gradient-to-br from-purple-50 to-pink-50 rounded-lg border-2 border-purple-200">
                   <p className="text-sm font-semibold text-gray-600 mb-1">키워드</p>
-                  <p className="text-xl font-bold text-gray-800">{result.keyword}</p>
+                  <p className="text-base font-bold text-gray-800">{result.keyword}</p>
                 </div>
                 <div className="p-4 bg-gradient-to-br from-blue-50 to-cyan-50 rounded-lg border-2 border-blue-200">
                   <p className="text-sm font-semibold text-gray-600 mb-1">검색 의도</p>
-                  <p className="text-xl font-bold text-gray-800">{result.searchIntent}</p>
+                  <p className="text-base font-bold text-gray-800">{result.searchIntent}</p>
                 </div>
                 <div className="p-4 bg-gradient-to-br from-orange-50 to-yellow-50 rounded-lg border-2 border-orange-200">
                   <p className="text-sm font-semibold text-gray-600 mb-2">난이도</p>
-                  <span className={`inline-block px-4 py-2 rounded-lg font-bold text-lg border-2 ${getDifficultyColor(result.difficulty)}`}>
+                  <span className={`inline-block px-4 py-2 rounded-lg font-bold text-base border-2 ${getDifficultyColor(result.difficulty)}`}>
                     {result.difficulty}
                   </span>
                 </div>
@@ -237,8 +237,8 @@ export default function KeywordAnalysisPage() {
             </div>
 
             {/* AI Citation Factors */}
-            <div className="bg-white rounded-xl shadow-lg p-5 border-2 border-indigo-200">
-              <h2 className="text-2xl font-bold text-gray-800 mb-4 flex items-center">
+            <div className="bg-white rounded-xl shadow-sm p-4 border-2 border-indigo-200">
+              <h2 className="text-base font-bold text-gray-800 mb-4 flex items-center">
                 <span className="bg-gradient-to-r from-indigo-500 to-purple-500 text-white px-3 py-1 rounded-lg mr-3">AI</span>
                 AI 인용 요소
               </h2>
@@ -258,8 +258,8 @@ export default function KeywordAnalysisPage() {
             </div>
 
             {/* Must-Cover Topics */}
-            <div className="bg-white rounded-xl shadow-lg p-5 border-2 border-emerald-200">
-              <h2 className="text-xl font-bold text-gray-800 mb-3">필수 다룰 주제</h2>
+            <div className="bg-white rounded-xl shadow-sm p-4 border-2 border-emerald-200">
+              <h2 className="text-base font-bold text-gray-800 mb-3">필수 다룰 주제</h2>
               <ol className="space-y-2">
                 {result.mustCoverTopics.map((topic, index) => (
                   <li key={index} className="flex items-start">
@@ -273,12 +273,12 @@ export default function KeywordAnalysisPage() {
             </div>
 
             {/* Differentiation Strategies */}
-            <div className="bg-white rounded-xl shadow-lg p-5 border-2 border-pink-200">
-              <h2 className="text-xl font-bold text-gray-800 mb-3">차별화 전략</h2>
+            <div className="bg-white rounded-xl shadow-sm p-4 border-2 border-pink-200">
+              <h2 className="text-base font-bold text-gray-800 mb-3">차별화 전략</h2>
               <div className="grid md:grid-cols-2 gap-3">
                 {result.differentiationStrategies.map((strategy, index) => (
                   <div key={index} className="p-4 bg-gradient-to-br from-pink-50 to-rose-50 rounded-lg border-2 border-pink-200">
-                    <h3 className="font-bold text-lg text-gray-800 mb-2">{strategy.strategy}</h3>
+                    <h3 className="font-bold text-sm text-gray-800 mb-2">{strategy.strategy}</h3>
                     <p className="text-gray-700 mb-2">{strategy.description}</p>
                     <div className="mt-3 pt-3 border-t border-pink-200">
                       <p className="text-sm font-semibold text-gray-600 mb-1">구현 방법:</p>
@@ -290,12 +290,12 @@ export default function KeywordAnalysisPage() {
             </div>
 
             {/* Content Recommendations */}
-            <div className="bg-white rounded-xl shadow-lg p-5 border-2 border-amber-200">
-              <h2 className="text-xl font-bold text-gray-800 mb-3">콘텐츠 추천</h2>
+            <div className="bg-white rounded-xl shadow-sm p-4 border-2 border-amber-200">
+              <h2 className="text-base font-bold text-gray-800 mb-3">콘텐츠 추천</h2>
               <div className="space-y-3">
                 {result.contentRecommendations.map((recommendation, index) => (
                   <div key={index} className="p-4 bg-gradient-to-r from-amber-50 to-yellow-50 rounded-lg border-2 border-amber-200">
-                    <h3 className="font-bold text-lg text-gray-800 mb-3">{recommendation.type}</h3>
+                    <h3 className="font-bold text-sm text-gray-800 mb-3">{recommendation.type}</h3>
                     <ul className="space-y-2">
                       {recommendation.recommendations.map((rec, recIndex) => (
                         <li key={recIndex} className="flex items-start">
@@ -310,13 +310,13 @@ export default function KeywordAnalysisPage() {
             </div>
 
             {/* Related Keywords */}
-            <div className="bg-white rounded-xl shadow-lg p-5 border-2 border-cyan-200">
-              <h2 className="text-xl font-bold text-gray-800 mb-3">연관 키워드</h2>
+            <div className="bg-white rounded-xl shadow-sm p-4 border-2 border-cyan-200">
+              <h2 className="text-base font-bold text-gray-800 mb-3">연관 키워드</h2>
               <div className="flex flex-wrap gap-2">
                 {result.relatedKeywords.map((relatedKeyword, index) => (
                   <span
                     key={index}
-                    className="px-4 py-2 bg-gradient-to-r from-cyan-100 to-blue-100 text-cyan-800 rounded-full font-semibold border-2 border-cyan-300 hover:from-cyan-200 hover:to-blue-200 transition-all cursor-pointer"
+                    className="px-3 py-1.5 bg-gradient-to-r from-cyan-100 to-blue-100 text-cyan-800 rounded-full font-semibold border-2 border-cyan-300 hover:from-cyan-200 hover:to-blue-200 transition-all cursor-pointer"
                   >
                     {relatedKeyword}
                   </span>
@@ -325,8 +325,8 @@ export default function KeywordAnalysisPage() {
             </div>
 
             {/* Competitor Insights */}
-            <div className="bg-white rounded-xl shadow-lg p-5 border-2 border-violet-200">
-              <h2 className="text-xl font-bold text-gray-800 mb-3">경쟁사 인사이트</h2>
+            <div className="bg-white rounded-xl shadow-sm p-4 border-2 border-violet-200">
+              <h2 className="text-base font-bold text-gray-800 mb-3">경쟁사 인사이트</h2>
               <div className="space-y-3">
                 {result.competitorInsights.map((insight, index) => (
                   <div key={index} className="p-4 bg-gradient-to-r from-violet-50 to-purple-50 rounded-lg border-2 border-violet-200">

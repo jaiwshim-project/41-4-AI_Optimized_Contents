@@ -121,20 +121,20 @@ export default function SeriesPage() {
     <div className="min-h-screen bg-gradient-to-br from-purple-50 via-pink-50 to-blue-50">
       <Header />
 
-      <main className="container mx-auto px-4 py-8 max-w-6xl">
-        <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold mb-3 bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 bg-clip-text text-transparent">
+      <main className="container mx-auto px-4 py-6 max-w-6xl">
+        <div className="text-center mb-5">
+          <h1 className="text-xl font-bold mb-2 bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 bg-clip-text text-transparent">
             콘텐츠 시리즈 기획
           </h1>
-          <p className="text-lg text-gray-600">
+          <p className="text-sm text-gray-600">
             연속성 있는 콘텐츠 시리즈를 AI가 자동으로 기획합니다
           </p>
         </div>
 
-        <div className="bg-white rounded-xl shadow-2xl p-6 border-2 border-purple-200 mb-5">
+        <div className="bg-white rounded-xl shadow-sm p-4 border-2 border-purple-200 mb-5">
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label htmlFor="topic" className="block text-lg font-semibold text-gray-800 mb-2">
+              <label htmlFor="topic" className="block text-sm font-semibold text-gray-800 mb-2">
                 시리즈 주제 <span className="text-red-500">*</span>
               </label>
               <input
@@ -149,7 +149,7 @@ export default function SeriesPage() {
             </div>
 
             <div>
-              <label htmlFor="industry" className="block text-lg font-semibold text-gray-800 mb-2">
+              <label htmlFor="industry" className="block text-sm font-semibold text-gray-800 mb-2">
                 산업 분야 (선택)
               </label>
               <select
@@ -168,7 +168,7 @@ export default function SeriesPage() {
             </div>
 
             <div>
-              <label htmlFor="episodeCount" className="block text-lg font-semibold text-gray-800 mb-2">
+              <label htmlFor="episodeCount" className="block text-sm font-semibold text-gray-800 mb-2">
                 에피소드 수: <span className="text-purple-600 font-bold">{episodeCount}개</span>
               </label>
               <input
@@ -187,7 +187,7 @@ export default function SeriesPage() {
             </div>
 
             <div>
-              <label htmlFor="additionalNotes" className="block text-lg font-semibold text-gray-800 mb-2">
+              <label htmlFor="additionalNotes" className="block text-sm font-semibold text-gray-800 mb-2">
                 추가 요청사항 (선택)
               </label>
               <textarea
@@ -214,7 +214,7 @@ export default function SeriesPage() {
             <button
               type="submit"
               disabled={isLoading || !topic.trim()}
-              className="w-full py-4 px-6 bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 text-white font-bold text-lg rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+              className="w-full py-3 px-6 bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 text-white font-bold rounded-xl shadow-lg hover:shadow-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isLoading ? (
                 <div className="flex items-center justify-center">
@@ -244,12 +244,12 @@ export default function SeriesPage() {
         </div>
 
         {result && (
-          <div className="space-y-5">
+          <div className="space-y-3">
             {/* Series Overview */}
-            <div className="bg-white rounded-xl shadow-2xl p-6 border-2 border-blue-200">
+            <div className="bg-white rounded-xl shadow-sm p-4 border-2 border-blue-200">
               <div className="mb-4">
-                <h2 className="text-2xl font-bold text-gray-800 mb-3">{result.seriesTitle}</h2>
-                <p className="text-lg text-gray-600 mb-3">{result.description}</p>
+                <h2 className="text-lg font-bold text-gray-800 mb-2">{result.seriesTitle}</h2>
+                <p className="text-sm text-gray-600 mb-2">{result.description}</p>
                 <div className="inline-block">
                   <span className="px-4 py-2 bg-gradient-to-r from-green-400 to-blue-500 text-white font-semibold rounded-full text-sm shadow-md">
                     타겟 독자: {result.targetAudience}
@@ -260,7 +260,7 @@ export default function SeriesPage() {
 
             {/* Episodes */}
             <div className="space-y-3">
-              <h3 className="text-xl font-bold text-gray-800 mb-3">에피소드 목록</h3>
+              <h3 className="text-base font-bold text-gray-800 mb-2">에피소드 목록</h3>
               {result.episodes.map((episode) => {
                 const isExpanded = expandedEpisodes.has(episode.number);
                 return (
@@ -278,9 +278,9 @@ export default function SeriesPage() {
                             <span className="px-3 py-1 bg-gradient-to-r from-indigo-500 to-purple-500 text-white font-bold rounded-lg text-sm">
                               EP {episode.number}
                             </span>
-                            <h4 className="text-xl font-bold text-gray-800">{episode.title}</h4>
+                            <h4 className="text-sm font-bold text-gray-800">{episode.title}</h4>
                           </div>
-                          <p className="text-gray-600 font-medium mb-2">{episode.subtitle}</p>
+                          <p className="text-sm text-gray-600 font-medium mb-2">{episode.subtitle}</p>
                           {!isExpanded && (
                             <p className="text-gray-500 text-sm line-clamp-2">{episode.summary}</p>
                           )}
@@ -301,12 +301,12 @@ export default function SeriesPage() {
                     {isExpanded && (
                       <div className="px-4 pb-4 space-y-3 border-t-2 border-gray-100 pt-3">
                         <div>
-                          <h5 className="font-semibold text-gray-800 mb-2">요약</h5>
+                          <h5 className="font-semibold text-sm text-gray-800 mb-2">요약</h5>
                           <p className="text-gray-600">{episode.summary}</p>
                         </div>
 
                         <div>
-                          <h5 className="font-semibold text-gray-800 mb-2">타겟 키워드</h5>
+                          <h5 className="font-semibold text-sm text-gray-800 mb-2">타겟 키워드</h5>
                           <div className="flex flex-wrap gap-2">
                             {episode.targetKeywords.map((keyword, idx) => (
                               <span
@@ -320,7 +320,7 @@ export default function SeriesPage() {
                         </div>
 
                         <div>
-                          <h5 className="font-semibold text-gray-800 mb-2">주요 포인트</h5>
+                          <h5 className="font-semibold text-sm text-gray-800 mb-2">주요 포인트</h5>
                           <ul className="list-disc list-inside space-y-1 text-gray-600">
                             {episode.keyPoints.map((point, idx) => (
                               <li key={idx}>{point}</li>
@@ -330,7 +330,7 @@ export default function SeriesPage() {
 
                         {episode.internalLinks.length > 0 && (
                           <div>
-                            <h5 className="font-semibold text-gray-800 mb-2">내부 링크 제안</h5>
+                            <h5 className="font-semibold text-sm text-gray-800 mb-2">내부 링크 제안</h5>
                             <ul className="list-disc list-inside space-y-1 text-gray-600">
                               {episode.internalLinks.map((link, idx) => (
                                 <li key={idx}>{link}</li>
@@ -340,13 +340,13 @@ export default function SeriesPage() {
                         )}
 
                         <div>
-                          <h5 className="font-semibold text-gray-800 mb-2">예상 분량</h5>
+                          <h5 className="font-semibold text-sm text-gray-800 mb-2">예상 분량</h5>
                           <p className="text-gray-600">{episode.estimatedLength}</p>
                         </div>
 
                         <button
                           onClick={() => handleCreateContent(episode)}
-                          className="w-full mt-4 py-3 px-6 bg-gradient-to-r from-green-500 to-teal-500 text-white font-bold rounded-lg shadow-md hover:shadow-lg transform hover:scale-105 transition-all"
+                          className="w-full mt-4 py-2.5 px-6 bg-gradient-to-r from-green-500 to-teal-500 text-white font-bold rounded-lg shadow-md hover:shadow-lg transition-all"
                         >
                           이 시리즈로 콘텐츠 생성
                         </button>
@@ -358,8 +358,8 @@ export default function SeriesPage() {
             </div>
 
             {/* Linking Strategy */}
-            <div className="bg-white rounded-xl shadow-2xl p-6 border-2 border-green-200">
-              <h3 className="text-xl font-bold text-gray-800 mb-3 flex items-center gap-2">
+            <div className="bg-white rounded-xl shadow-sm p-4 border-2 border-green-200">
+              <h3 className="text-base font-bold text-gray-800 mb-2 flex items-center gap-2">
                 <span className="text-green-500">🔗</span>
                 링킹 전략
               </h3>
@@ -367,8 +367,8 @@ export default function SeriesPage() {
             </div>
 
             {/* Publishing Schedule */}
-            <div className="bg-white rounded-xl shadow-2xl p-6 border-2 border-orange-200">
-              <h3 className="text-xl font-bold text-gray-800 mb-3 flex items-center gap-2">
+            <div className="bg-white rounded-xl shadow-sm p-4 border-2 border-orange-200">
+              <h3 className="text-base font-bold text-gray-800 mb-2 flex items-center gap-2">
                 <span className="text-orange-500">📅</span>
                 발행 일정
               </h3>
@@ -376,8 +376,8 @@ export default function SeriesPage() {
             </div>
 
             {/* Expected Outcome */}
-            <div className="bg-white rounded-xl shadow-2xl p-6 border-2 border-yellow-200">
-              <h3 className="text-xl font-bold text-gray-800 mb-3 flex items-center gap-2">
+            <div className="bg-white rounded-xl shadow-sm p-4 border-2 border-yellow-200">
+              <h3 className="text-base font-bold text-gray-800 mb-2 flex items-center gap-2">
                 <span className="text-yellow-500">🎯</span>
                 기대 효과
               </h3>

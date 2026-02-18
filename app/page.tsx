@@ -94,13 +94,13 @@ export default function LandingPage() {
             Powered by AI
           </div>
 
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 leading-tight">
+          <h2 className="text-2xl font-bold text-gray-900 mb-3 leading-tight">
             AI 검색엔진에 최적화된<br />
             <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
               콘텐츠를 분석하고 생성하세요
             </span>
           </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto mb-6">
+          <p className="text-sm text-gray-600 max-w-2xl mx-auto mb-6">
             AIO(AI Overview)와 GEO(Generative Engine Optimization) 관점에서
             콘텐츠를 종합 분석하고, AI 검색에 최적화된 고품질 콘텐츠를 자동으로 생성합니다.
           </p>
@@ -183,7 +183,7 @@ export default function LandingPage() {
       {/* 주요 기능 소개 */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         <div className="text-center mb-8">
-          <h3 className="text-2xl font-bold text-gray-900 mb-3">주요 기능</h3>
+          <h3 className="text-lg font-bold text-gray-900 mb-3">주요 기능</h3>
           <p className="text-gray-500">AI 검색엔진 최적화를 위한 올인원 솔루션</p>
         </div>
 
@@ -208,7 +208,7 @@ export default function LandingPage() {
       {/* 콘텐츠 분석 프로세스 */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         <div className="text-center mb-8">
-          <h3 className="text-2xl font-bold text-gray-900 mb-3">콘텐츠 분석 &rarr; AI 최적화 변환</h3>
+          <h3 className="text-lg font-bold text-gray-900 mb-3">콘텐츠 분석 &rarr; AI 최적화 변환</h3>
           <p className="text-gray-500">내 콘텐츠를 입력하면, AI가 분석하고 최적화된 버전까지 자동으로 제공합니다</p>
         </div>
 
@@ -290,7 +290,7 @@ export default function LandingPage() {
       {/* CTA 섹션 */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-10">
         <div className="bg-gradient-to-r from-blue-600 to-indigo-600 rounded-2xl p-6 text-center border-2 border-sky-300 shadow-lg">
-          <h3 className="text-2xl font-bold text-white mb-3">지금 바로 시작하세요</h3>
+          <h3 className="text-lg font-bold text-white mb-3">지금 바로 시작하세요</h3>
           <p className="text-blue-100 mb-5 max-w-lg mx-auto">
             콘텐츠를 입력하면 즉시 AIO/GEO 분석 결과와 구체적인 개선 방안을 확인할 수 있습니다.
           </p>

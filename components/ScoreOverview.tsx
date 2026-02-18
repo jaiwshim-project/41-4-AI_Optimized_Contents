@@ -51,7 +51,7 @@ export default function ScoreOverview({ result }: ScoreOverviewProps) {
                 />
               </svg>
               <div className="absolute inset-0 flex flex-col items-center justify-center">
-                <span className={`text-3xl font-bold ${overallColor}`}>{result.overallScore}</span>
+                <span className={`text-2xl font-bold ${overallColor}`}>{result.overallScore}</span>
                 <span className="text-xs text-gray-400 mt-1">/ 100</span>
               </div>
             </div>
@@ -64,11 +64,11 @@ export default function ScoreOverview({ result }: ScoreOverviewProps) {
 
             <div className="grid grid-cols-2 gap-3 mt-3 w-full">
               <div className="text-center bg-sky-50 rounded-xl p-3 border-2 border-sky-200">
-                <p className="text-2xl font-bold text-sky-600">{result.aio.total}</p>
+                <p className="text-lg font-bold text-sky-600">{result.aio.total}</p>
                 <p className="text-xs font-medium text-sky-500 mt-1">AIO 점수</p>
               </div>
               <div className="text-center bg-violet-50 rounded-xl p-3 border-2 border-violet-200">
-                <p className="text-2xl font-bold text-violet-600">{result.geo.total}</p>
+                <p className="text-lg font-bold text-violet-600">{result.geo.total}</p>
                 <p className="text-xs font-medium text-violet-500 mt-1">GEO 점수</p>
               </div>
             </div>

@@ -77,7 +77,7 @@ export default function PricingPage() {
       <Header />
       <main className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="text-center mb-4">
-          <h2 className="text-2xl font-bold text-gray-900 mb-3">요금제</h2>
+          <h2 className="text-lg font-bold text-gray-900 mb-3">요금제</h2>
           <p className="text-gray-500">필요에 맞는 플랜을 선택하세요</p>
         </div>
 
@@ -93,7 +93,7 @@ export default function PricingPage() {
             </div>
             <div>
               <div className="flex items-center gap-2 mb-1">
-                <h3 className="text-xl font-bold">Grand Open 프로모션</h3>
+                <h3 className="text-base font-bold">Grand Open 프로모션</h3>
                 <span className="px-2.5 py-0.5 bg-yellow-400 text-yellow-900 text-xs font-bold rounded-full">SALE</span>
               </div>
               <p className="text-white/90 text-sm">그랜드 오픈을 기념하여 <strong>최대 51% 할인</strong>된 특별 가격으로 제공합니다</p>
@@ -111,7 +111,7 @@ export default function PricingPage() {
                 </svg>
               </div>
               <div>
-                <h3 className="text-xl font-bold">관리자 계정</h3>
+                <h3 className="text-base font-bold">관리자 계정</h3>
                 <p className="text-white/80 text-sm">모든 기능을 무제한으로 사용할 수 있습니다</p>
               </div>
             </div>
@@ -145,7 +145,7 @@ export default function PricingPage() {
                   </span>
                 )}
 
-                <h3 className="text-lg font-bold text-gray-900 mb-1">{plan.name}</h3>
+                <h3 className="text-sm font-bold text-gray-900 mb-1">{plan.name}</h3>
                 <p className="text-sm text-gray-500 mb-3">{plan.description}</p>
 
                 <div className="mb-4">
@@ -154,7 +154,7 @@ export default function PricingPage() {
                       <span className="text-sm text-gray-400 line-through">{plan.originalPrice}</span>
                     </div>
                   )}
-                  <span className="text-2xl font-bold text-gray-900">{plan.price}</span>
+                  <span className="text-xl font-bold text-gray-900">{plan.price}</span>
                   <span className="text-sm text-gray-500">{plan.period}</span>
                   {plan.originalPrice && (
                     <span className="ml-2 text-xs font-bold text-orange-600 bg-orange-50 px-2 py-0.5 rounded-full border border-orange-200">
@@ -196,7 +196,7 @@ export default function PricingPage() {
         {/* 이번 달 사용량 */}
         {!loading && usage.length > 0 && (
           <div className="bg-white rounded-xl shadow-sm border-2 border-red-400 p-5">
-            <h3 className="text-lg font-bold text-gray-900 mb-3 flex items-center gap-2">
+            <h3 className="text-sm font-bold text-gray-900 mb-3 flex items-center gap-2">
               이번 달 사용량
               <span className={`px-2.5 py-0.5 text-xs font-bold rounded-full border ${
                 currentPlan === 'admin' ? 'bg-red-100 text-red-700 border-red-300'
@@ -216,7 +216,7 @@ export default function PricingPage() {
                   <div key={u.feature} className="bg-gray-50 rounded-xl p-4 border-2 border-violet-300">
                     <p className="text-sm font-medium text-gray-700 mb-2">{u.label}</p>
                     <div className="flex items-end gap-1 mb-2">
-                      <span className={`text-2xl font-bold ${isOver ? 'text-red-600' : 'text-gray-900'}`}>
+                      <span className={`text-xl font-bold ${isOver ? 'text-red-600' : 'text-gray-900'}`}>
                         {u.current}
                       </span>
                       <span className="text-sm text-gray-500 mb-0.5">

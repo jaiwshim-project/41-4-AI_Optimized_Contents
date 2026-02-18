@@ -78,8 +78,8 @@ export default function IntroductionPage() {
                 </svg>
               </div>
               <div>
-                <h1 className="text-[14pt] font-bold text-gray-900">소개 자료</h1>
-                <p className="text-[9pt] text-gray-700">AIO/GEO Optimizer 제품 소개서</p>
+                <h1 className="text-sm font-bold text-gray-900">소개 자료</h1>
+                <p className="text-[10px] text-gray-700">AIO/GEO Optimizer 제품 소개서</p>
               </div>
             </div>
             <div className="flex items-center gap-2">
@@ -138,25 +138,25 @@ export default function IntroductionPage() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
               </svg>
             </div>
-            <h1 className="text-2xl font-extrabold mb-3">AIO/GEO Optimizer</h1>
-            <p className="text-lg font-medium text-white/90 mb-2">AI 검색엔진 콘텐츠 최적화 플랫폼</p>
+            <h1 className="text-lg font-extrabold mb-3">AIO/GEO Optimizer</h1>
+            <p className="text-sm font-medium text-white/90 mb-2">AI 검색엔진 콘텐츠 최적화 플랫폼</p>
             <p className="text-sm text-white/70 max-w-lg mx-auto">AI가 주도하는 검색의 시대, 콘텐츠가 AI에 의해 발견되고 인용되기 위한 전략적 도구</p>
           </section>
 
           {/* 시장 변화: 왜 필요한가? */}
           <section className="bg-white rounded-xl shadow-sm border-2 border-indigo-200 p-6">
-            <h2 className="text-[14pt] font-bold mb-3 flex items-center gap-2">
+            <h2 className="text-sm font-bold mb-3 flex items-center gap-2">
               <span className="w-8 h-8 bg-gradient-to-br from-indigo-500 to-blue-600 text-white rounded-lg flex items-center justify-center text-sm font-bold shadow-sm">1</span>
               <span className="bg-gradient-to-r from-indigo-700 to-blue-600 bg-clip-text text-transparent">왜 AIO/GEO 최적화가 필요한가?</span>
             </h2>
-            <p className="text-[9pt] text-gray-800 mb-3">검색의 패러다임이 바뀌고 있습니다. 이제 사용자는 링크 목록이 아닌 AI가 생성한 답변을 먼저 봅니다.</p>
+            <p className="text-[10px] text-gray-800 mb-3">검색의 패러다임이 바뀌고 있습니다. 이제 사용자는 링크 목록이 아닌 AI가 생성한 답변을 먼저 봅니다.</p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
               <div className="bg-gradient-to-br from-red-50 to-orange-50 rounded-xl p-4 border border-red-200">
                 <div className="flex items-center gap-2 mb-3">
                   <span className="w-8 h-8 bg-red-100 text-red-600 rounded-lg flex items-center justify-center text-lg">&#9888;</span>
-                  <h3 className="text-[11pt] font-semibold text-red-800">기존 방식의 한계</h3>
+                  <h3 className="text-xs font-semibold text-red-800">기존 방식의 한계</h3>
                 </div>
-                <ul className="space-y-2 text-[9pt] text-gray-700">
+                <ul className="space-y-2 text-[10px] text-gray-700">
                   <li className="flex items-start gap-2"><span className="text-red-400">&#10005;</span> 키워드 중심의 기존 SEO만으로는 AI 검색에 노출되지 않음</li>
                   <li className="flex items-start gap-2"><span className="text-red-400">&#10005;</span> 구조화되지 않은 콘텐츠는 AI가 인용하기 어려움</li>
                   <li className="flex items-start gap-2"><span className="text-red-400">&#10005;</span> E-E-A-T 신호가 부족하면 AI가 신뢰하지 않음</li>
@@ -166,9 +166,9 @@ export default function IntroductionPage() {
               <div className="bg-gradient-to-br from-emerald-50 to-green-50 rounded-xl p-4 border border-emerald-200">
                 <div className="flex items-center gap-2 mb-3">
                   <span className="w-8 h-8 bg-emerald-100 text-emerald-600 rounded-lg flex items-center justify-center text-lg">&#10004;</span>
-                  <h3 className="text-[11pt] font-semibold text-emerald-800">AIO/GEO 최적화 후</h3>
+                  <h3 className="text-xs font-semibold text-emerald-800">AIO/GEO 최적화 후</h3>
                 </div>
-                <ul className="space-y-2 text-[9pt] text-gray-700">
+                <ul className="space-y-2 text-[10px] text-gray-700">
                   <li className="flex items-start gap-2"><span className="text-emerald-500">&#10003;</span> AI Overview 상단에 콘텐츠가 인용되어 노출</li>
                   <li className="flex items-start gap-2"><span className="text-emerald-500">&#10003;</span> 구조화된 콘텐츠로 AI 친화도 극대화</li>
                   <li className="flex items-start gap-2"><span className="text-emerald-500">&#10003;</span> 전문성과 신뢰성 내장 콘텐츠로 브랜드 가치 상승</li>
@@ -184,7 +184,7 @@ export default function IntroductionPage() {
 
           {/* 핵심 기능 */}
           <section className="bg-white rounded-xl shadow-sm border-2 border-purple-200 p-6">
-            <h2 className="text-[14pt] font-bold mb-3 flex items-center gap-2">
+            <h2 className="text-sm font-bold mb-3 flex items-center gap-2">
               <span className="w-8 h-8 bg-gradient-to-br from-purple-500 to-violet-600 text-white rounded-lg flex items-center justify-center text-sm font-bold shadow-sm">2</span>
               <span className="bg-gradient-to-r from-purple-700 to-violet-600 bg-clip-text text-transparent">핵심 기능</span>
             </h2>
@@ -206,9 +206,9 @@ export default function IntroductionPage() {
                     <div className={`w-8 h-8 bg-gradient-to-br from-${feat.color}-500 to-${feat.color}-600 rounded-lg flex items-center justify-center`}>
                       <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={feat.icon} /></svg>
                     </div>
-                    <h3 className={`text-[11pt] font-semibold text-${feat.color}-800`}>{feat.title}</h3>
+                    <h3 className={`text-xs font-semibold text-${feat.color}-800`}>{feat.title}</h3>
                   </div>
-                  <p className="text-[9pt] text-gray-700">{feat.desc}</p>
+                  <p className="text-[10px] text-gray-700">{feat.desc}</p>
                 </div>
               ))}
             </div>
@@ -216,37 +216,37 @@ export default function IntroductionPage() {
 
           {/* 고객 가치 */}
           <section className="bg-white rounded-xl shadow-sm border-2 border-rose-200 p-6">
-            <h2 className="text-[14pt] font-bold mb-3 flex items-center gap-2">
+            <h2 className="text-sm font-bold mb-3 flex items-center gap-2">
               <span className="w-8 h-8 bg-gradient-to-br from-rose-500 to-pink-600 text-white rounded-lg flex items-center justify-center text-sm font-bold shadow-sm">3</span>
               <span className="bg-gradient-to-r from-rose-700 to-pink-600 bg-clip-text text-transparent">고객이 얻는 가치</span>
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
               <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-4 border border-blue-200 text-center">
-                <div className="text-2xl font-extrabold text-blue-600 mb-2">&#8593; 트래픽</div>
-                <h3 className="text-[11pt] font-semibold text-blue-800 mb-2">검색 노출 극대화</h3>
-                <p className="text-[9pt] text-gray-700">AI Overview 상위 인용을 통해 자연 검색 유입량을 획기적으로 증가시킵니다.</p>
+                <div className="text-lg font-extrabold text-blue-600 mb-2">&#8593; 트래픽</div>
+                <h3 className="text-xs font-semibold text-blue-800 mb-2">검색 노출 극대화</h3>
+                <p className="text-[10px] text-gray-700">AI Overview 상위 인용을 통해 자연 검색 유입량을 획기적으로 증가시킵니다.</p>
               </div>
               <div className="bg-gradient-to-br from-emerald-50 to-green-50 rounded-xl p-4 border border-emerald-200 text-center">
-                <div className="text-2xl font-extrabold text-emerald-600 mb-2">80%&#8595;</div>
-                <h3 className="text-[11pt] font-semibold text-emerald-800 mb-2">시간 절약</h3>
-                <p className="text-[9pt] text-gray-700">콘텐츠 기획부터 작성, 최적화까지 소요 시간을 최대 80% 단축합니다.</p>
+                <div className="text-lg font-extrabold text-emerald-600 mb-2">80%&#8595;</div>
+                <h3 className="text-xs font-semibold text-emerald-800 mb-2">시간 절약</h3>
+                <p className="text-[10px] text-gray-700">콘텐츠 기획부터 작성, 최적화까지 소요 시간을 최대 80% 단축합니다.</p>
               </div>
               <div className="bg-gradient-to-br from-purple-50 to-violet-50 rounded-xl p-4 border border-purple-200 text-center">
-                <div className="text-2xl font-extrabold text-purple-600 mb-2">&#9733; 신뢰</div>
-                <h3 className="text-[11pt] font-semibold text-purple-800 mb-2">브랜드 권위 강화</h3>
-                <p className="text-[9pt] text-gray-700">E-E-A-T 최적화로 전문적이고 신뢰성 있는 브랜드 이미지를 구축합니다.</p>
+                <div className="text-lg font-extrabold text-purple-600 mb-2">&#9733; 신뢰</div>
+                <h3 className="text-xs font-semibold text-purple-800 mb-2">브랜드 권위 강화</h3>
+                <p className="text-[10px] text-gray-700">E-E-A-T 최적화로 전문적이고 신뢰성 있는 브랜드 이미지를 구축합니다.</p>
               </div>
             </div>
           </section>
 
           {/* 경쟁 차별성 */}
           <section className="bg-white rounded-xl shadow-sm border-2 border-amber-200 p-6">
-            <h2 className="text-[14pt] font-bold mb-3 flex items-center gap-2">
+            <h2 className="text-sm font-bold mb-3 flex items-center gap-2">
               <span className="w-8 h-8 bg-gradient-to-br from-amber-500 to-orange-600 text-white rounded-lg flex items-center justify-center text-sm font-bold shadow-sm">4</span>
               <span className="bg-gradient-to-r from-amber-700 to-orange-600 bg-clip-text text-transparent">경쟁 차별성</span>
             </h2>
             <div className="overflow-hidden rounded-xl border border-amber-200">
-              <table className="w-full text-[9pt]">
+              <table className="w-full text-[10px]">
                 <thead>
                   <tr className="bg-gradient-to-r from-amber-500 to-orange-500 text-white">
                     <th className="px-4 py-3 text-left font-semibold">비교 항목</th>
@@ -280,7 +280,7 @@ export default function IntroductionPage() {
 
           {/* 활용 시나리오 */}
           <section className="bg-white rounded-xl shadow-sm border-2 border-cyan-200 p-6">
-            <h2 className="text-[14pt] font-bold mb-3 flex items-center gap-2">
+            <h2 className="text-sm font-bold mb-3 flex items-center gap-2">
               <span className="w-8 h-8 bg-gradient-to-br from-cyan-500 to-teal-600 text-white rounded-lg flex items-center justify-center text-sm font-bold shadow-sm">5</span>
               <span className="bg-gradient-to-r from-cyan-700 to-teal-600 bg-clip-text text-transparent">활용 시나리오</span>
             </h2>
@@ -292,8 +292,8 @@ export default function IntroductionPage() {
                 { who: '전문직 / 컨설턴트', scenario: '전문 지식을 AI가 인용하기 쉬운 형태로 변환하여 해당 분야의 온라인 권위를 구축합니다.', color: 'amber' },
               ].map((item) => (
                 <div key={item.who} className={`bg-${item.color}-50 rounded-xl p-4 border border-${item.color}-200`}>
-                  <h3 className={`text-[11pt] font-semibold text-${item.color}-800 mb-2`}>{item.who}</h3>
-                  <p className="text-[9pt] text-gray-700">{item.scenario}</p>
+                  <h3 className={`text-xs font-semibold text-${item.color}-800 mb-2`}>{item.who}</h3>
+                  <p className="text-[10px] text-gray-700">{item.scenario}</p>
                 </div>
               ))}
             </div>
@@ -320,8 +320,8 @@ export default function IntroductionPage() {
           <section className="bg-gray-50 rounded-xl p-6 border border-gray-200">
             <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
               <div>
-                <h3 className="text-[11pt] font-bold text-gray-800 mb-2">문의 및 연락처</h3>
-                <div className="space-y-1 text-[9pt] text-gray-600">
+                <h3 className="text-xs font-bold text-gray-800 mb-2">문의 및 연락처</h3>
+                <div className="space-y-1 text-[10px] text-gray-600">
                   <p className="flex items-center gap-2">
                     <svg className="w-3.5 h-3.5 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
                     <span className="font-semibold text-gray-800">심재우 대표</span>
@@ -338,7 +338,7 @@ export default function IntroductionPage() {
               </div>
               <div className="flex items-center gap-2 px-4 py-3 bg-amber-50 border border-amber-200 rounded-xl">
                 <svg className="w-5 h-5 text-amber-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
-                <p className="text-[9pt] text-amber-800 font-medium">
+                <p className="text-[10px] text-amber-800 font-medium">
                   본 서비스는 <span className="font-bold">특허 및 저작권 등록</span>을 통해 법적 보호를 받고 있습니다.
                 </p>
               </div>
