@@ -105,7 +105,7 @@ export default function Header({ showApiKeyButton = false, onToggleApiKey, apiKe
                     className={`px-3 py-1.5 text-xs font-semibold rounded-md transition-all ${
                       isActive
                         ? 'bg-white text-indigo-700 shadow-sm'
-                        : 'text-white/80 hover:text-white hover:bg-white/10'
+                        : 'text-white hover:bg-white/10'
                     }`}
                   >
                     {item.label}
@@ -127,7 +127,7 @@ export default function Header({ showApiKeyButton = false, onToggleApiKey, apiKe
                   className={`px-2.5 py-1.5 text-xs font-medium rounded-md transition-all ${
                     isActive
                       ? 'text-white bg-white/20'
-                      : 'text-white/70 hover:text-white hover:bg-white/10'
+                      : 'text-white hover:bg-white/10'
                   }`}
                 >
                   {item.label}
@@ -270,7 +270,7 @@ export default function Header({ showApiKeyButton = false, onToggleApiKey, apiKe
                   className={`block px-3 py-2 text-sm font-medium rounded-lg transition-all ${
                     isActive
                       ? 'bg-white/20 text-white'
-                      : 'text-white/80 hover:bg-white/10'
+                      : 'text-white hover:bg-white/10'
                   }`}
                 >
                   {item.label}
