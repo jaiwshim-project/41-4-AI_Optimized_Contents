@@ -1,6 +1,7 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
+import html2canvas from 'html2canvas';
 import Link from 'next/link';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -112,6 +113,20 @@ interface Review {
 export default function LandingPage() {
   const [showApiKey, setShowApiKey] = useState(false);
   const [showTesterModal, setShowTesterModal] = useState(false);
+  const testerModalRef = useRef<HTMLDivElement>(null);
+
+  const handleDownloadPng = useCallback(async () => {
+    if (!testerModalRef.current) return;
+    const canvas = await html2canvas(testerModalRef.current, {
+      backgroundColor: '#ffffff',
+      scale: 2,
+      useCORS: true,
+    });
+    const link = document.createElement('a');
+    link.download = 'GEOAIO-테스터모집안내.png';
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+  }, []);
   const [reviews, setReviews] = useState<Review[]>([]);
 
   useEffect(() => {
@@ -532,8 +547,19 @@ export default function LandingPage() {
             className="relative bg-white rounded-2xl shadow-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto"
             onClick={(e) => e.stopPropagation()}
           >
+            <div ref={testerModalRef}>
             {/* 모달 헤더 */}
             <div className="bg-gradient-to-r from-amber-400 via-orange-500 to-red-500 rounded-t-2xl px-6 py-5 text-center relative">
+              {/* PNG 다운로드 버튼 */}
+              <button
+                onClick={handleDownloadPng}
+                className="absolute top-3 right-14 w-8 h-8 flex items-center justify-center rounded-full bg-white/20 hover:bg-white/30 text-white transition-all"
+                title="PNG 다운로드"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                </svg>
+              </button>
               <button
                 onClick={() => setShowTesterModal(false)}
                 className="absolute top-3 right-3 w-8 h-8 flex items-center justify-center rounded-full bg-white/20 hover:bg-white/30 text-white transition-all"
@@ -646,6 +672,7 @@ export default function LandingPage() {
               </div>
             </div>
 
+            </div>
             {/* 모달 푸터 */}
             <div className="px-6 py-4 border-t border-gray-100 flex gap-3">
               <a
