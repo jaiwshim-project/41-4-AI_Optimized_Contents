@@ -86,7 +86,7 @@ export default function Header({ showApiKeyButton = false, onToggleApiKey, apiKe
         <div className="flex items-center justify-between h-12">
           {/* 로고 */}
           <Link href="/" className="flex items-center shrink-0">
-            <Image src="/images/logo-geoaio.png" alt="GEOAIO" width={160} height={32} className="h-8 w-auto rounded" quality={100} priority />
+            <Image src="/images/logo-geoaio.png" alt="GEOAIO" width={320} height={64} className="h-9 w-auto rounded" quality={100} priority unoptimized />
           </Link>
 
           {/* 데스크톱 네비게이션 */}
