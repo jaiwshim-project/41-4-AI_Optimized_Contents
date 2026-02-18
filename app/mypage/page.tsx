@@ -85,7 +85,7 @@ export default function MyPage() {
         ) : (
           <div className="space-y-5">
             {/* 사용자 정보 카드 */}
-            <div className="bg-white rounded-xl shadow-sm border-2 border-indigo-200 overflow-hidden">
+            <div className="bg-white rounded-xl shadow-sm border border-indigo-200 overflow-hidden">
               <div className="px-4 py-3 bg-gradient-to-r from-indigo-50 to-violet-50 border-b border-indigo-100">
                 <div className="flex items-center gap-3">
                   <div className="w-8 h-8 bg-gradient-to-br from-indigo-500 to-violet-600 rounded-lg flex items-center justify-center shadow-sm">
@@ -134,7 +134,7 @@ export default function MyPage() {
             </div>
 
             {/* 이번 달 사용량 */}
-            <div className="bg-white rounded-xl shadow-sm border-2 border-indigo-200 overflow-hidden">
+            <div className="bg-white rounded-xl shadow-sm border border-indigo-200 overflow-hidden">
               <div className="px-4 py-3 bg-gradient-to-r from-indigo-50 to-violet-50 border-b border-indigo-100">
                 <div className="flex items-center gap-3">
                   <div className="w-8 h-8 bg-gradient-to-br from-indigo-500 to-violet-600 rounded-lg flex items-center justify-center shadow-sm">
@@ -185,7 +185,7 @@ export default function MyPage() {
             </div>
 
             {/* 누적 사용량 */}
-            <div className="bg-white rounded-xl shadow-sm border-2 border-indigo-200 overflow-hidden">
+            <div className="bg-white rounded-xl shadow-sm border border-indigo-200 overflow-hidden">
               <div className="px-4 py-3 bg-gradient-to-r from-indigo-50 to-violet-50 border-b border-indigo-100">
                 <div className="flex items-center gap-3">
                   <div className="w-8 h-8 bg-gradient-to-br from-indigo-500 to-violet-600 rounded-lg flex items-center justify-center shadow-sm">
@@ -217,7 +217,7 @@ export default function MyPage() {
             </div>
 
             {/* 빠른 실행 */}
-            <div className="bg-white rounded-xl shadow-sm border-2 border-indigo-200 overflow-hidden">
+            <div className="bg-white rounded-xl shadow-sm border border-indigo-200 overflow-hidden">
               <div className="px-4 py-3 bg-gradient-to-r from-indigo-50 to-violet-50 border-b border-indigo-100">
                 <div className="flex items-center gap-3">
                   <div className="w-8 h-8 bg-gradient-to-br from-indigo-500 to-violet-600 rounded-lg flex items-center justify-center shadow-sm">

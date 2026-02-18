@@ -64,7 +64,7 @@ export default function ResetPasswordPage() {
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-violet-50 flex items-center justify-center px-4">
         <div className="w-full max-w-md">
-          <div className="bg-white rounded-xl shadow-lg border-2 border-emerald-200 p-6 text-center">
+          <div className="bg-white rounded-xl shadow-lg border border-emerald-200 p-6 text-center">
             <div className="w-16 h-16 bg-emerald-100 rounded-xl flex items-center justify-center mx-auto mb-3">
               <svg className="w-8 h-8 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
@@ -95,7 +95,7 @@ export default function ResetPasswordPage() {
           </Link>
         </div>
 
-        <div className="bg-white rounded-xl shadow-lg border-2 border-indigo-200 p-6">
+        <div className="bg-white rounded-xl shadow-lg border border-indigo-200 p-6">
           <h2 className="text-xl font-bold text-gray-900 mb-1">새 비밀번호 설정</h2>
           <p className="text-sm text-gray-500 mb-4">새로운 비밀번호를 입력해주세요</p>
 
@@ -125,7 +125,7 @@ export default function ResetPasswordPage() {
                 required
                 placeholder="최소 6자 이상"
                 minLength={6}
-                className="w-full px-4 py-2.5 border-2 border-gray-200 rounded-xl text-sm focus:outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100 transition-all"
+                className="w-full px-4 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100 transition-all"
               />
             </div>
             <div>
@@ -138,14 +138,14 @@ export default function ResetPasswordPage() {
                 required
                 placeholder="비밀번호를 다시 입력하세요"
                 minLength={6}
-                className="w-full px-4 py-2.5 border-2 border-gray-200 rounded-xl text-sm focus:outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100 transition-all"
+                className="w-full px-4 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100 transition-all"
               />
             </div>
 
             <button
               type="submit"
               disabled={loading || !ready}
-              className="w-full py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold rounded-xl hover:from-blue-700 hover:to-indigo-700 transition-all shadow-md border-2 border-sky-300 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold rounded-xl hover:from-blue-700 hover:to-indigo-700 transition-all shadow-md border border-sky-300 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {loading ? (
                 <span className="inline-flex items-center gap-2">

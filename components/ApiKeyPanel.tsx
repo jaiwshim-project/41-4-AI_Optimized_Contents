@@ -88,20 +88,20 @@ export default function ApiKeyPanel({ visible }: ApiKeyPanelProps) {
               value={geminiKeyInput}
               onChange={(e) => setGeminiKeyInput(e.target.value)}
               placeholder={hasGeminiKey ? '새 키를 입력하면 기존 키가 교체됩니다' : 'AIza... Gemini API 키를 입력하세요'}
-              className="flex-1 px-4 py-2.5 border-2 border-green-300 rounded-xl text-sm bg-white focus:outline-none focus:ring-2 focus:ring-green-400 focus:border-transparent placeholder-gray-400"
+              className="flex-1 px-4 py-2.5 border border-green-300 rounded-xl text-sm bg-white focus:outline-none focus:ring-2 focus:ring-green-400 focus:border-transparent placeholder-gray-400"
               onKeyDown={(e) => e.key === 'Enter' && handleSaveGeminiKey()}
             />
             <button
               onClick={handleSaveGeminiKey}
               disabled={isSavingGemini || !geminiKeyInput.trim()}
-              className="px-5 py-2.5 bg-green-600 text-white text-sm font-medium rounded-xl hover:bg-green-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap border-2 border-green-300"
+              className="px-5 py-2.5 bg-green-600 text-white text-sm font-medium rounded-xl hover:bg-green-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap border border-green-300"
             >
               {isSavingGemini ? '저장 중...' : '저장'}
             </button>
             {hasGeminiKey && (
               <button
                 onClick={handleDeleteGeminiKey}
-                className="px-4 py-2.5 bg-white border-2 border-red-300 text-red-600 text-sm font-medium rounded-xl hover:bg-red-50 transition-all whitespace-nowrap"
+                className="px-4 py-2.5 bg-white border border-red-300 text-red-600 text-sm font-medium rounded-xl hover:bg-red-50 transition-all whitespace-nowrap"
               >
                 삭제
               </button>
@@ -110,7 +110,7 @@ export default function ApiKeyPanel({ visible }: ApiKeyPanelProps) {
               href="https://aistudio.google.com/apikey"
               target="_blank"
               rel="noopener noreferrer"
-              className="px-4 py-2.5 bg-white border-2 border-green-300 text-green-700 text-sm font-medium rounded-xl hover:bg-green-100 transition-all whitespace-nowrap inline-flex items-center gap-1.5"
+              className="px-4 py-2.5 bg-white border border-green-300 text-green-700 text-sm font-medium rounded-xl hover:bg-green-100 transition-all whitespace-nowrap inline-flex items-center gap-1.5"
             >
               🍌 키 발급
               <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

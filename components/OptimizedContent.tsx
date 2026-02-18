@@ -95,7 +95,7 @@ export default function OptimizedContent({ result, originalContent, targetKeywor
   // 최적화 전 초기 화면
   if (!optimized && !isOptimizing) {
     return (
-      <div className="bg-emerald-50 rounded-2xl shadow-sm border-2 border-emerald-200 p-6">
+      <div className="bg-emerald-50 rounded-2xl shadow-sm border border-emerald-200 p-6">
         <div className="text-center max-w-lg mx-auto">
           <div className="w-16 h-16 bg-gradient-to-br from-emerald-100 to-teal-100 rounded-xl flex items-center justify-center mx-auto mb-3">
             <svg className="w-8 h-8 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -221,7 +221,7 @@ export default function OptimizedContent({ result, originalContent, targetKeywor
   // 변환 중 로딩
   if (isOptimizing) {
     return (
-      <div className="bg-emerald-50 rounded-2xl shadow-sm border-2 border-emerald-200 p-8">
+      <div className="bg-emerald-50 rounded-2xl shadow-sm border border-emerald-200 p-8">
         <div className="text-center">
           <div className="w-16 h-16 mx-auto mb-3 relative">
             <div className="absolute inset-0 rounded-full border-4 border-emerald-100" />
@@ -246,7 +246,7 @@ export default function OptimizedContent({ result, originalContent, targetKeywor
   return (
     <div className="space-y-3">
       {/* 예상 점수 향상 */}
-      <div className="bg-emerald-50 rounded-2xl shadow-sm border-2 border-emerald-200 p-5">
+      <div className="bg-emerald-50 rounded-2xl shadow-sm border border-emerald-200 p-5">
         <h2 className="text-lg font-semibold text-gray-900 mb-3">예상 점수 변화</h2>
         <div className="grid grid-cols-3 gap-3">
           {([
@@ -256,7 +256,7 @@ export default function OptimizedContent({ result, originalContent, targetKeywor
           ] as const).map(({ label, before, after, color }) => {
             const diff = after - before;
             return (
-              <div key={label} className="text-center p-4 bg-gray-50 rounded-xl border-2 border-indigo-200">
+              <div key={label} className="text-center p-4 bg-gray-50 rounded-xl border border-indigo-200">
                 <p className="text-xs text-gray-500 mb-2">{label}</p>
                 <div className="flex items-center justify-center gap-2">
                   <span className="text-lg text-gray-400">{before}</span>
@@ -277,7 +277,7 @@ export default function OptimizedContent({ result, originalContent, targetKeywor
       </div>
 
       {/* 변경사항 요약 */}
-      <div className="bg-emerald-50 rounded-2xl shadow-sm border-2 border-emerald-200 p-5">
+      <div className="bg-emerald-50 rounded-2xl shadow-sm border border-emerald-200 p-5">
         <h2 className="text-lg font-semibold text-gray-900 mb-2">변경사항 요약</h2>
         <div className="space-y-2">
           {optimized!.changeSummary.map((change, i) => (
@@ -292,12 +292,12 @@ export default function OptimizedContent({ result, originalContent, targetKeywor
       </div>
 
       {/* 최적화된 콘텐츠 */}
-      <div className="bg-emerald-50 rounded-2xl shadow-sm border-2 border-emerald-200 p-5">
+      <div className="bg-emerald-50 rounded-2xl shadow-sm border border-emerald-200 p-5">
         <div className="flex items-center justify-between mb-3">
           <h2 className="text-lg font-semibold text-gray-900">최적화된 콘텐츠</h2>
           <div className="flex items-center gap-2">
             {/* 보기 모드 토글 */}
-            <div className="bg-gray-100 rounded-lg p-0.5 flex border-2 border-emerald-300">
+            <div className="bg-gray-100 rounded-lg p-0.5 flex border border-emerald-300">
               <button
                 onClick={() => setViewMode('optimized')}
                 className={`px-3 py-1.5 text-xs font-medium rounded-md transition-all ${
@@ -318,7 +318,7 @@ export default function OptimizedContent({ result, originalContent, targetKeywor
             {/* 복사 버튼 */}
             <button
               onClick={handleCopy}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-gray-600 bg-gray-100 rounded-lg hover:bg-gray-200 transition-all border-2 border-sky-300"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-gray-600 bg-gray-100 rounded-lg hover:bg-gray-200 transition-all border border-sky-300"
             >
               {copied ? (
                 <>
@@ -373,7 +373,7 @@ export default function OptimizedContent({ result, originalContent, targetKeywor
       <div className="text-center">
         <button
           onClick={handleOptimize}
-          className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-emerald-600 bg-emerald-50 rounded-xl hover:bg-emerald-100 transition-all border-2 border-emerald-300"
+          className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-emerald-600 bg-emerald-50 rounded-xl hover:bg-emerald-100 transition-all border border-emerald-300"
         >
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />

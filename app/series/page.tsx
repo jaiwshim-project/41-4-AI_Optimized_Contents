@@ -131,7 +131,7 @@ export default function SeriesPage() {
           </p>
         </div>
 
-        <div className="bg-white rounded-xl shadow-sm p-4 border-2 border-purple-200 mb-5">
+        <div className="bg-white rounded-xl shadow-sm p-4 border border-purple-200 mb-5">
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <label htmlFor="topic" className="block text-sm font-semibold text-gray-800 mb-2">
@@ -143,7 +143,7 @@ export default function SeriesPage() {
                 value={topic}
                 onChange={(e) => setTopic(e.target.value)}
                 placeholder="예: 초보자를 위한 SEO 가이드, 디지털 마케팅 전략 등"
-                className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-purple-500 transition-colors"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-purple-500 transition-colors"
                 required
               />
             </div>
@@ -156,7 +156,7 @@ export default function SeriesPage() {
                 id="industry"
                 value={industry}
                 onChange={(e) => setIndustry(e.target.value)}
-                className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-purple-500 transition-colors bg-white"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-purple-500 transition-colors bg-white"
               >
                 <option value="">선택하지 않음</option>
                 {INDUSTRY_OPTIONS.map((option) => (
@@ -196,12 +196,12 @@ export default function SeriesPage() {
                 onChange={(e) => setAdditionalNotes(e.target.value)}
                 placeholder="타겟 독자층, 특정 키워드, 스타일 등 추가로 고려할 사항을 입력하세요"
                 rows={4}
-                className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-purple-500 transition-colors resize-none"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-purple-500 transition-colors resize-none"
               />
             </div>
 
             {error && (
-              <div className="p-4 bg-red-50 border-2 border-red-300 rounded-lg">
+              <div className="p-4 bg-red-50 border border-red-300 rounded-lg">
                 <p className="text-red-700 font-semibold">{error}</p>
                 {error.includes('소진했습니다') && (
                   <Link href="/pricing" className="inline-block mt-2 text-sm font-semibold text-indigo-600 hover:text-indigo-800 underline">
@@ -246,7 +246,7 @@ export default function SeriesPage() {
         {result && (
           <div className="space-y-3">
             {/* Series Overview */}
-            <div className="bg-white rounded-xl shadow-sm p-4 border-2 border-blue-200">
+            <div className="bg-white rounded-xl shadow-sm p-4 border border-blue-200">
               <div className="mb-4">
                 <h2 className="text-lg font-bold text-gray-800 mb-2">{result.seriesTitle}</h2>
                 <p className="text-sm text-gray-600 mb-2">{result.description}</p>
@@ -266,7 +266,7 @@ export default function SeriesPage() {
                 return (
                   <div
                     key={episode.number}
-                    className="bg-white rounded-xl shadow-lg border-2 border-indigo-200 overflow-hidden transition-all hover:shadow-xl"
+                    className="bg-white rounded-xl shadow-lg border border-indigo-200 overflow-hidden transition-all hover:shadow-xl"
                   >
                     <div
                       onClick={() => toggleEpisode(episode.number)}
@@ -358,7 +358,7 @@ export default function SeriesPage() {
             </div>
 
             {/* Linking Strategy */}
-            <div className="bg-white rounded-xl shadow-sm p-4 border-2 border-green-200">
+            <div className="bg-white rounded-xl shadow-sm p-4 border border-green-200">
               <h3 className="text-base font-bold text-gray-800 mb-2 flex items-center gap-2">
                 <span className="text-green-500">🔗</span>
                 링킹 전략
@@ -367,7 +367,7 @@ export default function SeriesPage() {
             </div>
 
             {/* Publishing Schedule */}
-            <div className="bg-white rounded-xl shadow-sm p-4 border-2 border-orange-200">
+            <div className="bg-white rounded-xl shadow-sm p-4 border border-orange-200">
               <h3 className="text-base font-bold text-gray-800 mb-2 flex items-center gap-2">
                 <span className="text-orange-500">📅</span>
                 발행 일정
@@ -376,7 +376,7 @@ export default function SeriesPage() {
             </div>
 
             {/* Expected Outcome */}
-            <div className="bg-white rounded-xl shadow-sm p-4 border-2 border-yellow-200">
+            <div className="bg-white rounded-xl shadow-sm p-4 border border-yellow-200">
               <h3 className="text-base font-bold text-gray-800 mb-2 flex items-center gap-2">
                 <span className="text-yellow-500">🎯</span>
                 기대 효과

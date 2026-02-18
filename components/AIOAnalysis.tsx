@@ -9,7 +9,7 @@ interface AIOAnalysisProps {
 
 export default function AIOAnalysis({ aio }: AIOAnalysisProps) {
   return (
-    <div className="bg-white rounded-2xl shadow-sm border-2 border-sky-200 overflow-hidden">
+    <div className="bg-white rounded-2xl shadow-sm border border-sky-200 overflow-hidden">
       {/* 헤더 */}
       <div className="px-4 py-3 bg-gradient-to-r from-sky-50 to-blue-50 border-b border-sky-100">
         <div className="flex items-center gap-3">
@@ -63,7 +63,7 @@ export default function AIOAnalysis({ aio }: AIOAnalysisProps) {
           <div className="space-y-2">
             <h3 className="text-xs font-bold text-sky-600 uppercase tracking-wide">상세 분석</h3>
             {aio.details.map((detail, i) => (
-              <div key={i} className="bg-sky-50/50 border-2 border-sky-100 rounded-xl p-3 hover:border-sky-300 transition-all duration-200">
+              <div key={i} className="bg-sky-50/50 border border-sky-100 rounded-xl p-3 hover:border-sky-300 transition-all duration-200">
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-sm font-semibold text-gray-900">{detail.category}</span>
                   <span className={`text-xs font-bold px-2.5 py-1 rounded-full ${detail.score >= 70 ? 'bg-emerald-100 text-emerald-700 border border-emerald-200' : detail.score >= 40 ? 'bg-amber-100 text-amber-700 border border-amber-200' : 'bg-red-100 text-red-700 border border-red-200'}`}>

@@ -8,7 +8,7 @@ interface KeywordAnalysisProps {
 
 export default function KeywordAnalysis({ keywords }: KeywordAnalysisProps) {
   return (
-    <div className="bg-white rounded-2xl shadow-sm border-2 border-teal-200 overflow-hidden">
+    <div className="bg-white rounded-2xl shadow-sm border border-teal-200 overflow-hidden">
       {/* 헤더 */}
       <div className="px-4 py-3 bg-gradient-to-r from-teal-50 to-emerald-50 border-b border-teal-100">
         <div className="flex items-center gap-3">

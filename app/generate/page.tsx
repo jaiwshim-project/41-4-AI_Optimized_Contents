@@ -475,11 +475,11 @@ export default function GeneratePage() {
         {(
           <>
             {/* 히어로 스텝 가이드 */}
-            <div className="bg-white rounded-xl shadow-sm border-2 border-indigo-100 p-4 overflow-hidden relative">
+            <div className="bg-white rounded-xl shadow-sm border border-indigo-100 p-4 overflow-hidden relative">
               <div className="absolute inset-0 bg-gradient-to-r from-teal-50/40 via-indigo-50/40 to-purple-50/40 pointer-events-none" />
               <div className="relative flex items-center justify-center gap-0">
                 {/* 1단계 */}
-                <div className={`flex items-center gap-3 px-5 py-3 rounded-xl transition-all duration-300 ${showBusinessInfo ? 'bg-gradient-to-r from-teal-500 to-emerald-500 text-white shadow-lg shadow-teal-200 scale-105' : 'bg-teal-50 text-teal-700 border-2 border-teal-200'}`}>
+                <div className={`flex items-center gap-3 px-5 py-3 rounded-xl transition-all duration-300 ${showBusinessInfo ? 'bg-gradient-to-r from-teal-500 to-emerald-500 text-white shadow-lg shadow-teal-200 scale-105' : 'bg-teal-50 text-teal-700 border border-teal-200'}`}>
                   <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold shrink-0 ${showBusinessInfo ? 'bg-white/20 text-white' : 'bg-teal-200 text-teal-700'}`}>1</div>
                   <div className="text-left">
                     <p className={`text-xs font-bold ${showBusinessInfo ? 'text-white/80' : 'text-teal-500'}`}>STEP 1</p>
@@ -499,7 +499,7 @@ export default function GeneratePage() {
                 </div>
 
                 {/* 2단계 */}
-                <div className={`flex items-center gap-3 px-5 py-3 rounded-xl transition-all duration-300 ${selectedCategory ? 'bg-gradient-to-r from-indigo-500 to-purple-500 text-white shadow-lg shadow-indigo-200 scale-105' : 'bg-indigo-50 text-indigo-700 border-2 border-indigo-200'}`}>
+                <div className={`flex items-center gap-3 px-5 py-3 rounded-xl transition-all duration-300 ${selectedCategory ? 'bg-gradient-to-r from-indigo-500 to-purple-500 text-white shadow-lg shadow-indigo-200 scale-105' : 'bg-indigo-50 text-indigo-700 border border-indigo-200'}`}>
                   <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold shrink-0 ${selectedCategory ? 'bg-white/20 text-white' : 'bg-indigo-200 text-indigo-700'}`}>2</div>
                   <div className="text-left">
                     <p className={`text-xs font-bold ${selectedCategory ? 'text-white/80' : 'text-indigo-500'}`}>STEP 2</p>
@@ -519,7 +519,7 @@ export default function GeneratePage() {
                 </div>
 
                 {/* 3단계 */}
-                <div className={`flex items-center gap-3 px-5 py-3 rounded-xl transition-all duration-300 ${isGenerating ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg shadow-purple-200 scale-105 animate-pulse' : 'bg-purple-50 text-purple-700 border-2 border-purple-200'}`}>
+                <div className={`flex items-center gap-3 px-5 py-3 rounded-xl transition-all duration-300 ${isGenerating ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg shadow-purple-200 scale-105 animate-pulse' : 'bg-purple-50 text-purple-700 border border-purple-200'}`}>
                   <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold shrink-0 ${isGenerating ? 'bg-white/20 text-white' : 'bg-purple-200 text-purple-700'}`}>3</div>
                   <div className="text-left">
                     <p className={`text-xs font-bold ${isGenerating ? 'text-white/80' : 'text-purple-500'}`}>STEP 3</p>
@@ -533,7 +533,7 @@ export default function GeneratePage() {
             </div>
 
             {/* 비즈니스 정보 입력 (접이식) */}
-            <div className="bg-white rounded-2xl shadow-sm border-2 border-teal-200 overflow-hidden">
+            <div className="bg-white rounded-2xl shadow-sm border border-teal-200 overflow-hidden">
               <button
                 onClick={() => setShowBusinessInfo(!showBusinessInfo)}
                 className="w-full flex items-center justify-between px-6 py-4 hover:bg-teal-50 transition-all duration-200"
@@ -577,7 +577,7 @@ export default function GeneratePage() {
                       <button
                         type="button"
                         onClick={() => setShowProfileList(!showProfileList)}
-                        className={`inline-flex items-center gap-2 px-4 py-2.5 text-sm font-semibold rounded-xl transition-all duration-200 border-2 hover:shadow-lg hover:scale-105 ${
+                        className={`inline-flex items-center gap-2 px-4 py-2.5 text-sm font-semibold rounded-xl transition-all duration-200 border hover:shadow-lg hover:scale-105 ${
                           showProfileList
                             ? 'bg-gradient-to-r from-indigo-500 to-violet-500 text-white border-indigo-300 shadow-md'
                             : 'bg-white text-indigo-700 border-indigo-300 hover:bg-indigo-50'
@@ -597,7 +597,7 @@ export default function GeneratePage() {
                       {/* 프로필 모달 */}
                       {showProfileList && (
                         <div className="fixed inset-0 bg-black/30 z-40 flex items-center justify-center p-4" onClick={() => setShowProfileList(false)}>
-                          <div ref={profileListRef} onClick={e => e.stopPropagation()} className="w-full max-w-2xl bg-white rounded-2xl shadow-2xl border-2 border-indigo-200 overflow-hidden">
+                          <div ref={profileListRef} onClick={e => e.stopPropagation()} className="w-full max-w-2xl bg-white rounded-2xl shadow-2xl border border-indigo-200 overflow-hidden">
                             {/* 헤더 */}
                             <div className="px-6 py-4 bg-gradient-to-r from-indigo-50 to-violet-50 border-b border-indigo-100 flex items-center justify-between">
                               <div className="flex items-center gap-3">
@@ -699,7 +699,7 @@ export default function GeneratePage() {
                     <button
                       type="button"
                       onClick={saveAsProfile}
-                      className="inline-flex items-center gap-2 px-4 py-2.5 text-sm font-semibold rounded-xl transition-all duration-200 border-2 bg-white text-teal-700 border-teal-300 hover:bg-teal-50 hover:shadow-lg hover:scale-105"
+                      className="inline-flex items-center gap-2 px-4 py-2.5 text-sm font-semibold rounded-xl transition-all duration-200 border bg-white text-teal-700 border-teal-300 hover:bg-teal-50 hover:shadow-lg hover:scale-105"
                     >
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
@@ -722,10 +722,10 @@ export default function GeneratePage() {
                       회사 정보
                     </h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                      <input type="text" value={businessInfo.companyName} onChange={e => updateBiz('companyName', e.target.value)} placeholder="회사명 (예: ○○주식회사)" className="px-4 py-2.5 bg-teal-50/50 border-2 border-teal-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-400 focus:border-transparent placeholder-teal-400/60" />
-                      <input type="text" value={businessInfo.location} onChange={e => updateBiz('location', e.target.value)} placeholder="지역/위치 (예: 서울 강남구)" className="px-4 py-2.5 bg-teal-50/50 border-2 border-teal-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-400 focus:border-transparent placeholder-teal-400/60" />
+                      <input type="text" value={businessInfo.companyName} onChange={e => updateBiz('companyName', e.target.value)} placeholder="회사명 (예: ○○주식회사)" className="px-4 py-2.5 bg-teal-50/50 border border-teal-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-400 focus:border-transparent placeholder-teal-400/60" />
+                      <input type="text" value={businessInfo.location} onChange={e => updateBiz('location', e.target.value)} placeholder="지역/위치 (예: 서울 강남구)" className="px-4 py-2.5 bg-teal-50/50 border border-teal-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-400 focus:border-transparent placeholder-teal-400/60" />
                     </div>
-                    <input type="text" value={businessInfo.website} onChange={e => updateBiz('website', e.target.value)} placeholder="웹사이트/SNS (예: www.example.com)" className="mt-3 w-full px-4 py-2.5 bg-teal-50/50 border-2 border-teal-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-400 focus:border-transparent placeholder-teal-400/60" />
+                    <input type="text" value={businessInfo.website} onChange={e => updateBiz('website', e.target.value)} placeholder="웹사이트/SNS (예: www.example.com)" className="mt-3 w-full px-4 py-2.5 bg-teal-50/50 border border-teal-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-400 focus:border-transparent placeholder-teal-400/60" />
                   </div>
 
                   {/* 브랜드 정보 */}
@@ -734,7 +734,7 @@ export default function GeneratePage() {
                       <span className="w-6 h-6 bg-gradient-to-br from-cyan-500 to-teal-600 rounded-lg text-center text-xs leading-6 font-bold text-white shadow-sm">✦</span>
                       브랜드 정보
                     </h3>
-                    <input type="text" value={businessInfo.brandName} onChange={e => updateBiz('brandName', e.target.value)} placeholder="브랜드명 (예: 브랜드 이름, 서비스명)" className="w-full px-4 py-2.5 bg-cyan-50/50 border-2 border-cyan-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-transparent placeholder-cyan-400/60" />
+                    <input type="text" value={businessInfo.brandName} onChange={e => updateBiz('brandName', e.target.value)} placeholder="브랜드명 (예: 브랜드 이름, 서비스명)" className="w-full px-4 py-2.5 bg-cyan-50/50 border border-cyan-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-transparent placeholder-cyan-400/60" />
                   </div>
 
                   {/* 산업 분야 */}
@@ -752,7 +752,7 @@ export default function GeneratePage() {
                             key={ind.value}
                             type="button"
                             onClick={() => updateBiz('industry', ind.value)}
-                            className={`flex flex-col items-center justify-center gap-1 px-2 py-3 rounded-xl border-2 transition-all duration-200 hover:shadow-md hover:scale-105 ${
+                            className={`flex flex-col items-center justify-center gap-1 px-2 py-3 rounded-xl border transition-all duration-200 hover:shadow-md hover:scale-105 ${
                               businessInfo.industry === ind.value
                                 ? 'bg-gradient-to-br from-amber-500 to-orange-500 text-white border-amber-300 shadow-md'
                                 : 'bg-white text-gray-700 border-gray-200 hover:border-amber-400 hover:bg-amber-50/50'
@@ -765,7 +765,7 @@ export default function GeneratePage() {
                       })}
                     </div>
                     {businessInfo.industry === '기타' && (
-                      <input type="text" value={businessInfo.customIndustry} onChange={e => updateBiz('customIndustry', e.target.value)} placeholder="산업 분야를 직접 입력" className="mt-3 w-full px-4 py-2.5 bg-amber-50/50 border-2 border-amber-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent placeholder-amber-400/60" />
+                      <input type="text" value={businessInfo.customIndustry} onChange={e => updateBiz('customIndustry', e.target.value)} placeholder="산업 분야를 직접 입력" className="mt-3 w-full px-4 py-2.5 bg-amber-50/50 border border-amber-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent placeholder-amber-400/60" />
                     )}
                   </div>
 
@@ -775,11 +775,11 @@ export default function GeneratePage() {
                       <span className="w-6 h-6 bg-gradient-to-br from-sky-500 to-blue-600 rounded-lg text-center text-xs leading-6 font-bold text-white shadow-sm">3</span>
                       제품/서비스 정보
                     </h3>
-                    <input type="text" value={businessInfo.mainProduct} onChange={e => updateBiz('mainProduct', e.target.value)} placeholder="주요 제품/서비스 (예: 프리미엄 커피, 영어 회화 수업)" className="w-full px-4 py-2.5 bg-sky-50/50 border-2 border-sky-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-sky-400 focus:border-transparent placeholder-sky-400/60" />
-                    <textarea value={businessInfo.productDescription} onChange={e => updateBiz('productDescription', e.target.value)} placeholder="제품/서비스 상세 설명 (특징, 장점, 차별점)" rows={2} className="mt-3 w-full px-4 py-2.5 bg-sky-50/50 border-2 border-sky-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-sky-400 focus:border-transparent resize-none placeholder-sky-400/60" />
+                    <input type="text" value={businessInfo.mainProduct} onChange={e => updateBiz('mainProduct', e.target.value)} placeholder="주요 제품/서비스 (예: 프리미엄 커피, 영어 회화 수업)" className="w-full px-4 py-2.5 bg-sky-50/50 border border-sky-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-sky-400 focus:border-transparent placeholder-sky-400/60" />
+                    <textarea value={businessInfo.productDescription} onChange={e => updateBiz('productDescription', e.target.value)} placeholder="제품/서비스 상세 설명 (특징, 장점, 차별점)" rows={2} className="mt-3 w-full px-4 py-2.5 bg-sky-50/50 border border-sky-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-sky-400 focus:border-transparent resize-none placeholder-sky-400/60" />
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-3">
-                      <input type="text" value={businessInfo.priceRange} onChange={e => updateBiz('priceRange', e.target.value)} placeholder="가격대 (예: 5,000원~15,000원)" className="px-4 py-2.5 bg-sky-50/50 border-2 border-sky-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-sky-400 focus:border-transparent placeholder-sky-400/60" />
-                      <input type="text" value={businessInfo.mainBenefit} onChange={e => updateBiz('mainBenefit', e.target.value)} placeholder="주요 혜택 (예: 30% 할인, 무료 배송)" className="px-4 py-2.5 bg-sky-50/50 border-2 border-sky-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-sky-400 focus:border-transparent placeholder-sky-400/60" />
+                      <input type="text" value={businessInfo.priceRange} onChange={e => updateBiz('priceRange', e.target.value)} placeholder="가격대 (예: 5,000원~15,000원)" className="px-4 py-2.5 bg-sky-50/50 border border-sky-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-sky-400 focus:border-transparent placeholder-sky-400/60" />
+                      <input type="text" value={businessInfo.mainBenefit} onChange={e => updateBiz('mainBenefit', e.target.value)} placeholder="주요 혜택 (예: 30% 할인, 무료 배송)" className="px-4 py-2.5 bg-sky-50/50 border border-sky-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-sky-400 focus:border-transparent placeholder-sky-400/60" />
                     </div>
                   </div>
 
@@ -789,7 +789,7 @@ export default function GeneratePage() {
                       <span className="w-6 h-6 bg-gradient-to-br from-violet-500 to-purple-600 rounded-lg text-center text-xs leading-6 font-bold text-white shadow-sm">4</span>
                       타겟 고객
                     </h3>
-                    <input type="text" value={businessInfo.targetAudience} onChange={e => updateBiz('targetAudience', e.target.value)} placeholder="주요 타겟 고객층 (예: 20-30대 직장인)" className="w-full px-4 py-2.5 bg-violet-50/50 border-2 border-violet-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-violet-400 focus:border-transparent placeholder-violet-400/60" />
+                    <input type="text" value={businessInfo.targetAudience} onChange={e => updateBiz('targetAudience', e.target.value)} placeholder="주요 타겟 고객층 (예: 20-30대 직장인)" className="w-full px-4 py-2.5 bg-violet-50/50 border border-violet-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-violet-400 focus:border-transparent placeholder-violet-400/60" />
                     <div className="flex flex-wrap gap-1.5 mt-2">
                       {['10대 청소년', '20대 대학생', '20-30대 직장인', '30-40대 주부', '40-50대 중년층', '시니어'].map(t => (
                         <button key={t} type="button" onClick={() => updateBiz('targetAudience', businessInfo.targetAudience ? `${businessInfo.targetAudience}, ${t}` : t)}
@@ -797,7 +797,7 @@ export default function GeneratePage() {
                         >{t}</button>
                       ))}
                     </div>
-                    <textarea value={businessInfo.customerNeeds} onChange={e => updateBiz('customerNeeds', e.target.value)} placeholder="고객의 주요 고민/니즈" rows={2} className="mt-3 w-full px-4 py-2.5 bg-violet-50/50 border-2 border-violet-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-violet-400 focus:border-transparent resize-none placeholder-violet-400/60" />
+                    <textarea value={businessInfo.customerNeeds} onChange={e => updateBiz('customerNeeds', e.target.value)} placeholder="고객의 주요 고민/니즈" rows={2} className="mt-3 w-full px-4 py-2.5 bg-violet-50/50 border border-violet-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-violet-400 focus:border-transparent resize-none placeholder-violet-400/60" />
                   </div>
 
                   {/* 강점 및 차별점 */}
@@ -817,8 +817,8 @@ export default function GeneratePage() {
                       </div>
                     )}
                     <div className="flex gap-2">
-                      <input type="text" value={businessInfo.newStrength} onChange={e => updateBiz('newStrength', e.target.value)} onKeyDown={e => e.key === 'Enter' && (e.preventDefault(), addStrength())} placeholder="강점 입력 (최대 5개)" className="flex-1 px-4 py-2.5 bg-rose-50/50 border-2 border-rose-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-rose-400 focus:border-transparent placeholder-rose-400/60" />
-                      <button type="button" onClick={addStrength} className="px-4 py-2.5 bg-gradient-to-r from-rose-500 to-pink-600 text-white text-sm font-medium rounded-xl hover:from-rose-600 hover:to-pink-700 hover:shadow-md hover:scale-105 transition-all duration-200 border-2 border-rose-300 shadow-sm">추가</button>
+                      <input type="text" value={businessInfo.newStrength} onChange={e => updateBiz('newStrength', e.target.value)} onKeyDown={e => e.key === 'Enter' && (e.preventDefault(), addStrength())} placeholder="강점 입력 (최대 5개)" className="flex-1 px-4 py-2.5 bg-rose-50/50 border border-rose-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-rose-400 focus:border-transparent placeholder-rose-400/60" />
+                      <button type="button" onClick={addStrength} className="px-4 py-2.5 bg-gradient-to-r from-rose-500 to-pink-600 text-white text-sm font-medium rounded-xl hover:from-rose-600 hover:to-pink-700 hover:shadow-md hover:scale-105 transition-all duration-200 border border-rose-300 shadow-sm">추가</button>
                     </div>
                     <div className="flex flex-wrap gap-1.5 mt-2">
                       {['합리적인 가격', '전문가 상담', '풍부한 경험', '빠른 서비스', '고품질', '친절한 응대'].map(s => (
@@ -827,7 +827,7 @@ export default function GeneratePage() {
                         >{s}</button>
                       ))}
                     </div>
-                    <textarea value={businessInfo.uniquePoint} onChange={e => updateBiz('uniquePoint', e.target.value)} placeholder="경쟁사 대비 차별점" rows={2} className="mt-3 w-full px-4 py-2.5 bg-rose-50/50 border-2 border-rose-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-rose-400 focus:border-transparent resize-none placeholder-rose-400/60" />
+                    <textarea value={businessInfo.uniquePoint} onChange={e => updateBiz('uniquePoint', e.target.value)} placeholder="경쟁사 대비 차별점" rows={2} className="mt-3 w-full px-4 py-2.5 bg-rose-50/50 border border-rose-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-rose-400 focus:border-transparent resize-none placeholder-rose-400/60" />
                   </div>
 
                   {/* 하단 현재 정보 저장 버튼 */}
@@ -835,7 +835,7 @@ export default function GeneratePage() {
                     <button
                       type="button"
                       onClick={saveAsProfile}
-                      className="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-semibold rounded-xl transition-all duration-200 border-2 bg-white text-teal-700 border-teal-300 hover:bg-teal-50 hover:shadow-lg hover:scale-105"
+                      className="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-semibold rounded-xl transition-all duration-200 border bg-white text-teal-700 border-teal-300 hover:bg-teal-50 hover:shadow-lg hover:scale-105"
                     >
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
@@ -848,7 +848,7 @@ export default function GeneratePage() {
             </div>
 
             {/* 카테고리 선택 */}
-            <div className="bg-white rounded-xl shadow-sm border-2 border-indigo-200 p-5">
+            <div className="bg-white rounded-xl shadow-sm border border-indigo-200 p-5">
               <h2 className="text-lg font-semibold text-gray-900 mb-1">콘텐츠 유형 선택</h2>
               <p className="text-sm text-gray-500 mb-3">생성할 콘텐츠의 유형을 선택하세요</p>
 
@@ -859,7 +859,7 @@ export default function GeneratePage() {
                     <button
                       key={cat.id}
                       onClick={() => setSelectedCategory(cat.id)}
-                      className={`relative p-3 rounded-xl text-left transition-all duration-200 border-2 ${
+                      className={`relative p-3 rounded-xl text-left transition-all duration-200 border ${
                         isSelected
                           ? `bg-gradient-to-br ${cat.color} text-white shadow-lg`
                           : `${cat.bgIdle} hover:shadow-md`
@@ -894,7 +894,7 @@ export default function GeneratePage() {
 
             {/* 입력 폼 */}
             {selectedCategory && (
-              <div className="bg-white rounded-xl shadow-sm border-2 border-sky-200 p-5">
+              <div className="bg-white rounded-xl shadow-sm border border-sky-200 p-5">
                 <h2 className="text-lg font-semibold text-gray-900 mb-1">콘텐츠 정보 입력</h2>
                 <p className="text-sm text-gray-500 mb-3">
                   {categories.find(c => c.id === selectedCategory)?.label} 생성을 위한 정보를 입력하세요
@@ -911,7 +911,7 @@ export default function GeneratePage() {
                       value={topic}
                       onChange={(e) => setTopic(e.target.value)}
                       placeholder="예: 2024년 AI 마케팅 트렌드, 홈트레이닝 초보자 가이드"
-                      className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent placeholder-gray-400"
+                      className="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent placeholder-gray-400"
                     />
                   </div>
 
@@ -923,7 +923,7 @@ export default function GeneratePage() {
                       value={targetKeyword}
                       onChange={(e) => setTargetKeyword(e.target.value)}
                       placeholder="예: AI 마케팅, 홈트레이닝"
-                      className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent placeholder-gray-400"
+                      className="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent placeholder-gray-400"
                     />
                   </div>
 
@@ -935,7 +935,7 @@ export default function GeneratePage() {
                         <button
                           key={opt.value}
                           onClick={() => setTone(opt.value)}
-                          className={`px-4 py-2 text-sm rounded-xl border-2 transition-all ${
+                          className={`px-4 py-2 text-sm rounded-xl border transition-all ${
                             tone === opt.value
                               ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white border-sky-300'
                               : 'bg-gray-50 text-gray-600 border-gray-200 hover:border-indigo-300'
@@ -956,14 +956,14 @@ export default function GeneratePage() {
                       onChange={(e) => setAdditionalNotes(e.target.value)}
                       placeholder="콘텐츠에 반영할 정보를 입력하세요...&#10;예: 제품 스펙, 통계 데이터, 전문 용어, 인용할 내용, 특별 요구사항 등"
                       rows={4}
-                      className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent placeholder-gray-400 resize-none"
+                      className="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent placeholder-gray-400 resize-none"
                     />
                     {/* 파일 업로드 (클릭 + 드래그 앤 드롭) */}
                     <div
                       onDrop={handleDrop}
                       onDragOver={handleDragOver}
                       onDragLeave={handleDragLeave}
-                      className={`mt-3 relative rounded-xl border-2 border-dashed transition-all duration-200 ${
+                      className={`mt-3 relative rounded-xl border border-dashed transition-all duration-200 ${
                         dragOver
                           ? 'border-indigo-500 bg-indigo-100 scale-[1.01] shadow-lg'
                           : 'border-indigo-300 bg-indigo-50 hover:border-indigo-400 hover:bg-indigo-100'
@@ -1043,7 +1043,7 @@ export default function GeneratePage() {
                   </div>
 
                   {/* A/B 테스트 모드 */}
-                  <div className="flex items-center gap-3 p-3 bg-gradient-to-r from-orange-50 to-amber-50 rounded-xl border-2 border-amber-200">
+                  <div className="flex items-center gap-3 p-3 bg-gradient-to-r from-orange-50 to-amber-50 rounded-xl border border-amber-200">
                     <label className="relative inline-flex items-center cursor-pointer">
                       <input
                         type="checkbox"
@@ -1063,7 +1063,7 @@ export default function GeneratePage() {
                   <button
                     onClick={handleGenerate}
                     disabled={isGenerating || !topic.trim()}
-                    className="w-full py-3.5 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-medium rounded-xl hover:from-blue-700 hover:to-indigo-700 transition-all shadow-sm disabled:opacity-50 disabled:cursor-not-allowed border-2 border-sky-300 flex items-center justify-center gap-2"
+                    className="w-full py-3.5 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-medium rounded-xl hover:from-blue-700 hover:to-indigo-700 transition-all shadow-sm disabled:opacity-50 disabled:cursor-not-allowed border border-sky-300 flex items-center justify-center gap-2"
                   >
                     {isGenerating ? (
                       <>
@@ -1088,7 +1088,7 @@ export default function GeneratePage() {
 
             {/* 에러 */}
             {error && (
-              <div className="bg-red-50 border-2 border-red-200 rounded-xl p-4 flex items-start gap-3">
+              <div className="bg-red-50 border border-red-200 rounded-xl p-4 flex items-start gap-3">
                 <svg className="w-5 h-5 text-red-500 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
@@ -1105,7 +1105,7 @@ export default function GeneratePage() {
 
             {/* 로딩 애니메이션 */}
             {isGenerating && (
-              <div className="bg-white rounded-xl shadow-sm border-2 border-blue-200 p-8 text-center">
+              <div className="bg-white rounded-xl shadow-sm border border-blue-200 p-8 text-center">
                 <div className="w-16 h-16 mx-auto mb-3 relative">
                   <div className="absolute inset-0 rounded-full border-4 border-blue-100" />
                   <div className="absolute inset-0 rounded-full border-4 border-blue-500 border-t-transparent animate-spin" />
@@ -1117,7 +1117,7 @@ export default function GeneratePage() {
 
             {/* 초기 안내 (카테고리 미선택 시) */}
             {!selectedCategory && !isGenerating && (
-              <div className="bg-white rounded-xl shadow-sm border-2 border-violet-200 p-8 text-center">
+              <div className="bg-white rounded-xl shadow-sm border border-violet-200 p-8 text-center">
                 <div className="w-16 h-16 bg-gradient-to-br from-indigo-100 to-violet-100 rounded-xl flex items-center justify-center mx-auto mb-3">
                   <svg className="w-8 h-8 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
@@ -1135,7 +1135,7 @@ export default function GeneratePage() {
                     { label: 'FAQ 자동생성', bg: 'bg-amber-50', border: 'border-amber-200', text: 'text-amber-700' },
                     { label: 'SEO 친화적', bg: 'bg-emerald-50', border: 'border-emerald-200', text: 'text-emerald-700' },
                   ].map((feature) => (
-                    <div key={feature.label} className={`${feature.bg} rounded-xl px-3 py-2.5 border-2 ${feature.border}`}>
+                    <div key={feature.label} className={`${feature.bg} rounded-xl px-3 py-2.5 border ${feature.border}`}>
                       <p className={`text-xs font-semibold ${feature.text}`}>{feature.label}</p>
                     </div>
                   ))}

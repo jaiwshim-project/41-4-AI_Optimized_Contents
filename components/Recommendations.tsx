@@ -31,7 +31,7 @@ export default function Recommendations({ recommendations }: RecommendationsProp
   });
 
   return (
-    <div className="bg-white rounded-2xl shadow-sm border-2 border-amber-200 overflow-hidden">
+    <div className="bg-white rounded-2xl shadow-sm border border-amber-200 overflow-hidden">
       {/* 헤더 */}
       <div className="px-4 py-3 bg-gradient-to-r from-amber-50 to-orange-50 border-b border-amber-100">
         <div className="flex items-center gap-3">
@@ -60,7 +60,7 @@ export default function Recommendations({ recommendations }: RecommendationsProp
             {sorted.map((rec) => {
               const pConfig = priorityConfig[rec.priority];
               return (
-                <div key={rec.id} className={`border-2 ${pConfig.border} rounded-xl p-3 ${pConfig.bg} ${pConfig.hoverBorder} transition-all duration-200`}>
+                <div key={rec.id} className={`border ${pConfig.border} rounded-xl p-3 ${pConfig.bg} ${pConfig.hoverBorder} transition-all duration-200`}>
                   <div className="flex items-start justify-between mb-2">
                     <div className="flex items-center gap-2">
                       <span className={`text-xs font-bold px-2.5 py-0.5 rounded-full ${pConfig.badge} ${pConfig.text}`}>
@@ -76,11 +76,11 @@ export default function Recommendations({ recommendations }: RecommendationsProp
 
                   {rec.before && rec.after && (
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-2">
-                      <div className="bg-white/70 rounded-xl p-3 border-2 border-red-100">
+                      <div className="bg-white/70 rounded-xl p-3 border border-red-100">
                         <p className="text-xs font-bold text-red-500 mb-1">Before</p>
                         <p className="text-xs text-gray-700 whitespace-pre-wrap">{rec.before}</p>
                       </div>
-                      <div className="bg-white/70 rounded-xl p-3 border-2 border-emerald-100">
+                      <div className="bg-white/70 rounded-xl p-3 border border-emerald-100">
                         <p className="text-xs font-bold text-emerald-500 mb-1">After</p>
                         <p className="text-xs text-gray-700 whitespace-pre-wrap">{rec.after}</p>
                       </div>

@@ -131,7 +131,7 @@ export default function KeywordAnalysisPage() {
       <main className="flex-grow container mx-auto px-4 py-6">
         {/* Page Header */}
         <div className="mb-5 text-center">
-          <div className="py-5 px-4 rounded-xl border-2 border-green-200">
+          <div className="py-5 px-4 rounded-xl border border-green-200">
             <h1 className="text-xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent mb-1">
               키워드 경쟁 분석
             </h1>
@@ -143,7 +143,7 @@ export default function KeywordAnalysisPage() {
 
         {/* Analysis Form */}
         <div className="max-w-3xl mx-auto mb-5">
-          <form onSubmit={handleAnalyze} className="bg-white rounded-xl shadow-sm p-4 border-2 border-green-200">
+          <form onSubmit={handleAnalyze} className="bg-white rounded-xl shadow-sm p-4 border border-green-200">
             <div className="space-y-3">
               <div>
                 <label htmlFor="keyword" className="block text-sm font-semibold text-gray-700 mb-2">
@@ -155,7 +155,7 @@ export default function KeywordAnalysisPage() {
                   value={keyword}
                   onChange={(e) => setKeyword(e.target.value)}
                   placeholder="예: AI 마케팅 전략"
-                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all"
                   disabled={loading}
                 />
               </div>
@@ -168,7 +168,7 @@ export default function KeywordAnalysisPage() {
                   id="industry"
                   value={industry}
                   onChange={(e) => setIndustry(e.target.value)}
-                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all"
                   disabled={loading}
                 >
                   <option value="">선택하지 않음</option>
@@ -201,7 +201,7 @@ export default function KeywordAnalysisPage() {
           </form>
 
           {error && (
-            <div className="mt-4 p-4 bg-red-50 border-2 border-red-200 rounded-lg">
+            <div className="mt-4 p-4 bg-red-50 border border-red-200 rounded-lg">
               <p className="text-red-700 font-semibold">{error}</p>
               {error.includes('소진했습니다') && (
                 <Link href="/pricing" className="inline-block mt-2 text-sm font-semibold text-indigo-600 hover:text-indigo-800 underline">
@@ -216,20 +216,20 @@ export default function KeywordAnalysisPage() {
         {result && (
           <div className="max-w-5xl mx-auto space-y-3">
             {/* Overview Card */}
-            <div className="bg-white rounded-xl shadow-sm p-4 border-2 border-blue-200">
+            <div className="bg-white rounded-xl shadow-sm p-4 border border-blue-200">
               <h2 className="text-base font-bold text-gray-800 mb-3">분석 개요</h2>
               <div className="grid md:grid-cols-3 gap-3">
-                <div className="p-4 bg-gradient-to-br from-purple-50 to-pink-50 rounded-lg border-2 border-purple-200">
+                <div className="p-4 bg-gradient-to-br from-purple-50 to-pink-50 rounded-lg border border-purple-200">
                   <p className="text-sm font-semibold text-gray-600 mb-1">키워드</p>
                   <p className="text-base font-bold text-gray-800">{result.keyword}</p>
                 </div>
-                <div className="p-4 bg-gradient-to-br from-blue-50 to-cyan-50 rounded-lg border-2 border-blue-200">
+                <div className="p-4 bg-gradient-to-br from-blue-50 to-cyan-50 rounded-lg border border-blue-200">
                   <p className="text-sm font-semibold text-gray-600 mb-1">검색 의도</p>
                   <p className="text-base font-bold text-gray-800">{result.searchIntent}</p>
                 </div>
-                <div className="p-4 bg-gradient-to-br from-orange-50 to-yellow-50 rounded-lg border-2 border-orange-200">
+                <div className="p-4 bg-gradient-to-br from-orange-50 to-yellow-50 rounded-lg border border-orange-200">
                   <p className="text-sm font-semibold text-gray-600 mb-2">난이도</p>
-                  <span className={`inline-block px-4 py-2 rounded-lg font-bold text-base border-2 ${getDifficultyColor(result.difficulty)}`}>
+                  <span className={`inline-block px-4 py-2 rounded-lg font-bold text-base border ${getDifficultyColor(result.difficulty)}`}>
                     {result.difficulty}
                   </span>
                 </div>
@@ -237,14 +237,14 @@ export default function KeywordAnalysisPage() {
             </div>
 
             {/* AI Citation Factors */}
-            <div className="bg-white rounded-xl shadow-sm p-4 border-2 border-indigo-200">
+            <div className="bg-white rounded-xl shadow-sm p-4 border border-indigo-200">
               <h2 className="text-base font-bold text-gray-800 mb-4 flex items-center">
                 <span className="bg-gradient-to-r from-indigo-500 to-purple-500 text-white px-3 py-1 rounded-lg mr-3">AI</span>
                 AI 인용 요소
               </h2>
               <div className="space-y-3">
                 {result.aiCitationFactors.map((factor, index) => (
-                  <div key={index} className="p-4 bg-gradient-to-r from-indigo-50 to-purple-50 rounded-lg border-2 border-indigo-200">
+                  <div key={index} className="p-4 bg-gradient-to-r from-indigo-50 to-purple-50 rounded-lg border border-indigo-200">
                     <div className="flex items-start justify-between mb-2">
                       <h3 className="font-bold text-gray-800 flex-grow">{factor.factor}</h3>
                       <span className={`ml-3 px-3 py-1 rounded-full text-sm font-semibold border ${getImportanceBadge(factor.importance)}`}>
@@ -258,7 +258,7 @@ export default function KeywordAnalysisPage() {
             </div>
 
             {/* Must-Cover Topics */}
-            <div className="bg-white rounded-xl shadow-sm p-4 border-2 border-emerald-200">
+            <div className="bg-white rounded-xl shadow-sm p-4 border border-emerald-200">
               <h2 className="text-base font-bold text-gray-800 mb-3">필수 다룰 주제</h2>
               <ol className="space-y-2">
                 {result.mustCoverTopics.map((topic, index) => (
@@ -273,11 +273,11 @@ export default function KeywordAnalysisPage() {
             </div>
 
             {/* Differentiation Strategies */}
-            <div className="bg-white rounded-xl shadow-sm p-4 border-2 border-pink-200">
+            <div className="bg-white rounded-xl shadow-sm p-4 border border-pink-200">
               <h2 className="text-base font-bold text-gray-800 mb-3">차별화 전략</h2>
               <div className="grid md:grid-cols-2 gap-3">
                 {result.differentiationStrategies.map((strategy, index) => (
-                  <div key={index} className="p-4 bg-gradient-to-br from-pink-50 to-rose-50 rounded-lg border-2 border-pink-200">
+                  <div key={index} className="p-4 bg-gradient-to-br from-pink-50 to-rose-50 rounded-lg border border-pink-200">
                     <h3 className="font-bold text-sm text-gray-800 mb-2">{strategy.strategy}</h3>
                     <p className="text-gray-700 mb-2">{strategy.description}</p>
                     <div className="mt-3 pt-3 border-t border-pink-200">
@@ -290,11 +290,11 @@ export default function KeywordAnalysisPage() {
             </div>
 
             {/* Content Recommendations */}
-            <div className="bg-white rounded-xl shadow-sm p-4 border-2 border-amber-200">
+            <div className="bg-white rounded-xl shadow-sm p-4 border border-amber-200">
               <h2 className="text-base font-bold text-gray-800 mb-3">콘텐츠 추천</h2>
               <div className="space-y-3">
                 {result.contentRecommendations.map((recommendation, index) => (
-                  <div key={index} className="p-4 bg-gradient-to-r from-amber-50 to-yellow-50 rounded-lg border-2 border-amber-200">
+                  <div key={index} className="p-4 bg-gradient-to-r from-amber-50 to-yellow-50 rounded-lg border border-amber-200">
                     <h3 className="font-bold text-sm text-gray-800 mb-3">{recommendation.type}</h3>
                     <ul className="space-y-2">
                       {recommendation.recommendations.map((rec, recIndex) => (
@@ -310,13 +310,13 @@ export default function KeywordAnalysisPage() {
             </div>
 
             {/* Related Keywords */}
-            <div className="bg-white rounded-xl shadow-sm p-4 border-2 border-cyan-200">
+            <div className="bg-white rounded-xl shadow-sm p-4 border border-cyan-200">
               <h2 className="text-base font-bold text-gray-800 mb-3">연관 키워드</h2>
               <div className="flex flex-wrap gap-2">
                 {result.relatedKeywords.map((relatedKeyword, index) => (
                   <span
                     key={index}
-                    className="px-3 py-1.5 bg-gradient-to-r from-cyan-100 to-blue-100 text-cyan-800 rounded-full font-semibold border-2 border-cyan-300 hover:from-cyan-200 hover:to-blue-200 transition-all cursor-pointer"
+                    className="px-3 py-1.5 bg-gradient-to-r from-cyan-100 to-blue-100 text-cyan-800 rounded-full font-semibold border border-cyan-300 hover:from-cyan-200 hover:to-blue-200 transition-all cursor-pointer"
                   >
                     {relatedKeyword}
                   </span>
@@ -325,11 +325,11 @@ export default function KeywordAnalysisPage() {
             </div>
 
             {/* Competitor Insights */}
-            <div className="bg-white rounded-xl shadow-sm p-4 border-2 border-violet-200">
+            <div className="bg-white rounded-xl shadow-sm p-4 border border-violet-200">
               <h2 className="text-base font-bold text-gray-800 mb-3">경쟁사 인사이트</h2>
               <div className="space-y-3">
                 {result.competitorInsights.map((insight, index) => (
-                  <div key={index} className="p-4 bg-gradient-to-r from-violet-50 to-purple-50 rounded-lg border-2 border-violet-200">
+                  <div key={index} className="p-4 bg-gradient-to-r from-violet-50 to-purple-50 rounded-lg border border-violet-200">
                     <p className="text-gray-700 mb-2">
                       <span className="font-semibold text-violet-700">인사이트:</span> {insight.insight}
                     </p>

@@ -29,7 +29,7 @@ export default function ResourcesPage() {
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`px-4 py-2 text-sm font-semibold rounded-lg border-2 transition-all ${
+              className={`px-4 py-2 text-sm font-semibold rounded-lg border transition-all ${
                 activeTab === tab.id
                   ? 'bg-indigo-600 text-white border-indigo-600 shadow-md'
                   : 'bg-white text-gray-600 border-gray-200 hover:border-indigo-300 hover:text-indigo-600'
@@ -41,7 +41,7 @@ export default function ResourcesPage() {
         </div>
 
         {/* PDF 뷰어 (스크롤 가능) */}
-        <div className="bg-white rounded-xl border-2 border-indigo-200 shadow-md overflow-hidden">
+        <div className="bg-white rounded-xl border border-indigo-200 shadow-md overflow-hidden">
           <div className="w-full" style={{ height: '85vh' }}>
             <iframe
               key={active.id}

@@ -127,12 +127,12 @@ export default function Dashboard() {
         {result && (
           <>
             {/* 탭 네비게이션 */}
-            <div className="bg-white rounded-2xl shadow-sm border-2 border-indigo-200 p-1.5 flex gap-1 overflow-x-auto">
+            <div className="bg-white rounded-2xl shadow-sm border border-indigo-200 p-1.5 flex gap-1 overflow-x-auto">
               {tabs.map((tab) => (
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
-                  className={`flex-1 px-4 py-2.5 rounded-xl text-sm font-medium transition-all whitespace-nowrap border-2 ${
+                  className={`flex-1 px-4 py-2.5 rounded-xl text-sm font-medium transition-all whitespace-nowrap border ${
                     activeTab === tab.id
                       ? tab.id === 'optimize'
                         ? 'bg-gradient-to-r from-emerald-600 to-teal-600 text-white shadow-sm border-lime-300'
@@ -159,7 +159,7 @@ export default function Dashboard() {
 
         {/* 초기 안내 */}
         {!result && !isAnalyzing && !error && (
-          <div className="bg-white rounded-2xl shadow-sm border-2 border-violet-200 p-8 text-center">
+          <div className="bg-white rounded-2xl shadow-sm border border-violet-200 p-8 text-center">
             <div className="w-16 h-16 bg-gradient-to-br from-blue-100 to-indigo-100 rounded-xl flex items-center justify-center mx-auto mb-3">
               <svg className="w-8 h-8 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
@@ -177,7 +177,7 @@ export default function Dashboard() {
                 { label: '키워드 분석', bg: 'bg-teal-50', border: 'border-teal-200', text: 'text-teal-700' },
                 { label: '개선 제안', bg: 'bg-amber-50', border: 'border-amber-200', text: 'text-amber-700' },
               ].map((feature) => (
-                <div key={feature.label} className={`${feature.bg} rounded-xl px-3 py-2.5 border-2 ${feature.border}`}>
+                <div key={feature.label} className={`${feature.bg} rounded-xl px-3 py-2.5 border ${feature.border}`}>
                   <p className={`text-xs font-semibold ${feature.text}`}>{feature.label}</p>
                 </div>
               ))}

@@ -447,7 +447,7 @@ export default function GenerateResultPage() {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 space-y-4">
         {/* 에러 */}
         {error && (
-          <div className="bg-red-50 border-2 border-red-200 rounded-xl p-4 flex items-start gap-3">
+          <div className="bg-red-50 border border-red-200 rounded-xl p-4 flex items-start gap-3">
             <svg className="w-5 h-5 text-red-500 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
@@ -456,7 +456,7 @@ export default function GenerateResultPage() {
         )}
 
         {/* 결과 헤더 */}
-        <div className="bg-white rounded-xl shadow-sm border-2 border-emerald-200 p-5">
+        <div className="bg-white rounded-xl shadow-sm border border-emerald-200 p-5">
           <div className="flex items-center justify-between mb-3">
             <div>
               <h2 className="text-lg font-semibold text-gray-900">{result.title}</h2>
@@ -465,7 +465,7 @@ export default function GenerateResultPage() {
                   {result.metadata.wordCount.toLocaleString()}자
                 </span>
                 <span className="text-xs text-gray-500">{result.metadata.estimatedReadTime}</span>
-                <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-emerald-100 text-emerald-700 border-2 border-emerald-200">
+                <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-emerald-100 text-emerald-700 border border-emerald-200">
                   {categories.find(c => c.id === selectedCategory)?.label}
                 </span>
               </div>
@@ -473,7 +473,7 @@ export default function GenerateResultPage() {
             <div className="flex items-center gap-2">
               <button
                 onClick={handleCopyTitle}
-                className={`inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl transition-all duration-200 border-2 hover:shadow-md hover:scale-[1.03] ${
+                className={`inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl transition-all duration-200 border hover:shadow-md hover:scale-[1.03] ${
                   copiedTitle
                     ? 'bg-emerald-500 text-white border-emerald-300'
                     : 'border-amber-300 bg-amber-50 text-amber-700 hover:bg-amber-100'
@@ -486,7 +486,7 @@ export default function GenerateResultPage() {
               </button>
               <button
                 onClick={handleCopy}
-                className={`inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl transition-all duration-200 border-2 hover:shadow-md hover:scale-[1.03] ${
+                className={`inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl transition-all duration-200 border hover:shadow-md hover:scale-[1.03] ${
                   copied
                     ? 'bg-emerald-500 text-white border-emerald-300'
                     : 'border-sky-300 bg-sky-50 text-sky-700 hover:bg-sky-100'
@@ -500,7 +500,7 @@ export default function GenerateResultPage() {
               <button
                 onClick={handleCopyAsImage}
                 disabled={isCapturing}
-                className={`inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl transition-all duration-200 border-2 hover:shadow-md hover:scale-[1.03] disabled:opacity-50 ${
+                className={`inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl transition-all duration-200 border hover:shadow-md hover:scale-[1.03] disabled:opacity-50 ${
                   copiedImage
                     ? 'bg-emerald-500 text-white border-emerald-300'
                     : 'border-emerald-300 bg-emerald-50 text-emerald-700 hover:bg-emerald-100'
@@ -520,7 +520,7 @@ export default function GenerateResultPage() {
               </button>
               <button
                 onClick={handleReset}
-                className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl transition-all duration-200 border-2 border-violet-300 bg-gray-50 text-gray-600 hover:bg-gray-100 hover:shadow-md hover:scale-[1.03]"
+                className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl transition-all duration-200 border border-violet-300 bg-gray-50 text-gray-600 hover:bg-gray-100 hover:shadow-md hover:scale-[1.03]"
               >
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
@@ -532,7 +532,7 @@ export default function GenerateResultPage() {
 
           {/* SEO 팁 */}
           {result.metadata.seoTips.length > 0 && (
-            <div className="bg-blue-50 rounded-xl p-3 border-2 border-blue-200">
+            <div className="bg-blue-50 rounded-xl p-3 border border-blue-200">
               <h3 className="text-sm font-semibold text-blue-800 mb-1.5 flex items-center gap-1.5">
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -553,7 +553,7 @@ export default function GenerateResultPage() {
 
         {/* 수정 입력창 */}
         {showEditInput && (
-          <div className="bg-violet-50 rounded-xl shadow-sm border-2 border-violet-300 p-4">
+          <div className="bg-violet-50 rounded-xl shadow-sm border border-violet-300 p-4">
             <div className="flex items-center gap-2 mb-3">
               <svg className="w-4 h-4 text-violet-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
@@ -565,12 +565,12 @@ export default function GenerateResultPage() {
               onChange={(e) => setEditNotes(e.target.value)}
               placeholder="수정하거나 추가하고 싶은 내용을 입력하세요...&#10;예: '서론을 더 강렬하게', '통계 데이터 추가', 'FAQ 섹션 보강'"
               rows={3}
-              className="w-full px-4 py-3 border-2 border-violet-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-violet-400 focus:border-transparent placeholder-gray-400 resize-none bg-white"
+              className="w-full px-4 py-3 border border-violet-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-violet-400 focus:border-transparent placeholder-gray-400 resize-none bg-white"
             />
             <button
               onClick={handleRegenerate}
               disabled={isRegenerating || !editNotes.trim()}
-              className="mt-3 w-full py-3 bg-gradient-to-r from-violet-600 to-purple-600 text-white font-medium rounded-xl hover:from-violet-700 hover:to-purple-700 hover:shadow-lg hover:scale-[1.01] transition-all duration-200 shadow-sm disabled:opacity-50 disabled:cursor-not-allowed border-2 border-violet-300 flex items-center justify-center gap-2"
+              className="mt-3 w-full py-3 bg-gradient-to-r from-violet-600 to-purple-600 text-white font-medium rounded-xl hover:from-violet-700 hover:to-purple-700 hover:shadow-lg hover:scale-[1.01] transition-all duration-200 shadow-sm disabled:opacity-50 disabled:cursor-not-allowed border border-violet-300 flex items-center justify-center gap-2"
             >
               {isRegenerating ? (
                 <>
@@ -593,7 +593,7 @@ export default function GenerateResultPage() {
         )}
 
         {/* 생성된 콘텐츠 */}
-        <div className="bg-white rounded-xl shadow-sm border-2 border-indigo-200 p-5 relative">
+        <div className="bg-white rounded-xl shadow-sm border border-indigo-200 p-5 relative">
           {/* 상단 버튼 그룹 */}
           <div className="absolute top-4 right-4 flex items-center gap-2">
             <button
@@ -613,7 +613,7 @@ export default function GenerateResultPage() {
                   setTimeout(() => setCopiedContent(false), 2000);
                 });
               }}
-              className={`inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg transition-all duration-200 border-2 hover:shadow-md hover:scale-105 ${
+              className={`inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg transition-all duration-200 border hover:shadow-md hover:scale-105 ${
                 copiedContent
                   ? 'bg-emerald-500 text-white border-emerald-300'
                   : 'bg-gray-50 text-gray-500 border-gray-200 hover:bg-gray-100 hover:border-indigo-300'
@@ -626,7 +626,7 @@ export default function GenerateResultPage() {
             </button>
             <button
               onClick={() => setShowEditInput(!showEditInput)}
-              className={`inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg transition-all duration-200 border-2 hover:shadow-md hover:scale-105 ${
+              className={`inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg transition-all duration-200 border hover:shadow-md hover:scale-105 ${
                 showEditInput
                   ? 'bg-violet-500 text-white border-violet-300'
                   : 'bg-gray-50 text-gray-500 border-gray-200 hover:bg-gray-100 hover:border-violet-300'
@@ -671,7 +671,7 @@ export default function GenerateResultPage() {
                 <button
                   onClick={handleGenerateImages}
                   disabled={isGeneratingImages}
-                  className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl transition-all duration-200 border-2 bg-gradient-to-r from-emerald-500 to-teal-500 text-white border-emerald-300 hover:from-emerald-600 hover:to-teal-600 hover:shadow-lg hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
+                  className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl transition-all duration-200 border bg-gradient-to-r from-emerald-500 to-teal-500 text-white border-emerald-300 hover:from-emerald-600 hover:to-teal-600 hover:shadow-lg hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
                 >
                   {isGeneratingImages ? (
                     <>
@@ -703,7 +703,7 @@ export default function GenerateResultPage() {
                   <div className="flex items-center gap-2">
                     <button
                       onClick={handleApplyImages}
-                      className="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-semibold rounded-xl transition-all duration-200 border-2 border-indigo-300 text-white bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 hover:shadow-lg hover:scale-105 shadow-sm"
+                      className="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-semibold rounded-xl transition-all duration-200 border border-indigo-300 text-white bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 hover:shadow-lg hover:scale-105 shadow-sm"
                     >
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
@@ -713,7 +713,7 @@ export default function GenerateResultPage() {
                     <button
                       onClick={handleGenerateImages}
                       disabled={isGeneratingImages}
-                      className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg transition-all duration-200 border-2 border-emerald-300 text-emerald-700 bg-emerald-50 hover:bg-emerald-100 hover:shadow-md hover:scale-105 disabled:opacity-50"
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg transition-all duration-200 border border-emerald-300 text-emerald-700 bg-emerald-50 hover:bg-emerald-100 hover:shadow-md hover:scale-105 disabled:opacity-50"
                     >
                       {isGeneratingImages ? (
                         <>
@@ -729,7 +729,7 @@ export default function GenerateResultPage() {
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                   {generatedImages.map((img, i) => (
-                    <div key={i} className="relative group rounded-xl overflow-hidden border-2 border-gray-200 shadow-sm hover:shadow-lg transition-all duration-200">
+                    <div key={i} className="relative group rounded-xl overflow-hidden border border-gray-200 shadow-sm hover:shadow-lg transition-all duration-200">
                       <img src={img} alt={`AI 생성 이미지 ${i + 1}`} className="w-full aspect-video object-cover" />
                       <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-all duration-200 flex items-center justify-center">
                         <a
@@ -763,7 +763,7 @@ export default function GenerateResultPage() {
 
           {/* A/B 버전 비교 */}
           {abVersions.length > 1 && (
-            <div className="bg-white rounded-xl shadow-sm border-2 border-amber-200 overflow-hidden">
+            <div className="bg-white rounded-xl shadow-sm border border-amber-200 overflow-hidden">
               <div className="bg-gradient-to-r from-amber-50 to-orange-50 px-5 py-2 border-b border-amber-200">
                 <h3 className="text-sm font-bold text-amber-800 flex items-center gap-2">
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" /></svg>
@@ -792,7 +792,7 @@ export default function GenerateResultPage() {
           )}
 
           {/* SNS 채널별 변환 */}
-          <div className="bg-white rounded-xl shadow-sm border-2 border-teal-200 overflow-hidden">
+          <div className="bg-white rounded-xl shadow-sm border border-teal-200 overflow-hidden">
             <div className="bg-gradient-to-r from-teal-50 to-cyan-50 px-5 py-2 border-b border-teal-200">
               <h3 className="text-sm font-bold text-teal-800 flex items-center gap-2">
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" /></svg>
@@ -812,7 +812,7 @@ export default function GenerateResultPage() {
                     key={ch.id}
                     onClick={() => handleSnsConvert(ch.id)}
                     disabled={snsLoading}
-                    className={`inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold rounded-xl border-2 transition-all hover:shadow-md hover:scale-105 disabled:opacity-50 ${
+                    className={`inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold rounded-xl border transition-all hover:shadow-md hover:scale-105 disabled:opacity-50 ${
                       snsChannel === ch.id
                         ? `bg-${ch.color}-500 text-white border-${ch.color}-300`
                         : `bg-${ch.color}-50 text-${ch.color}-700 border-${ch.color}-200 hover:bg-${ch.color}-100`
@@ -838,7 +838,7 @@ export default function GenerateResultPage() {
                     <span className="text-xs font-semibold text-gray-600">변환 결과</span>
                     <button
                       onClick={handleCopySns}
-                      className={`inline-flex items-center gap-1 px-3 py-1.5 text-xs font-medium rounded-lg border-2 transition-all ${
+                      className={`inline-flex items-center gap-1 px-3 py-1.5 text-xs font-medium rounded-lg border transition-all ${
                         snsCopied ? 'bg-emerald-500 text-white border-emerald-300' : 'bg-teal-50 text-teal-700 border-teal-200 hover:bg-teal-100'
                       }`}
                     >
@@ -875,7 +875,7 @@ export default function GenerateResultPage() {
               <div className="flex items-center gap-2">
                 <button
                   onClick={handleCopyFinalContent}
-                  className={`inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl transition-all duration-200 border-2 hover:shadow-md hover:scale-105 ${
+                  className={`inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl transition-all duration-200 border hover:shadow-md hover:scale-105 ${
                     copiedFinal
                       ? 'bg-emerald-500 text-white border-emerald-300'
                       : 'bg-gradient-to-r from-indigo-500 to-purple-600 text-white border-indigo-300 hover:from-indigo-600 hover:to-purple-700'
@@ -888,7 +888,7 @@ export default function GenerateResultPage() {
                 </button>
                 <button
                   onClick={() => setShowFinalContent(false)}
-                  className="inline-flex items-center gap-1.5 px-3 py-2 text-sm font-medium rounded-xl border-2 border-gray-200 text-gray-600 hover:bg-gray-50 hover:border-gray-300 transition-all"
+                  className="inline-flex items-center gap-1.5 px-3 py-2 text-sm font-medium rounded-xl border border-gray-200 text-gray-600 hover:bg-gray-50 hover:border-gray-300 transition-all"
                 >
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />

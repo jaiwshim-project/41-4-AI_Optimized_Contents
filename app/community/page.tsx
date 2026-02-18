@@ -235,37 +235,37 @@ export default function CommunityPage() {
         ) : (
           <div className="space-y-5">
             {/* 탭 헤더 */}
-            <div className="bg-white rounded-xl shadow-sm border-2 border-indigo-200 overflow-hidden">
-              <div className="flex border-b border-indigo-100">
+            <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+              <div className="flex">
                 <button
                   onClick={() => setActiveTab('questions')}
-                  className={`flex-1 py-3 text-sm font-bold text-center transition-all ${
+                  className={`flex-1 py-3.5 text-sm font-bold text-center transition-all border-b-3 ${
                     activeTab === 'questions'
-                      ? 'text-indigo-700 bg-indigo-50 border-b-2 border-indigo-600'
-                      : 'text-gray-500 hover:text-gray-700 hover:bg-gray-50'
+                      ? 'text-emerald-700 bg-emerald-50 border-emerald-600'
+                      : 'text-gray-400 hover:text-gray-600 hover:bg-gray-50 border-transparent'
                   }`}
                 >
-                  질문 <span className="ml-1 text-xs font-normal text-gray-400">({questions.length})</span>
+                  질문 <span className={`ml-1 text-xs font-semibold ${activeTab === 'questions' ? 'text-emerald-500' : 'text-gray-300'}`}>({questions.length})</span>
                 </button>
                 <button
                   onClick={() => setActiveTab('reviews')}
-                  className={`flex-1 py-3 text-sm font-bold text-center transition-all ${
+                  className={`flex-1 py-3.5 text-sm font-bold text-center transition-all border-b-3 ${
                     activeTab === 'reviews'
-                      ? 'text-indigo-700 bg-indigo-50 border-b-2 border-indigo-600'
-                      : 'text-gray-500 hover:text-gray-700 hover:bg-gray-50'
+                      ? 'text-purple-700 bg-purple-50 border-purple-600'
+                      : 'text-gray-400 hover:text-gray-600 hover:bg-gray-50 border-transparent'
                   }`}
                 >
-                  후기 <span className="ml-1 text-xs font-normal text-gray-400">({reviews.length})</span>
+                  후기 <span className={`ml-1 text-xs font-semibold ${activeTab === 'reviews' ? 'text-purple-500' : 'text-gray-300'}`}>({reviews.length})</span>
                 </button>
                 <button
                   onClick={() => setActiveTab('qna')}
-                  className={`flex-1 py-3 text-sm font-bold text-center transition-all ${
+                  className={`flex-1 py-3.5 text-sm font-bold text-center transition-all border-b-3 ${
                     activeTab === 'qna'
-                      ? 'text-indigo-700 bg-indigo-50 border-b-2 border-indigo-600'
-                      : 'text-gray-500 hover:text-gray-700 hover:bg-gray-50'
+                      ? 'text-indigo-800 bg-indigo-50 border-indigo-800'
+                      : 'text-gray-400 hover:text-gray-600 hover:bg-gray-50 border-transparent'
                   }`}
                 >
-                  QnA <span className="ml-1 text-xs font-normal text-gray-400">({QNA_DATA.length})</span>
+                  QnA <span className={`ml-1 text-xs font-semibold ${activeTab === 'qna' ? 'text-indigo-600' : 'text-gray-300'}`}>({QNA_DATA.length})</span>
                 </button>
               </div>
 
@@ -296,14 +296,14 @@ export default function CommunityPage() {
                         placeholder="질문 제목"
                         value={qTitle}
                         onChange={(e) => setQTitle(e.target.value)}
-                        className="w-full px-3 py-2 border-2 border-gray-200 rounded-lg text-sm focus:outline-none focus:border-indigo-400 mb-2"
+                        className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:border-indigo-400 mb-2"
                       />
                       <textarea
                         placeholder="질문 내용을 입력하세요"
                         value={qContent}
                         onChange={(e) => setQContent(e.target.value)}
                         rows={4}
-                        className="w-full px-3 py-2 border-2 border-gray-200 rounded-lg text-sm focus:outline-none focus:border-indigo-400 resize-none mb-3"
+                        className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:border-indigo-400 resize-none mb-3"
                       />
                       <div className="flex gap-2 justify-end">
                         <button
@@ -380,7 +380,7 @@ export default function CommunityPage() {
                                     value={answerText}
                                     onChange={(e) => setAnswerText(e.target.value)}
                                     rows={3}
-                                    className="w-full px-3 py-2 border-2 border-gray-200 rounded-lg text-sm focus:outline-none focus:border-red-400 resize-none mb-2"
+                                    className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:border-red-400 resize-none mb-2"
                                   />
                                   <button
                                     onClick={() => handleAnswer(q.id)}
@@ -481,7 +481,7 @@ export default function CommunityPage() {
                         value={rContent}
                         onChange={(e) => setRContent(e.target.value)}
                         rows={4}
-                        className="w-full px-3 py-2 border-2 border-gray-200 rounded-lg text-sm focus:outline-none focus:border-amber-400 resize-none mb-3"
+                        className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:border-amber-400 resize-none mb-3"
                       />
                       <div className="flex gap-2 justify-end">
                         <button

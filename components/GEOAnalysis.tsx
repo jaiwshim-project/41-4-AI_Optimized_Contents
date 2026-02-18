@@ -22,7 +22,7 @@ export default function GEOAnalysis({ geo }: GEOAnalysisProps) {
   ];
 
   return (
-    <div className="bg-white rounded-2xl shadow-sm border-2 border-purple-200 overflow-hidden">
+    <div className="bg-white rounded-2xl shadow-sm border border-purple-200 overflow-hidden">
       {/* 헤더 */}
       <div className="px-4 py-3 bg-gradient-to-r from-purple-50 to-violet-50 border-b border-purple-100">
         <div className="flex items-center gap-3">

@@ -99,7 +99,7 @@ export default function AdminStatsPage() {
       <div className="min-h-screen bg-gray-50">
         <Header />
         <main className="max-w-md mx-auto px-4 py-16">
-          <div className="bg-white rounded-2xl shadow-lg border-2 border-red-200 p-6">
+          <div className="bg-white rounded-2xl shadow-lg border border-red-200 p-6">
             <div className="text-center mb-4">
               <div className="w-16 h-16 bg-gradient-to-br from-red-500 to-rose-500 rounded-xl flex items-center justify-center mx-auto mb-3">
                 <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -116,7 +116,7 @@ export default function AdminStatsPage() {
                 onChange={(e) => setPassword(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && handleLogin()}
                 placeholder="비밀번호 입력"
-                className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl text-center text-lg tracking-widest focus:outline-none focus:ring-2 focus:ring-red-400 focus:border-transparent"
+                className="w-full px-4 py-3 border border-gray-300 rounded-xl text-center text-lg tracking-widest focus:outline-none focus:ring-2 focus:ring-red-400 focus:border-transparent"
                 autoFocus
               />
               {passwordError && (
@@ -160,14 +160,14 @@ export default function AdminStatsPage() {
           <div className="flex items-center gap-2">
             <Link
               href="/admin"
-              className="px-3 py-2 text-xs font-medium text-gray-600 bg-white border-2 border-gray-200 rounded-lg hover:bg-gray-50 transition-all"
+              className="px-3 py-2 text-xs font-medium text-gray-600 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-all"
             >
               회원 관리
             </Link>
             <button
               onClick={() => loadStats(adminPassword)}
               disabled={loading}
-              className="px-3 py-2 bg-white border-2 border-gray-200 rounded-lg text-sm text-gray-600 hover:bg-gray-50 transition-all disabled:opacity-50"
+              className="px-3 py-2 bg-white border border-gray-200 rounded-lg text-sm text-gray-600 hover:bg-gray-50 transition-all disabled:opacity-50"
             >
               <svg className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
@@ -177,7 +177,7 @@ export default function AdminStatsPage() {
         </div>
 
         {error && (
-          <div className="mb-4 p-4 bg-red-50 border-2 border-red-200 rounded-xl">
+          <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-xl">
             <p className="text-sm text-red-700 font-medium">{error}</p>
           </div>
         )}
@@ -194,7 +194,7 @@ export default function AdminStatsPage() {
           <>
             {/* 1행: 핵심 지표 카드 */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-5">
-              <div className="bg-white rounded-xl p-5 border-2 border-gray-200 shadow-sm">
+              <div className="bg-white rounded-xl p-5 border border-gray-200 shadow-sm">
                 <p className="text-[11px] font-semibold text-gray-400 uppercase tracking-wider mb-2">전체 회원</p>
                 <p className="text-3xl font-extrabold text-gray-900 tabular-nums">{stats.totalUsers}</p>
                 <div className="flex gap-1.5 mt-3 flex-wrap">
@@ -207,17 +207,17 @@ export default function AdminStatsPage() {
                   ))}
                 </div>
               </div>
-              <div className="bg-gradient-to-br from-indigo-50 to-white rounded-xl p-5 border-2 border-indigo-200 shadow-sm">
+              <div className="bg-gradient-to-br from-indigo-50 to-white rounded-xl p-5 border border-indigo-200 shadow-sm">
                 <p className="text-[11px] font-semibold text-indigo-400 uppercase tracking-wider mb-2">누적 사용량</p>
                 <p className="text-3xl font-extrabold text-indigo-600 tabular-nums">{totalUsageAll.toLocaleString()}<span className="text-base font-bold ml-0.5">회</span></p>
                 <p className="text-[11px] text-gray-400 mt-1">전체 기간 합계</p>
               </div>
-              <div className="bg-gradient-to-br from-emerald-50 to-white rounded-xl p-5 border-2 border-emerald-200 shadow-sm">
+              <div className="bg-gradient-to-br from-emerald-50 to-white rounded-xl p-5 border border-emerald-200 shadow-sm">
                 <p className="text-[11px] font-semibold text-emerald-400 uppercase tracking-wider mb-2">이번 달 사용량</p>
                 <p className="text-3xl font-extrabold text-emerald-600 tabular-nums">{thisMonthTotal.toLocaleString()}<span className="text-base font-bold ml-0.5">회</span></p>
                 <p className="text-[11px] text-gray-400 mt-1">{stats.currentMonth}</p>
               </div>
-              <div className="bg-gradient-to-br from-amber-50 to-white rounded-xl p-5 border-2 border-amber-200 shadow-sm">
+              <div className="bg-gradient-to-br from-amber-50 to-white rounded-xl p-5 border border-amber-200 shadow-sm">
                 <p className="text-[11px] font-semibold text-amber-400 uppercase tracking-wider mb-2">활성 사용자</p>
                 <p className="text-3xl font-extrabold text-amber-600 tabular-nums">{stats.activeWeek}<span className="text-base font-bold ml-0.5">명</span></p>
                 <div className="flex items-center gap-3 mt-1">
@@ -231,7 +231,7 @@ export default function AdminStatsPage() {
             {/* 2행: 기능별 사용량 */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-5">
               {/* 누적 사용량 */}
-              <div className="bg-white rounded-xl p-5 border-2 border-gray-200 shadow-sm">
+              <div className="bg-white rounded-xl p-5 border border-gray-200 shadow-sm">
                 <h3 className="text-sm font-bold text-gray-800 mb-4">기능별 누적 사용량</h3>
                 <div className="space-y-4">
                   {Object.entries(stats.totalByFeature).map(([feature, count]) => {
@@ -257,7 +257,7 @@ export default function AdminStatsPage() {
               </div>
 
               {/* 이번 달 사용량 */}
-              <div className="bg-white rounded-xl p-5 border-2 border-gray-200 shadow-sm">
+              <div className="bg-white rounded-xl p-5 border border-gray-200 shadow-sm">
                 <h3 className="text-sm font-bold text-gray-800 mb-4">이번 달 사용량 <span className="text-gray-400 font-normal">({stats.currentMonth})</span></h3>
                 <div className="space-y-4">
                   {Object.entries(stats.thisMonthUsage).map(([feature, count]) => {
@@ -285,7 +285,7 @@ export default function AdminStatsPage() {
 
             {/* 3행: 월별 추이 차트 */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-5">
-              <div className="bg-white rounded-xl p-5 border-2 border-gray-200 shadow-sm">
+              <div className="bg-white rounded-xl p-5 border border-gray-200 shadow-sm">
                 <h3 className="text-sm font-bold text-gray-800 mb-4">월별 사용량 추이 <span className="text-gray-400 font-normal">(최근 6개월)</span></h3>
                 <div className="flex items-end gap-3 h-44">
                   {stats.monthlyTrend.map((m) => (
@@ -313,7 +313,7 @@ export default function AdminStatsPage() {
                 </div>
               </div>
 
-              <div className="bg-white rounded-xl p-5 border-2 border-gray-200 shadow-sm">
+              <div className="bg-white rounded-xl p-5 border border-gray-200 shadow-sm">
                 <h3 className="text-sm font-bold text-gray-800 mb-4">월별 가입자 추이 <span className="text-gray-400 font-normal">(최근 6개월)</span></h3>
                 <div className="flex items-end gap-3 h-44">
                   {stats.signupTrend.map((m) => {
@@ -336,7 +336,7 @@ export default function AdminStatsPage() {
             </div>
 
             {/* 4행: 상위 사용자 */}
-            <div className="bg-white rounded-xl border-2 border-gray-200 shadow-sm overflow-hidden">
+            <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
               <div className="px-5 py-4 border-b border-gray-100 flex items-center justify-between">
                 <h3 className="text-sm font-bold text-gray-800">상위 사용자 TOP 10 <span className="text-gray-400 font-normal">(누적 사용량 기준)</span></h3>
               </div>

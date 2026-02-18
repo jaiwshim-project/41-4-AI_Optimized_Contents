@@ -9,7 +9,7 @@ export default function FloatingQR() {
   return (
     <div className="fixed bottom-6 right-6 z-50">
       {expanded && (
-        <div className="mb-2 bg-white rounded-2xl shadow-2xl border-2 border-indigo-200 p-3 animate-in fade-in slide-in-from-bottom-2">
+        <div className="mb-2 bg-white rounded-2xl shadow-2xl border border-indigo-200 p-3 animate-in fade-in slide-in-from-bottom-2">
           <div className="flex items-center justify-between mb-2">
             <span className="text-[10px] font-semibold text-indigo-700">QR 코드로 접속하기</span>
             <button

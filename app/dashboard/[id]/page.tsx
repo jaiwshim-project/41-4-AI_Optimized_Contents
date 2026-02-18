@@ -387,7 +387,7 @@ export default function DashboardDetailPage() {
         {/* 뒤로가기 */}
         <button
           onClick={() => router.push('/dashboard')}
-          className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-600 bg-white rounded-xl border-2 border-gray-200 hover:bg-gray-50 hover:border-indigo-300 hover:shadow-md transition-all"
+          className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-600 bg-white rounded-xl border border-gray-200 hover:bg-gray-50 hover:border-indigo-300 hover:shadow-md transition-all"
         >
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -396,7 +396,7 @@ export default function DashboardDetailPage() {
         </button>
 
         {/* 헤더 정보 */}
-        <div className="bg-white rounded-xl shadow-sm border-2 border-indigo-200 p-5">
+        <div className="bg-white rounded-xl shadow-sm border border-indigo-200 p-5">
           <div className="flex items-center justify-between flex-wrap gap-2">
             <div>
               <h2 className="text-lg font-bold text-gray-900">{item.title}</h2>
@@ -418,7 +418,7 @@ export default function DashboardDetailPage() {
               {/* 블로그 붙여넣기 복사 */}
               <button
                 onClick={handleCopyBlog}
-                className={`inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl transition-all duration-200 border-2 hover:shadow-md hover:scale-[1.03] ${
+                className={`inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl transition-all duration-200 border hover:shadow-md hover:scale-[1.03] ${
                   copiedBlog
                     ? 'bg-emerald-500 text-white border-emerald-300'
                     : 'bg-gradient-to-r from-indigo-500 to-purple-600 text-white border-indigo-300 hover:from-indigo-600 hover:to-purple-700'
@@ -432,7 +432,7 @@ export default function DashboardDetailPage() {
               {/* 제목 복사 */}
               <button
                 onClick={handleCopyTitle}
-                className={`inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl transition-all duration-200 border-2 hover:shadow-md hover:scale-[1.03] ${
+                className={`inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl transition-all duration-200 border hover:shadow-md hover:scale-[1.03] ${
                   copiedTitle
                     ? 'bg-emerald-500 text-white border-emerald-300'
                     : 'border-amber-300 bg-amber-50 text-amber-700 hover:bg-amber-100'
@@ -446,7 +446,7 @@ export default function DashboardDetailPage() {
               {/* 본문 복사 */}
               <button
                 onClick={handleCopyContent}
-                className={`inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl transition-all duration-200 border-2 hover:shadow-md hover:scale-[1.03] ${
+                className={`inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl transition-all duration-200 border hover:shadow-md hover:scale-[1.03] ${
                   copiedContent
                     ? 'bg-emerald-500 text-white border-emerald-300'
                     : 'border-sky-300 bg-sky-50 text-sky-700 hover:bg-sky-100'
@@ -461,7 +461,7 @@ export default function DashboardDetailPage() {
               <button
                 onClick={handleCopyAsImage}
                 disabled={isCapturing}
-                className={`inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl transition-all duration-200 border-2 hover:shadow-md hover:scale-[1.03] disabled:opacity-50 ${
+                className={`inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl transition-all duration-200 border hover:shadow-md hover:scale-[1.03] disabled:opacity-50 ${
                   copiedImage
                     ? 'bg-emerald-500 text-white border-emerald-300'
                     : 'border-emerald-300 bg-emerald-50 text-emerald-700 hover:bg-emerald-100'
@@ -482,7 +482,7 @@ export default function DashboardDetailPage() {
               {/* 본문 수정 */}
               <button
                 onClick={isEditing ? handleSaveEdit : handleStartEdit}
-                className={`inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl transition-all duration-200 border-2 hover:shadow-md hover:scale-[1.03] ${
+                className={`inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl transition-all duration-200 border hover:shadow-md hover:scale-[1.03] ${
                   savedMessage
                     ? 'bg-emerald-500 text-white border-emerald-300'
                     : isEditing
@@ -498,7 +498,7 @@ export default function DashboardDetailPage() {
               {isEditing && (
                 <button
                   onClick={() => setIsEditing(false)}
-                  className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl transition-all duration-200 border-2 border-gray-300 bg-gray-50 text-gray-600 hover:bg-gray-100 hover:shadow-md hover:scale-[1.03]"
+                  className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl transition-all duration-200 border border-gray-300 bg-gray-50 text-gray-600 hover:bg-gray-100 hover:shadow-md hover:scale-[1.03]"
                 >
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -511,7 +511,7 @@ export default function DashboardDetailPage() {
                 <div className="flex items-center gap-2">
                   <button
                     onClick={() => handleRevisionChange(null)}
-                    className={`px-3 py-1.5 text-xs font-medium rounded-lg border-2 transition-all hover:shadow-md ${
+                    className={`px-3 py-1.5 text-xs font-medium rounded-lg border transition-all hover:shadow-md ${
                       !revisionId ? 'bg-indigo-600 text-white border-indigo-300' : 'bg-gray-50 text-gray-600 border-gray-200 hover:border-indigo-300'
                     }`}
                   >
@@ -521,7 +521,7 @@ export default function DashboardDetailPage() {
                     <button
                       key={rev.id}
                       onClick={() => handleRevisionChange(rev.id)}
-                      className={`px-3 py-1.5 text-xs font-medium rounded-lg border-2 transition-all hover:shadow-md ${
+                      className={`px-3 py-1.5 text-xs font-medium rounded-lg border transition-all hover:shadow-md ${
                         revisionId === rev.id ? 'bg-violet-600 text-white border-violet-300' : 'bg-gray-50 text-gray-600 border-gray-200 hover:border-violet-300'
                       }`}
                     >
@@ -536,7 +536,7 @@ export default function DashboardDetailPage() {
 
         {/* 분석 결과 점수 (분석인 경우) */}
         {!isGeneration && item.analysisResult && (
-          <div className="bg-white rounded-xl shadow-sm border-2 border-sky-200 p-5">
+          <div className="bg-white rounded-xl shadow-sm border border-sky-200 p-5">
             <h3 className="text-sm font-semibold text-gray-900 mb-3">분석 점수</h3>
             <div className="grid grid-cols-3 gap-3">
               <div className="text-center p-3 bg-blue-50 rounded-xl border border-blue-200">
@@ -556,7 +556,7 @@ export default function DashboardDetailPage() {
         )}
 
         {/* 콘텐츠 */}
-        <div className="bg-white rounded-xl shadow-sm border-2 border-indigo-200 p-5">
+        <div className="bg-white rounded-xl shadow-sm border border-indigo-200 p-5">
           {isEditing ? (
             <div>
               <div className="flex items-center gap-2 mb-3">
@@ -567,7 +567,7 @@ export default function DashboardDetailPage() {
                 <span className="text-xs text-gray-400">마크다운 형식으로 편집하세요</span>
               </div>
               {/* 편집 도구 바 */}
-              <div className="sticky top-0 z-20 bg-pink-50 border-2 border-violet-200 rounded-t-xl px-3 py-2 shadow-sm">
+              <div className="sticky top-0 z-20 bg-pink-50 border border-violet-200 rounded-t-xl px-3 py-2 shadow-sm">
                 <div className="flex items-center gap-1 flex-wrap">
                   <button type="button" onClick={() => insertMarkdown('**', '**', '굵은 텍스트')} className="px-2.5 py-1.5 text-xs font-bold text-gray-700 bg-white hover:bg-violet-100 hover:text-violet-700 rounded-lg transition-colors border border-pink-200" title="굵게">B</button>
                   <button type="button" onClick={() => insertMarkdown('*', '*', '기울임 텍스트')} className="px-2.5 py-1.5 text-xs italic text-gray-700 bg-white hover:bg-violet-100 hover:text-violet-700 rounded-lg transition-colors border border-pink-200" title="기울임">I</button>
@@ -656,7 +656,7 @@ export default function DashboardDetailPage() {
                 ref={textareaRef}
                 value={editContent}
                 onChange={(e) => setEditContent(e.target.value)}
-                className="w-full min-h-[500px] px-4 py-3 border-2 border-t-0 border-violet-200 rounded-b-xl text-sm font-mono leading-relaxed focus:outline-none focus:ring-2 focus:ring-violet-400 focus:border-transparent resize-y bg-gray-50"
+                className="w-full min-h-[500px] px-4 py-3 border border-t-0 border-violet-200 rounded-b-xl text-sm font-mono leading-relaxed focus:outline-none focus:ring-2 focus:ring-violet-400 focus:border-transparent resize-y bg-gray-50"
               />
             </div>
           ) : (

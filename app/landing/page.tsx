@@ -151,21 +151,21 @@ export default function PromotionLandingPage() {
               <span className="text-sm font-bold text-gray-900">AIO/GEO Optimizer</span>
             </Link>
             <div className="flex items-center gap-2">
-              <Link href="/" className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium text-gray-700 bg-gray-50 rounded-lg border-2 border-indigo-200 hover:border-indigo-400 hover:bg-indigo-50 transition-all">
+              <Link href="/" className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium text-gray-700 bg-gray-50 rounded-lg border border-indigo-200 hover:border-indigo-400 hover:bg-indigo-50 transition-all">
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
                 </svg>
                 홈
               </Link>
-              <Link href="/analyze" className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium text-gray-700 bg-gray-50 rounded-lg border-2 border-blue-200 hover:border-blue-400 hover:bg-blue-50 transition-all">
+              <Link href="/analyze" className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium text-gray-700 bg-gray-50 rounded-lg border border-blue-200 hover:border-blue-400 hover:bg-blue-50 transition-all">
                 콘텐츠 분석
               </Link>
-              <Link href="/generate" className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium text-gray-700 bg-gray-50 rounded-lg border-2 border-purple-200 hover:border-purple-400 hover:bg-purple-50 transition-all">
+              <Link href="/generate" className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium text-gray-700 bg-gray-50 rounded-lg border border-purple-200 hover:border-purple-400 hover:bg-purple-50 transition-all">
                 콘텐츠 생성
               </Link>
               <Link
                 href="/analyze"
-                className="inline-flex items-center gap-1.5 px-5 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white text-sm font-semibold rounded-xl hover:from-blue-700 hover:to-indigo-700 transition-all shadow-md border-2 border-sky-300"
+                className="inline-flex items-center gap-1.5 px-5 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white text-sm font-semibold rounded-xl hover:from-blue-700 hover:to-indigo-700 transition-all shadow-md border border-sky-300"
               >
                 무료로 시작
               </Link>
@@ -257,7 +257,7 @@ export default function PromotionLandingPage() {
 
       {/* 초기 테스터 모집 배너 */}
       <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-10">
-        <div className="relative bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 rounded-xl p-5 text-white shadow-lg border-2 border-emerald-300 overflow-hidden">
+        <div className="relative bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 rounded-xl p-5 text-white shadow-lg border border-emerald-300 overflow-hidden">
           <div className="absolute -right-6 -top-6 w-28 h-28 bg-white/10 rounded-full" />
           <div className="absolute -left-4 -bottom-4 w-20 h-20 bg-white/5 rounded-full" />
           <div className="relative flex flex-col sm:flex-row items-center gap-4">
@@ -294,7 +294,7 @@ export default function PromotionLandingPage() {
           <h2 className="text-lg font-extrabold text-gray-900 mb-2">서비스 소개 영상</h2>
           <p className="text-sm text-gray-500">3분만에 AIO/GEO Optimizer의 핵심 기능을 확인하세요</p>
         </div>
-        <div className="relative rounded-xl overflow-hidden shadow-lg border-2 border-indigo-200">
+        <div className="relative rounded-xl overflow-hidden shadow-lg border border-indigo-200">
           {/* TODO: YouTube 영상 ID를 실제 값으로 교체하세요 */}
           <iframe
             className="w-full aspect-video"
@@ -308,7 +308,7 @@ export default function PromotionLandingPage() {
 
       {/* 자료 이미지 섹션 */}
       <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-        <img src="/ai-search-choice.png" alt="AI 검색 엔진의 선택" className="w-full rounded-xl shadow-md border-2 border-indigo-200" />
+        <img src="/ai-search-choice.png" alt="AI 검색 엔진의 선택" className="w-full rounded-xl shadow-md border border-indigo-200" />
       </section>
 
       {/* ============================================ */}
@@ -328,7 +328,7 @@ export default function PromotionLandingPage() {
           {painPoints.map((point) => (
             <div
               key={point.title}
-              className="bg-white rounded-xl p-5 shadow-sm border-2 border-gray-100 hover:border-gray-200 hover:shadow-md transition-all group"
+              className="bg-white rounded-xl p-5 shadow-sm border border-gray-100 hover:border-gray-200 hover:shadow-md transition-all group"
             >
               <div className={`w-12 h-12 bg-${point.color}-100 rounded-xl flex items-center justify-center mb-5 group-hover:scale-110 transition-transform`}>
                 <svg className={`w-6 h-6 text-${point.color}-600`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -395,7 +395,7 @@ export default function PromotionLandingPage() {
 
         <div className="space-y-3">
           {beforeAfter.map((item) => (
-            <div key={item.category} className="bg-white rounded-xl shadow-sm border-2 border-gray-100 overflow-hidden">
+            <div key={item.category} className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
               <div className="grid grid-cols-1 md:grid-cols-[140px_1fr_auto_1fr] items-center">
                 <div className="bg-gradient-to-br from-gray-800 to-gray-900 px-5 py-4 md:py-6 text-center">
                   <span className="text-xs font-bold text-gray-300 uppercase tracking-wide">{item.category}</span>
@@ -480,7 +480,7 @@ export default function PromotionLandingPage() {
           {targetAudiences.map((ta) => (
             <div
               key={ta.who}
-              className={`bg-white rounded-xl shadow-sm border-2 border-${ta.color}-100 hover:border-${ta.color}-300 hover:shadow-md transition-all p-5`}
+              className={`bg-white rounded-xl shadow-sm border border-${ta.color}-100 hover:border-${ta.color}-300 hover:shadow-md transition-all p-5`}
             >
               <div className="flex items-center gap-3 mb-3">
                 <div className={`w-11 h-11 bg-gradient-to-br from-${ta.color}-500 to-${ta.color}-600 rounded-xl flex items-center justify-center`}>
@@ -639,7 +639,7 @@ export default function PromotionLandingPage() {
             ].map((industry) => (
               <div
                 key={industry.name}
-                className={`group bg-white rounded-xl p-5 border-2 ${industry.borderClass} hover:shadow-lg transition-all duration-300 cursor-default`}
+                className={`group bg-white rounded-xl p-5 border ${industry.borderClass} hover:shadow-lg transition-all duration-300 cursor-default`}
               >
                 <div className="text-lg mb-3">{industry.emoji}</div>
                 <h3 className="text-sm font-bold text-gray-900 mb-2">{industry.name}</h3>
@@ -704,7 +704,7 @@ export default function PromotionLandingPage() {
                 { step: '03', title: '개선 제안', desc: '우선순위별 구체적인 최적화 액션 아이템 제시', color: 'amber', tags: [] },
                 { step: '04', title: 'AI 최적화 변환', desc: '분석 결과 바탕으로 AI가 최적화 콘텐츠를 자동 생성', color: 'rose', tags: ['최적화 콘텐츠', '변경사항 요약', '예상 점수'] },
               ].map((s) => (
-                <div key={s.step} className={`relative rounded-xl p-5 border-2 border-${s.color}-200 bg-${s.color}-50/30 hover:border-${s.color}-400 hover:shadow-md transition-all`}>
+                <div key={s.step} className={`relative rounded-xl p-5 border border-${s.color}-200 bg-${s.color}-50/30 hover:border-${s.color}-400 hover:shadow-md transition-all`}>
                   <div className={`text-lg font-extrabold text-${s.color}-200 mb-2`}>{s.step}</div>
                   <h4 className="text-sm font-bold text-gray-900 mb-1">{s.title}</h4>
                   <p className="text-xs text-gray-600 leading-relaxed">{s.desc}</p>
@@ -737,7 +737,7 @@ export default function PromotionLandingPage() {
               { title: '시리즈 기획', desc: '하나의 주제로 3~12편의 연재 시리즈를 자동 기획, 에피소드별 키워드·개요 제공', color: 'violet', icon: 'M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10' },
               { title: 'AI 인포그래픽 이미지', desc: 'Gemini AI로 콘텐츠에 맞는 인포그래픽 이미지 3장을 자동 생성하여 본문에 삽입', color: 'sky', icon: 'M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z' },
             ].map((feat) => (
-              <div key={feat.title} className={`rounded-xl p-5 border-2 border-${feat.color}-100 bg-${feat.color}-50/30 hover:border-${feat.color}-300 hover:shadow-md transition-all`}>
+              <div key={feat.title} className={`rounded-xl p-5 border border-${feat.color}-100 bg-${feat.color}-50/30 hover:border-${feat.color}-300 hover:shadow-md transition-all`}>
                 <div className={`w-11 h-11 bg-gradient-to-br from-${feat.color}-500 to-${feat.color}-600 rounded-xl flex items-center justify-center mb-3`}>
                   <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={feat.icon} />
@@ -755,7 +755,7 @@ export default function PromotionLandingPage() {
       {/* 에이전시 특별 섹션 */}
       {/* ============================================ */}
       <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
-        <div className="bg-gradient-to-br from-violet-50 to-indigo-50 rounded-2xl border-2 border-violet-200 p-5 md:p-12">
+        <div className="bg-gradient-to-br from-violet-50 to-indigo-50 rounded-2xl border border-violet-200 p-5 md:p-12">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
             <div>
               <div className="inline-flex items-center gap-2 px-3 py-1 bg-violet-100 text-violet-700 text-xs font-bold rounded-full mb-3">

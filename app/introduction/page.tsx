@@ -85,7 +85,7 @@ export default function IntroductionPage() {
             <div className="flex items-center gap-2">
               <button
                 onClick={handleCopyAll}
-                className={`inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl transition-all shadow-sm border-2 hover:shadow-md hover:scale-[1.03] ${
+                className={`inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl transition-all shadow-sm border hover:shadow-md hover:scale-[1.03] ${
                   copiedAll
                     ? 'bg-emerald-500 text-white border-emerald-300'
                     : 'bg-gradient-to-r from-indigo-500 to-purple-600 text-white border-indigo-300 hover:from-indigo-600 hover:to-purple-700'
@@ -98,7 +98,7 @@ export default function IntroductionPage() {
               </button>
               <button
                 onClick={handleDownloadPdf}
-                className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-gradient-to-r from-rose-500 to-pink-600 rounded-xl hover:from-rose-600 hover:to-pink-700 transition-all shadow-sm border-2 border-rose-300 hover:shadow-md hover:scale-[1.03]"
+                className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-gradient-to-r from-rose-500 to-pink-600 rounded-xl hover:from-rose-600 hover:to-pink-700 transition-all shadow-sm border border-rose-300 hover:shadow-md hover:scale-[1.03]"
               >
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
@@ -107,7 +107,7 @@ export default function IntroductionPage() {
               </button>
               <button
                 onClick={handleDownloadDocx}
-                className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-gradient-to-r from-blue-600 to-indigo-600 rounded-xl hover:from-blue-700 hover:to-indigo-700 transition-all shadow-sm border-2 border-sky-300 hover:shadow-md hover:scale-[1.03]"
+                className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-gradient-to-r from-blue-600 to-indigo-600 rounded-xl hover:from-blue-700 hover:to-indigo-700 transition-all shadow-sm border border-sky-300 hover:shadow-md hover:scale-[1.03]"
               >
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
@@ -116,7 +116,7 @@ export default function IntroductionPage() {
               </button>
               <Link
                 href="/"
-                className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-800 bg-gray-50 rounded-xl hover:bg-gray-100 transition-all border-2 border-violet-300 hover:border-violet-400"
+                className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-800 bg-gray-50 rounded-xl hover:bg-gray-100 transition-all border border-violet-300 hover:border-violet-400"
               >
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
@@ -144,7 +144,7 @@ export default function IntroductionPage() {
           </section>
 
           {/* 시장 변화: 왜 필요한가? */}
-          <section className="bg-white rounded-xl shadow-sm border-2 border-indigo-200 p-6">
+          <section className="bg-white rounded-xl shadow-sm border border-indigo-200 p-6">
             <h2 className="text-sm font-bold mb-3 flex items-center gap-2">
               <span className="w-8 h-8 bg-gradient-to-br from-indigo-500 to-blue-600 text-white rounded-lg flex items-center justify-center text-sm font-bold shadow-sm">1</span>
               <span className="bg-gradient-to-r from-indigo-700 to-blue-600 bg-clip-text text-transparent">왜 AIO/GEO 최적화가 필요한가?</span>
@@ -183,7 +183,7 @@ export default function IntroductionPage() {
           </section>
 
           {/* 핵심 기능 */}
-          <section className="bg-white rounded-xl shadow-sm border-2 border-purple-200 p-6">
+          <section className="bg-white rounded-xl shadow-sm border border-purple-200 p-6">
             <h2 className="text-sm font-bold mb-3 flex items-center gap-2">
               <span className="w-8 h-8 bg-gradient-to-br from-purple-500 to-violet-600 text-white rounded-lg flex items-center justify-center text-sm font-bold shadow-sm">2</span>
               <span className="bg-gradient-to-r from-purple-700 to-violet-600 bg-clip-text text-transparent">핵심 기능</span>
@@ -215,7 +215,7 @@ export default function IntroductionPage() {
           </section>
 
           {/* 고객 가치 */}
-          <section className="bg-white rounded-xl shadow-sm border-2 border-rose-200 p-6">
+          <section className="bg-white rounded-xl shadow-sm border border-rose-200 p-6">
             <h2 className="text-sm font-bold mb-3 flex items-center gap-2">
               <span className="w-8 h-8 bg-gradient-to-br from-rose-500 to-pink-600 text-white rounded-lg flex items-center justify-center text-sm font-bold shadow-sm">3</span>
               <span className="bg-gradient-to-r from-rose-700 to-pink-600 bg-clip-text text-transparent">고객이 얻는 가치</span>
@@ -240,7 +240,7 @@ export default function IntroductionPage() {
           </section>
 
           {/* 경쟁 차별성 */}
-          <section className="bg-white rounded-xl shadow-sm border-2 border-amber-200 p-6">
+          <section className="bg-white rounded-xl shadow-sm border border-amber-200 p-6">
             <h2 className="text-sm font-bold mb-3 flex items-center gap-2">
               <span className="w-8 h-8 bg-gradient-to-br from-amber-500 to-orange-600 text-white rounded-lg flex items-center justify-center text-sm font-bold shadow-sm">4</span>
               <span className="bg-gradient-to-r from-amber-700 to-orange-600 bg-clip-text text-transparent">경쟁 차별성</span>
@@ -279,7 +279,7 @@ export default function IntroductionPage() {
           </section>
 
           {/* 활용 시나리오 */}
-          <section className="bg-white rounded-xl shadow-sm border-2 border-cyan-200 p-6">
+          <section className="bg-white rounded-xl shadow-sm border border-cyan-200 p-6">
             <h2 className="text-sm font-bold mb-3 flex items-center gap-2">
               <span className="w-8 h-8 bg-gradient-to-br from-cyan-500 to-teal-600 text-white rounded-lg flex items-center justify-center text-sm font-bold shadow-sm">5</span>
               <span className="bg-gradient-to-r from-cyan-700 to-teal-600 bg-clip-text text-transparent">활용 시나리오</span>
@@ -310,7 +310,7 @@ export default function IntroductionPage() {
               <Link href="/generate" className="inline-flex items-center gap-2 px-6 py-3 bg-white text-indigo-700 font-bold rounded-xl hover:bg-gray-100 transition-all shadow-lg">
                 콘텐츠 생성 시작하기
               </Link>
-              <Link href="/analyze" className="inline-flex items-center gap-2 px-6 py-3 bg-white/20 text-white font-bold rounded-xl hover:bg-white/30 transition-all border-2 border-white/40">
+              <Link href="/analyze" className="inline-flex items-center gap-2 px-6 py-3 bg-white/20 text-white font-bold rounded-xl hover:bg-white/30 transition-all border border-white/40">
                 콘텐츠 분석하기
               </Link>
             </div>

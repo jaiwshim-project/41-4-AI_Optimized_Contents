@@ -82,7 +82,7 @@ export default function PricingPage() {
         </div>
 
         {/* 프로모션 배너 */}
-        <div className="mb-6 bg-gradient-to-r from-orange-500 via-red-500 to-pink-500 rounded-xl p-5 text-white shadow-lg border-2 border-orange-300 relative overflow-hidden">
+        <div className="mb-6 bg-gradient-to-r from-orange-500 via-red-500 to-pink-500 rounded-xl p-5 text-white shadow-lg border border-orange-300 relative overflow-hidden">
           <div className="absolute -right-4 -top-4 w-24 h-24 bg-white/10 rounded-full" />
           <div className="absolute -right-8 -bottom-8 w-32 h-32 bg-white/5 rounded-full" />
           <div className="relative flex items-center gap-4">
@@ -103,7 +103,7 @@ export default function PricingPage() {
 
         {/* 관리자 배너 */}
         {!loading && currentPlan === 'admin' && (
-          <div className="mb-5 bg-gradient-to-r from-red-500 to-rose-500 rounded-xl p-5 text-white shadow-lg border-2 border-red-300">
+          <div className="mb-5 bg-gradient-to-r from-red-500 to-rose-500 rounded-xl p-5 text-white shadow-lg border border-red-300">
             <div className="flex items-center gap-3">
               <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -125,7 +125,7 @@ export default function PricingPage() {
             return (
               <div
                 key={plan.id}
-                className={`relative rounded-xl p-5 border-2 ${plan.border} ${plan.bg} ${
+                className={`relative rounded-xl p-5 border ${plan.border} ${plan.bg} ${
                   isCurrent ? 'ring-2 ring-indigo-400 shadow-lg' : 'shadow-sm'
                 } transition-all`}
               >
@@ -183,7 +183,7 @@ export default function PricingPage() {
                   </button>
                 ) : (
                   <button
-                    className={`w-full py-2.5 bg-gradient-to-r ${plan.color} text-white font-semibold rounded-xl hover:opacity-90 transition-all shadow-md border-2 ${plan.border} text-sm`}
+                    className={`w-full py-2.5 bg-gradient-to-r ${plan.color} text-white font-semibold rounded-xl hover:opacity-90 transition-all shadow-md border ${plan.border} text-sm`}
                   >
                     준비 중
                   </button>
@@ -195,7 +195,7 @@ export default function PricingPage() {
 
         {/* 이번 달 사용량 */}
         {!loading && usage.length > 0 && (
-          <div className="bg-white rounded-xl shadow-sm border-2 border-red-400 p-5">
+          <div className="bg-white rounded-xl shadow-sm border border-red-400 p-5">
             <h3 className="text-sm font-bold text-gray-900 mb-3 flex items-center gap-2">
               이번 달 사용량
               <span className={`px-2.5 py-0.5 text-xs font-bold rounded-full border ${
@@ -214,7 +214,7 @@ export default function PricingPage() {
                 const percentage = isUnlimited ? 0 : Math.min((u.current / u.limit) * 100, 100);
                 const isOver = !isUnlimited && u.current >= u.limit;
                 return (
-                  <div key={u.feature} className="bg-gray-50 rounded-xl p-4 border-2 border-violet-300">
+                  <div key={u.feature} className="bg-gray-50 rounded-xl p-4 border border-violet-300">
                     <p className="text-sm font-medium text-gray-700 mb-2">{u.label}</p>
                     <div className="flex items-end gap-1 mb-2">
                       <span className={`text-xl font-bold ${isOver ? 'text-red-600' : 'text-gray-900'}`}>
@@ -240,7 +240,7 @@ export default function PricingPage() {
         )}
 
         {/* 비교표 */}
-        <div className="mt-8 bg-white rounded-xl shadow-sm border-2 border-gray-200 overflow-hidden">
+        <div className="mt-8 bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
           <table className="w-full text-sm">
             <thead>
               <tr className="bg-gray-50 border-b border-gray-200">

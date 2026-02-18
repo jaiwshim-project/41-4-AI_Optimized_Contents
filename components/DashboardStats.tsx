@@ -117,19 +117,19 @@ export default function DashboardStats({ history }: DashboardStatsProps) {
     <div className="space-y-4">
       {/* 요약 카드 */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-        <div className="bg-gradient-to-br from-indigo-50 to-blue-50 rounded-xl p-4 border-2 border-indigo-200">
+        <div className="bg-gradient-to-br from-indigo-50 to-blue-50 rounded-xl p-4 border border-indigo-200">
           <p className="text-[10px] text-indigo-600 font-medium">총 콘텐츠</p>
           <p className="text-2xl font-bold text-indigo-800">{stats.total}</p>
         </div>
-        <div className="bg-gradient-to-br from-purple-50 to-violet-50 rounded-xl p-4 border-2 border-purple-200">
+        <div className="bg-gradient-to-br from-purple-50 to-violet-50 rounded-xl p-4 border border-purple-200">
           <p className="text-[10px] text-purple-600 font-medium">생성</p>
           <p className="text-2xl font-bold text-purple-800">{stats.generations}</p>
         </div>
-        <div className="bg-gradient-to-br from-emerald-50 to-green-50 rounded-xl p-4 border-2 border-emerald-200">
+        <div className="bg-gradient-to-br from-emerald-50 to-green-50 rounded-xl p-4 border border-emerald-200">
           <p className="text-[10px] text-emerald-600 font-medium">분석</p>
           <p className="text-2xl font-bold text-emerald-800">{stats.analyses}</p>
         </div>
-        <div className="bg-gradient-to-br from-amber-50 to-yellow-50 rounded-xl p-4 border-2 border-amber-200">
+        <div className="bg-gradient-to-br from-amber-50 to-yellow-50 rounded-xl p-4 border border-amber-200">
           <p className="text-[10px] text-amber-600 font-medium">평균 AIO 점수</p>
           <p className="text-2xl font-bold text-amber-800">{stats.avgScore > 0 ? stats.avgScore : '-'}<span className="text-sm font-normal">{stats.avgScore > 0 ? '점' : ''}</span></p>
         </div>
@@ -138,7 +138,7 @@ export default function DashboardStats({ history }: DashboardStatsProps) {
       {/* 차트 영역 */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
         {/* 월별 생성 추이 */}
-        <div className="bg-white rounded-xl p-4 border-2 border-blue-200">
+        <div className="bg-white rounded-xl p-4 border border-blue-200">
           <h3 className="text-sm font-bold text-gray-800 mb-3 flex items-center gap-2">
             <svg className="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
             월별 콘텐츠 생성 추이
@@ -158,7 +158,7 @@ export default function DashboardStats({ history }: DashboardStatsProps) {
         </div>
 
         {/* 카테고리 분포 */}
-        <div className="bg-white rounded-xl p-4 border-2 border-pink-200">
+        <div className="bg-white rounded-xl p-4 border border-pink-200">
           <h3 className="text-sm font-bold text-gray-800 mb-3 flex items-center gap-2">
             <svg className="w-4 h-4 text-pink-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z" /></svg>
             카테고리 분포

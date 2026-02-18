@@ -52,7 +52,7 @@ export default function DashboardPage() {
         </div>
 
         {/* 통계 */}
-        <div className="bg-white rounded-xl shadow-sm border-2 border-violet-200 overflow-hidden">
+        <div className="bg-white rounded-xl shadow-sm border border-violet-200 overflow-hidden">
           <button
             onClick={() => setShowStats(!showStats)}
             className="w-full flex items-center justify-between px-6 py-3 hover:bg-violet-50 transition-colors"
@@ -71,10 +71,10 @@ export default function DashboardPage() {
         </div>
 
         {/* 탭 */}
-        <div className="bg-white rounded-xl shadow-sm border-2 border-indigo-200 p-1.5 flex gap-1">
+        <div className="bg-white rounded-xl shadow-sm border border-indigo-200 p-1.5 flex gap-1">
           <button
             onClick={() => setActiveTab('analysis')}
-            className={`flex-1 px-4 py-2.5 rounded-xl text-sm font-medium transition-all border-2 hover:shadow-md ${
+            className={`flex-1 px-4 py-2.5 rounded-xl text-sm font-medium transition-all border hover:shadow-md ${
               activeTab === 'analysis'
                 ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-sm border-sky-300'
                 : 'text-gray-600 hover:bg-gray-50 border-transparent hover:border-indigo-200'
@@ -90,7 +90,7 @@ export default function DashboardPage() {
           </button>
           <button
             onClick={() => setActiveTab('generation')}
-            className={`flex-1 px-4 py-2.5 rounded-xl text-sm font-medium transition-all border-2 hover:shadow-md ${
+            className={`flex-1 px-4 py-2.5 rounded-xl text-sm font-medium transition-all border hover:shadow-md ${
               activeTab === 'generation'
                 ? 'bg-gradient-to-r from-purple-600 to-violet-600 text-white shadow-sm border-purple-300'
                 : 'text-gray-600 hover:bg-gray-50 border-transparent hover:border-purple-200'
@@ -108,7 +108,7 @@ export default function DashboardPage() {
 
         {/* 이력 목록 */}
         {filteredHistory.length === 0 ? (
-          <div className="bg-white rounded-xl shadow-sm border-2 border-gray-200 p-8 text-center">
+          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-8 text-center">
             <div className="w-16 h-16 bg-gradient-to-br from-gray-100 to-gray-200 rounded-xl flex items-center justify-center mx-auto mb-3">
               <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
@@ -124,7 +124,7 @@ export default function DashboardPage() {
             {filteredHistory.map((item) => (
               <div key={item.id}>
                 {/* 메인 항목 */}
-                <div className="bg-white rounded-xl shadow-sm border-2 border-gray-200 hover:border-indigo-300 hover:shadow-md transition-all">
+                <div className="bg-white rounded-xl shadow-sm border border-gray-200 hover:border-indigo-300 hover:shadow-md transition-all">
                   <div className="flex items-center gap-3 px-5 py-3">
                     {/* 날짜 */}
                     <div className="text-center min-w-[60px]">
@@ -171,7 +171,7 @@ export default function DashboardPage() {
                     <div className="flex items-center gap-2">
                       <button
                         onClick={() => router.push(`/dashboard/${item.id}`)}
-                        className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg bg-indigo-50 text-indigo-600 border-2 border-indigo-200 hover:bg-indigo-100 hover:border-indigo-400 hover:shadow-md transition-all"
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg bg-indigo-50 text-indigo-600 border border-indigo-200 hover:bg-indigo-100 hover:border-indigo-400 hover:shadow-md transition-all"
                       >
                         <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -181,7 +181,7 @@ export default function DashboardPage() {
                       </button>
                       <button
                         onClick={() => handleDelete(item.id)}
-                        className="inline-flex items-center p-1.5 text-xs rounded-lg text-gray-400 border-2 border-transparent hover:text-red-500 hover:bg-red-50 hover:border-red-200 hover:shadow-md transition-all"
+                        className="inline-flex items-center p-1.5 text-xs rounded-lg text-gray-400 border border-transparent hover:text-red-500 hover:bg-red-50 hover:border-red-200 hover:shadow-md transition-all"
                       >
                         <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
@@ -197,7 +197,7 @@ export default function DashboardPage() {
                     {item.revisions.map((rev, i) => (
                       <div
                         key={rev.id}
-                        className="bg-violet-50 rounded-xl border-2 border-violet-200 hover:border-violet-400 hover:shadow-md transition-all"
+                        className="bg-violet-50 rounded-xl border border-violet-200 hover:border-violet-400 hover:shadow-md transition-all"
                       >
                         <div className="flex items-center gap-4 px-5 py-3">
                           <div className="text-center min-w-[60px]">
@@ -211,7 +211,7 @@ export default function DashboardPage() {
                           </div>
                           <button
                             onClick={() => router.push(`/dashboard/${item.id}?revision=${rev.id}`)}
-                            className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg bg-white text-violet-600 border-2 border-violet-200 hover:bg-violet-100 hover:border-violet-400 hover:shadow-md transition-all"
+                            className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg bg-white text-violet-600 border border-violet-200 hover:bg-violet-100 hover:border-violet-400 hover:shadow-md transition-all"
                           >
                             <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />

@@ -21,7 +21,7 @@ export default function ScoreOverview({ result }: ScoreOverviewProps) {
   const ringColor = result.overallScore >= 80 ? 'stroke-emerald-500' : result.overallScore >= 60 ? 'stroke-blue-500' : result.overallScore >= 40 ? 'stroke-amber-500' : 'stroke-red-500';
 
   return (
-    <div className="bg-white rounded-2xl shadow-sm border-2 border-indigo-200 overflow-hidden">
+    <div className="bg-white rounded-2xl shadow-sm border border-indigo-200 overflow-hidden">
       {/* 헤더 */}
       <div className="px-4 py-3 bg-gradient-to-r from-indigo-50 to-violet-50 border-b border-indigo-100">
         <div className="flex items-center gap-3">
@@ -63,11 +63,11 @@ export default function ScoreOverview({ result }: ScoreOverviewProps) {
             </p>
 
             <div className="grid grid-cols-2 gap-3 mt-3 w-full">
-              <div className="text-center bg-sky-50 rounded-xl p-3 border-2 border-sky-200">
+              <div className="text-center bg-sky-50 rounded-xl p-3 border border-sky-200">
                 <p className="text-lg font-bold text-sky-600">{result.aio.total}</p>
                 <p className="text-xs font-medium text-sky-500 mt-1">AIO 점수</p>
               </div>
-              <div className="text-center bg-violet-50 rounded-xl p-3 border-2 border-violet-200">
+              <div className="text-center bg-violet-50 rounded-xl p-3 border border-violet-200">
                 <p className="text-lg font-bold text-violet-600">{result.geo.total}</p>
                 <p className="text-xs font-medium text-violet-500 mt-1">GEO 점수</p>
               </div>
