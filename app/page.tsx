@@ -116,16 +116,35 @@ export default function LandingPage() {
   const testerModalRef = useRef<HTMLDivElement>(null);
 
   const handleDownloadPng = useCallback(async () => {
-    if (!testerModalRef.current) return;
-    const canvas = await html2canvas(testerModalRef.current, {
-      backgroundColor: '#ffffff',
-      scale: 2,
-      useCORS: true,
-    });
-    const link = document.createElement('a');
-    link.download = 'GEOAIO-테스터모집안내.png';
-    link.href = canvas.toDataURL('image/png');
-    link.click();
+    const el = testerModalRef.current;
+    if (!el) return;
+    const scrollParent = el.closest('.overflow-y-auto') as HTMLElement | null;
+    let prevMaxH = '';
+    let prevOverflow = '';
+    if (scrollParent) {
+      prevMaxH = scrollParent.style.maxHeight;
+      prevOverflow = scrollParent.style.overflow;
+      scrollParent.style.maxHeight = 'none';
+      scrollParent.style.overflow = 'visible';
+    }
+    try {
+      const canvas = await html2canvas(el, {
+        backgroundColor: '#ffffff',
+        scale: 2,
+        useCORS: true,
+        scrollY: -window.scrollY,
+        windowHeight: el.scrollHeight,
+      });
+      const link = document.createElement('a');
+      link.download = 'GEOAIO-테스터모집안내.png';
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+    } finally {
+      if (scrollParent) {
+        scrollParent.style.maxHeight = prevMaxH;
+        scrollParent.style.overflow = prevOverflow;
+      }
+    }
   }, []);
   const [reviews, setReviews] = useState<Review[]>([]);
 
@@ -575,7 +594,7 @@ export default function LandingPage() {
               </div>
               <div className="flex items-center justify-center gap-3">
                 <div>
-                  <h2 className="text-xl font-extrabold text-white">테스터 모집 안내</h2>
+                  <h2 className="text-2xl font-extrabold text-white">테스터 모집 안내</h2>
                   <p className="text-sm text-white/80 mt-1">GEOAIO 베타 테스터를 모집합니다</p>
                 </div>
                 <img src="/qr-tester.jpg" alt="테스터 모집 QR코드" className="w-16 h-16 rounded-lg border-2 border-white/40 shadow-lg" />
