@@ -143,7 +143,7 @@ export default function Header({ showApiKeyButton = false, onToggleApiKey, apiKe
                     href="/admin"
                     className="px-2 py-1 text-[10px] font-bold text-red-100 bg-red-500/30 rounded hover:bg-red-500/50 transition-all"
                   >
-                    관리
+                    관리 대시보드
                   </Link>
                 )}
                 {/* 사용자 버튼 (클릭하면 드롭다운) */}
@@ -291,7 +291,7 @@ export default function Header({ showApiKeyButton = false, onToggleApiKey, apiKe
                       onClick={() => setMobileOpen(false)}
                       className="px-1.5 py-0.5 text-[10px] font-bold text-red-100 bg-red-500/30 rounded"
                     >
-                      관리
+                      관리 대시보드
                     </Link>
                   )}
                 </div>
