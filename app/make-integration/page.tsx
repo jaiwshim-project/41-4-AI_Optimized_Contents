@@ -42,10 +42,10 @@ const steps = [
   },
   {
     step: 2,
-    title: 'Anthropic API 키 준비',
-    description: 'AI 콘텐츠 생성 및 분석에 필요한 API 키를 Anthropic Console에서 발급받으세요.',
-    link: 'https://console.anthropic.com',
-    linkLabel: 'Anthropic Console 바로가기',
+    title: 'Gemini API 키 준비',
+    description: 'AI 콘텐츠 생성 및 분석에 필요한 API 키를 Google AI Studio에서 발급받으세요.',
+    link: 'https://aistudio.google.com/apikey',
+    linkLabel: 'Google AI Studio 바로가기',
   },
   {
     step: 3,
@@ -109,7 +109,7 @@ const faqs = [
   },
   {
     q: 'API 키는 어디서 발급받나요?',
-    a: 'Anthropic Console(console.anthropic.com)에서 발급받을 수 있습니다. 회원가입 후 API Keys 메뉴에서 새 키를 생성하면 됩니다. API 키는 안전한 곳에 보관하세요.',
+    a: 'Google AI Studio(aistudio.google.com/apikey)에서 발급받을 수 있습니다. Google 계정으로 로그인 후 API 키를 생성하면 됩니다. API 키는 안전한 곳에 보관하세요.',
   },
   {
     q: '프로그래밍 지식이 필요한가요?',
