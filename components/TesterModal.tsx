@@ -1,64 +1,11 @@
 'use client';
 
-import { useRef, useCallback } from 'react';
-import html2canvas from 'html2canvas';
-import jsPDF from 'jspdf';
-
 interface TesterModalProps {
   show: boolean;
   onClose: () => void;
 }
 
 export default function TesterModal({ show, onClose }: TesterModalProps) {
-  const modalContentRef = useRef<HTMLDivElement>(null);
-
-  const handleDownloadPdf = useCallback(async () => {
-    const el = modalContentRef.current;
-    if (!el) return;
-    const scrollParent = el.parentElement as HTMLElement | null;
-    const savedStyles: { el: HTMLElement; maxHeight: string; overflow: string; height: string }[] = [];
-    if (scrollParent) {
-      savedStyles.push({
-        el: scrollParent,
-        maxHeight: scrollParent.style.maxHeight,
-        overflow: scrollParent.style.overflow,
-        height: scrollParent.style.height,
-      });
-      scrollParent.style.maxHeight = 'none';
-      scrollParent.style.overflow = 'visible';
-      scrollParent.style.height = 'auto';
-    }
-    try {
-      const canvas = await html2canvas(el, {
-        backgroundColor: '#ffffff',
-        scale: 2,
-        useCORS: true,
-        allowTaint: true,
-        scrollY: 0,
-        scrollX: 0,
-        height: el.scrollHeight,
-        windowHeight: el.scrollHeight + 200,
-      });
-      const imgData = canvas.toDataURL('image/png');
-      const imgWidth = canvas.width;
-      const imgHeight = canvas.height;
-      const pdfWidth = 210; // A4 width in mm
-      const pdfHeight = (imgHeight * pdfWidth) / imgWidth;
-      const pdf = new jsPDF('p', 'mm', [pdfWidth, pdfHeight]);
-      pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
-      pdf.save('GEO-AIO-테스터모집안내.pdf');
-    } catch (err) {
-      console.error('PDF 다운로드 실패:', err);
-      alert('PDF 다운로드에 실패했습니다. 다시 시도해주세요.');
-    } finally {
-      savedStyles.forEach(({ el: savedEl, maxHeight, overflow, height }) => {
-        savedEl.style.maxHeight = maxHeight;
-        savedEl.style.overflow = overflow;
-        savedEl.style.height = height;
-      });
-    }
-  }, []);
-
   if (!show) return null;
 
   return (
@@ -68,22 +15,12 @@ export default function TesterModal({ show, onClose }: TesterModalProps) {
         className="relative bg-white rounded-2xl shadow-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto"
         onClick={(e) => e.stopPropagation()}
       >
-        <div ref={modalContentRef}>
+        <div>
           {/* 모달 헤더 */}
           <div className="bg-gradient-to-r from-amber-400 via-orange-500 to-red-500 rounded-t-2xl px-6 py-5 text-center relative">
             {/* 로고 */}
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="/images/logo-geoaio.png" alt="GEO-AIO 로고" className="absolute top-3 left-3 h-8 object-contain drop-shadow-md" />
-            {/* PDF 다운로드 버튼 */}
-            <button
-              onClick={handleDownloadPdf}
-              className="absolute top-3 right-14 z-10 w-9 h-9 flex items-center justify-center rounded-full bg-white text-orange-500 hover:bg-orange-100 transition-all shadow-md"
-              title="PDF 다운로드"
-            >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-              </svg>
-            </button>
             <button
               onClick={onClose}
               className="absolute top-3 right-3 z-10 w-9 h-9 flex items-center justify-center rounded-full bg-white/20 hover:bg-white/30 text-white transition-all"
