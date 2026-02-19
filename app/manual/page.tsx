@@ -19,7 +19,7 @@ export default function ManualPage() {
               </div>
               <div>
                 <h1 className="text-sm font-bold text-gray-900">사용자 매뉴얼</h1>
-                <p className="text-[11px] text-gray-700">GEOAIO 사용 가이드</p>
+                <p className="text-[11px] text-gray-700">GEO-AIO 사용 가이드</p>
               </div>
             </div>
             <div className="flex items-center gap-2">
@@ -49,12 +49,51 @@ export default function ManualPage() {
       <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-5">
         {/* 소개 */}
         <section className="bg-gradient-to-br from-indigo-50 to-purple-50 rounded-xl shadow-sm border border-indigo-200 p-6">
-          <h2 className="text-sm font-bold bg-gradient-to-r from-indigo-700 to-purple-700 bg-clip-text text-transparent mb-3">GEOAIO란?</h2>
+          <h2 className="text-sm font-bold bg-gradient-to-r from-indigo-700 to-purple-700 bg-clip-text text-transparent mb-3">GEO-AIO란?</h2>
           <p className="text-[11px] text-gray-800 leading-relaxed">
-            GEOAIO는 AI 검색엔진(AI Overview, Generative Engine)에 최적화된 콘텐츠를 작성할 수 있도록
+            GEO-AIO는 AI 검색엔진(AI Overview, Generative Engine)에 최적화된 콘텐츠를 작성할 수 있도록
             도와주는 종합 콘텐츠 플랫폼입니다. Gemini API를 활용하여 콘텐츠 분석, 생성, 키워드 경쟁 분석, 시리즈 기획,
             SNS 채널별 변환, A/B 테스트 등 다양한 기능을 제공하며, Make.com 연동을 통한 자동화도 지원합니다.
           </p>
+        </section>
+
+        {/* 네비게이션 가이드 */}
+        <section className="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+          <h2 className="text-sm font-bold text-gray-900 mb-3 flex items-center gap-2">
+            <span className="w-8 h-8 bg-gradient-to-br from-slate-600 to-gray-700 text-white rounded-lg flex items-center justify-center text-sm font-bold shadow-sm">&#9776;</span>
+            <span className="bg-gradient-to-r from-slate-700 to-gray-600 bg-clip-text text-transparent">메뉴 구조 안내</span>
+          </h2>
+          <div className="space-y-3">
+            <div className="bg-gray-50 rounded-xl p-4 border border-gray-100">
+              <h3 className="text-[13pt] font-semibold text-gray-800 mb-2">주요 메뉴</h3>
+              <ul className="space-y-2 text-[11px] text-gray-800">
+                <li className="flex items-start gap-2"><span className="text-gray-500 font-bold">&#8226;</span> <strong>분석:</strong> 기존 콘텐츠의 GEO/AIO 점수를 분석합니다</li>
+                <li className="flex items-start gap-2"><span className="text-gray-500 font-bold">&#8226;</span> <strong>생성:</strong> AI가 최적화된 새 콘텐츠를 생성합니다</li>
+                <li className="flex items-start gap-2"><span className="text-gray-500 font-bold">&#8226;</span> <strong>키워드:</strong> 키워드 경쟁 분석 및 전략 수립</li>
+                <li className="flex items-start gap-2"><span className="text-gray-500 font-bold">&#8226;</span> <strong>시리즈:</strong> 에피소드 기반 콘텐츠 시리즈 기획</li>
+              </ul>
+            </div>
+            <div className="bg-gray-50 rounded-xl p-4 border border-gray-100">
+              <h3 className="text-[13pt] font-semibold text-gray-800 mb-2">부가 메뉴</h3>
+              <ul className="space-y-2 text-[11px] text-gray-800">
+                <li className="flex items-start gap-2"><span className="text-gray-500 font-bold">&#8226;</span> <strong>요금제:</strong> 플랜 확인 및 업그레이드</li>
+                <li className="flex items-start gap-2"><span className="text-gray-500 font-bold">&#8226;</span> <strong>자료실:</strong> GEO/AIO 관련 가이드 PDF</li>
+                <li className="flex items-start gap-2"><span className="text-gray-500 font-bold">&#8226;</span> <strong>커뮤니티:</strong> 질문, 후기, 정보 공유</li>
+                <li className="flex items-start gap-2"><span className="text-gray-500 font-bold">&#8226;</span> <strong>Make 연동:</strong> Make.com 자동화 연동 가이드</li>
+              </ul>
+            </div>
+            <div className="bg-gray-50 rounded-xl p-4 border border-gray-100">
+              <h3 className="text-[13pt] font-semibold text-gray-800 mb-2">요금제 뱃지</h3>
+              <p className="text-[11px] text-gray-800 mb-2">로그인 후 헤더에 현재 요금제가 뱃지로 표시됩니다.</p>
+              <div className="flex flex-wrap gap-2">
+                <span className="px-2 py-0.5 bg-gray-100 text-gray-600 text-[11px] font-bold rounded-full">FREE</span>
+                <span className="px-2 py-0.5 bg-blue-100 text-blue-700 text-[11px] font-bold rounded-full">PRO</span>
+                <span className="px-2 py-0.5 bg-violet-100 text-violet-700 text-[11px] font-bold rounded-full">MAX</span>
+                <span className="px-2 py-0.5 bg-amber-100 text-amber-700 text-[11px] font-bold rounded-full">TESTER</span>
+                <span className="px-2 py-0.5 bg-red-100 text-red-700 text-[11px] font-bold rounded-full">ADMIN</span>
+              </div>
+            </div>
+          </div>
         </section>
 
         {/* API 키 설정 */}
@@ -116,21 +155,39 @@ export default function ManualPage() {
             <span className="w-8 h-8 bg-gradient-to-br from-emerald-500 to-green-600 text-white rounded-lg flex items-center justify-center text-sm font-bold shadow-sm">3</span>
             <span className="bg-gradient-to-r from-emerald-700 to-green-600 bg-clip-text text-transparent">콘텐츠 생성</span>
           </h2>
-          <p className="text-[11px] text-gray-800 mb-3">AI가 GEO/AIO에 최적화된 콘텐츠를 자동으로 생성합니다. 주제, 카테고리, 톤을 설정하면 맞춤형 콘텐츠가 만들어집니다.</p>
+          <p className="text-[11px] text-gray-800 mb-3">AI가 GEO/AIO에 최적화된 콘텐츠를 자동으로 생성합니다. 3단계(사업 정보 → 콘텐츠 유형 → 생성)로 진행됩니다.</p>
           <div className="space-y-3">
             <div className="bg-emerald-50 rounded-xl p-4 border border-emerald-100">
-              <h3 className="text-[13pt] font-semibold text-emerald-800 mb-2">기본 설정</h3>
+              <h3 className="text-[13pt] font-semibold text-emerald-800 mb-2 flex items-center gap-2">
+                Step 1: 사업 정보 입력
+                <span className="px-2 py-0.5 bg-emerald-200 text-emerald-700 text-[11px] font-bold rounded-full">NEW</span>
+              </h3>
+              <p className="text-[11px] text-gray-800 mb-2">사업 정보를 입력하면 맥락에 맞는 고품질 콘텐츠가 생성됩니다.</p>
               <ul className="space-y-2 text-[11px] text-gray-800">
-                <li className="flex items-start gap-2"><span className="text-emerald-500 font-bold">&#8226;</span> <strong>주제:</strong> 콘텐츠의 핵심 주제를 입력합니다</li>
-                <li className="flex items-start gap-2"><span className="text-emerald-500 font-bold">&#8226;</span> <strong>카테고리:</strong> 블로그, 제품 설명, FAQ, How-to 등 콘텐츠 유형을 선택합니다</li>
+                <li className="flex items-start gap-2"><span className="text-emerald-500 font-bold">&#8226;</span> <strong>회사 정보:</strong> 회사명, 소재지, 웹사이트 URL</li>
+                <li className="flex items-start gap-2"><span className="text-emerald-500 font-bold">&#8226;</span> <strong>브랜드 정보:</strong> 브랜드명, 슬로건</li>
+                <li className="flex items-start gap-2"><span className="text-emerald-500 font-bold">&#8226;</span> <strong>업종:</strong> IT/소프트웨어, 의료/헬스케어, 교육, 금융, 쇼핑몰, 부동산, 요식업, 뷰티/패션, 여행/관광, 제조업, 법률/회계, 기타</li>
+                <li className="flex items-start gap-2"><span className="text-emerald-500 font-bold">&#8226;</span> <strong>제품/서비스:</strong> 주요 제품 및 서비스 설명</li>
+                <li className="flex items-start gap-2"><span className="text-emerald-500 font-bold">&#8226;</span> <strong>타겟 고객:</strong> 주요 고객층 설명</li>
+                <li className="flex items-start gap-2"><span className="text-emerald-500 font-bold">&#8226;</span> <strong>강점/차별점:</strong> 경쟁 우위 요소</li>
+              </ul>
+              <div className="mt-3 bg-white rounded-lg p-3 border border-emerald-200">
+                <p className="text-[11px] font-medium text-emerald-700 mb-1">프로필 저장/불러오기</p>
+                <p className="text-[11px] text-gray-700">입력한 사업 정보를 프로필로 저장하면 다음에 바로 불러올 수 있습니다. 여러 브랜드/사업 프로필을 관리할 수 있어 반복 입력이 필요 없습니다.</p>
+              </div>
+            </div>
+            <div className="bg-emerald-50 rounded-xl p-4 border border-emerald-100">
+              <h3 className="text-[13pt] font-semibold text-emerald-800 mb-2">Step 2: 콘텐츠 유형 선택</h3>
+              <ul className="space-y-2 text-[11px] text-gray-800">
+                <li className="flex items-start gap-2"><span className="text-emerald-500 font-bold">&#8226;</span> <strong>카테고리:</strong> 블로그, 제품 설명, FAQ, How-to 가이드, 랜딩 페이지, 기술 문서, SNS 포스트, 이메일</li>
                 <li className="flex items-start gap-2"><span className="text-emerald-500 font-bold">&#8226;</span> <strong>타겟 키워드:</strong> SEO에 활용할 핵심 키워드를 지정합니다</li>
-                <li className="flex items-start gap-2"><span className="text-emerald-500 font-bold">&#8226;</span> <strong>톤/스타일:</strong> 전문적, 친근한, 설명적 등 콘텐츠 어조를 설정합니다</li>
+                <li className="flex items-start gap-2"><span className="text-emerald-500 font-bold">&#8226;</span> <strong>톤/스타일:</strong> 전문적, 친근한, 설득력 있는, 간결한, 스토리텔링 중 선택</li>
+                <li className="flex items-start gap-2"><span className="text-emerald-500 font-bold">&#8226;</span> <strong>A/B 테스트 모드:</strong> 활성화하면 3가지 톤으로 동시 생성하여 비교 가능</li>
               </ul>
             </div>
             <div className="bg-emerald-50 rounded-xl p-4 border border-emerald-100">
               <h3 className="text-[13pt] font-semibold text-emerald-800 mb-2 flex items-center gap-2">
                 참조 자료 활용 (RAG 방식)
-                <span className="px-2 py-0.5 bg-emerald-200 text-emerald-700 text-[11px] font-bold rounded-full">NEW</span>
               </h3>
               <p className="text-[11px] text-gray-800 mb-3">추가 요구사항 입력란에 참조 자료를 입력하거나, 파일을 업로드하면 해당 정보를 기반으로 더 정확하고 구체적인 콘텐츠를 생성합니다.</p>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -139,8 +196,9 @@ export default function ManualPage() {
                   <p className="text-[11px] text-gray-700">추가 요구사항 입력란에 통계, 사실관계, 연구 결과 등 참조할 정보를 직접 입력합니다.</p>
                 </div>
                 <div className="bg-white rounded-lg p-3 border border-emerald-200">
-                  <p className="text-[11px] font-medium text-emerald-700 mb-1">파일 업로드</p>
-                  <p className="text-[11px] text-gray-700">TXT, MD, CSV, JSON, HTML 형식의 참조 파일을 업로드하면 파일 내용이 자동으로 반영됩니다.</p>
+                  <p className="text-[11px] font-medium text-emerald-700 mb-1">파일 업로드 (드래그앤드롭 지원)</p>
+                  <p className="text-[11px] text-gray-700 mb-1">최대 5개 파일, 각 20MB 이하. 지원 형식:</p>
+                  <p className="text-[10px] text-gray-500">TXT, MD, CSV, JSON, HTML, PDF, DOCX, DOC, XLS, XLSX, PPT, PPTX, PNG, JPG, JPEG, WEBP</p>
                 </div>
               </div>
             </div>
@@ -953,7 +1011,7 @@ export default function ManualPage() {
             <span className="w-8 h-8 bg-gradient-to-br from-emerald-500 to-teal-600 text-white rounded-lg flex items-center justify-center text-sm font-bold shadow-sm">19</span>
             <span className="bg-gradient-to-r from-emerald-700 to-teal-600 bg-clip-text text-transparent">요금제 안내</span>
           </h2>
-          <p className="text-[11px] text-gray-800 mb-3">GEOAIO는 무료 플랜과 유료 플랜을 제공합니다. 각 플랜별 사용 가능 횟수가 다릅니다.</p>
+          <p className="text-[11px] text-gray-800 mb-3">GEO-AIO는 무료 플랜과 유료 플랜을 제공합니다. 각 플랜별 사용 가능 횟수가 다릅니다.</p>
 
           <div className="space-y-3">
             <div className="bg-emerald-50 rounded-xl p-4 border border-emerald-100">
