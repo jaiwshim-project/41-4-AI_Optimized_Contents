@@ -118,32 +118,47 @@ export default function LandingPage() {
   const handleDownloadPng = useCallback(async () => {
     const el = testerModalRef.current;
     if (!el) return;
-    const scrollParent = el.closest('.overflow-y-auto') as HTMLElement | null;
-    let prevMaxH = '';
-    let prevOverflow = '';
+    // 스크롤 컨테이너의 제한을 일시 해제하여 전체 캡처
+    const scrollParent = el.parentElement as HTMLElement | null;
+    const savedStyles: { el: HTMLElement; maxHeight: string; overflow: string; height: string }[] = [];
     if (scrollParent) {
-      prevMaxH = scrollParent.style.maxHeight;
-      prevOverflow = scrollParent.style.overflow;
+      savedStyles.push({
+        el: scrollParent,
+        maxHeight: scrollParent.style.maxHeight,
+        overflow: scrollParent.style.overflow,
+        height: scrollParent.style.height,
+      });
       scrollParent.style.maxHeight = 'none';
       scrollParent.style.overflow = 'visible';
+      scrollParent.style.height = 'auto';
     }
     try {
       const canvas = await html2canvas(el, {
         backgroundColor: '#ffffff',
         scale: 2,
         useCORS: true,
-        scrollY: -window.scrollY,
-        windowHeight: el.scrollHeight,
+        allowTaint: true,
+        scrollY: 0,
+        scrollX: 0,
+        height: el.scrollHeight,
+        windowHeight: el.scrollHeight + 200,
       });
+      const dataUrl = canvas.toDataURL('image/png');
       const link = document.createElement('a');
       link.download = 'GEOAIO-테스터모집안내.png';
-      link.href = canvas.toDataURL('image/png');
+      link.href = dataUrl;
+      document.body.appendChild(link);
       link.click();
+      document.body.removeChild(link);
+    } catch (err) {
+      console.error('PNG 다운로드 실패:', err);
+      alert('PNG 다운로드에 실패했습니다. 다시 시도해주세요.');
     } finally {
-      if (scrollParent) {
-        scrollParent.style.maxHeight = prevMaxH;
-        scrollParent.style.overflow = prevOverflow;
-      }
+      savedStyles.forEach(({ el: savedEl, maxHeight, overflow, height }) => {
+        savedEl.style.maxHeight = maxHeight;
+        savedEl.style.overflow = overflow;
+        savedEl.style.height = height;
+      });
     }
   }, []);
   const [reviews, setReviews] = useState<Review[]>([]);
