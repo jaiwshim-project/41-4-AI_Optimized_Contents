@@ -131,20 +131,43 @@ export default function ManualPage() {
         <section className="bg-white rounded-xl shadow-sm border border-blue-200 p-6">
           <h2 className="text-sm font-bold text-gray-900 mb-3 flex items-center gap-2">
             <span className="w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-600 text-white rounded-lg flex items-center justify-center text-sm font-bold shadow-sm">2</span>
-            <span className="bg-gradient-to-r from-blue-700 to-blue-600 bg-clip-text text-transparent">콘텐츠 분석 시작하기</span>
+            <span className="bg-gradient-to-r from-blue-700 to-blue-600 bg-clip-text text-transparent">콘텐츠 분석</span>
           </h2>
+          <p className="text-[11px] text-gray-800 mb-3">기존 콘텐츠의 GEO/AIO 최적화 수준을 분석합니다. 상단 메뉴에서 &quot;분석&quot;을 클릭하여 접근합니다.</p>
           <div className="space-y-3 text-gray-800">
             <div className="bg-blue-50 rounded-xl p-4 border border-blue-100">
-              <h3 className="text-[13pt] font-semibold text-blue-800 mb-2">콘텐츠 입력</h3>
-              <p className="text-[11px]">분석하고 싶은 콘텐츠(블로그 글, 기사, 웹페이지 텍스트 등)를 텍스트 입력 영역에 붙여넣기 합니다.</p>
+              <h3 className="text-[13pt] font-semibold text-blue-800 mb-2">입력 항목</h3>
+              <ul className="space-y-2 text-[11px] text-gray-800">
+                <li className="flex items-start gap-2"><span className="text-blue-500 font-bold">&#8226;</span> <strong>콘텐츠 입력 (필수):</strong> 분석할 콘텐츠(블로그 글, 기사, 웹페이지 텍스트 등)를 텍스트 영역에 붙여넣기 합니다</li>
+                <li className="flex items-start gap-2"><span className="text-blue-500 font-bold">&#8226;</span> <strong>타겟 키워드 (선택):</strong> 최적화하려는 주요 검색 키워드를 입력하면 해당 키워드에 대한 맞춤 분석을 제공합니다</li>
+                <li className="flex items-start gap-2"><span className="text-blue-500 font-bold">&#8226;</span> <strong>URL (선택):</strong> 콘텐츠가 게시된 URL을 입력하면 추가적인 컨텍스트를 바탕으로 분석합니다</li>
+              </ul>
             </div>
             <div className="bg-blue-50 rounded-xl p-4 border border-blue-100">
-              <h3 className="text-[13pt] font-semibold text-blue-800 mb-2">타겟 키워드 (선택)</h3>
-              <p className="text-[11px]">최적화하려는 주요 검색 키워드를 입력합니다. 입력하면 해당 키워드에 대한 맞춤 분석을 제공합니다.</p>
-            </div>
-            <div className="bg-blue-50 rounded-xl p-4 border border-blue-100">
-              <h3 className="text-[13pt] font-semibold text-blue-800 mb-2">URL (선택)</h3>
-              <p className="text-[11px]">콘텐츠가 게시된 URL을 입력하면 추가적인 컨텍스트를 바탕으로 분석합니다.</p>
+              <h3 className="text-[13pt] font-semibold text-blue-800 mb-2">분석 결과 탭</h3>
+              <p className="text-[11px] text-gray-800 mb-2">분석이 완료되면 5개 탭으로 결과가 표시됩니다.</p>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <div className="bg-white rounded-lg p-3 border border-blue-200">
+                  <p className="text-[11px] font-medium text-blue-700 mb-1">종합 개요</p>
+                  <p className="text-[11px] text-gray-700">전체 GEO/AIO 점수와 주요 지표를 한눈에 확인하는 대시보드</p>
+                </div>
+                <div className="bg-white rounded-lg p-3 border border-blue-200">
+                  <p className="text-[11px] font-medium text-blue-700 mb-1">AIO 분석</p>
+                  <p className="text-[11px] text-gray-700">Google AI Overview 인용 가능성 분석 (구조화 답변, 신뢰성, 간결성)</p>
+                </div>
+                <div className="bg-white rounded-lg p-3 border border-blue-200">
+                  <p className="text-[11px] font-medium text-blue-700 mb-1">GEO 분석</p>
+                  <p className="text-[11px] text-gray-700">생성형 AI 엔진의 콘텐츠 이해도 분석 (의미적 명확성, 전문성, 컨텍스트)</p>
+                </div>
+                <div className="bg-white rounded-lg p-3 border border-blue-200">
+                  <p className="text-[11px] font-medium text-blue-700 mb-1">키워드 분석</p>
+                  <p className="text-[11px] text-gray-700">콘텐츠 내 키워드 분포, 밀도, 관련성 및 타겟 키워드 최적화 상태</p>
+                </div>
+                <div className="bg-white rounded-lg p-3 border border-blue-200">
+                  <p className="text-[11px] font-medium text-blue-700 mb-1">개선 제안</p>
+                  <p className="text-[11px] text-gray-700">우선순위별 구체적인 콘텐츠 개선 제안 및 실행 가능한 액션 아이템</p>
+                </div>
+              </div>
             </div>
           </div>
         </section>
@@ -202,35 +225,65 @@ export default function ManualPage() {
                 </div>
               </div>
             </div>
+            <div className="bg-emerald-50 rounded-xl p-4 border border-emerald-100">
+              <h3 className="text-[13pt] font-semibold text-emerald-800 mb-2 flex items-center gap-2">
+                생성 결과 페이지 기능
+              </h3>
+              <p className="text-[11px] text-gray-800 mb-3">콘텐츠 생성이 완료되면 결과 페이지에서 다양한 후속 작업을 수행할 수 있습니다.</p>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <div className="bg-white rounded-lg p-3 border border-emerald-200">
+                  <p className="text-[11px] font-medium text-emerald-700 mb-1">콘텐츠 헤더</p>
+                  <p className="text-[11px] text-gray-700">생성된 제목, 글자 수, 예상 읽기 시간, 카테고리 뱃지가 표시됩니다.</p>
+                </div>
+                <div className="bg-white rounded-lg p-3 border border-emerald-200">
+                  <p className="text-[11px] font-medium text-emerald-700 mb-1">SEO 최적화 팁</p>
+                  <p className="text-[11px] text-gray-700">AI가 생성한 SEO 최적화 제안이 파란색 정보 박스에 표시됩니다.</p>
+                </div>
+                <div className="bg-white rounded-lg p-3 border border-emerald-200">
+                  <p className="text-[11px] font-medium text-emerald-700 mb-1">AI 이미지 생성</p>
+                  <p className="text-[11px] text-gray-700">버튼 클릭으로 3장의 AI 이미지를 생성하고, 다운로드하거나 본문에 삽입할 수 있습니다.</p>
+                </div>
+                <div className="bg-white rounded-lg p-3 border border-emerald-200">
+                  <p className="text-[11px] font-medium text-emerald-700 mb-1">수정/재생성</p>
+                  <p className="text-[11px] text-gray-700">수정 요청 사항을 입력하면 AI가 해당 내용을 반영하여 콘텐츠를 재생성합니다.</p>
+                </div>
+              </div>
+            </div>
           </div>
         </section>
 
-        {/* 분석 결과 탭 */}
+        {/* A/B 버전 & SNS 채널별 변환 */}
         <section className="bg-white rounded-xl shadow-sm border border-sky-200 p-6">
           <h2 className="text-sm font-bold text-gray-900 mb-3 flex items-center gap-2">
             <span className="w-8 h-8 bg-gradient-to-br from-sky-500 to-blue-600 text-white rounded-lg flex items-center justify-center text-sm font-bold shadow-sm">4</span>
-            <span className="bg-gradient-to-r from-sky-700 to-blue-600 bg-clip-text text-transparent">분석 결과 이해하기</span>
+            <span className="bg-gradient-to-r from-sky-700 to-blue-600 bg-clip-text text-transparent">A/B 버전 비교 &amp; SNS 변환</span>
           </h2>
+          <p className="text-[11px] text-gray-800 mb-3">콘텐츠 생성 결과 페이지에서 A/B 버전 비교와 SNS 채널별 변환 기능을 사용할 수 있습니다.</p>
           <div className="space-y-3">
             <div className="bg-sky-50 rounded-xl p-4 border border-sky-100">
-              <h3 className="text-[13pt] font-semibold text-sky-800 mb-2">종합 개요</h3>
-              <p className="text-[11px] text-gray-800">전체 GEO/AIO 점수와 주요 지표를 한눈에 확인할 수 있는 대시보드입니다. 콘텐츠의 전반적인 AI 최적화 수준을 빠르게 파악할 수 있습니다.</p>
+              <h3 className="text-[13pt] font-semibold text-sky-800 mb-2">A/B 버전 비교</h3>
+              <p className="text-[11px] text-gray-800 mb-2">콘텐츠 생성 시 &quot;A/B 버전 생성&quot; 토글을 켜면 전문적 / 친근한 / 설득적 3가지 톤으로 동시에 생성됩니다.</p>
+              <ul className="space-y-1.5 text-[11px] text-gray-700">
+                <li className="flex items-start gap-2"><span className="text-sky-500 font-bold">&#8226;</span> 결과 페이지 상단 탭을 클릭하여 각 버전을 전환하며 비교</li>
+                <li className="flex items-start gap-2"><span className="text-sky-500 font-bold">&#8226;</span> 가장 적합한 버전을 선택하여 복사, 편집, 이미지 생성 등 활용</li>
+              </ul>
             </div>
             <div className="bg-sky-50 rounded-xl p-4 border border-sky-100">
-              <h3 className="text-[13pt] font-semibold text-sky-800 mb-2">AIO 분석 (AI Overview)</h3>
-              <p className="text-[11px] text-gray-800">Google AI Overview에 콘텐츠가 인용될 가능성을 분석합니다. 구조화된 답변 형식, 신뢰성, 간결성 등 AIO 노출에 영향을 미치는 요소를 평가합니다.</p>
-            </div>
-            <div className="bg-sky-50 rounded-xl p-4 border border-sky-100">
-              <h3 className="text-[13pt] font-semibold text-sky-800 mb-2">GEO 분석 (Generative Engine Optimization)</h3>
-              <p className="text-[11px] text-gray-800">생성형 AI 엔진이 콘텐츠를 이해하고 활용하기 쉬운 정도를 분석합니다. 의미적 명확성, 전문성, 컨텍스트 완성도 등을 평가합니다.</p>
-            </div>
-            <div className="bg-sky-50 rounded-xl p-4 border border-sky-100">
-              <h3 className="text-[13pt] font-semibold text-sky-800 mb-2">키워드 분석</h3>
-              <p className="text-[11px] text-gray-800">콘텐츠 내 주요 키워드의 분포, 밀도, 관련성을 분석합니다. 타겟 키워드가 입력된 경우 해당 키워드의 최적화 상태를 집중적으로 확인합니다.</p>
-            </div>
-            <div className="bg-sky-50 rounded-xl p-4 border border-sky-100">
-              <h3 className="text-[13pt] font-semibold text-sky-800 mb-2">개선 제안</h3>
-              <p className="text-[11px] text-gray-800">분석 결과를 바탕으로 콘텐츠 개선을 위한 구체적이고 실행 가능한 제안을 제공합니다. 우선순위별로 정리되어 효율적인 최적화 작업이 가능합니다.</p>
+              <h3 className="text-[13pt] font-semibold text-sky-800 mb-2">SNS 채널별 변환</h3>
+              <p className="text-[11px] text-gray-800 mb-2">결과 페이지 하단의 SNS 변환 섹션에서 원하는 채널 버튼을 클릭하면 자동 변환됩니다.</p>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                {[
+                  { ch: '인스타그램', desc: '후킹 문구 + 핵심 포인트 + 이모지 + 해시태그' },
+                  { ch: '링크드인', desc: '전문적 인사이트 + 번호 정리 + 토론 유도' },
+                  { ch: '네이버 블로그', desc: 'SEO 제목 + 목차 + 키워드 최적화' },
+                  { ch: '카드뉴스', desc: '6-8장 슬라이드 구성 (표지/본문/마무리)' },
+                  { ch: '핵심 요약', desc: '3줄 요약 + 키워드 5개 + 한 줄 결론' },
+                ].map(item => (
+                  <div key={item.ch} className="bg-white rounded-lg p-2 border border-sky-200">
+                    <p className="text-[11px]"><span className="font-medium text-sky-700">{item.ch}:</span> <span className="text-gray-600">{item.desc}</span></p>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </section>
@@ -775,28 +828,27 @@ export default function ManualPage() {
             <span className="w-8 h-8 bg-gradient-to-br from-cyan-500 to-blue-600 text-white rounded-lg flex items-center justify-center text-sm font-bold shadow-sm">13</span>
             <span className="bg-gradient-to-r from-cyan-700 to-blue-600 bg-clip-text text-transparent">키워드 경쟁 분석</span>
           </h2>
-          <p className="text-[11px] text-gray-800 mb-3">타겟 키워드의 AI 검색 경쟁도를 분석하고, 차별화 전략을 수립합니다.</p>
+          <p className="text-[11px] text-gray-800 mb-3">타겟 키워드의 AI 검색 경쟁도를 분석하고, 차별화 전략을 수립합니다. 상단 메뉴에서 &quot;키워드&quot;를 클릭하여 접근합니다.</p>
 
           <div className="space-y-3">
             <div className="bg-cyan-50 rounded-xl p-4 border border-cyan-100">
-              <h3 className="text-[13pt] font-semibold text-cyan-800 mb-3">사용 방법</h3>
-              <div className="space-y-2 text-[11px] text-gray-700">
-                <p>1. 상단 네비게이션에서 <span className="font-semibold text-cyan-700">키워드 분석</span> 클릭</p>
-                <p>2. 분석할 키워드 입력 (예: &quot;AI 마케팅 전략&quot;)</p>
-                <p>3. 산업 분야 선택 (선택사항)</p>
-                <p>4. <span className="font-semibold">분석 시작</span> 클릭</p>
-              </div>
+              <h3 className="text-[13pt] font-semibold text-cyan-800 mb-3">입력 항목</h3>
+              <ul className="space-y-2 text-[11px] text-gray-700">
+                <li className="flex items-start gap-2"><span className="text-cyan-500 font-bold">&#8226;</span> <strong>분석 키워드 (필수):</strong> 분석할 키워드를 입력합니다 (예: &quot;AI 마케팅 전략&quot;)</li>
+                <li className="flex items-start gap-2"><span className="text-cyan-500 font-bold">&#8226;</span> <strong>산업 분야 (선택):</strong> IT/테크, 교육, 의료/건강, 금융/보험, 부동산, 여행/관광, 법률/컨설팅, 마케팅/광고, 이커머스, 요식업, 기타 중 선택</li>
+              </ul>
             </div>
             <div className="bg-white rounded-xl p-4 border border-cyan-100">
-              <h3 className="text-[13pt] font-semibold text-cyan-800 mb-3">분석 결과 항목</h3>
+              <h3 className="text-[13pt] font-semibold text-cyan-800 mb-3">분석 결과 (7개 섹션)</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 {[
-                  { title: '경쟁도 점수', desc: '상/중/하로 표시되는 키워드 경쟁 난이도' },
-                  { title: 'AI 인용 요소', desc: 'AI가 콘텐츠를 인용할 때 중요하게 보는 요소 분석' },
-                  { title: '필수 주제', desc: '해당 키워드로 반드시 다뤄야 할 핵심 주제 목록' },
-                  { title: '차별화 전략', desc: '경쟁 콘텐츠 대비 차별화할 수 있는 구체적 전략' },
-                  { title: '콘텐츠 추천', desc: '권장 글자 수, 형식, 톤, 핵심 포함 요소' },
-                  { title: '연관 키워드', desc: '함께 활용하면 좋은 연관 키워드 제안' },
+                  { title: '개요 카드', desc: '키워드명, 검색 의도 분류, 경쟁 난이도(상/중/하)가 색상별 뱃지로 표시됩니다' },
+                  { title: 'AI 인용 요소', desc: 'AI가 콘텐츠 인용 시 중요하게 보는 요소와 각 요소의 중요도(높음/중간/낮음)를 분석합니다' },
+                  { title: '필수 커버 주제', desc: '해당 키워드로 반드시 다뤄야 할 핵심 주제 목록이 번호 순서대로 정리됩니다' },
+                  { title: '차별화 전략', desc: '전략명, 설명, 구체적인 실행 방법이 카드 형태로 제시됩니다' },
+                  { title: '콘텐츠 추천', desc: '권장 글자 수, 형식, 톤, 핵심 포함 요소 등 유형별 추천사항을 제공합니다' },
+                  { title: '연관 키워드', desc: '함께 활용하면 좋은 연관 키워드가 뱃지로 표시됩니다' },
+                  { title: '경쟁사 인사이트', desc: '경쟁 콘텐츠에서 도출한 인사이트와 실행 방안이 카드별로 정리됩니다' },
                 ].map(item => (
                   <div key={item.title} className="bg-cyan-50 rounded-lg p-3 border border-cyan-100">
                     <p className="text-[11pt] font-medium text-cyan-700">{item.title}</p>
@@ -928,39 +980,50 @@ export default function ManualPage() {
             <span className="w-8 h-8 bg-gradient-to-br from-orange-500 to-red-600 text-white rounded-lg flex items-center justify-center text-sm font-bold shadow-sm">17</span>
             <span className="bg-gradient-to-r from-orange-700 to-red-600 bg-clip-text text-transparent">콘텐츠 시리즈 기획</span>
           </h2>
-          <p className="text-[11px] text-gray-800 mb-3">하나의 주제로 연관된 시리즈 콘텐츠 기획안을 자동으로 생성합니다.</p>
+          <p className="text-[11px] text-gray-800 mb-3">하나의 주제로 연관된 시리즈 콘텐츠 기획안을 자동으로 생성합니다. 상단 메뉴에서 &quot;시리즈&quot;를 클릭하여 접근합니다.</p>
 
           <div className="space-y-3">
             <div className="bg-orange-50 rounded-xl p-4 border border-orange-100">
-              <h3 className="text-[13pt] font-semibold text-orange-800 mb-3">사용 방법</h3>
-              <div className="space-y-2 text-[11px] text-gray-700">
-                <p>1. 상단 네비게이션에서 <span className="font-semibold text-orange-700">시리즈 기획</span> 클릭</p>
-                <p>2. 시리즈 주제 입력 (예: &quot;초보자를 위한 디지털 마케팅&quot;)</p>
-                <p>3. 산업 분야 선택, 에피소드 수 조절 (3~12편, 기본 7편)</p>
-                <p>4. 추가 요구사항 입력 (선택사항)</p>
-                <p>5. <span className="font-semibold">시리즈 기획 생성</span> 클릭</p>
-              </div>
+              <h3 className="text-[13pt] font-semibold text-orange-800 mb-3">입력 항목</h3>
+              <ul className="space-y-2 text-[11px] text-gray-700">
+                <li className="flex items-start gap-2"><span className="text-orange-500 font-bold">&#8226;</span> <strong>시리즈 주제 (필수):</strong> 시리즈의 전체 주제를 입력합니다 (예: &quot;초보자를 위한 디지털 마케팅&quot;)</li>
+                <li className="flex items-start gap-2"><span className="text-orange-500 font-bold">&#8226;</span> <strong>산업 분야 (선택):</strong> IT/테크, 교육, 의료/건강, 금융/보험, 부동산, 여행/관광, 법률/컨설팅, 마케팅/광고, 이커머스, 요식업, 기타</li>
+                <li className="flex items-start gap-2"><span className="text-orange-500 font-bold">&#8226;</span> <strong>에피소드 수:</strong> 슬라이더로 3~12편 조절 (기본 7편)</li>
+                <li className="flex items-start gap-2"><span className="text-orange-500 font-bold">&#8226;</span> <strong>추가 요구사항 (선택):</strong> 타겟 독자층, 특정 키워드, 스타일 등 참고 사항을 입력</li>
+              </ul>
             </div>
             <div className="bg-white rounded-xl p-4 border border-orange-100">
-              <h3 className="text-[13pt] font-semibold text-orange-800 mb-3">기획안에 포함되는 내용</h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                {[
-                  { title: '시리즈 개요', desc: '전체 제목, 소개, 타겟 독자' },
-                  { title: '에피소드별 기획', desc: '제목, 부제, 요약, 타겟 키워드, 핵심 포인트' },
-                  { title: '내부 링크 전략', desc: '에피소드 간 연결 전략으로 SEO 시너지 극대화' },
-                  { title: '발행 스케줄', desc: '권장 발행 주기 및 순서 제안' },
-                ].map(item => (
-                  <div key={item.title} className="bg-orange-50 rounded-lg p-3 border border-orange-100">
-                    <p className="text-[11pt] font-medium text-orange-700">{item.title}</p>
-                    <p className="text-[11px] text-gray-600">{item.desc}</p>
-                  </div>
-                ))}
+              <h3 className="text-[13pt] font-semibold text-orange-800 mb-3">기획 결과 구성</h3>
+              <div className="space-y-3">
+                <div className="bg-orange-50 rounded-lg p-3 border border-orange-100">
+                  <p className="text-[11pt] font-medium text-orange-700 mb-1">시리즈 개요</p>
+                  <p className="text-[11px] text-gray-600">시리즈 전체 제목, 설명, 타겟 독자가 요약됩니다.</p>
+                </div>
+                <div className="bg-orange-50 rounded-lg p-3 border border-orange-100">
+                  <p className="text-[11pt] font-medium text-orange-700 mb-1">에피소드별 기획 카드</p>
+                  <p className="text-[11px] text-gray-600 mb-2">각 에피소드는 접기/펼치기 가능한 카드 형태로 표시됩니다. 카드를 펼치면 다음 항목이 나타납니다:</p>
+                  <ul className="space-y-1 text-[11px] text-gray-600">
+                    <li className="flex items-start gap-2"><span className="text-orange-400 font-bold">&#8226;</span> <strong>요약:</strong> 에피소드 상세 설명</li>
+                    <li className="flex items-start gap-2"><span className="text-orange-400 font-bold">&#8226;</span> <strong>타겟 키워드:</strong> 에피소드별 키워드 뱃지</li>
+                    <li className="flex items-start gap-2"><span className="text-orange-400 font-bold">&#8226;</span> <strong>주요 포인트:</strong> 핵심 내용 목록</li>
+                    <li className="flex items-start gap-2"><span className="text-orange-400 font-bold">&#8226;</span> <strong>내부 링크 제안:</strong> 에피소드 간 연결 전략</li>
+                    <li className="flex items-start gap-2"><span className="text-orange-400 font-bold">&#8226;</span> <strong>예상 분량:</strong> 글자 수 / 읽기 시간</li>
+                    <li className="flex items-start gap-2"><span className="text-orange-400 font-bold">&#8226;</span> <strong>&quot;콘텐츠 생성&quot; 버튼:</strong> 해당 에피소드 주제로 바로 생성 페이지 이동</li>
+                  </ul>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                  {[
+                    { title: '링킹 전략', desc: '에피소드 간 내부 링크 구조로 SEO 시너지 극대화' },
+                    { title: '발행 일정', desc: '권장 발행 주기 및 순서 제안' },
+                    { title: '기대 효과', desc: '시리즈 완성 시 예상되는 SEO/마케팅 효과' },
+                  ].map(item => (
+                    <div key={item.title} className="bg-orange-50 rounded-lg p-3 border border-orange-100">
+                      <p className="text-[11pt] font-medium text-orange-700">{item.title}</p>
+                      <p className="text-[11px] text-gray-600">{item.desc}</p>
+                    </div>
+                  ))}
+                </div>
               </div>
-            </div>
-            <div className="bg-gradient-to-r from-orange-50 to-amber-50 rounded-xl p-4 border border-orange-200">
-              <p className="text-[11px] text-orange-800">
-                <span className="font-semibold">Tip:</span> 각 에피소드 카드의 &quot;콘텐츠 생성&quot; 버튼을 클릭하면 해당 에피소드 주제로 바로 콘텐츠 생성 페이지로 이동합니다.
-              </p>
             </div>
           </div>
         </section>
