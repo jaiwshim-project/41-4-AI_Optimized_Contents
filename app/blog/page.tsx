@@ -95,9 +95,12 @@ export default function BlogPage() {
         <section className="relative overflow-hidden rounded-xl bg-gradient-to-br from-violet-600 via-indigo-600 to-blue-600 text-white px-6 sm:px-10 py-8 mb-8">
           <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSI+PHBhdGggZD0iTTM2IDM0djJoLTR2LTJoNHptMC0xMHYyaC00di0yaDR6Ii8+PC9nPjwvZz48L3N2Zz4=')] opacity-30" />
           <div className="relative">
-            <h1 className="text-2xl sm:text-3xl font-bold mb-2">블로그</h1>
-            <p className="text-white/80 text-sm sm:text-base">
-              다양한 분야의 전문 콘텐츠를 만나보세요. AI 검색 최적화부터 업종별 마케팅 전략까지.
+            <h1 className="text-2xl sm:text-3xl font-bold mb-3">블로그 / 기사 / 방송</h1>
+            <p className="text-white/90 text-sm sm:text-base leading-relaxed">
+              GEO-AIO가 실제 운영하는 다양한 업종의 블로그, 언론 기사, 방송 콘텐츠를 한곳에서 확인하세요.
+            </p>
+            <p className="text-white/70 text-xs sm:text-sm mt-2 leading-relaxed">
+              AI 검색 최적화(GEO) 전략부터 의료기기 컨설팅, 수제맥주, 치과병원까지 — 각 업종별로 AI 검색엔진에 최적화된 콘텐츠가 어떻게 작성되고 활용되는지 실제 사례를 통해 확인할 수 있습니다.
             </p>
           </div>
         </section>
