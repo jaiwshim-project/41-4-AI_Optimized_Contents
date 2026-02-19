@@ -462,33 +462,58 @@ export default function ManualPage() {
         <section className="bg-white rounded-xl shadow-sm border border-sky-200 p-6">
           <h2 className="text-sm font-bold text-gray-900 mb-3 flex items-center gap-2">
             <span className="w-8 h-8 bg-gradient-to-br from-sky-500 to-blue-600 text-white rounded-lg flex items-center justify-center text-sm font-bold shadow-sm">6</span>
-            <span className="bg-gradient-to-r from-sky-700 to-blue-600 bg-clip-text text-transparent">A/B 버전 비교 &amp; SNS 변환</span>
+            <span className="bg-gradient-to-r from-sky-700 to-blue-600 bg-clip-text text-transparent">A/B 버전 생성 &amp; SNS 채널별 변환</span>
           </h2>
-          <p className="text-[11px] text-gray-800 mb-3">콘텐츠 생성 결과 페이지에서 A/B 버전 비교와 SNS 채널별 변환 기능을 사용할 수 있습니다.</p>
+          <p className="text-[11px] text-gray-800 mb-3">같은 주제로 3가지 톤의 콘텐츠를 동시 생성하고, SNS 채널에 최적화된 형식으로 자동 변환합니다.</p>
           <div className="space-y-3">
             <div className="bg-sky-50 rounded-xl p-4 border border-sky-100">
-              <h3 className="text-[13pt] font-semibold text-sky-800 mb-2">A/B 버전 비교</h3>
+              <h3 className="text-[13pt] font-semibold text-sky-800 mb-2">A/B 버전 생성</h3>
               <p className="text-[11px] text-gray-800 mb-2">콘텐츠 생성 시 &quot;A/B 버전 생성&quot; 토글을 켜면 전문적 / 친근한 / 설득적 3가지 톤으로 동시에 생성됩니다.</p>
-              <ul className="space-y-1.5 text-[11px] text-gray-700">
-                <li className="flex items-start gap-2"><span className="text-sky-500 font-bold">&#8226;</span> 결과 페이지 상단 탭을 클릭하여 각 버전을 전환하며 비교</li>
-                <li className="flex items-start gap-2"><span className="text-sky-500 font-bold">&#8226;</span> 가장 적합한 버전을 선택하여 복사, 편집, 이미지 생성 등 활용</li>
-              </ul>
+              <div className="space-y-2 text-[11px] text-gray-700 mb-3">
+                <p>1. 콘텐츠 생성 페이지에서 주제, 카테고리 등 기본 정보 입력</p>
+                <p>2. 생성 버튼 위의 <span className="font-semibold text-sky-700">A/B 버전 생성</span> 토글을 켜기</p>
+                <p>3. 생성 버튼 클릭 → 전문적 / 친근한 / 설득적 3가지 톤으로 동시 생성</p>
+                <p>4. 결과 페이지에서 탭을 클릭하여 각 버전 비교</p>
+                <p>5. 가장 적합한 버전을 선택하여 활용</p>
+              </div>
+              <div className="grid grid-cols-3 gap-3">
+                {[
+                  { tone: '전문적', desc: '신뢰감 있고 권위적인 어조', color: 'blue' },
+                  { tone: '친근한', desc: '대화체의 편안한 어조', color: 'green' },
+                  { tone: '설득적', desc: '강렬하고 행동을 유도하는 어조', color: 'rose' },
+                ].map(t => (
+                  <div key={t.tone} className={`bg-${t.color}-50 rounded-lg p-3 border border-${t.color}-200 text-center`}>
+                    <p className={`text-[11pt] font-bold text-${t.color}-700`}>{t.tone}</p>
+                    <p className="text-[11px] text-gray-600 mt-1">{t.desc}</p>
+                  </div>
+                ))}
+              </div>
             </div>
             <div className="bg-sky-50 rounded-xl p-4 border border-sky-100">
               <h3 className="text-[13pt] font-semibold text-sky-800 mb-2">SNS 채널별 변환</h3>
-              <p className="text-[11px] text-gray-800 mb-2">결과 페이지 하단의 SNS 변환 섹션에서 원하는 채널 버튼을 클릭하면 자동 변환됩니다.</p>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+              <p className="text-[11px] text-gray-800 mb-2">생성된 콘텐츠를 각 SNS 채널에 최적화된 형식으로 자동 변환합니다.</p>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-3">
                 {[
-                  { ch: '인스타그램', desc: '후킹 문구 + 핵심 포인트 + 이모지 + 해시태그' },
-                  { ch: '링크드인', desc: '전문적 인사이트 + 번호 정리 + 토론 유도' },
-                  { ch: '네이버 블로그', desc: 'SEO 제목 + 목차 + 키워드 최적화' },
-                  { ch: '카드뉴스', desc: '6-8장 슬라이드 구성 (표지/본문/마무리)' },
-                  { ch: '핵심 요약', desc: '3줄 요약 + 키워드 5개 + 한 줄 결론' },
-                ].map(item => (
-                  <div key={item.ch} className="bg-white rounded-lg p-2 border border-sky-200">
-                    <p className="text-[11px]"><span className="font-medium text-sky-700">{item.ch}:</span> <span className="text-gray-600">{item.desc}</span></p>
+                  { channel: '인스타그램', desc: '후킹 문구 + 핵심 포인트 + 이모지 + 해시태그 10-15개', icon: '📸' },
+                  { channel: '링크드인', desc: '전문적 인사이트 + 번호 정리 + 토론 유도 + 해시태그 3-5개', icon: '💼' },
+                  { channel: '네이버 블로그', desc: 'SEO 최적화 제목 + 목차 + 키워드 반복 + 이미지 위치 표시', icon: '📝' },
+                  { channel: '카드뉴스', desc: '6-8장 슬라이드 구성 + 표지/본문/마무리 형식', icon: '🎴' },
+                  { channel: '핵심 요약', desc: '3줄 요약 + 키워드 5개 + 주요 포인트 + 한 줄 결론', icon: '📋' },
+                ].map(ch => (
+                  <div key={ch.channel} className="bg-white rounded-lg p-3 border border-sky-200 flex items-start gap-3">
+                    <span className="text-lg">{ch.icon}</span>
+                    <div>
+                      <p className="text-[11pt] font-medium text-sky-700">{ch.channel}</p>
+                      <p className="text-[11px] text-gray-600">{ch.desc}</p>
+                    </div>
                   </div>
                 ))}
+              </div>
+              <div className="space-y-2 text-[11px] text-gray-700">
+                <p>1. 콘텐츠 생성 후 결과 페이지 하단의 <span className="font-semibold text-sky-700">SNS 채널별 변환</span> 섹션 확인</p>
+                <p>2. 원하는 채널 버튼 클릭 (인스타그램, 링크드인 등)</p>
+                <p>3. AI가 해당 채널에 최적화된 형식으로 자동 변환</p>
+                <p>4. 변환 결과를 <span className="font-semibold">복사</span> 버튼으로 클립보드에 복사</p>
               </div>
             </div>
           </div>
@@ -591,6 +616,28 @@ export default function ManualPage() {
             <div className="bg-violet-50 rounded-xl p-4 border border-violet-100">
               <h3 className="text-[13pt] font-semibold text-violet-800 mb-2">수정본 관리</h3>
               <p className="text-[11px] text-gray-800">콘텐츠 생성 결과 페이지에서 수정/재생성한 이력이 있으면, 상세 페이지에서 &quot;원본&quot;과 &quot;수정 #1, #2...&quot; 버튼으로 각 버전을 전환하여 확인할 수 있습니다.</p>
+            </div>
+
+            <div className="bg-violet-50 rounded-xl p-4 border border-violet-100">
+              <h3 className="text-[13pt] font-semibold text-violet-800 mb-3">콘텐츠 통계 &amp; 차트</h3>
+              <p className="text-[11px] text-gray-800 mb-3">콘텐츠 생성/분석 현황을 차트와 통계로 한눈에 파악합니다. 대시보드 상단의 &quot;콘텐츠 통계&quot; 섹션을 클릭하여 펼치기/접기 가능합니다.</p>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-3">
+                {[
+                  { label: '총 콘텐츠', desc: '생성 + 분석 전체 수', color: 'indigo' },
+                  { label: '생성 수', desc: 'AI로 생성한 콘텐츠', color: 'purple' },
+                  { label: '분석 수', desc: 'AIO 분석한 콘텐츠', color: 'emerald' },
+                  { label: '평균 AIO 점수', desc: '분석 콘텐츠 평균 점수', color: 'amber' },
+                ].map(s => (
+                  <div key={s.label} className={`bg-${s.color}-50 rounded-lg p-3 border border-${s.color}-200 text-center`}>
+                    <p className={`text-[11pt] font-bold text-${s.color}-700`}>{s.label}</p>
+                    <p className="text-[11px] text-gray-600">{s.desc}</p>
+                  </div>
+                ))}
+              </div>
+              <div className="space-y-2 text-[11px] text-gray-700">
+                <p><span className="font-semibold text-violet-700">월별 생성 추이:</span> 바 차트로 월별 콘텐츠 생성 수 시각화</p>
+                <p><span className="font-semibold text-violet-700">카테고리 분포:</span> 파이 차트로 블로그, SNS, 제품설명 등 카테고리별 비율 표시</p>
+              </div>
             </div>
           </div>
         </section>
@@ -1028,124 +1075,10 @@ export default function ManualPage() {
           </div>
         </section>
 
-        {/* 15. A/B 버전 생성 */}
-        <section className="bg-white rounded-xl shadow-sm border border-amber-200 p-6">
-          <h2 className="text-sm font-bold flex items-center gap-3 mb-3">
-            <span className="w-8 h-8 bg-gradient-to-br from-amber-500 to-orange-600 text-white rounded-lg flex items-center justify-center text-sm font-bold shadow-sm">15</span>
-            <span className="bg-gradient-to-r from-amber-700 to-orange-600 bg-clip-text text-transparent">A/B 버전 생성</span>
-          </h2>
-          <p className="text-[11px] text-gray-800 mb-3">같은 주제로 3가지 다른 톤의 콘텐츠를 동시에 생성하여 최적의 버전을 선택합니다.</p>
-
-          <div className="space-y-3">
-            <div className="bg-amber-50 rounded-xl p-4 border border-amber-100">
-              <h3 className="text-[13pt] font-semibold text-amber-800 mb-3">사용 방법</h3>
-              <div className="space-y-2 text-[11px] text-gray-700">
-                <p>1. 콘텐츠 생성 페이지에서 주제, 카테고리 등 기본 정보 입력</p>
-                <p>2. 생성 버튼 위의 <span className="font-semibold text-amber-700">A/B 버전 생성</span> 토글을 켜기</p>
-                <p>3. 생성 버튼 클릭 → 전문적 / 친근한 / 설득적 3가지 톤으로 동시 생성</p>
-                <p>4. 결과 페이지에서 탭을 클릭하여 각 버전 비교</p>
-                <p>5. 가장 적합한 버전을 선택하여 활용</p>
-              </div>
-            </div>
-            <div className="bg-white rounded-xl p-4 border border-amber-100">
-              <h3 className="text-[13pt] font-semibold text-amber-800 mb-3">3가지 톤</h3>
-              <div className="grid grid-cols-3 gap-3">
-                {[
-                  { tone: '전문적', desc: '신뢰감 있고 권위적인 어조', color: 'blue' },
-                  { tone: '친근한', desc: '대화체의 편안한 어조', color: 'green' },
-                  { tone: '설득적', desc: '강렬하고 행동을 유도하는 어조', color: 'rose' },
-                ].map(t => (
-                  <div key={t.tone} className={`bg-${t.color}-50 rounded-lg p-3 border border-${t.color}-200 text-center`}>
-                    <p className={`text-[11pt] font-bold text-${t.color}-700`}>{t.tone}</p>
-                    <p className="text-[11px] text-gray-600 mt-1">{t.desc}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* 16. SNS 채널별 변환 */}
-        <section className="bg-white rounded-xl shadow-sm border border-teal-200 p-6">
-          <h2 className="text-sm font-bold flex items-center gap-3 mb-3">
-            <span className="w-8 h-8 bg-gradient-to-br from-teal-500 to-emerald-600 text-white rounded-lg flex items-center justify-center text-sm font-bold shadow-sm">16</span>
-            <span className="bg-gradient-to-r from-teal-700 to-emerald-600 bg-clip-text text-transparent">SNS 채널별 콘텐츠 변환</span>
-          </h2>
-          <p className="text-[11px] text-gray-800 mb-3">생성된 콘텐츠를 각 SNS 채널에 최적화된 형식으로 자동 변환합니다.</p>
-
-          <div className="space-y-3">
-            <div className="bg-teal-50 rounded-xl p-4 border border-teal-100">
-              <h3 className="text-[13pt] font-semibold text-teal-800 mb-3">지원 채널</h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                {[
-                  { channel: '인스타그램', desc: '후킹 문구 + 핵심 포인트 + 이모지 + 해시태그 10-15개', icon: '📸' },
-                  { channel: '링크드인', desc: '전문적 인사이트 + 번호 정리 + 토론 유도 + 해시태그 3-5개', icon: '💼' },
-                  { channel: '네이버 블로그', desc: 'SEO 최적화 제목 + 목차 + 키워드 반복 + 이미지 위치 표시', icon: '📝' },
-                  { channel: '카드뉴스', desc: '6-8장 슬라이드 구성 + 표지/본문/마무리 형식', icon: '🎴' },
-                  { channel: '핵심 요약', desc: '3줄 요약 + 키워드 5개 + 주요 포인트 + 한 줄 결론', icon: '📋' },
-                ].map(ch => (
-                  <div key={ch.channel} className="bg-white rounded-lg p-3 border border-teal-100 flex items-start gap-3">
-                    <span className="text-lg">{ch.icon}</span>
-                    <div>
-                      <p className="text-[11pt] font-medium text-teal-700">{ch.channel}</p>
-                      <p className="text-[11px] text-gray-600">{ch.desc}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-            <div className="bg-white rounded-xl p-4 border border-teal-100">
-              <h3 className="text-[13pt] font-semibold text-teal-800 mb-3">사용 방법</h3>
-              <div className="space-y-2 text-[11px] text-gray-700">
-                <p>1. 콘텐츠 생성 후 결과 페이지 하단의 <span className="font-semibold text-teal-700">SNS 채널별 변환</span> 섹션 확인</p>
-                <p>2. 원하는 채널 버튼 클릭 (인스타그램, 링크드인 등)</p>
-                <p>3. AI가 해당 채널에 최적화된 형식으로 자동 변환</p>
-                <p>4. 변환 결과를 <span className="font-semibold">복사</span> 버튼으로 클립보드에 복사</p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* 17. 대시보드 통계 */}
-        <section className="bg-white rounded-xl shadow-sm border border-violet-200 p-6">
-          <h2 className="text-sm font-bold flex items-center gap-3 mb-3">
-            <span className="w-8 h-8 bg-gradient-to-br from-violet-500 to-purple-600 text-white rounded-lg flex items-center justify-center text-sm font-bold shadow-sm">17</span>
-            <span className="bg-gradient-to-r from-violet-700 to-purple-600 bg-clip-text text-transparent">대시보드 통계 & 차트</span>
-          </h2>
-          <p className="text-[11px] text-gray-800 mb-3">콘텐츠 생성/분석 현황을 차트와 통계로 한눈에 파악합니다.</p>
-
-          <div className="space-y-3">
-            <div className="bg-violet-50 rounded-xl p-4 border border-violet-100">
-              <h3 className="text-[13pt] font-semibold text-violet-800 mb-3">통계 항목</h3>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-                {[
-                  { label: '총 콘텐츠', desc: '생성 + 분석 전체 수', color: 'indigo' },
-                  { label: '생성 수', desc: 'AI로 생성한 콘텐츠', color: 'purple' },
-                  { label: '분석 수', desc: 'AIO 분석한 콘텐츠', color: 'emerald' },
-                  { label: '평균 AIO 점수', desc: '분석 콘텐츠 평균 점수', color: 'amber' },
-                ].map(s => (
-                  <div key={s.label} className={`bg-${s.color}-50 rounded-lg p-3 border border-${s.color}-200 text-center`}>
-                    <p className={`text-[11pt] font-bold text-${s.color}-700`}>{s.label}</p>
-                    <p className="text-[11px] text-gray-600">{s.desc}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-            <div className="bg-white rounded-xl p-4 border border-violet-100">
-              <h3 className="text-[13pt] font-semibold text-violet-800 mb-3">차트</h3>
-              <div className="space-y-2 text-[11px] text-gray-700">
-                <p><span className="font-semibold text-violet-700">월별 생성 추이:</span> 바 차트로 월별 콘텐츠 생성 수 시각화</p>
-                <p><span className="font-semibold text-violet-700">카테고리 분포:</span> 파이 차트로 블로그, SNS, 제품설명 등 카테고리별 비율 표시</p>
-                <p>대시보드 상단의 &quot;콘텐츠 통계&quot; 섹션을 클릭하여 펼치기/접기 가능</p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* 18. Make.com 연동 */}
+        {/* 15. Make.com 연동 */}
         <section className="bg-white rounded-xl shadow-sm border border-indigo-200 p-6">
           <h2 className="text-sm font-bold flex items-center gap-3 mb-3">
-            <span className="w-8 h-8 bg-gradient-to-br from-indigo-500 to-violet-600 text-white rounded-lg flex items-center justify-center text-sm font-bold shadow-sm">18</span>
+            <span className="w-8 h-8 bg-gradient-to-br from-indigo-500 to-violet-600 text-white rounded-lg flex items-center justify-center text-sm font-bold shadow-sm">15</span>
             <span className="bg-gradient-to-r from-indigo-700 to-violet-600 bg-clip-text text-transparent">Make.com 자동화 연동</span>
           </h2>
           <p className="text-[11px] text-gray-800 mb-3">Make.com(구 Integromat)을 활용하여 콘텐츠 분석/생성을 자동화할 수 있습니다. Webhook API를 통해 외부 시스템과 연결합니다.</p>
@@ -1182,10 +1115,10 @@ export default function ManualPage() {
           </div>
         </section>
 
-        {/* 19. 요금제 안내 */}
+        {/* 16. 요금제 안내 */}
         <section className="bg-white rounded-xl shadow-sm border border-emerald-200 p-6">
           <h2 className="text-sm font-bold flex items-center gap-3 mb-3">
-            <span className="w-8 h-8 bg-gradient-to-br from-emerald-500 to-teal-600 text-white rounded-lg flex items-center justify-center text-sm font-bold shadow-sm">19</span>
+            <span className="w-8 h-8 bg-gradient-to-br from-emerald-500 to-teal-600 text-white rounded-lg flex items-center justify-center text-sm font-bold shadow-sm">16</span>
             <span className="bg-gradient-to-r from-emerald-700 to-teal-600 bg-clip-text text-transparent">요금제 안내</span>
           </h2>
           <p className="text-[11px] text-gray-800 mb-3">GEO-AIO는 무료 플랜과 유료 플랜을 제공합니다. 각 플랜별 사용 가능 횟수가 다릅니다.</p>

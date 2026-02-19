@@ -40,7 +40,14 @@
       "Bash(vercel:*)",
       "Bash(npx --yes sharp-cli:*)",
       "Bash(npx sharp-cli:*)",
-      "Bash(npx next dev:*)"
+      "Bash(npx next dev:*)",
+      "Bash(npm ls:*)",
+      "Bash(__NEW_LINE_1d25ffac7d684dc8__ echo \"=== PRICING PAGE ===\")",
+      "Bash(node:*)",
+      "WebFetch(domain:geo-aio.vercel.app)",
+      "WebFetch(domain:geoaio.com)",
+      "WebFetch(domain:geo-aio.co.kr)",
+      "WebFetch(domain:www.geo-aio.com)"
     ]
   }
 }
