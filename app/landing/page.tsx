@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import TesterModal from '@/components/TesterModal';
+import TesterModal, { TesterFloatingButton } from '@/components/TesterModal';
 import { createClient } from '@/lib/supabase-client';
 
 const painPoints = [
@@ -911,6 +911,7 @@ export default function PromotionLandingPage() {
 
       <Footer />
 
+      <TesterFloatingButton onClick={() => setShowTesterModal(true)} />
       <TesterModal show={showTesterModal} onClose={() => setShowTesterModal(false)} />
     </div>
   );

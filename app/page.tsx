@@ -5,7 +5,7 @@ import Link from 'next/link';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import ApiKeyPanel from '@/components/ApiKeyPanel';
-import TesterModal from '@/components/TesterModal';
+import TesterModal, { TesterFloatingButton } from '@/components/TesterModal';
 
 const features = [
   {
@@ -141,21 +141,6 @@ export default function LandingPage() {
         <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-indigo-950 to-violet-950" />
         <div className="absolute inset-0 opacity-20" style={{ backgroundImage: 'radial-gradient(circle at 25% 25%, rgba(99,102,241,0.3) 0%, transparent 50%), radial-gradient(circle at 75% 75%, rgba(168,85,247,0.3) 0%, transparent 50%)' }} />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-20 text-center">
-          {/* 테스터 모집 버튼 - 히어로 왼쪽 상단 */}
-          <div className="absolute top-4 left-4 sm:left-6 lg:left-8 z-10">
-            <button
-              onClick={() => setShowTesterModal(true)}
-              className="relative w-20 h-20 bg-gradient-to-br from-amber-400 via-orange-500 to-red-500 text-white rounded-2xl shadow-xl shadow-orange-500/40 hover:shadow-orange-500/60 hover:scale-110 transition-all flex flex-col items-center justify-center gap-1 group"
-            >
-              <div className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full animate-ping" />
-              <div className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full" />
-              <svg className="w-7 h-7 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z" />
-              </svg>
-              <span className="text-[10px] font-bold leading-tight text-center">테스터{'\n'}모집중</span>
-            </button>
-          </div>
-
           <img src="/images/logo-geoaio.png" alt="GEOAIO" className="h-14 sm:h-16 rounded-lg mx-auto mb-6" />
 
           <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-white/10 backdrop-blur-sm rounded-full border border-white/20 text-sm text-indigo-200 font-medium mb-6">
@@ -525,6 +510,7 @@ export default function LandingPage() {
 
       <Footer />
 
+      <TesterFloatingButton onClick={() => setShowTesterModal(true)} />
       <TesterModal show={showTesterModal} onClose={() => setShowTesterModal(false)} />
     </div>
   );

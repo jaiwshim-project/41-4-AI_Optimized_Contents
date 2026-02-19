@@ -229,7 +229,7 @@ export function TesterFloatingButton({ onClick }: { onClick: () => void }) {
   return (
     <button
       onClick={onClick}
-      className="fixed bottom-6 left-6 z-40 w-20 h-20 bg-gradient-to-br from-amber-400 via-orange-500 to-red-500 text-white rounded-2xl shadow-xl shadow-orange-500/40 hover:shadow-orange-500/60 hover:scale-110 transition-all flex flex-col items-center justify-center gap-1 group"
+      className="fixed top-20 left-4 sm:left-6 z-40 w-20 h-20 bg-gradient-to-br from-amber-400 via-orange-500 to-red-500 text-white rounded-2xl shadow-xl shadow-orange-500/40 hover:shadow-orange-500/60 hover:scale-110 transition-all flex flex-col items-center justify-center gap-1 group"
     >
       <div className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full animate-ping" />
       <div className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full" />
